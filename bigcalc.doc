@@ -1,0 +1,68 @@
+                  BIGCALC Extended Precision Calculator 5.0
+
+BIGCALC works like an H-P calculator with stack and ten memory registers.
+Maximum precision settable from 3 to 1075 digits. Exponents to ñ999999999.
+Execute BIGCALC like this:
+
+  BIGCALC precision   (precision is maximum number of digits, default is 50)
+
+BIGCALC has +, -, x, ö, ûX, Xý, X!, Y^X, logs, trig, pi, e, print, much more.
+All trig functions work in radians. BIGCALC is fast, but some operations on
+large numbers may take up to several minutes. You can abort long calculations
+by pressing the Escape key. Press F1 for on-screen help. Registers can be
+viewed in full, or printed to printer or disk.
+
+You can specify floating decimal or scientific notation display. Large numbers
+display in scientific notation to about 65 digits all the time, but the view
+and print commands show full precision in 3 or 5 digit groups.
+
+  KEY  FUNCTION     KEY  FUNCTION      KEY  FUNCTION        KEY  FUNCTION
+                                            (M rotates Fn key menu)
+0-9.E  Enter number   V >View number    F1 >Help            ^F1 >sin X
+    S  change Sign    F >Float/Sci      F2 >Power Y^X       ^F2 >arcsin X
+BkSpc  CLX/Backspace  G >Group 3/5      F3 >Sq root ûx      ^F3 >cos X
+Enter >Enter          P >Print          F4 >Square Xý       ^F4 >arccos X
+    + >Add Y + X      D >Disk/Print     F5 >Recip 1 ö X     ^F5 >tan X
+    - >Sub Y - X   PgUp >Store X        F6 >Fact X!         ^F6 >arctan X
+    * >Mul Y x X   PgDn >Recall X       F7 >Integer XXX.    ^F7 >Common log X
+    / >Div Y ö X      X >eXchg X & Reg  F8 >Fraction .XXX   ^F8 >Exponent 10^X
+    C >Clear      Up/Dn >Roll Up/Dn     F9 >Recall ã to X   ^F9 >Natural log X
+    L >Last X    Lft/Rt >Exchg X & Y   F10 >Recall e to X  ^F10 >Exponent e^X
+
+    To enter a number just begin typing it in. Use Backspace to back up.
+    To enter an exponent press E then enter the exponent.
+    Press S while entering mantissa or exponent to change respective sign.
+    If you start a number with E a mantissa of 1 is assumed.
+    Functions marked '>' complete a number being entered before acting.
+    View displays any register to full precision.
+    Clear, Print, View, Store, Recall & eXchange ask for affected register.
+    BackSpace backs up while entering number, otherwise acts as Clear X.
+    M rotates function key menus. ^ means control: ^F1 = ctrl-F1
+
+This program emulates a Hewlett-Packard calculator with four register stack
+and ten memory registers.  The stack consists of the X, Y, Z & T registers.
+The memory registers are 0-9.
+
+The X register is 'where the action is'.  When you enter a number it is entered
+into the X register.  If X already contains a number, that number is 'pushed'
+up to Y, Y is pushed to Z, Z to T, and the contents of T is lost.  The 'Enter'
+key pushes the stack and duplicates X into Y. A number entered into X after
+Enter or ClearX DOES NOT push the stack. When you use a function that acts on
+two numbers (like + or -) it always acts on X & Y (except for Store, Recall &
+eXchange which act on X and a memory register).  The result is put in X, and
+the stack is 'Dropped'.  That is, Z copies to Y and T duplicates into Z.
+
+Numbers are displayed in 'Floating Decimal' or 'Scientific Notation' format.
+Floating Decimal looks like this:    1.2     123.45     -12300000000  0.000002
+Scientific Notation looks like this: 1.2 e0  1.2345 e2  -1.23 e10     2.0 e-6
+Very long numbers take longer to compute, of course. You can abort a long
+calculation by pressing the Escape key.
+
+If a number is too large or small for the screen, Scientific Notation is used.
+All results are truncated except for Y^X which is rounded: 5 up 4 down.
+
+ Judson D. McClendon           $20 gets you a disk with the complete C source.
+ Sun Valley Systems
+ 4522 Shadow Ridge Pkwy        There is no warranty of any kind.
+ Pinson, AL 35126-2192         The author assumes no responsibility for the
+     205-680-0460              use of this program.

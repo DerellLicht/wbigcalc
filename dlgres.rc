@@ -1,0 +1,59 @@
+#include <windows.h>
+#include "resource.h"
+
+IDI_ICON ICON "icon.ico"
+
+//*******************************************************************
+//  ElCal calibration dialog
+//*******************************************************************
+#define  PI_X   12
+#define  PI_Y    4
+#define  PI_FX (PI_X + 5)
+
+#define  Y_OFS    1
+
+#define  REGS_GRP_DX  600
+#define  REGS_DX     (REGS_GRP_DX - PI_FX - 8)
+
+#define  ST_Y     PI_Y+170
+
+IDD_MAIN_DIALOG DIALOG DISCARDABLE  160, 40, REGS_GRP_DX+30, 500
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
+CAPTION "BigCalc for Windows"
+FONT 10, "Times New Roman"
+BEGIN
+   GROUPBOX        " Registers ",   IDC_REGS,  PI_X,     PI_Y,    REGS_GRP_DX, 160 
+   LTEXT           "R0",            IDS_R0,    PI_FX,    PI_Y+Y_OFS+10,          12,  10
+   LTEXT           " ",             IDC_R0,    PI_FX+15, PI_Y+10,     REGS_DX,  10, SS_SUNKEN
+   LTEXT           "R1",            IDS_R1,    PI_FX,    PI_Y+Y_OFS+25,          12,  10
+   LTEXT           " ",             IDC_R1,    PI_FX+15, PI_Y+25,     REGS_DX,  10, SS_SUNKEN
+   LTEXT           "R2",            IDS_R2,    PI_FX,    PI_Y+Y_OFS+40,          12,  10
+   LTEXT           " ",             IDC_R2,    PI_FX+15, PI_Y+40,     REGS_DX,  10, SS_SUNKEN
+   LTEXT           "R3",            IDS_R3,    PI_FX,    PI_Y+Y_OFS+55,          12,  10
+   LTEXT           " ",             IDC_R3,    PI_FX+15, PI_Y+55,     REGS_DX,  10, SS_SUNKEN
+   LTEXT           "R4",            IDS_R4,    PI_FX,    PI_Y+Y_OFS+70,          12,  10
+   LTEXT           " ",             IDC_R4,    PI_FX+15, PI_Y+70,     REGS_DX,  10, SS_SUNKEN
+   LTEXT           "R5",            IDS_R5,    PI_FX,    PI_Y+Y_OFS+85,          12,  10
+   LTEXT           " ",             IDC_R5,    PI_FX+15, PI_Y+85,     REGS_DX,  10, SS_SUNKEN
+   LTEXT           "R6",            IDS_R6,    PI_FX,    PI_Y+Y_OFS+100,         12,  10
+   LTEXT           " ",             IDC_R6,    PI_FX+15, PI_Y+100,    REGS_DX,  10, SS_SUNKEN
+   LTEXT           "R7",            IDS_R7,    PI_FX,    PI_Y+Y_OFS+115,         12,  10
+   LTEXT           " ",             IDC_R7,    PI_FX+15, PI_Y+115,    REGS_DX,  10, SS_SUNKEN
+   LTEXT           "R8",            IDS_R8,    PI_FX,    PI_Y+Y_OFS+130,         12,  10
+   LTEXT           " ",             IDC_R8,    PI_FX+15, PI_Y+130,    REGS_DX,  10, SS_SUNKEN
+   LTEXT           "R9",            IDS_R9,    PI_FX,    PI_Y+Y_OFS+145,         12,  10
+   LTEXT           " ",             IDC_R9,    PI_FX+15, PI_Y+145,    REGS_DX,  10, SS_SUNKEN
+
+   GROUPBOX        " Stack ",       IDC_REGS,  PI_X,     ST_Y,    REGS_GRP_DX, 74 
+   LTEXT           "T",             IDS_REG_T,    PI_FX,    ST_Y+Y_OFS+10,          12,  10
+   LTEXT           " ",             IDC_REG_T,    PI_FX+15, ST_Y+10,     REGS_DX,  10, SS_SUNKEN
+   LTEXT           "Z",             IDS_REG_Z,    PI_FX,    ST_Y+Y_OFS+25,          12,  10
+   LTEXT           " ",             IDC_REG_Z,    PI_FX+15, ST_Y+25,     REGS_DX,  10, SS_SUNKEN
+   LTEXT           "Y",             IDS_REG_Y,    PI_FX,    ST_Y+Y_OFS+40,          12,  10
+   LTEXT           " ",             IDC_REG_Y,    PI_FX+15, ST_Y+40,     REGS_DX,  10, SS_SUNKEN
+   LTEXT           "X",             IDS_REG_X,    PI_FX,    ST_Y+Y_OFS+55,          12,  10
+   LTEXT           " ",             IDC_REG_X,    PI_FX+15, ST_Y+55,     REGS_DX,  10, SS_SUNKEN
+   
+END
+
+

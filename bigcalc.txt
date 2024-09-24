@@ -1,0 +1,31 @@
+
+
+                          BIGCALC SOURCE 5.0
+
+
+   This is the source for BIGCALC 5.0 Extended Precision Calculator.
+   BIGCALC 5.0 compiles with the small model using Microsoft C 6.00A.
+   Microsoft C 6.0  supports string literals to 32k, allowing improved
+   coding of the ExtendedGetXxx() functions in the module BIGMISC.C.
+
+
+   To compile BIGCALC with Microsoft C 6.00A use the following command:
+
+      cl /Ozax /Gr bigcalc.c bigio.c bigmath.c bigmisc.c bigprint.c
+
+
+   To compile BIGCALC for OS/2 protected mode edit file BIGCALC.H and
+   remove this line:
+
+      #define REALMODE        /* Remove for OS/2 protected mode */
+
+
+   If you make any changes or enhancements in BIGCALC, please share
+   them with me.  Also, please let me know if you find any problems.
+
+
+                        Judson D. McClendon
+                        Sun Valley Systems
+                        4522 Shadow Ridge Pkwy
+                        Pinson, AL 35126-2192
+                           205-680-0460
