@@ -1,14 +1,18 @@
 CFLAGS=-Wall -O3
 CFLAGS += -Wno-write-strings
 
-CPPSRC=wbigcalc.cpp bigcalc.cpp bigmath.cpp bigmisc.cpp bigprint.cpp bigio.cpp statbar.cpp wcommon.cpp
+CPPSRC=wbigcalc.cpp bigcalc.cpp bigmath.cpp bigmisc.cpp bigprint.cpp bigio.cpp \
+der_libs/common_funcs.cpp \
+der_libs/common_win.cpp \
+der_libs/statbar.cpp
 	
 OBJS = $(CPPSRC:.cpp=.o) dlgres.o
 
 BIN=wbigcalc.exe
 
+#************************************************************
 %.o: %.cpp
-	g++ $(CFLAGS) -c $<
+	g++ $(CFLAGS) -Weffc++ -c $< -o $@
 
 all: $(BIN)
 
@@ -25,7 +29,7 @@ src:
 	zip wbigcalc.zip *.cpp *.h *.rc makefile *.txt *.doc *.ico
 
 $(BIN): $(OBJS)
-	g++ $(CFLAGS) -s $(OBJS) -o $@ -lcomctl32 -lgdi32
+	g++ $(CFLAGS) -s $(OBJS) -o $@ -lcomctl32 -lgdi32 -lcomdlg32
 
 dlgres.o: dlgres.rc
 	windres -O COFF $< -o $@
@@ -41,5 +45,6 @@ bigmath.o: bigcalc.h biggvar.h
 bigmisc.o: bigcalc.h biggvar.h
 bigprint.o: bigcalc.h biggvar.h
 bigio.o: bigcalc.h
-statbar.o: statbar.h
 wcommon.o: wcommon.h
+der_libs/common_win.o: der_libs/common.h der_libs/commonw.h
+der_libs/statbar.o: der_libs/common.h der_libs/commonw.h statbar.h
