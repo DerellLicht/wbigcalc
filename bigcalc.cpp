@@ -987,7 +987,6 @@ static void GroupSize(void)
       }
 
    if (flag) {
-      syslog("calling Heading2 from GroupSize\n");
       Heading2();
    }
 }

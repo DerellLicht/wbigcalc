@@ -38,6 +38,9 @@ uint cyClient = 0 ;
 static CStatusBar *MainStatusBar = NULL;
 extern int dos_main(unsigned inchr);
 
+//  bigcalc.cpp
+void Initialize(int argc, char *argv);
+
 //*************************************************************
 static void set_hwnd_values(void)
 {
@@ -59,6 +62,18 @@ static void set_hwnd_values(void)
    hwndStack[2] = GetDlgItem(hwndMain, IDC_REG_Z) ;
    hwndStack[3] = GetDlgItem(hwndMain, IDC_REG_T) ;
    
+}
+
+//*******************************************************************
+void status_message(char *msgstr)
+{
+   MainStatusBar->show_message(msgstr);
+}
+
+//*******************************************************************
+void status_message(uint idx, char *msgstr)
+{
+   MainStatusBar->show_message(idx, msgstr);
 }
 
 //*************************************************************
@@ -191,6 +206,7 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
       set_hwnd_values();
       // SendDlgItemMessage (hDlgWnd, IDC_DLG_TEXT, EM_SETLIMITTEXT, (WPARAM) BUFFER_SIZE - 1, (LPARAM) 0);
       // SetDlgItemText (hDlgWnd, IDC_DLG_TEXT, "Enter Text");
+      Heading2();
       Message("We are ready...");
       return TRUE;
       }
@@ -271,6 +287,7 @@ INT WINAPI WinMain (HINSTANCE hInstance,
 {
    hInst = hInstance;
 
+   Initialize(0, 0);
    HWND hWnd = CreateDialog (hInstance, 
       MAKEINTRESOURCE(IDD_MAIN_DIALOG), 
       NULL,

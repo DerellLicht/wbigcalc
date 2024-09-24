@@ -27,14 +27,15 @@
  */
 
 #include <windows.h>
-#include <ctype.h>
 #include <stdio.h>
+#include <ctype.h>
 #include <stdlib.h>
 // #include <string.h>
 
 #include "common.h"
 #include "bigcalc.h"
 #include "biggvar.h"
+#include "statbar.h"
 
 extern void dputc(char chr);
 extern void dputs(char *str);
@@ -907,17 +908,28 @@ static void Heading1(void)
  *    *                                                *
  *    **************************************************
  */
+extern void status_message(char *msgstr);
+extern void status_message(uint idx, char *msgstr);
+
 void Heading2(void)
 {
-   set_text_attrx(HEADER_ATTR) ;
-   CurPos(2, 1);
-   EraEol();
-   WriteAt(2, 8, "Precision is ");
-   WInteger((long) normprec);
-   WString(" digits,  Digit grouping is ");
-   WInteger((long) groupsize);
-   WString(",  Print to ");
-   WString(printid);
+   // set_text_attrx(HEADER_ATTR) ;
+   // CurPos(2, 1);
+   // EraEol();
+   // WriteAt(2, 8, "Precision is ");
+   // WInteger((long) normprec);
+   // WString(" digits,  Digit grouping is ");
+   // WInteger((long) groupsize);
+   // WString(",  Print to ");
+   // WString(printid);
+   
+   char tempstr[20];
+   sprintf (tempstr, " Prec: %d", normprec);
+   status_message(1, tempstr);
+   
+   sprintf (tempstr, " dgroup: %d", groupsize);
+   status_message(2, tempstr);
+   
 }
 
 /*
