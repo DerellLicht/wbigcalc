@@ -31,3 +31,6 @@
 #define  IDS_R8      218
 #define  IDC_R9      219
 #define  IDS_R9      220
+
+#define  IDC_MSG     300
+#define  IDS_MSG     301

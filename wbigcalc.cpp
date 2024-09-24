@@ -79,12 +79,34 @@ static int process_keystroke (HWND hwnd, unsigned inchr)
    return 0;
 }
 
-//*************************************************************
-BOOL CALLBACK InitProc (HWND hDlgWnd, UINT Message, WPARAM wParam, LPARAM lParam)
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *      Display Message centered on 25th line     *
+ *    *                                                *
+ *    **************************************************
+ */
+static HWND hwndMain = NULL ;
+static HWND hwndMsg = NULL ;
+
+void Message(char *msg)
 {
-   switch (Message) {
+   if (hwndMsg == NULL) {
+      hwndMsg = GetDlgItem(hwndMain, IDC_MSG) ;
+   }
+   SetWindowText(hwndMsg, msg);
+   // WriteCenter(25, msg);
+}
+
+//*************************************************************
+
+BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+   switch (msg) {
    case WM_INITDIALOG:
       {
+      hwndMain = hDlgWnd ;
+      //  center the dialog on desktop
       RECT DesktopRect;
       RECT DialogRect;
       GetWindowRect (GetDesktopWindow (), &DesktopRect);
@@ -96,7 +118,7 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT Message, WPARAM wParam, LPARAM lParam
          0, 0, SWP_NOSIZE);
 
       SendMessage (hDlgWnd, WM_SETICON, ICON_SMALL,(LPARAM) LoadIcon (hInst, MAKEINTRESOURCE (IDI_ICON)));
-      SendMessage (hDlgWnd, WM_SETICON, ICON_BIG,(LPARAM) LoadIcon (hInst, MAKEINTRESOURCE (IDI_ICON)));
+      SendMessage (hDlgWnd, WM_SETICON, ICON_BIG,  (LPARAM) LoadIcon (hInst, MAKEINTRESOURCE (IDI_ICON)));
       
       // RECT rWindow;
       // unsigned stTop ;
@@ -122,6 +144,7 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT Message, WPARAM wParam, LPARAM lParam
 
       // SendDlgItemMessage (hDlgWnd, IDC_DLG_TEXT, EM_SETLIMITTEXT, (WPARAM) BUFFER_SIZE - 1, (LPARAM) 0);
       // SetDlgItemText (hDlgWnd, IDC_DLG_TEXT, "Enter Text");
+      Message("We are ready...");
       return TRUE;
       }
       break;
@@ -139,7 +162,7 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT Message, WPARAM wParam, LPARAM lParam
          key_mask |= kAlt;
       }
       else {
-         OutputDebugString("I am here...\n") ;
+         OutputDebugString("I am here (DOWN)...\n") ;
          wParam |= key_mask;
          process_keystroke (hDlgWnd, wParam);
       }
@@ -158,6 +181,7 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT Message, WPARAM wParam, LPARAM lParam
          key_mask &= ~kAlt;
       }
       else {
+         OutputDebugString("I am here (UP)...\n") ;
          // wParam |= key_mask ;
          // process_keystroke(hwnd, wParam) ;
       }

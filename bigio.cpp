@@ -294,18 +294,6 @@ void WriteCenter(int row, char *msg)
 /*
  *    **************************************************
  *    *                                                *
- *    *      Display Message centered on 25th line     *
- *    *                                                *
- *    **************************************************
- */
-void Message(char *msg)
-{
-   WriteCenter(25, msg);
-}
-
-/*
- *    **************************************************
- *    *                                                *
  *    *      Write Message and Wait for keystroke      *
  *    *                                                *
  *    **************************************************
