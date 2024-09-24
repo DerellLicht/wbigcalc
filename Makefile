@@ -39,12 +39,12 @@ depend:
 
 # DO NOT DELETE
 
-wbigcalc.o: keywin32.h resource.h bigcalc.h statbar.h
+wbigcalc.o: keywin32.h resource.h bigcalc.h
 bigcalc.o: bigcalc.h keywin32.h
 bigmath.o: bigcalc.h biggvar.h
 bigmisc.o: bigcalc.h biggvar.h
 bigprint.o: bigcalc.h biggvar.h
 bigio.o: bigcalc.h
-wcommon.o: wcommon.h
+der_libs/common_funcs.o: der_libs/common.h
 der_libs/common_win.o: der_libs/common.h der_libs/commonw.h
-der_libs/statbar.o: der_libs/common.h der_libs/commonw.h statbar.h
+der_libs/statbar.o: der_libs/common.h der_libs/commonw.h der_libs/statbar.h
