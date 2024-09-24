@@ -120,8 +120,8 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT Message, WPARAM wParam, LPARAM lParam
       MainStatusBar->SetParts(3, &sbparts[0]);
       }
 
-      SendDlgItemMessage (hDlgWnd, IDC_DLG_TEXT, EM_SETLIMITTEXT, (WPARAM) BUFFER_SIZE - 1, (LPARAM) 0);
-      SetDlgItemText (hDlgWnd, IDC_DLG_TEXT, "Enter Text");
+      // SendDlgItemMessage (hDlgWnd, IDC_DLG_TEXT, EM_SETLIMITTEXT, (WPARAM) BUFFER_SIZE - 1, (LPARAM) 0);
+      // SetDlgItemText (hDlgWnd, IDC_DLG_TEXT, "Enter Text");
       return TRUE;
       }
       break;
@@ -171,7 +171,7 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT Message, WPARAM wParam, LPARAM lParam
 
       case IDOK:
          MessageBox (hDlgWnd, "Ok", "Success", MB_OK);
-         GetDlgItemText (hDlgWnd, IDC_DLG_TEXT, szText, BUFFER_SIZE);
+         // GetDlgItemText (hDlgWnd, IDC_DLG_TEXT, szText, BUFFER_SIZE);
          ExitProcess (0);
          return TRUE;
       }

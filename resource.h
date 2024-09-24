@@ -1,8 +1,6 @@
 #define IDI_ICON 100
 #define IDD_MAIN_DIALOG 101
 
-#define IDC_DLG_TEXT 102
-
 #define IDC_REG_X    103
 #define IDC_REG_Y    104
 #define IDC_REG_Z    105

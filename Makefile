@@ -1,6 +1,9 @@
 CFLAGS=-Wall -O3
 CFLAGS += -Wno-write-strings
 
+#LiFLAGS = -Ider_libs
+CFLAGS += -Ider_libs
+
 CPPSRC=wbigcalc.cpp bigcalc.cpp bigmath.cpp bigmisc.cpp bigprint.cpp bigio.cpp \
 der_libs/common_funcs.cpp \
 der_libs/common_win.cpp \
