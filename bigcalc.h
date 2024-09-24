@@ -320,10 +320,10 @@ void Heading2(void);
 void WorkScreen(void);
 
 //  wbigcalc.cpp 
-#define  regT  (unsigned) 3
-#define  regZ  (unsigned) 2
-#define  regY  (unsigned) 1
-#define  regX  (unsigned) 0
+// #define  regT  (unsigned) 3
+// #define  regZ  (unsigned) 2
+// #define  regY  (unsigned) 1
+// #define  regX  (unsigned) 0
 void put_stack(unsigned n);
 void put_register(unsigned n);
 void put_work(void);
