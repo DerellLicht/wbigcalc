@@ -28,12 +28,6 @@
 
 #define TITLE "Extended Precision Calculator 6.0"
 
-typedef unsigned char         u8 ;
-typedef unsigned short        u16 ;
-typedef unsigned int          uint ;
-typedef unsigned long         u32 ;
-typedef unsigned long long    u64 ;
-
 // #define REALMODE                          /* Remove for OS/2 protected mode */
 
 #define MINPREC 3                         /* Min nbr of digits  */
@@ -105,8 +99,8 @@ typedef unsigned long long    u64 ;
 
 #define ESCAPE     27   /* Escape          */
 #define BACKSPACE  8    /* Back Space      */
-#define CR         '\r' /* Carriage Return */
-#define LF         '\n' /* Line Feed       */
+// #define CR         '\r' /* Carriage Return */
+// #define LF         '\n' /* Line Feed       */
 #define FF         '\f' /* Form Feed       */
 #define PGUP       1073 /* PgUp            */
 #define PGDN       1081 /* PgDn            */

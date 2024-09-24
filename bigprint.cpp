@@ -32,6 +32,7 @@
 #include <stdlib.h>
 // #include <string.h>
 
+#include "common.h"
 #include "bigcalc.h"
 #include "biggvar.h"
 
@@ -1031,6 +1032,7 @@ void WorkScreen(void)
 
    int r, s;
 
+   syslog("calling Heading2 from WorkScreen\n");
    Heading1();
    Heading2();
 

@@ -4,17 +4,16 @@
 
 #include <windows.h>
 
+#include "common.h"
 #include "keywin32.h"
 #include "resource.h"
 #include "bigcalc.h"
 #include "statbar.h"
+#include "winmsgs.h"
 
 #define BUFFER_SIZE 256
 
 char szText[BUFFER_SIZE];
-
-static HWND hwndRegs[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ;
-static HWND hwndStack[4] = { 0, 0, 0, 0 } ;
 
 static unsigned key_mask = 0;
 // HBRUSH g_hbrBackground = CreateSolidBrush (RGB (255, 255, 255));
@@ -27,12 +26,40 @@ HBRUSH g_hbrBackground = (HBRUSH) (COLOR_WINDOW + 1) ;
 // #endif
 
 HINSTANCE hInst;
+static HWND hwndMain = NULL ;
+static HWND hwndMsg = NULL ;
+
+static HWND hwndRegs[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ;
+static HWND hwndStack[4] = { 0, 0, 0, 0 } ;
 
 uint cxClient = 0 ;
 uint cyClient = 0 ;
 
 static CStatusBar *MainStatusBar = NULL;
 extern int dos_main(unsigned inchr);
+
+//*************************************************************
+static void set_hwnd_values(void)
+{
+   hwndMsg = GetDlgItem(hwndMain, IDC_MSG) ;
+   
+   hwndRegs[0] = GetDlgItem(hwndMain, IDC_R0) ;
+   hwndRegs[1] = GetDlgItem(hwndMain, IDC_R1) ;
+   hwndRegs[2] = GetDlgItem(hwndMain, IDC_R2) ;
+   hwndRegs[3] = GetDlgItem(hwndMain, IDC_R3) ;
+   hwndRegs[4] = GetDlgItem(hwndMain, IDC_R4) ;
+   hwndRegs[5] = GetDlgItem(hwndMain, IDC_R5) ;
+   hwndRegs[6] = GetDlgItem(hwndMain, IDC_R6) ;
+   hwndRegs[7] = GetDlgItem(hwndMain, IDC_R7) ;
+   hwndRegs[8] = GetDlgItem(hwndMain, IDC_R8) ;
+   hwndRegs[9] = GetDlgItem(hwndMain, IDC_R9) ;
+   
+   hwndStack[0] = GetDlgItem(hwndMain, IDC_REG_X) ;
+   hwndStack[1] = GetDlgItem(hwndMain, IDC_REG_Y);
+   hwndStack[2] = GetDlgItem(hwndMain, IDC_REG_Z) ;
+   hwndStack[3] = GetDlgItem(hwndMain, IDC_REG_T) ;
+   
+}
 
 //*************************************************************
 void put_stack(unsigned n)
@@ -86,25 +113,46 @@ static int process_keystroke (HWND hwnd, unsigned inchr)
  *    *                                                *
  *    **************************************************
  */
-static HWND hwndMain = NULL ;
-static HWND hwndMsg = NULL ;
-
 void Message(char *msg)
 {
-   if (hwndMsg == NULL) {
-      hwndMsg = GetDlgItem(hwndMain, IDC_MSG) ;
-   }
    SetWindowText(hwndMsg, msg);
-   // WriteCenter(25, msg);
 }
 
 //*************************************************************
 
 BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+   //***************************************************
+   //  debug: log all windows messages
+   //***************************************************
+   // if (dbg_flags & DBG_WINMSGS) {
+   if (false) {
+      switch (msg) {
+      //  list messages to be ignored
+      // case WM_CTLCOLORBTN:
+      // case WM_CTLCOLORSTATIC:
+      // case WM_CTLCOLOREDIT:
+      // case WM_CTLCOLORLISTBOX:
+      // case WM_MOUSEMOVE:
+      // case WM_NCMOUSEMOVE:
+      // case WM_NCHITTEST:
+      // case WM_SETCURSOR:
+      // case WM_TIMER:
+      // case WM_NOTIFY:
+      case WM_COMMAND:  //  prints its own msgs below
+         break;
+      default:
+         syslog("TOP [%s]\n", lookup_winmsg_name(msg)) ;
+         break;
+      }
+   }
+   
    switch (msg) {
    case WM_INITDIALOG:
       {
+      SendMessage (hDlgWnd, WM_SETICON, ICON_SMALL,(LPARAM) LoadIcon (hInst, MAKEINTRESOURCE (IDI_ICON)));
+      SendMessage (hDlgWnd, WM_SETICON, ICON_BIG,  (LPARAM) LoadIcon (hInst, MAKEINTRESOURCE (IDI_ICON)));
+      
       hwndMain = hDlgWnd ;
       //  center the dialog on desktop
       RECT DesktopRect;
@@ -117,8 +165,6 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
          (DesktopRect.bottom - DialogRect.bottom) / 2,
          0, 0, SWP_NOSIZE);
 
-      SendMessage (hDlgWnd, WM_SETICON, ICON_SMALL,(LPARAM) LoadIcon (hInst, MAKEINTRESOURCE (IDI_ICON)));
-      SendMessage (hDlgWnd, WM_SETICON, ICON_BIG,  (LPARAM) LoadIcon (hInst, MAKEINTRESOURCE (IDI_ICON)));
       
       // RECT rWindow;
       // unsigned stTop ;
@@ -142,6 +188,7 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
       MainStatusBar->SetParts(3, &sbparts[0]);
       }
 
+      set_hwnd_values();
       // SendDlgItemMessage (hDlgWnd, IDC_DLG_TEXT, EM_SETLIMITTEXT, (WPARAM) BUFFER_SIZE - 1, (LPARAM) 0);
       // SetDlgItemText (hDlgWnd, IDC_DLG_TEXT, "Enter Text");
       Message("We are ready...");
@@ -162,7 +209,7 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
          key_mask |= kAlt;
       }
       else {
-         OutputDebugString("I am here (DOWN)...\n") ;
+         syslog("I am here (DOWN)...\n") ;
          wParam |= key_mask;
          process_keystroke (hDlgWnd, wParam);
       }
@@ -181,7 +228,7 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
          key_mask &= ~kAlt;
       }
       else {
-         OutputDebugString("I am here (UP)...\n") ;
+         syslog("I am here (UP)...\n") ;
          // wParam |= key_mask ;
          // process_keystroke(hwnd, wParam) ;
       }

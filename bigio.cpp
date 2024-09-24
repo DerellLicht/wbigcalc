@@ -33,10 +33,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "common.h"
 #include "bigcalc.h"
-// #include "biggvar.h"
-// #include "statbar.h"
-// #include "conio32.h"
+#include "statbar.h"
 
 /*
  *    **************************************************
@@ -70,20 +69,19 @@ void dputc(char chr)
 {
    //  this needs to be modified to deal with BackSpace, etc...
    if (iostrlen < MAXIOSTR) {
-      // wsprintf(tempstr, "%c", chr) ;
-      // OutputDebugString(tempstr) ;
       iostr[iostrlen++] = chr ;
       iostr[iostrlen] = 0 ;   //  keep string NULL-term
    }
+   syslog("%c", chr);
 }
 
 void dputs(char *str)
 {
-   // OutputDebugString(str) ;
    int slen = strlen(str) ;
    if (iostrlen + slen <= MAXIOSTR) {
       iostrlen += wsprintf(&iostr[iostrlen], str) ;
    }
+   syslog("%s\n", str);
 }
 
 static void dprints(unsigned row, unsigned col, char *str)

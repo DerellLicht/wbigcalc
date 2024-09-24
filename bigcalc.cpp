@@ -31,6 +31,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "common.h"
 #include "bigcalc.h"
 #include "keywin32.h"
 
@@ -154,6 +155,7 @@ BOOLEAN
 int dos_main(unsigned chr)
 {
 
+   syslog("Entering dos_main()\n");
    switch (chr) {
 // typedef char NORMDIGIT;
 // typedef int  WORKDIGIT;
@@ -984,8 +986,10 @@ static void GroupSize(void)
       maxfloatprn = 1200L;
       }
 
-   if (flag)
+   if (flag) {
+      syslog("calling Heading2 from GroupSize\n");
       Heading2();
+   }
 }
 
 /*
@@ -1078,7 +1082,7 @@ static void AcceptX(unsigned inchr)
 //    EraEop();
 //    menucleared = TRUE;
 //    WriteAt(entrysignrow, 1, "X:");
-//    Message("Entering X: S=ChgSign, E=Exp, BakSpc=Backup, Other=Complete, ESC=Exit");
+   Message("Entering X: S=ChgSign, E=Exp, BakSpc=Backup, Other=Complete, ESC=Exit");
 
    if (normprec > SIZEOFSMALL) {
       CurPos(entrysignrow - 1, 1);  /* Big numbers, use full screen */
