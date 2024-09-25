@@ -59,6 +59,7 @@
 // #define MONOSCREEN      0xB0000000L          /* Mono buffer address    */
 // #define COLORSCREEN     0xB8000000L          /* Color buffer address   */
 
+//  this string is overloaded, it is being used for multiple elements...
 #define  MAXIOSTR    1024
 static int iostrlen = 0 ;
 static char iostr[MAXIOSTR+1] = "" ;

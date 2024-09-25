@@ -532,14 +532,10 @@ static void WriteNumber(NORMTYPE *nbr)
    digits = nbr->digits;
    exponent = nbr->exp;
 
-   if ( (scinotation)
-         ||
-        (exponent < MINFLOATDSP)
-         ||
-        (exponent > MAXFLOATDSP)
-         ||
+   if ( (scinotation) ||
+        (exponent < MINFLOATDSP) ||
+        (exponent > MAXFLOATDSP) ||
         (exponent > normprec) )
-
       {                             /* Scientific Notation */
 
       WChar(nbr->man[0]+ '0');         /* First digit and decimal point */
@@ -636,12 +632,32 @@ void WriteStack(int lo, int hi)
    int s;
 
    for (s = hi; s >= lo; s--) {
-      CurPos(XSIGNROW - s, SIGNDISPCOL);
+      // reset_iostr() ;
+      // CurPos(XSIGNROW - s, SIGNDISPCOL);
       WriteNumber(&stack[s]);
       // dprints(XSIGNROW - s, SIGNDISPCOL, &stack[s]);
       put_stack(s) ;
       reset_iostr() ;
-      }
+   }
+}
+
+//********************************************************************
+void DumpStack(void)
+{
+   char tempstr[30];
+   uint idx ;
+   uint s, i;
+   syslog("stack contents");
+   for (s=0; s<4; s++) {
+      idx = 0 ;
+      tempstr[idx] = 0;
+      uint digits = stack[s].digits ;
+      for (i = 0; i < digits; i++) {      /* Write number digits */
+         tempstr[idx++] = stack[s].man[i] + '0';
+         tempstr[idx] = 0;
+      }                             /* Number < 1 end */
+      syslog("%u: %u [%s]\n", s, digits, tempstr);
+   }
 }
 
 /*
@@ -1044,7 +1060,6 @@ void WorkScreen(void)
 
    int r, s;
 
-   syslog("calling Heading2 from WorkScreen\n");
    Heading1();
    Heading2();
 

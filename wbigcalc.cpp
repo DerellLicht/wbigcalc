@@ -80,8 +80,9 @@ void status_message(uint idx, char *msgstr)
 //*************************************************************
 void put_stack(unsigned n)
 {
-   // wsprintf (tempstr, "put_stack %u", n);
-   // Statusbar_ShowMessage (tempstr);
+   char tempstr[30];
+   wsprintf (tempstr, "put_stack %u [%s]", n, get_iostr());
+   syslog(tempstr);
    SetWindowText(hwndStack[n], get_iostr()) ;
 }
 
@@ -94,8 +95,9 @@ void put_register(unsigned n)
 
 void put_work(void)
 {
-   // wsprintf (tempstr, "put_register %u", n);
-   // Statusbar_ShowMessage (tempstr);
+   char tempstr[30];
+   wsprintf (tempstr, "put_work %u [%s]", 0, get_iostr());
+   syslog(tempstr);
    SetWindowText(hwndStack[0], get_iostr()) ;
 }
 

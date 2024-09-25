@@ -302,6 +302,7 @@ void SetTempInteger(COMPTYPE *dest,long integer);
 // void PrintStack(int lo,int hi);
 void DisplayReg(int r);
 void DisplayStack(int s);
+void DumpStack(void);   //  debug function
 
 void WriteReg(int lo,int hi);
 void WriteStack(int lo,int hi);

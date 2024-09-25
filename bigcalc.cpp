@@ -287,7 +287,8 @@ void Initialize(int argc, char *argv)
    GroupSize();                  /* Toggle group size to 5 & set xxxfloatprn */
 
    // InitialScreen();              /* Welcome screen */
-   // memset((char *) &stacks[0], 0, sizeof(NORMTYPE)) ;
+   memset((char *) &stack[0], 0, sizeof(NORMTYPE)) ;
+   init_work_variables();
 }
 
 /*
@@ -1080,6 +1081,7 @@ static void AcceptX(unsigned inchr)
 //    EraEop();
 //    menucleared = TRUE;
 //    WriteAt(entrysignrow, 1, "X:");
+   //  this message gets repeated with every keystroke
    Message("Entering X: S=ChgSign, E=Exp, BakSpc=Backup, Other=Complete, ESC=Exit");
 
    if (normprec > SIZEOFSMALL) {
@@ -1161,6 +1163,7 @@ static void ClearX(void)
  */
 static void Enter(void)
 {
+   DumpStack();
    PushStack();
    WriteStack(1, 3);
    stacklift = FALSE;
