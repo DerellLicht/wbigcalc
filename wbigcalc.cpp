@@ -3,6 +3,7 @@
 // http://members.net-tech.com.au/alaneb/main_dialog.html
 
 #include <windows.h>
+#include <stdio.h>
 
 #include "common.h"
 #include "keywin32.h"
@@ -15,7 +16,7 @@
 
 char szText[BUFFER_SIZE];
 
-static unsigned key_mask = 0;
+// static unsigned key_mask = 0;
 // HBRUSH g_hbrBackground = CreateSolidBrush (RGB (255, 255, 255));
 //  other colors are in winuser.h (line 822 in mingw)
 HBRUSH g_hbrBackground = (HBRUSH) (COLOR_WINDOW + 1) ;
@@ -99,27 +100,27 @@ void put_work(void)
 }
 
 //*************************************************************
-static int process_keystroke (HWND hwnd, unsigned inchr)
-{
-   char stext[10] ;
-   //  main keyboard handler
-   switch (inchr) {
-   case kCc:
-   case kESC:
-      SendMessage(hwnd, WM_DESTROY, 0, 0) ;
-      break;
-
-   default:
-      HWND hwndTemp = GetDlgItem(hwnd, IDC_REG_X) ;
-      wsprintf(stext, "%c", inchr) ;
-      SetWindowText(hwndTemp, stext) ;
-      dos_main(inchr) ;
-      // wsprintf (tempstr, "PRESS=0x%04X", inchr);
-      // Statusbar_ShowMessage (tempstr);
-      break;
-   }
-   return 0;
-}
+// static int process_keystroke (HWND hwnd, unsigned inchr)
+// {
+//    char stext[10] ;
+//    //  main keyboard handler
+//    switch (inchr) {
+//    case kCc:
+//    case kESC:
+//       SendMessage(hwnd, WM_DESTROY, 0, 0) ;
+//       break;
+// 
+//    default:
+//       HWND hwndTemp = GetDlgItem(hwnd, IDC_REG_X) ;
+//       wsprintf(stext, "%c", inchr) ;
+//       SetWindowText(hwndTemp, stext) ;
+//       dos_main(inchr) ;
+//       // wsprintf (tempstr, "PRESS=0x%04X", inchr);
+//       // Statusbar_ShowMessage (tempstr);
+//       break;
+//    }
+//    return 0;
+// }
 
 /*
  *    **************************************************
@@ -212,58 +213,91 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
       }
       break;
 
-   case WM_KEYDOWN:
-   case WM_SYSKEYDOWN:
-      // ShowKey (hwnd, 0, "WM_KEYDOWN", wParam, lParam) ;
-      if (wParam == VK_SHIFT) {
-         key_mask |= kShift;
-      }
-      else if (wParam == VK_CONTROL) {
-         key_mask |= kCtrl;
-      }
-      else if (wParam == VK_MENU) {
-         key_mask |= kAlt;
-      }
-      else {
-         syslog("I am here (DOWN)...\n") ;
-         wParam |= key_mask;
-         process_keystroke (hDlgWnd, wParam);
-      }
-      return 0;
+   // case WM_KEYDOWN:
+   // case WM_SYSKEYDOWN:
+   //    // ShowKey (hwnd, 0, "WM_KEYDOWN", wParam, lParam) ;
+   //    if (wParam == VK_SHIFT) {
+   //       key_mask |= kShift;
+   //    }
+   //    else if (wParam == VK_CONTROL) {
+   //       key_mask |= kCtrl;
+   //    }
+   //    else if (wParam == VK_MENU) {
+   //       key_mask |= kAlt;
+   //    }
+   //    else {
+   //       syslog("I am here (DOWN)...\n") ;
+   //       wParam |= key_mask;
+   //       process_keystroke (hDlgWnd, wParam);
+   //    }
+   //    return 0;
 
-   case WM_KEYUP:
-   case WM_SYSKEYUP:
-      // ShowKey (hwnd, 0, "WM_KEYUP", wParam, lParam) ;
-      if (wParam == VK_SHIFT) {
-         key_mask &= ~kShift;
-      }
-      else if (wParam == VK_CONTROL) {
-         key_mask &= ~kCtrl;
-      }
-      else if (wParam == VK_MENU) {
-         key_mask &= ~kAlt;
-      }
-      else {
-         syslog("I am here (UP)...\n") ;
-         // wParam |= key_mask ;
-         // process_keystroke(hwnd, wParam) ;
-      }
-      return 0;
+   // case WM_KEYUP:
+   // case WM_SYSKEYUP:
+   //    // ShowKey (hwnd, 0, "WM_KEYUP", wParam, lParam) ;
+   //    if (wParam == VK_SHIFT) {
+   //       key_mask &= ~kShift;
+   //    }
+   //    else if (wParam == VK_CONTROL) {
+   //       key_mask &= ~kCtrl;
+   //    }
+   //    else if (wParam == VK_MENU) {
+   //       key_mask &= ~kAlt;
+   //    }
+   //    else {
+   //       syslog("I am here (UP)...\n") ;
+   //       // wParam |= key_mask ;
+   //       // process_keystroke(hwnd, wParam) ;
+   //    }
+   //    return 0;
 
    case WM_COMMAND:
-      switch (LOWORD (wParam)) {
-      case IDCANCEL:
-         ExitProcess (0);
-         return TRUE;
+      {  //  create local context
+      DWORD cmd = HIWORD (wParam) ;
+      DWORD target = LOWORD(wParam) ;
+      // char tempstr[20];
+      // sprintf (tempstr, " cmd: %u, target: %u", (uint) cmd, (uint) target);
+      // status_message(tempstr);
 
-      case IDOK:
-         MessageBox (hDlgWnd, "Ok", "Success", MB_OK);
-         // GetDlgItemText (hDlgWnd, IDC_DLG_TEXT, szText, BUFFER_SIZE);
-         ExitProcess (0);
-         return TRUE;
-      }
+      switch (cmd) {
+      case FVIRTKEY:  //  keyboard accelerators: WARNING: same code as CBN_SELCHANGE !!
+         //  fall through to BM_CLICKED, which uses same targets
+      case BN_CLICKED:
+         switch(target) {
+            
+         case IDB_KBD_0  : dos_main(k0);   break ;
+         case IDB_KBD_1  : dos_main(k1);   break ;
+         case IDB_KBD_2  : dos_main(k2);   break ;
+         case IDB_KBD_3  : dos_main(k3);   break ;
+         case IDB_KBD_4  : dos_main(k4);   break ;
+         case IDB_KBD_5  : dos_main(k5);   break ;
+         case IDB_KBD_6  : dos_main(k6);   break ;
+         case IDB_KBD_7  : dos_main(k7);   break ;
+         case IDB_KBD_8  : dos_main(k8);   break ;
+         case IDB_KBD_9  : dos_main(k9);   break ;
+         case IDB_KBD_DOT: dos_main(kPeriod);  break ;
+         case IDB_KBD_e  : dos_main(ke);   break ;
+            
+         case IDB_KBD_RETURN:
+            dos_main(ENTER);
+            Message("Return/Enter received");
+            break ;            
+         // case IDB_HELP:
+         //    queryout("Terminal keyboard shortcuts") ;
+         //    infoout("Alt-s = send command (i.e., print command in terminal)") ;
+         //    infoout("Alt-h = show this help screen") ;
+         //    infoout("Alt-c = Close this program") ;
+         //    break;
+            
+         case IDB_CLOSE:
+            PostMessageA(hDlgWnd, WM_CLOSE, 0, 0);
+            break;
+         } //lint !e744  switch target
+         return true;
+      } //lint !e744  switch cmd
       break;
-      
+      }  //lint !e438 !e10  end local context
+         
    case WM_CTLCOLORDLG:
       return (LONG) g_hbrBackground;
 
@@ -274,9 +308,20 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
       SetBkMode (hdcStatic, TRANSPARENT);
       return (LONG) g_hbrBackground;
       }
+
+   //********************************************************************
+   //  application shutdown handlers
+   //********************************************************************
+   case WM_CLOSE:
+      DestroyWindow(hDlgWnd);
       break;
 
+   case WM_DESTROY:
+      PostQuitMessage(0);
+      break;
 
+   default:
+      return FALSE ;
    }
    return FALSE;
 }
@@ -292,11 +337,12 @@ INT WINAPI WinMain (HINSTANCE hInstance,
       MAKEINTRESOURCE(IDD_MAIN_DIALOG), 
       NULL,
       (DLGPROC) InitProc);
+   HACCEL hAccel = LoadAccelerators(hInst, MAKEINTRESOURCE(IDR_ACCELERATOR1));  
 
    MSG Msg;
-
    while (GetMessage (&Msg, NULL, 0, 0) == TRUE) {
-      if (!IsDialogMessage (hWnd, &Msg)) {
+      // if (!IsDialogMessage (hWnd, &Msg)) {
+      if(!TranslateAccelerator(hWnd, hAccel, &Msg)  &&  !IsDialogMessage(hWnd, &Msg)) {
          TranslateMessage (&Msg);
          DispatchMessage (&Msg);
       }

@@ -154,7 +154,6 @@ BOOLEAN
 //lint -esym(578, chr)
 int dos_main(unsigned chr)
 {
-
    syslog("Entering dos_main()\n");
    switch (chr) {
 // typedef char NORMDIGIT;
