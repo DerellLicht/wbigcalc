@@ -215,44 +215,6 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
       }
       return TRUE;
 
-   // case WM_KEYDOWN:
-   // case WM_SYSKEYDOWN:
-   //    // ShowKey (hwnd, 0, "WM_KEYDOWN", wParam, lParam) ;
-   //    if (wParam == VK_SHIFT) {
-   //       key_mask |= kShift;
-   //    }
-   //    else if (wParam == VK_CONTROL) {
-   //       key_mask |= kCtrl;
-   //    }
-   //    else if (wParam == VK_MENU) {
-   //       key_mask |= kAlt;
-   //    }
-   //    else {
-   //       syslog("I am here (DOWN)...\n") ;
-   //       wParam |= key_mask;
-   //       process_keystroke (hDlgWnd, wParam);
-   //    }
-   //    return 0;
-
-   // case WM_KEYUP:
-   // case WM_SYSKEYUP:
-   //    // ShowKey (hwnd, 0, "WM_KEYUP", wParam, lParam) ;
-   //    if (wParam == VK_SHIFT) {
-   //       key_mask &= ~kShift;
-   //    }
-   //    else if (wParam == VK_CONTROL) {
-   //       key_mask &= ~kCtrl;
-   //    }
-   //    else if (wParam == VK_MENU) {
-   //       key_mask &= ~kAlt;
-   //    }
-   //    else {
-   //       syslog("I am here (UP)...\n") ;
-   //       // wParam |= key_mask ;
-   //       // process_keystroke(hwnd, wParam) ;
-   //    }
-   //    return 0;
-
    case WM_COMMAND:
       {  //  create local context
       DWORD cmd = HIWORD (wParam) ;
@@ -334,10 +296,8 @@ INT WINAPI WinMain (HINSTANCE hInstance,
 {
    hInst = hInstance;
 
-   HWND hWnd = CreateDialog (hInstance, 
-      MAKEINTRESOURCE(IDD_MAIN_DIALOG), 
-      NULL,
-      (DLGPROC) InitProc);
+   HWND hWnd = CreateDialog (hInstance, MAKEINTRESOURCE(IDD_MAIN_DIALOG), NULL,
+                              (DLGPROC) InitProc);
    HACCEL hAccel = LoadAccelerators(hInst, MAKEINTRESOURCE(IDR_ACCELERATOR1));  
 
    MSG Msg;
