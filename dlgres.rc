@@ -1,7 +1,7 @@
 #include <windows.h>
 #include "resource.h"
 
-IDI_ICON ICON "sci_calc2.ico"
+IDI_ICON ICON "sci_calc.ico"
 
 //*******************************************************************
 //  keyboard accelerators
