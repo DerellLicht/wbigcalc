@@ -246,12 +246,6 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
             dos_main(ENTER);
             Message("Return/Enter received");
             break ;            
-         // case IDB_HELP:
-         //    queryout("Terminal keyboard shortcuts") ;
-         //    infoout("Alt-s = send command (i.e., print command in terminal)") ;
-         //    infoout("Alt-h = show this help screen") ;
-         //    infoout("Alt-c = Close this program") ;
-         //    break;
             
          case IDB_CLOSE:
             PostMessageA(hDlgWnd, WM_CLOSE, 0, 0);

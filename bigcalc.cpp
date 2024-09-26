@@ -31,6 +31,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "common.h"
 #include "bigcalc.h"
 
 /*
@@ -974,111 +976,16 @@ static void ViewReg(void)
 /*
  *    **************************************************
  *    *                                                *
- *    *               Accept X from KBD                *
- *    *                                                *
- *    **************************************************
- */
-static void AcceptX(void)
-{
-   NORMTYPE *temp;
-   int result ;
-
-   if ((temp = GETNORMTEMP(1)) == NULL) {
-      MemoryError();
-      return;
-      }
-
-   CurPos(entrysignrow, 1);      /* Clear area to enter new X */
-   EraEop();
-   menucleared = TRUE;
-   WriteAt(entrysignrow, 1, "X:");
-   Message("Entering X: S=ChgSign, E=Exp, BakSpc=Backup, Other=Complete, ESC=Exit");
-
-   if (normprec > SIZEOFSMALL) {
-
-      CurPos(entrysignrow - 1, 1);  /* Big numbers, use full screen */
-      EraEol();
-      WriteAt(entrysignrow - 1, 1, "========================="
-                                   "  E N T E R I N G   X  "
-                                   "=========================");
-      result = ExtendedGetX();
-      if (result) {
-          if (stacklift)
-             PushStack();
-         MoveWorkStack(0, 0);
-         stacklift = TRUE;
-         }
-      WorkScreen();
-      }
-
-   else {
-
-      if (stacklift) {              /* Small numbers, use bottom of screen */
-         *temp = stack[3];
-         PushStack();
-         WriteStack(1, 3);
-         }
-         
-      result = ExtendedGetX();
-      if (result) {
-         MoveWorkStack(0, 0);
-         stacklift = TRUE;
-         }
-      else
-         if (stacklift) {
-            DropStack();
-            stack[3] = *temp;
-            WriteStack(1, 3);
-         }
-      CurPos(entrysignrow, SIGNDISPCOL);
-      EraEop();
-      WriteStack(0, 0);
-      }
-
-   free(temp);
-}
-
-/*
- *    **************************************************
- *    *                                                *
  *    *                    Clear X                     *
  *    *                                                *
  *    **************************************************
  */
-
 static void ClearX(void)
-
 {
-
    ClearStack(0, 0);
    WriteStack(0, 0);
    stacklift = FALSE;
-
 }
-
-
-
-
-/*
- *    **************************************************
- *    *                                                *
- *    *                    Enter                       *
- *    *                                                *
- *    **************************************************
- */
-
-static void Enter(void)
-
-{
-
-   PushStack();
-   WriteStack(1, 3);
-   stacklift = FALSE;
-
-}
-
-
-
 
 /*
  *    **************************************************
@@ -1087,11 +994,8 @@ static void Enter(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void SciNotation(void)
-
 {
-
    if (scinotation)
       scinotation = FALSE;
    else
@@ -1099,11 +1003,7 @@ static void SciNotation(void)
 
    WriteReg(0, 9);
    WriteStack(0, 3);
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1112,11 +1012,8 @@ static void SciNotation(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void Clear(void)
-
 {
-
    int r;
 
    Message("Press to clear (S, X,Y,Z,T, R, 0-9, A=All, Esc=Exit):");
@@ -1183,11 +1080,7 @@ static void Clear(void)
          }  /* switch */
 
       }  /* while */
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1202,8 +1095,7 @@ static void StoreX(void)
 {
    int r;
 
-   Message("Store X to: Press Reg (0-9) or Operation (+,-,*,/)"
-           " then Reg (0-9) or Esc:");
+   Message("Store X to: Press Reg (0-9) or Operation (+,-,*,/) then Reg (0-9) or Esc:");
 
    while ((chr = GetChar()) != ESCAPE) {
 
@@ -1727,6 +1619,87 @@ static void DropStack(void)
 /*
  *    **************************************************
  *    *                                                *
+ *    *               Accept X from KBD                *
+ *    *                                                *
+ *    **************************************************
+ */
+static void AcceptX(void)
+{
+   NORMTYPE *temp;
+   int result ;
+
+   if ((temp = GETNORMTEMP(1)) == NULL) {
+      MemoryError();
+      return;
+      }
+
+   // CurPos(entrysignrow, 1);      /* Clear area to enter new X */
+   // EraEop();
+   menucleared = TRUE;
+   // WriteAt(entrysignrow, 1, "X:");
+   Message("Entering X: S=ChgSign, E=Exp, BakSpc=Backup, Other=Complete, ESC=Exit");
+
+   if (normprec > SIZEOFSMALL) {
+
+      // CurPos(entrysignrow - 1, 1);  /* Big numbers, use full screen */
+      // EraEol();
+      // WriteAt(entrysignrow - 1, 1, "========================="
+      //                              "  E N T E R I N G   X  "
+      //                              "=========================");
+      result = ExtendedGetX();
+      if (result) {
+          if (stacklift)
+             PushStack();
+         MoveWorkStack(0, 0);
+         stacklift = TRUE;
+         }
+      WorkScreen();
+      }
+
+   else {
+
+      if (stacklift) {              /* Small numbers, use bottom of screen */
+         *temp = stack[3];
+         PushStack();
+         WriteStack(1, 3);
+         }
+         
+      result = ExtendedGetX();
+      if (result) {
+         MoveWorkStack(0, 0);
+         stacklift = TRUE;
+         }
+      else
+         if (stacklift) {
+            DropStack();
+            stack[3] = *temp;
+            WriteStack(1, 3);
+         }
+      CurPos(entrysignrow, SIGNDISPCOL);
+      EraEop();
+      WriteStack(0, 0);
+      }
+
+   free(temp);
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *                    Enter                       *
+ *    *                                                *
+ *    **************************************************
+ */
+static void Enter(void)
+{
+   PushStack();
+   WriteStack(1, 3);
+   stacklift = FALSE;
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
  *    *                     Main                       *
  *    *                                                *
  *    **************************************************
@@ -1744,122 +1717,6 @@ int dos_main(unsigned inchr)
 
       switch (chr) {
 
-         case (ADD):
-            Add();               /* Add Y + X */
-            break;
-
-         case (SUBTRACT):
-            Subtract();          /* Subtract Y - X */
-            break;
-
-         case (MULTIPLY):
-            Multiply();          /* Multiply Y * X */
-            break;
-
-         case (DIVIDE):
-            Divide();            /* Divide Y / X */
-            break;
-
-         case (HELP):
-            HelpScreen();        /* Help Screen */
-            break;
-
-         case (POWER):
-            Power();             /* Power (Y^X) */
-            break;
-
-         case (SQUAREROOT):
-            SquareRoot();        /* Square Root X */
-            break;
-
-         case (SQUARE):
-            Square();            /* Square X */
-            break;
-
-         case (RECIPROCAL):
-            Reciprocal();        /* Reciprocal X */
-            break;
-
-         case (FACTORIAL):
-            Factorial();         /* Factorial X */
-            break;
-
-         case (INTEGER):
-            IntegerPart();       /* Integer Part X */
-            break;
-
-         case (FRACTION):
-            FractionPart();      /* Fraction Part X */
-            break;
-
-         case (SIN):
-            Sin();               /* Sine X */
-            break;
-
-         case (ARCSIN):
-            ArcSin();            /* ArcSine X */
-            break;
-
-         case (COS):
-            Cos();               /* Cosine X */
-            break;
-
-         case (ARCCOS):
-            ArcCos();            /* ArcCosine X */
-            break;
-
-         case (TAN):
-            Tan();               /* Tangent X */
-            break;
-
-         case (ARCTAN):
-            ArcTan();            /* ArcTangent X */
-            break;
-
-         case (LOG):
-            Log();               /* Common Log X */
-            break;
-
-         case (EXP10):
-            Exp10();             /* Exponent 10^X */
-            break;
-
-         case (LN):
-            Ln();                /* Natural Log X */
-            break;
-
-         case (EXPE):
-            ExpE();              /* Exponent e^X */
-            break;
-
-         case (RECALLPI):
-            RecallPi();          /* Recall pi */
-            break;
-
-         case (RECALLE):
-            RecallE();           /* Recall e */
-            break;
-
-         case (LASTX):
-            RecallLastX();       /* Recall Last X */
-            break;
-
-         case (CHGSIGN):
-            ChangeSign();        /* Change sign X */
-            break;
-
-         case (GROUPSIZE):
-            GroupSize();         /* Toggle Group Size (3/5) */
-            break;
-
-         case (MENUROLL):
-            MenuRoll();          /* Roll Function Key Menu */
-            break;
-
-         case (VIEWREG):
-            ViewReg();           /* View Register on Screen */
-            break;
-
          case ('0'):
          case ('1'):
          case ('2'):
@@ -1875,47 +1732,49 @@ int dos_main(unsigned inchr)
             AcceptX();           /* Accept new X from keyboard with first */
             break;               /*  character passed to AcceptX routine */
 
-         case (CLEARX):
-            ClearX();            /* Clear X to zero */
+         case (ENTER):        Enter();    break;            /* Push up stack */
+         case (ADD):          Add();      break;           /* Add Y + X */
+         case (SUBTRACT):     Subtract(); break;         /* Subtract Y - X */
+         case (MULTIPLY):     Multiply(); break;         /* Multiply Y * X */
+         case (DIVIDE):       Divide();   break;         /* Divide Y / X */
+         case (HELP):
+            //  eventually, this will load a Windows help file
+            // HelpScreen();        /* Help Screen */
             break;
-
-         case (ENTER):
-            Enter();             /* Push up stack */
-            break;
-
-         case (SCINOT):
-            SciNotation();       /* Use Scientific Notation */
-            break;
-
-         case (CLEAR):
-            Clear();             /* Clear (prompt for what) */
-            break;
-
-         case (STOREX):
-            StoreX();            /* Store X in register (prompt for which) */
-            break;
-
-         case (RECALLREG):
-            RecallReg();         /* Recall register to X (prompt for which) */
-            break;
-
+         case (POWER):        Power();    break;         /* Power (Y^X) */
+         case (SQUAREROOT):   SquareRoot();  break;        /* Square Root X */
+         case (SQUARE):       Square();      break;      /* Square X */
+         case (RECIPROCAL):   Reciprocal();  break;        /* Reciprocal X */
+         case (FACTORIAL):    Factorial();   break;         /* Factorial X */
+         case (INTEGER):      IntegerPart(); break;       /* Integer Part X */
+         case (FRACTION):     FractionPart();   break;      /* Fraction Part X */
+         case (SIN):          Sin();      break;   /* Sine X */
+         case (ARCSIN):       ArcSin();   break;            /* ArcSine X */
+         case (COS):          Cos();    break;             /* Cosine X */
+         case (ARCCOS):       ArcCos(); break;           /* ArcCosine X */
+         case (TAN):          Tan();    break;           /* Tangent X */
+         case (ARCTAN):       ArcTan(); break;           /* ArcTangent X */
+         case (LOG):          Log(); break;              /* Common Log X */
+         case (EXP10):        Exp10();  break;           /* Exponent 10^X */
+         case (LN):           Ln();  break;              /* Natural Log X */
+         case (EXPE):         ExpE(); break;             /* Exponent e^X */
+         case (RECALLPI):     RecallPi(); break;         /* Recall pi */
+         case (RECALLE):      RecallE();  break;         /* Recall e */
+         case (LASTX):        RecallLastX(); break;      /* Recall Last X */
+         case (CHGSIGN):      ChangeSign();  break;      /* Change sign X */
+         case (GROUPSIZE):    GroupSize();  break;       /* Toggle Group Size (3/5) */
+         case (MENUROLL):     MenuRoll();   break;       /* Roll Function Key Menu */
+         case (VIEWREG):      ViewReg();  break;         /* View Register on Screen */
+         case (CLEARX):       ClearX();  break;          /* Clear X to zero */
+         case (SCINOT):       SciNotation();  break;     /* Use Scientific Notation */
+         case (CLEAR):        Clear(); break;            /* Clear (prompt for what) */
+         case (STOREX):       StoreX();  break;          /* Store X in register (prompt for which) */
+         case (RECALLREG):    RecallReg(); break;        /* Recall register to X (prompt for which) */
          case (XCHGXY1):
-         case (XCHGXY2):
-            ExchangeXY();        /* Exchange X and Y */
-            break;
-
-         case (XCHGXREG):
-            ExchangeXReg();      /* Exchange X and Reg (prompt for which) */
-            break;
-
-         case (ROLLDOWN):
-            RollDown();          /* Roll stack down */
-            break;
-
-         case (ROLLUP):
-            RollUp();            /* Roll stack up */
-            break;
-
+         case (XCHGXY2):      ExchangeXY();  break;      /* Exchange X and Y */
+         case (XCHGXREG):     ExchangeXReg(); break;     /* Exchange X and Reg (prompt for which) */
+         case (ROLLDOWN):     RollDown();  break;        /* Roll stack down */
+         case (ROLLUP):       RollUp();  break;          /* Roll stack up */
          default:
             ;              /* Unknown key */
 
@@ -1925,11 +1784,46 @@ int dos_main(unsigned inchr)
 
       // chr = GetPrompt();
       // }  /* while */
-
-
    // ScrTerm();
 
-   // exit(0);
+   return 0;
+}
+
+//*********************************************************************************
+//  manage keyboard state machine
+//  The DOS/console version of BigCalc, had nested keyboard loops for 
+//  entering different data elements.  This cannot be done in a message-driven
+//  environment such as Windows; a getch() loop will just stall the message thread.
+//  
+//  This program will use a state machine to determine which keyboard handler
+//  to call for keyboard inputs from the message handler.
+//*********************************************************************************
+typedef enum {
+   KBD_STATE_DEFAULT=0,
+   KBD_STATE_GETX
+} keyboard_state_t ;
+
+static keyboard_state_t keyboard_state = KBD_STATE_DEFAULT ;
+
+int keyboard_state_handler(char chr)
+{
+   switch(keyboard_state) {
+   case KBD_STATE_DEFAULT:
+      dos_main(chr);
+      break ;
+      
+   case KBD_STATE_GETX:
+      break ;
+      
+   default:
+      {
+      char msg[30];
+      sprintf(msg, "Invalid kbd state: %u", (uint) keyboard_state);
+      MessageBox(NULL, msg, NULL, MB_OK | MB_ICONERROR);
+      }
+      keyboard_state = KBD_STATE_DEFAULT ;
+      break ;
+   }
    return 0;
 }
 

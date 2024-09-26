@@ -313,9 +313,6 @@ extern  void SetTempInteger(COMPTYPE *dest,long integer);
  *    **************************************************
  */
 
-extern  void PrintReg(int lo,int hi);
-extern  void PrintStack(int lo,int hi);
-
 extern  void DisplayReg(int r);
 extern  void DisplayStack(int s);
 
@@ -333,7 +330,6 @@ extern  void MemoryError(void);
 
 extern  void OnScreenMenu(void);
 extern  void InitialScreen(void);
-extern  void HelpScreen(void);
 extern  void Heading1(void);
 extern  void Heading2(void);
 extern  void WorkScreen(void);

@@ -660,11 +660,8 @@ void InitialScreen(void)
  *    *                                                *
  *    **************************************************
  */
-
 void HelpScreen(void)
-
 {
-
    int screen;
 
    menucleared = TRUE;
@@ -707,7 +704,6 @@ void HelpScreen(void)
       } while (chr != ESCAPE);
 
    WorkScreen();
-
 }
 
 /*
