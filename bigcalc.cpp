@@ -1236,8 +1236,7 @@ static void AcceptX(void)
    EraEop();
    menucleared = TRUE;
    WriteAt(entrysignrow, 1, "X:");
-   Message("Entering X: S=ChgSign, E=Exp, BakSpc=Backup, Other=Complete,"
-           " ESC=Exit");
+   Message("Entering X: S=ChgSign, E=Exp, BakSpc=Backup, Other=Complete, ESC=Exit");
 
    if (normprec > SIZEOFSMALL) {
 
@@ -1278,7 +1277,6 @@ static void AcceptX(void)
       }
 
    free(temp);
-
 }
 
 /*

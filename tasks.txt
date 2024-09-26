@@ -1,0 +1,8 @@
+Current tasks
+=============
+
+> 09/26/24
+AcceptX() -> ExtendedGetX()
+contains a GetCh() functions, which is not compatible with Windows Message Handler.
+
+This needs to somehow get extracted into a different state or something.
