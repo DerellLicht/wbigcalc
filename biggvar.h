@@ -49,8 +49,6 @@ extern long
    minfloatprn,            /* Min exp for float */
    maxfloatprn;            /* Max exp for float */
 
-extern char stackname[4];           /* Stack register names */
-
 extern BOOLEAN
    stacklift,              /* Lift stack for new X if TRUE */
    scinotation,            /* Force sci notation if TRUE   */

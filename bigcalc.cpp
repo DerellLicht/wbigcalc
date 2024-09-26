@@ -123,13 +123,6 @@ long
    minfloatprn,            /* Min exp for float */
    maxfloatprn;            /* Max exp for float */
 
-// FILE *printfile;             /* Print file handle */
-
-char stackname[4]            /* Stack register names */
-      = {'X','Y','Z','T'};
-// char printid[15]             /* Print file name      */
-//       = "Printer";
-
 BOOLEAN
    stacklift = TRUE,       /* Lift stack for new X if TRUE */
    scinotation = FALSE,    /* Force sci notation if TRUE   */

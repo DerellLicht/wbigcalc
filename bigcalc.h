@@ -319,7 +319,7 @@ extern  void DisplayStack(int s);
 extern  void WriteReg(int lo,int hi);
 extern  void WriteStack(int lo,int hi);
 extern  void WriteNumber(NORMTYPE *nbr);
-extern  int  GetPrompt(void);
+// extern  int  GetPrompt(void);
 extern  void Overflow(void);
 extern  void DivideByZero(void);
 extern  void ZeroArgument(void);

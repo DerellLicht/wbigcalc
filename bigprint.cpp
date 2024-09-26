@@ -345,22 +345,22 @@ static void WExponent(long exponent)
  *    *                                                *
  *    **************************************************
  */
-int GetPrompt(void)
-{
-   if (menucleared) {            /* Restore menu if cleared */
-      OnScreenMenu();
-      menucleared = FALSE;
-      }
-
-   if (charpresent) {            /* Character passed from routine */
-      charpresent = FALSE;
-      return(chr);
-      }
-   else {                        /* Get character */
-      Message("(Esc to Exit)");
-      return(GetChar());
-      }
-}
+// int GetPrompt(void)
+// {
+//    if (menucleared) {            /* Restore menu if cleared */
+//       OnScreenMenu();
+//       menucleared = FALSE;
+//       }
+// 
+//    if (charpresent) {            /* Character passed from routine */
+//       charpresent = FALSE;
+//       return(chr);
+//       }
+//    else {                        /* Get character */
+//       Message("(Esc to Exit)");
+//       return(GetChar());
+//       }
+// }
 
 /*
  *    **************************************************
@@ -774,25 +774,25 @@ void WorkScreen(void)
    // set_text_attrx(REG_ATTR) ;
    for (r = 0; r <= 9; r++) {
       // sprintf(str, "")
-      CurPos(4 + r, 1);
-      WChar(r + '0');
-      WChar(':');
+      // CurPos(4 + r, 1);
+      // WChar(r + '0');
+      // WChar(':');
       // WriteReg(r, r);
       WriteNumber(&reg[r]);
    }
 
-   set_text_attrx(LOGO_ATTR) ;
-   WriteAt(14, 1, "================================="
-                  "  S T A C K  "
-                  "=================================");
-   set_text_attrx(REG_ATTR) ;
+   // set_text_attrx(LOGO_ATTR) ;
+   // WriteAt(14, 1, "================================="
+   //                "  S T A C K  "
+   //                "=================================");
+   // set_text_attrx(REG_ATTR) ;
    for (s = 3; s >= 0; s--) {
-      CurPos(XSIGNROW - s, 1);
-      WChar(stackname[s]);
-      WChar(':');
+      // CurPos(XSIGNROW - s, 1);
+      // WChar(stackname[s]);
+      // WChar(':');
       // WriteStack(s, s);
       WriteNumber(&stack[s]);
    }
-   set_text_attrx(TEXT_ATTR) ;
+   // set_text_attrx(TEXT_ATTR) ;
 
 }
