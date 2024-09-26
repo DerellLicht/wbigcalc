@@ -18,7 +18,7 @@
  *    **************************************************
  */
 #define  VER_NUMBER "6.0"
-char *Version = "BigCalc, Version " VER_NUMBER " " ;
+char *Version = "WBigCalc, Version " VER_NUMBER " " ;
 
 /*
  *    **************************************************
@@ -34,6 +34,8 @@ char *Version = "BigCalc, Version " VER_NUMBER " " ;
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "common.h"
 #include "bigcalc.h"
 #include "biggvar.h"
 // #include "conio32.h"
@@ -280,14 +282,14 @@ void WriteAt(int row, int col, char *str)
  *    *                                                *
  *    **************************************************
  */
-static char *spaces80 = 
-   "                                        "
-   "                                        " ;
-void WriteCenter(int row, char *msg)
-{
-   dprints(row-1, 0, spaces80) ;
-   dprints(row-1, ((80 - strlen(msg)) / 2), msg) ;
-}
+// static char *spaces80 = 
+//    "                                        "
+//    "                                        " ;
+// void WriteCenter(int row, char *msg)
+// {
+//    dprints(row-1, 0, spaces80) ;
+//    dprints(row-1, ((80 - strlen(msg)) / 2), msg) ;
+// }
 
 /*
  *    **************************************************
@@ -311,6 +313,10 @@ void WriteCenter(int row, char *msg)
 void MessageWait(char *msg)
 {
    char tmsg[81];
+   if (strlen(msg) == 0) {
+      return ;
+   }
+   // syslog("%u [%s]\n", strlen(msg), msg);
 
    strcpy(tmsg, msg);
    if (*tmsg)

@@ -219,7 +219,6 @@ extern  void WChar(int chr);
 extern  void WString(char *str);
 extern  void WInteger(long integer);
 extern  void WriteAt(int row,int col,char *str);
-extern  void WriteCenter(int row,char *msg);
 extern  void Message(char *msg);
 extern  void MessageWait(char *msg);
 extern  void MessageEsc(char *msg);

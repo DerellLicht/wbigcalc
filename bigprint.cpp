@@ -191,7 +191,7 @@ void WriteReg(int lo, int hi)
 {
    int r;
    for (r = lo; r <= hi; r++) {
-      CurPos(r + 4, SIGNDISPCOL);
+      // CurPos(r + 4, SIGNDISPCOL);
       WriteNumber(&reg[r]);
       // dprints(r + 4, SIGNDISPCOL, &reg[r]);
       }
@@ -209,7 +209,7 @@ void WriteStack(int lo, int hi)
    int s;
 
    for (s = hi; s >= lo; s--) {
-      CurPos(XSIGNROW - s, SIGNDISPCOL);
+      // CurPos(XSIGNROW - s, SIGNDISPCOL);
       WriteNumber(&stack[s]);
       // dprints(XSIGNROW - s, SIGNDISPCOL, &stack[s]);
       }
@@ -766,7 +766,7 @@ void Heading2(void)
 void WorkScreen(void)
 {
    int r, s;
-   char str[30];
+   // char str[30];
 
    // Heading1();
    Heading2();
@@ -781,7 +781,8 @@ void WorkScreen(void)
       CurPos(4 + r, 1);
       WChar(r + '0');
       WChar(':');
-      WriteReg(r, r);
+      // WriteReg(r, r);
+      WriteNumber(&reg[r]);
    }
 
    set_text_attrx(LOGO_ATTR) ;
@@ -793,7 +794,8 @@ void WorkScreen(void)
       CurPos(XSIGNROW - s, 1);
       WChar(stackname[s]);
       WChar(':');
-      WriteStack(s, s);
+      // WriteStack(s, s);
+      WriteNumber(&stack[s]);
    }
    set_text_attrx(TEXT_ATTR) ;
 
