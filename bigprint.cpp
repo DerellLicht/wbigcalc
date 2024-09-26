@@ -27,26 +27,17 @@
  */
 
 #include <windows.h>
-#include <stdio.h>
 #include <ctype.h>
+#include <stdio.h>
 #include <stdlib.h>
-// #include <string.h>
-
-#include "common.h"
+#include <string.h>
 #include "bigcalc.h"
 #include "biggvar.h"
-#include "statbar.h"
-
-extern void dputc(char chr);
-extern void dputs(char *str);
 
 static  void PExponent(long exponent);
 static  void WExponent(long exponent);
 static  void PSign(int sign);
 static  void PCharWrap(int chr);
-
-//  substitutes
-
 /*
  *    **************************************************
  *    *                                                *
@@ -55,114 +46,77 @@ static  void PCharWrap(int chr);
  *    **************************************************
  */
 
-//lint -esym(551, printtoscreen)  Symbol not accessed
-static bool
-   printtoscreen = false;          /* Print to screen if TRUE      */
-   
 static int
    ppos = 0,            /* Current print column */
    prevchr;             /* Previous character printed */
 
-/*
- *    **************************************************
- *    *                                                *
- *    *               Printer Routines                 *
- *    *                                                *
- *    **************************************************
- */
+//**********************************************************
+//  conio.cpp functions
+//**********************************************************
 
-/*
- *    **************************************************
- *    *                                                *
- *    *           Print Character on Printer           *
- *    *                                                *
- *    **************************************************
- */
-static void PChar(int chr)
+//**********************************************************
+void set_text_attrx(WORD tFGBG)
+   {
+   // sinfo.wAttributes = tFGBG ;
+   // SetConsoleTextAttribute(hStdOut, sinfo.wAttributes) ;
+   }   
+
+//**********************************************************
+void dputc(const CHAR c)
 {
-   // if (!printtoscreen) {         /* If using printer or disk ... */
-   //    fputc(chr, printfile);
-   //    return;
-   //    }
-    
-   /* Direct screen output */
-   dputc((char) chr) ;
+   // WriteFile(hStdOut, &c, 1, NULL, NULL) ;
+   // sinfo.dwCursorPosition.X++ ;
 }
 
-/*
- *    **************************************************
- *    *                                                *
- *    *            Print String on Printer             *
- *    *                                                *
- *    **************************************************
- */
-static void PString(char *str)
+//**********************************************************
+void dputs(const char *outstr)
 {
-   // if (!printtoscreen) {            /* If using printer or disk ... */
-   //    fputs(str, printfile);
-   //    return;
-   //    }
-
-   /* Direct screen output */
-   dputs(str) ;
+   
 }
 
-/*
- *    **************************************************
- *    *                                                *
- *    *            Print Integer on Printer            *
- *    *                                                *
- *    **************************************************
- */
-static void PInteger(long integer)
-{
-   long order;
+//**********************************************************
+void dprints(unsigned row, unsigned col, const char* outstr)
+   {
+   // dgotoxy(col, row) ;
+   // dputs(outstr) ;
+   }   
 
-   if (integer) {
-      if (integer < 0L) {
-         PChar('-');
-         integer = - integer;
-         }
-      order = 1000000000L;
-      while (order > integer) {
-         order /= 10L;
-         }
-      while (order) {
-         PChar((int)((integer / order) + (long)'0'));
-         integer %= order;
-         order /= 10L;
-         }
-      }
-   else
-      PChar('0');
-}
+//**********************************************************
+void dgotoxy(int x, int y)
+   {
+   // sinfo.dwCursorPosition.X = x ;
+   // sinfo.dwCursorPosition.Y = y ;
+   // SetConsoleCursorPosition(hStdOut, sinfo.dwCursorPosition) ;
+   }
 
-/*
- *    **************************************************
- *    *                                                *
- *    *              New Line on Printer               *
- *    *                                                *
- *    **************************************************
- */
-static void NewLine(void)
+//**********************************************************
+void dclrscr(void)
 {
-   PString("\r\n");
-}
+   // COORD coord = { 0, 0 };
+   // int slen ;
+   // DWORD wrlen ;
+   // 
+   // slen = sinfo.dwSize.X * sinfo.dwSize.Y ;
+   // 
+   // FillConsoleOutputCharacter(hStdOut, ' ', slen, coord, &wrlen) ;
+   // FillConsoleOutputAttribute(hStdOut,   7, slen, coord, &wrlen) ;
+   // 
+   // dgotoxy(0,0) ; // home the cursor
+}   
 
-/*
- *    **************************************************
- *    *                                                *
- *    *              New Page on Printer               *
- *    *                                                *
- *    **************************************************
- */
-//lint -esym(714, NewPage)
-//lint -esym(759, NewPage)
-//lint -esym(765, NewPage)
-void NewPage(void)
+//**********************************************************
+void dclreol(void)
 {
-   PString("\r\f");
-}
+}   
+
+//**********************************************************
+//  This could be better done with FillConsoleOutput...(),
+//  but to get this working now, I'll do it the cheap way,
+//  and bank on fast machines to cover my laziness...
+//**********************************************************
+void dclreos(void)
+{
+}         
 
 /*
  *    **************************************************
@@ -171,8 +125,6 @@ void NewPage(void)
  *    *                                                *
  *    **************************************************
  */
-static void PrintNumber(NORMTYPE *nbr);
-static void Heading1(void);
 
 
 /*
@@ -182,9 +134,6 @@ static void Heading1(void);
  *    *                                                *
  *    **************************************************
  */
-//lint -esym(714, PrintHeading)
-//lint -esym(759, PrintHeading)
-//lint -esym(765, PrintHeading)
 void PrintHeading(void)
 {
    Message("Printing...");
@@ -203,9 +152,6 @@ void PrintHeading(void)
  *    *                                                *
  *    **************************************************
  */
-//lint -esym(714, PrintReg)
-//lint -esym(759, PrintReg)
-//lint -esym(765, PrintReg)
 void PrintReg(int lo, int hi)
 {
    int r;
@@ -226,9 +172,6 @@ void PrintReg(int lo, int hi)
  *    **************************************************
  */
 
-//lint -esym(714, PrintStack)
-//lint -esym(759, PrintStack)
-//lint -esym(765, PrintStack)
 void PrintStack(int lo, int hi)
 
 {
@@ -245,11 +188,8 @@ void PrintStack(int lo, int hi)
 
 }
 
-//  dummy display functions
-static void set_text_attrx(unsigned char attr)
-{
-   
-}  //lint !e715
+
+
 
 /*
  *    **************************************************
@@ -260,12 +200,12 @@ static void set_text_attrx(unsigned char attr)
  */
 void DisplayReg(int r)
 {
-   printtoscreen = true;      /* Temporarily print to screen */
+   printtoscreen = TRUE;      /* Temporarily print to screen */
 
    set_text_attrx(REG_ATTR) ;
    // CurPos(1, 1);
    // EraEop();
-   // dclrscr() ;
+   dclrscr() ;
    menucleared = TRUE;
 
    PChar(r + '0');
@@ -275,7 +215,7 @@ void DisplayReg(int r)
 
    WorkScreen();
 
-   printtoscreen = false;     /* Reset print to screen */
+   printtoscreen = FALSE;     /* Reset print to screen */
 }
 
 /*
@@ -290,12 +230,12 @@ void DisplayStack(int s)
 
 {
 
-   printtoscreen = true;      /* Temporarily print to screen */
+   printtoscreen = TRUE;      /* Temporarily print to screen */
 
    set_text_attrx(REG_ATTR) ;
    // CurPos(1, 1);
    // EraEop();
-   // dclrscr() ;
+   dclrscr() ;
    menucleared = TRUE;
 
    PChar(stackname[s]);
@@ -305,9 +245,12 @@ void DisplayStack(int s)
 
    WorkScreen();
 
-   printtoscreen = false;     /* Reset print to screen */
+   printtoscreen = FALSE;     /* Reset print to screen */
 
 }
+
+
+
 
 /*
  *    **************************************************
@@ -317,7 +260,7 @@ void DisplayStack(int s)
  *    **************************************************
  */
 
-static void PrintNumber(NORMTYPE *nbr)
+void PrintNumber(NORMTYPE *nbr)
 
 {
 
@@ -442,8 +385,11 @@ static void PrintNumber(NORMTYPE *nbr)
  *    *                                                *
  *    **************************************************
  */
+
 static void PCharWrap(int chr)
+
 {
+
    int col;
 
    if ( (ppos > MAXPRTCOL)
@@ -462,7 +408,11 @@ static void PCharWrap(int chr)
    PChar(chr);
    ppos++;
    prevchr = chr;
+
 }
+
+
+
 
 /*
  *    **************************************************
@@ -505,12 +455,47 @@ static void PExponent(long exponent)
 /*
  *    **************************************************
  *    *                                                *
+ *    *          Write Registers [lo to hi]            *
+ *    *                                                *
+ *    **************************************************
+ */
+void WriteReg(int lo, int hi)
+{
+   int r;
+   for (r = lo; r <= hi; r++) {
+      CurPos(r + 4, SIGNDISPCOL);
+      WriteNumber(&reg[r]);
+      // dprints(r + 4, SIGNDISPCOL, &reg[r]);
+      }
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *            Write Stack [lo to hi]              *
+ *    *                                                *
+ *    **************************************************
+ */
+void WriteStack(int lo, int hi)
+{
+   int s;
+
+   for (s = hi; s >= lo; s--) {
+      CurPos(XSIGNROW - s, SIGNDISPCOL);
+      WriteNumber(&stack[s]);
+      // dprints(XSIGNROW - s, SIGNDISPCOL, &stack[s]);
+      }
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
  *    *        Write Number [*number] on Screen        *
  *    *                                                *
  *    **************************************************
  */
 
-static void WriteNumber(NORMTYPE *nbr)
+void WriteNumber(NORMTYPE *nbr)
 
 {
    long exponent;
@@ -532,10 +517,14 @@ static void WriteNumber(NORMTYPE *nbr)
    digits = nbr->digits;
    exponent = nbr->exp;
 
-   if ( (scinotation) ||
-        (exponent < MINFLOATDSP) ||
-        (exponent > MAXFLOATDSP) ||
+   if ( (scinotation)
+         ||
+        (exponent < MINFLOATDSP)
+         ||
+        (exponent > MAXFLOATDSP)
+         ||
         (exponent > normprec) )
+
       {                             /* Scientific Notation */
 
       WChar(nbr->man[0]+ '0');         /* First digit and decimal point */
@@ -577,7 +566,10 @@ static void WriteNumber(NORMTYPE *nbr)
                break;
             }
          }                             /* Number < 1 end */
-      else {                             /* Number >= 1 */
+
+      else
+
+         {                             /* Number >= 1 */
 
          for (i = 0; i < (int)exponent; i++) {  /* Digits to left of decimal */
             if (i < digits)
@@ -599,66 +591,11 @@ static void WriteNumber(NORMTYPE *nbr)
          }                             /* Number >= 1 end */
 
       }                             /* Floating Decimal end */
+
 }
 
-/*
- *    **************************************************
- *    *                                                *
- *    *          Write Registers [lo to hi]            *
- *    *                                                *
- *    **************************************************
- */
-void WriteReg(int lo, int hi)
-{
-   int r;
-   for (r = lo; r <= hi; r++) {
-      CurPos(r + 4, SIGNDISPCOL);
-      WriteNumber(&reg[r]);
-      // dprints(r + 4, SIGNDISPCOL, &reg[r]);
-      put_register(r) ;
-      reset_iostr() ;
-      }
-}
 
-/*
- *    **************************************************
- *    *                                                *
- *    *            Write Stack [lo to hi]              *
- *    *                                                *
- *    **************************************************
- */
-void WriteStack(int lo, int hi)
-{
-   int s;
 
-   for (s = hi; s >= lo; s--) {
-      // reset_iostr() ;
-      // CurPos(XSIGNROW - s, SIGNDISPCOL);
-      WriteNumber(&stack[s]);
-      // dprints(XSIGNROW - s, SIGNDISPCOL, &stack[s]);
-      put_stack(s) ;
-      reset_iostr() ;
-   }
-}
-
-//********************************************************************
-void DumpStack(void)
-{
-   char tempstr[30];
-   uint idx ;
-   uint s, i;
-   syslog("stack contents");
-   for (s=0; s<4; s++) {
-      idx = 0 ;
-      tempstr[idx] = 0;
-      uint digits = stack[s].digits ;
-      for (i = 0; i < digits; i++) {      /* Write number digits */
-         tempstr[idx++] = stack[s].man[i] + '0';
-         tempstr[idx] = 0;
-      }                             /* Number < 1 end */
-      syslog("%u: %u [%s]\n", s, digits, tempstr);
-   }
-}
 
 /*
  *    **************************************************
@@ -680,22 +617,22 @@ static void WExponent(long exponent)
  *    *                                                *
  *    **************************************************
  */
-// extern int GetPrompt(void)
-// {
-//    if (menucleared) {            /* Restore menu if cleared */
-//       OnScreenMenu();
-//       menucleared = FALSE;
-//       }
-// 
-//    if (charpresent) {            /* Character passed from routine */
-//       charpresent = FALSE;
-//       return(chr);
-//       }
-//    else {                        /* Get character */
-//       Message("(Esc to Exit)");
-//       return(GetChar());
-//       }
-// }
+int GetPrompt(void)
+{
+   if (menucleared) {            /* Restore menu if cleared */
+      OnScreenMenu();
+      menucleared = FALSE;
+      }
+
+   if (charpresent) {            /* Character passed from routine */
+      charpresent = FALSE;
+      return(chr);
+      }
+   else {                        /* Get character */
+      Message("(Esc to Exit)");
+      return(GetChar());
+      }
+}
 
 /*
  *    **************************************************
@@ -838,26 +775,46 @@ static void HelpScreen1(void)
    Heading1();
 
    set_text_attrx(HELP_ATTR) ;
-   WriteAt( 3,  1, "BIGCALC works like an H-P calculator with stack and ten memory registers.");
-   WriteAt( 4,  1, "Maximum precision settable from 3 to 1075 digits. Exponents to +-999999999.");
+   WriteAt( 3,  1, "BIGCALC works like an H-P calculator with stack and ten m"
+                   "emory registers.");
+   WriteAt( 4,  1, "Maximum precision settable from ");
+   WInteger((long)MINPREC);
+   WString(" to ");
+   WInteger((long)MAXNORM);
+   WString(" digits. Exponents to ñ");
+   WInteger(MAXEXP);
+   WString(".");
    WriteAt( 5,  1, "Execute BIGCALC like this:");
 
-   WriteAt( 7,  3, "BIGCALC precision   (precision is maximum number of digits, default is 50.");
+   WriteAt( 7,  3, "BIGCALC precision   (precision is maximum number of digit"
+                   "s, default is ");
+   WInteger((long)DEFAULTPREC);
+   WString(")");
 
-   WriteAt( 9,  1, "BIGCALC has +, -, x, ö, ûX, Xý, X!, Y^X, logs, trig, pi, e, print, much more.");
-   WriteAt(10,  1, "All trig functions work in radians. BIGCALC is fast, but some operations on");
-   WriteAt(11,  1, "large numbers may take up to several minutes. You can abort long calculations");
+   WriteAt( 9,  1, "BIGCALC has +, -, x, ö, ûX, Xý, X!, Y^X, logs, trig, pi, "
+                   "e, print, much more.");
+   WriteAt(10,  1, "All trig functions work in radians. BIGCALC is fast, but "
+                   "some operations on");
+   WriteAt(11,  1, "large numbers may take up to several minutes. You can abo"
+                   "rt long calculations");
    WriteAt(12,  1, "by pressing the Escape key. Press F1 for on-screen help. "
-                   "Registers can be viewed in full, or printed to printer or disk.");
+                   "Registers can be");
+   WriteAt(13,  1, "viewed in full, or printed to printer or disk.");
 
-   WriteAt(15,  1, "You can specify floating decimal or scientific notation display. Large numbers");
-   WriteAt(16,  1, "display in scientific notation to about 65 digits all the time, but the view");
-   WriteAt(17,  1, "and print commands show full precision in 3 or 5 digit groups.");
+   WriteAt(15,  1, "You can specify floating decimal or scientific notation d"
+                   "isplay. Large numbers");
+   WriteAt(16,  1, "display in scientific notation to about 65 digits all the"
+                   " time, but the view");
+   WriteAt(17,  1, "and print commands show full precision in 3 or 5 digit gr"
+                   "oups.");
 
-   WriteAt(19,  1, " Judson D. McClendon           $20 gets you a disk with the complete C source.");
+   WriteAt(19,  1, " Judson D. McClendon           $20 gets you a disk with t"
+                   "he complete C source.");
    WriteAt(20,  1, " Sun Valley Systems");
-   WriteAt(21,  1, " 4522 Shadow Ridge Pkwy        There is no warranty of any kind.");
-   WriteAt(22,  1, " Pinson, AL 35126-2192         The author assumes no responsibility for the");
+   WriteAt(21,  1, " 4522 Shadow Ridge Pkwy        There is no warranty of an"
+                   "y kind.");
+   WriteAt(22,  1, " Pinson, AL 35126-2192         The author assumes no resp"
+                   "onsibility for the");
    WriteAt(23,  1, "     205-680-0460              use of this program.");
 
 }
@@ -879,73 +836,43 @@ static void HelpScreen2(void)
 
    WriteAt( 4, 45, "(M rotates Fn key menu)");
 
-   WriteAt( 5,  1, "0-9.E  Enter number   V >View number    F1 >Help            ^F1 >sin X");
-   WriteAt( 6,  1, "    S  change Sign    F >Float/Sci      F2 >Power Y^X       ^F2 >arcsin X");
-   WriteAt( 7,  1, "BkSpc  CLX/Backspace  G >Group 3/5      F3 >Sq root ûx      ^F3 >cos X");
-   WriteAt( 8,  1, "Enter >Enter          P >Print          F4 >Square Xý       ^F4 >arccos X");
-   WriteAt( 9,  1, "    + >Add Y + X      D >Disk/Print     F5 >Recip 1 ö X     ^F5 >tan X");
-   WriteAt(10,  1, "    - >Sub Y - X   PgUp >Store X        F6 >Fact X!         ^F6 >arctan X");
-   WriteAt(11,  1, "    * >Mul Y x X   PgDn >Recall X       F7 >Integer XXX.    ^F7 >Common log X");
-   WriteAt(12,  1, "    / >Div Y ö X      X >eXchg X & Reg  F8 >Fraction .XXX   ^F8 >Exponent 10^X");
-   WriteAt(13,  1, "    C >Clear      Up/Dn >Roll Up/Dn     F9 >Recall ã to X   ^F9 >Natural log X");
-   WriteAt(14,  1, "    L >Last X    Lft/Rt >Exchg X & Y   F10 >Recall e to X  ^F10 >Exponent e^X");
+   WriteAt( 5,  1, "0-9.E  Enter number   V >View number    F1 >Help         "
+                   "   ^F1 >sin X");
+   WriteAt( 6,  1, "    S  change Sign    F >Float/Sci      F2 >Power Y^X    "
+                   "   ^F2 >arcsin X");
+   WriteAt( 7,  1, "BkSpc  CLX/Backspace  G >Group 3/5      F3 >Sq root ûx   "
+                   "   ^F3 >cos X");
+   WriteAt( 8,  1, "Enter >Enter          P >Print          F4 >Square Xý    "
+                   "   ^F4 >arccos X");
+   WriteAt( 9,  1, "    + >Add Y + X      D >Disk/Print     F5 >Recip 1 ö X  "
+                   "   ^F5 >tan X");
+   WriteAt(10,  1, "    - >Sub Y - X   PgUp >Store X        F6 >Fact X!      "
+                   "   ^F6 >arctan X");
+   WriteAt(11,  1, "    * >Mul Y x X   PgDn >Recall X       F7 >Integer XXX. "
+                   "   ^F7 >Common log X");
+   WriteAt(12,  1, "    / >Div Y ö X      X >eXchg X & Reg  F8 >Fraction .XXX"
+                   "   ^F8 >Exponent 10^X");
+   WriteAt(13,  1, "    C >Clear      Up/Dn >Roll Up/Dn     F9 >Recall ã to X"
+                   "   ^F9 >Natural log X");
+   WriteAt(14,  1, "    L >Last X    Lft/Rt >Exchg X & Y   F10 >Recall e to X"
+                   "  ^F10 >Exponent e^X");
 
-   WriteAt(16,  5, "To enter a number just begin typing it in. Use Backspace to back up.");
+   WriteAt(16,  5, "To enter a number just begin typing it in. Use Backspace "
+                   "to back up.");
    WriteAt(17,  5, "To enter an exponent press E then enter the exponent.");
-   WriteAt(18,  5, "Press S while entering mantissa or exponent to change respective sign.");
+   WriteAt(18,  5, "Press S while entering mantissa or exponent to change res"
+                   "pective sign.");
    WriteAt(19,  5, "If you start a number with E a mantissa of 1 is assumed.");
-   WriteAt(20,  5, "Functions marked '>' complete a number being entered before acting.");
+   WriteAt(20,  5, "Functions marked '>' complete a number being entered befo"
+                   "re acting.");
    WriteAt(21,  5, "View displays any register to full precision.");
-   WriteAt(22,  5, "Clear, Print, View, Store, Recall & eXchange ask for affected register.");
-   WriteAt(23,  5, "BackSpace backs up while entering number, otherwise acts as Clear X.");
-   WriteAt(24,  5, "M rotates function key menus. ^ means control: ^F1 = ctrl-F1");
+   WriteAt(22,  5, "Clear, Print, View, Store, Recall & eXchange ask for affe"
+                   "cted register.");
+   WriteAt(23,  5, "BackSpace backs up while entering number, otherwise acts "
+                   "as Clear X.");
+   WriteAt(24,  5, "M rotates function key menus. ^ means control: ^F1 = ctrl"
+                   "-F1");
 
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *             Screen Header Line 1               *
- *    *                                                *
- *    **************************************************
- */
-static void Heading1(void)
-{
-   set_text_attrx(TEXT_ATTR) ;
-   ScrClr();
-   set_text_attrx(TITLE_ATTR) ;
-   WriteCenter(1, TITLE);
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *             Screen Header Line 2               *
- *    *                                                *
- *    **************************************************
- */
-extern void status_message(char *msgstr);
-extern void status_message(uint idx, char *msgstr);
-
-void Heading2(void)
-{
-   // set_text_attrx(HEADER_ATTR) ;
-   // CurPos(2, 1);
-   // EraEol();
-   // WriteAt(2, 8, "Precision is ");
-   // WInteger((long) normprec);
-   // WString(" digits,  Digit grouping is ");
-   // WInteger((long) groupsize);
-   // WString(",  Print to ");
-   // WString(printid);
-   
-   char tempstr[20];
-   sprintf (tempstr, " Prec: %d", normprec);
-   status_message(1, tempstr);
-   
-   sprintf (tempstr, " dgroup: %d", groupsize);
-   status_message(2, tempstr);
-   
 }
 
 /*
@@ -960,27 +887,43 @@ static void HelpScreen3(void)
    Heading1();
 
    set_text_attrx(HELP_ATTR) ;
-   WriteAt( 3,  1, "This program emulates a Hewlett-Packard calculator with four register stack");
-   WriteAt( 4,  1, "and ten memory registers.  The stack consists of the X, Y, Z & T registers.");
+   WriteAt( 3,  1, "This program emulates a Hewlett-Packard calculator w"
+                   "ith four register stack");
+   WriteAt( 4,  1, "and ten memory registers.  The stack consists of the"
+                   " X, Y, Z & T registers.");
    WriteAt( 5,  1, "The memory registers are 0-9.");
 
-   WriteAt( 7,  1, "The X register is 'where the action is'.  When you enter a number it is entered");
-   WriteAt( 8,  1, "into the X register.  If X already contains a number, that number is 'pushed'");
-   WriteAt( 9,  1, "up to Y, Y is pushed to Z, Z to T, and the contents of T is lost.  The 'Enter'");
-   WriteAt(10,  1, "key pushes the stack and duplicates X into Y. A number entered into X after");
-   WriteAt(11,  1, "Enter or ClearX DOES NOT push the stack. When you use a function that acts on");
-   WriteAt(12,  1, "two numbers (like + or -) it always acts on X & Y (except for Store, Recall &");
-   WriteAt(13,  1, "eXchange which act on X and a memory register).  The result is put in X, and");
-   WriteAt(14,  1, "the stack is 'Dropped'.  That is, Z copies to Y and T duplicates into Z.");
+   WriteAt( 7,  1, "The X register is 'where the action is'.  When you e"
+                   "nter a number it is entered");
+   WriteAt( 8,  1, "into the X register.  If X already contains a number"
+                   ", that number is 'pushed'");
+   WriteAt( 9,  1, "up to Y, Y is pushed to Z, Z to T, and the contents "
+                   "of T is lost.  The 'Enter'");
+   WriteAt(10,  1, "key pushes the stack and duplicates X into Y. A numb"
+                   "er entered into X after");
+   WriteAt(11,  1, "Enter or ClearX DOES NOT push the stack. When you us"
+                   "e a function that acts on");
+   WriteAt(12,  1, "two numbers (like + or -) it always acts on X & Y (e"
+                   "xcept for Store, Recall &");
+   WriteAt(13,  1, "eXchange which act on X and a memory register).  The"
+                   " result is put in X, and");
+   WriteAt(14,  1, "the stack is 'Dropped'.  That is, Z copies to Y and "
+                   "T duplicates into Z.");
 
-   WriteAt(16,  1, "Numbers are displayed in 'Floating Decimal' or 'Scientific Notation' format.");
-   WriteAt(17,  1, "Floating Decimal looks like this:    1.2     123.45     -12300000000  0.000002");
-   WriteAt(18,  1, "Scientific Notation looks like this: 1.2 e0  1.2345 e2  -1.23 e10     2.0 e-6");
-   WriteAt(19,  1, "Very long numbers take longer to compute, of course. You can abort a long");
+   WriteAt(16,  1, "Numbers are displayed in 'Floating Decimal' or 'Scie"
+                   "ntific Notation' format.");
+   WriteAt(17,  1, "Floating Decimal looks like this:    1.2     123.45 "
+                   "    -12300000000  0.000002");
+   WriteAt(18,  1, "Scientific Notation looks like this: 1.2 e0  1.2345 "
+                   "e2  -1.23 e10     2.0 e-6");
+   WriteAt(19,  1, "Very long numbers take longer to compute, of course."
+                   " You can abort a long");
    WriteAt(20,  1, "calculation by pressing the Escape key.");
 
-   WriteAt(22,  1, "If a number is too large or small for the screen, Scientific Notation is used.");
-   WriteAt(23,  1, "All results are truncated except for Y^X which is rounded: 5 up 4 down.");
+   WriteAt(22,  1, "If a number is too large or small for the screen, Sc"
+                   "ientific Notation is used.");
+   WriteAt(23,  1, "All results are truncated except for Y^X which is ro"
+                   "unded: 5 up 4 down.");
 
 }
 
@@ -991,9 +934,6 @@ static void HelpScreen3(void)
  *    *                                                *
  *    **************************************************
  */
-//lint -esym(714, InitialScreen)
-//lint -esym(759, InitialScreen)
-//lint -esym(765, InitialScreen)
 void InitialScreen(void)
 {
    HelpScreen1();
@@ -1008,18 +948,29 @@ void InitialScreen(void)
  *    *                                                *
  *    **************************************************
  */
+
 void HelpScreen(void)
+
 {
+
    int screen;
+
    menucleared = TRUE;
+
    screen = 2;
+
    do {
       switch (screen) {
-      case (1): HelpScreen1(); break;
-      case (2): HelpScreen2(); break;
-      case (3): HelpScreen3(); break;
-      default: break ;
-      }  /* switch */
+         case (1):
+            HelpScreen1();
+            break;
+         case (2):
+            HelpScreen2();
+            break;
+         case (3):
+            HelpScreen3();
+            break;
+         }  /* switch */
 
       Message("(Press PgDn=Next page, PgUp=Prev page, Esc=Exit to BIGCALC)");
 
@@ -1041,9 +992,55 @@ void HelpScreen(void)
             ;
          }  /* while (TRUE) */
 
-   } while (chr != ESCAPE);
+      } while (chr != ESCAPE);
 
    WorkScreen();
+
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *             Screen Header Line 1               *
+ *    *                                                *
+ *    **************************************************
+ */
+void Heading1(void)
+{
+   // set_text_attrx(TEXT_ATTR) ;
+   // ScrClr();
+   // set_text_attrx(TITLE_ATTR) ;
+   // WriteCenter(1, TITLE);
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *             Screen Header Line 2               *
+ *    *                                                *
+ *    **************************************************
+ */
+void status_message(char *msgstr);
+void status_message(unsigned idx, char *msgstr);
+
+void Heading2(void)
+{
+   // set_text_attrx(HEADER_ATTR) ;
+   // CurPos(2, 1);
+   // EraEol();
+   // WriteAt(2, 8, "Precision is ");
+   // WInteger((long) normprec);
+   // WString(" digits,  Digit grouping is ");
+   // WInteger((long) groupsize);
+   // WString(",  Print to ");
+   // WString(printid);
+   
+   char tempstr[20];
+   sprintf (tempstr, " Prec: %d", normprec);
+   status_message(1, tempstr);
+   
+   sprintf (tempstr, " dgroup: %d", groupsize);
+   status_message(2, tempstr);
 }
 
 /*
@@ -1055,20 +1052,20 @@ void HelpScreen(void)
  */
 
 void WorkScreen(void)
-
 {
-
    int r, s;
+   char str[30];
 
-   Heading1();
+   // Heading1();
    Heading2();
 
-   set_text_attrx(LOGO_ATTR) ;
-   WriteAt(3, 1, "============================="
-                 "  R E G I S T E R S  "
-                 "=============================");
-   set_text_attrx(REG_ATTR) ;
+   // set_text_attrx(LOGO_ATTR) ;
+   // WriteAt(3, 1, "============================="
+   //               "  R E G I S T E R S  "
+   //               "=============================");
+   // set_text_attrx(REG_ATTR) ;
    for (r = 0; r <= 9; r++) {
+      // sprintf(str, "")
       CurPos(4 + r, 1);
       WChar(r + '0');
       WChar(':');
@@ -1089,4 +1086,3 @@ void WorkScreen(void)
    set_text_attrx(TEXT_ATTR) ;
 
 }
-

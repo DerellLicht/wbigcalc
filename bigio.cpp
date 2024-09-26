@@ -17,8 +17,8 @@
  *    *                                                *
  *    **************************************************
  */
-// #define  VER_NUMBER "6.0"
-// char *Version = "BigCalc, Version " VER_NUMBER " " ;
+#define  VER_NUMBER "6.0"
+char *Version = "BigCalc, Version " VER_NUMBER " " ;
 
 /*
  *    **************************************************
@@ -29,13 +29,14 @@
  */
 
 #include <windows.h>
+#include <conio.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-#include "common.h"
+#include <string.h>
 #include "bigcalc.h"
-#include "statbar.h"
+#include "biggvar.h"
+// #include "conio32.h"
 
 /*
  *    **************************************************
@@ -58,50 +59,6 @@
 // #define COLORCOLOR      0x17                 /* White on blue          */
 // #define MONOSCREEN      0xB0000000L          /* Mono buffer address    */
 // #define COLORSCREEN     0xB8000000L          /* Color buffer address   */
-
-//  this string is overloaded, it is being used for multiple elements...
-#define  MAXIOSTR    1024
-static int iostrlen = 0 ;
-static char iostr[MAXIOSTR+1] = "" ;
-
-//*******************************************************************************
-//  dummy functions
-void dputc(char chr)
-{
-   //  this needs to be modified to deal with BackSpace, etc...
-   if (iostrlen < MAXIOSTR) {
-      iostr[iostrlen++] = chr ;
-      iostr[iostrlen] = 0 ;   //  keep string NULL-term
-   }
-   syslog("%c", chr);
-}
-
-void dputs(char *str)
-{
-   int slen = strlen(str) ;
-   if (iostrlen + slen <= MAXIOSTR) {
-      iostrlen += wsprintf(&iostr[iostrlen], str) ;
-   }
-   syslog("%s\n", str);
-}
-
-static void dprints(unsigned row, unsigned col, char *str)
-{
-//lint -esym(715, row, col)
-   //  row, col are unused
-   dputs(str) ;
-}
-
-char *get_iostr(void)
-{
-   return iostr ;
-}
-
-void reset_iostr(void)
-{
-   iostrlen = 0 ;
-   iostr[0] = 0 ;
-}
 
 /*
  *    **************************************************
@@ -130,17 +87,31 @@ void reset_iostr(void)
  */
 extern int GetChar(void)
 {
-   return 0;
-   // int chr;
-   // 
-   // chr = getch();
-   // if (chr == 0)
-   //    chr = 1000 + getch();      /* Non ASCII character */
-   // else
-   //    if (isascii(chr) )
-   //       chr = toupper(chr);
-   // 
-   // return(chr);
+   int chr;
+
+   chr = getch();
+   if (chr == 0)
+      chr = 1000 + getch();      /* Non ASCII character */
+   else
+      if (isascii(chr) )
+         chr = toupper(chr);
+
+   return(chr);
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *         Return character if key pressed        *
+ *    *                                                *
+ *    **************************************************
+ */
+extern int KeyPressed(void)
+{
+   if (kbhit())
+      return(GetChar());
+   else
+      return(0);
 }
 
 /*
@@ -151,6 +122,35 @@ extern int GetChar(void)
  *    **************************************************
  */
 
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *            Initialize Screen Drivers           *
+ *    *                                                *
+ *    **************************************************
+ */
+// void ScrInit(void)
+// {
+//    console_init(Version) ;
+//    if (!is_redirected())
+//       set_linewrap_state(FALSE) ;
+// }
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *            End of Job Screen Cleanup           *
+ *    *                                                *
+ *    **************************************************
+ */
+// void ScrTerm(void)
+// {
+//    color = MONOCOLOR;            /* Clear end of screen to B/W */
+//    CurPos(XSIGNROW + 1, 1);
+//    EraEop();
+// }
+
 /*
  *    **************************************************
  *    *                                                *
@@ -160,7 +160,7 @@ extern int GetChar(void)
  */
 void ScrClr(void)
 {
-   // dclrscr() ;
+   dclrscr() ;
 }
 
 /*
@@ -170,7 +170,7 @@ void ScrClr(void)
  */
 void EraEol(void)
 {
-//    dclreol() ;
+   dclreol() ;
 }
 
 /*
@@ -180,7 +180,7 @@ void EraEol(void)
  */
 void EraEop(void)
 {
-//    dclreos() ;
+   dclreos() ;
 }
 
 /*
@@ -190,7 +190,7 @@ void EraEop(void)
  */
 void CurPos(int row, int col)
 {
-//    dgotoxy(col-1, row-1) ;
+   dgotoxy(col-1, row-1) ;
 }
 
 /*
@@ -200,10 +200,8 @@ void CurPos(int row, int col)
  */
 void CurGet(int *row, int *col)
 {
-//    *row = _where_y() + 1;
-//    *col = _where_x() + 1;
-   *row = 0 ;
-   *col = 0 ;
+   // *row = _where_y() + 1;
+   // *col = _where_x() + 1;
 }
 
 /*
@@ -280,8 +278,7 @@ void WriteAt(int row, int col, char *str)
  *    *                                                *
  *    **************************************************
  */
-//lint -esym(843, spaces80)  could be declared as const
-static char * spaces80 = 
+static char *spaces80 = 
    "                                        "
    "                                        " ;
 void WriteCenter(int row, char *msg)
@@ -289,6 +286,18 @@ void WriteCenter(int row, char *msg)
    dprints(row-1, 0, spaces80) ;
    dprints(row-1, ((80 - strlen(msg)) / 2), msg) ;
 }
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *      Display Message centered on 25th line     *
+ *    *                                                *
+ *    **************************************************
+ */
+// void Message(char *msg)
+// {
+//    WriteCenter(25, msg);
+// }
 
 /*
  *    **************************************************
@@ -455,5 +464,104 @@ void DisplayExp(int *row, int *col, int exprow, int expcol, int expsign, long ex
          order /= 10L;
          }
       }
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *               Printer Routines                 *
+ *    *                                                *
+ *    **************************************************
+ */
+
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *           Print Character on Printer           *
+ *    *                                                *
+ *    **************************************************
+ */
+void PChar(int chr)
+{
+   // if (!printtoscreen) {         /* If using printer or disk ... */
+   //    fputc(chr, printfile);
+   //    return;
+   //    }
+    
+   /* Direct screen output */
+   dputc((char) chr) ;
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *            Print String on Printer             *
+ *    *                                                *
+ *    **************************************************
+ */
+void PString(char *str)
+{
+   // if (!printtoscreen) {            /* If using printer or disk ... */
+   //    fputs(str, printfile);
+   //    return;
+   //    }
+
+   /* Direct screen output */
+   dputs(str) ;
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *            Print Integer on Printer            *
+ *    *                                                *
+ *    **************************************************
+ */
+void PInteger(long integer)
+{
+   long order;
+
+   if (integer) {
+      if (integer < 0L) {
+         PChar('-');
+         integer = - integer;
+         }
+      order = 1000000000L;
+      while (order > integer) {
+         order /= 10L;
+         }
+      while (order) {
+         PChar((int)((integer / order) + (long)'0'));
+         integer %= order;
+         order /= 10L;
+         }
+      }
+   else
+      PChar('0');
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *              New Line on Printer               *
+ *    *                                                *
+ *    **************************************************
+ */
+void NewLine(void)
+{
+   PString("\r\n");
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *              New Page on Printer               *
+ *    *                                                *
+ *    **************************************************
+ */
+void NewPage(void)
+{
+   PString("\r\f");
 }
 

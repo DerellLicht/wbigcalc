@@ -1,0 +1,9 @@
+Bugs in Win32 port of BigCalc
+Last Update: 11/08/01 11:44
+============================================
+
+1. dclreos() (clear to end of page) doesn't work...
+
+2. Clearing X reg when entering new number isn't working, probably because
+   of bug #1 .
+

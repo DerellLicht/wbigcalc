@@ -37,10 +37,10 @@ uint cxClient = 0 ;
 uint cyClient = 0 ;
 
 static CStatusBar *MainStatusBar = NULL;
-extern int dos_main(unsigned inchr);
 
 //  bigcalc.cpp
-void Initialize(int argc, char *argv);
+extern void Initialize(int argc, char *argv);
+extern int dos_main(unsigned inchr);
 
 //*************************************************************
 static void set_hwnd_values(void)
@@ -78,28 +78,28 @@ void status_message(uint idx, char *msgstr)
 }
 
 //*************************************************************
-void put_stack(unsigned n)
+void put_stack(unsigned n, char *msg)
 {
-   char tempstr[30];
-   wsprintf (tempstr, "put_stack %u [%s]", n, get_iostr());
-   syslog(tempstr);
-   SetWindowText(hwndStack[n], get_iostr()) ;
+   // char tempstr[30];
+   // wsprintf (tempstr, "put_stack %u [%s]", n, get_iostr());
+   // syslog(tempstr);
+   SetWindowText(hwndStack[n], msg) ;
 }
 
-void put_register(unsigned n)
+void put_register(unsigned n, char *msg)
 {
    // wsprintf (tempstr, "put_register %u", n);
    // Statusbar_ShowMessage (tempstr);
-   SetWindowText(hwndRegs[n], get_iostr()) ;
+   SetWindowText(hwndRegs[n], msg) ;
 }
 
-void put_work(void)
-{
-   char tempstr[30];
-   wsprintf (tempstr, "put_work %u [%s]", 0, get_iostr());
-   syslog(tempstr);
-   SetWindowText(hwndStack[0], get_iostr()) ;
-}
+// void put_work(void)
+// {
+//    char tempstr[30];
+//    wsprintf (tempstr, "put_work %u [%s]", 0, get_iostr());
+//    syslog(tempstr);
+//    SetWindowText(hwndStack[0], get_iostr()) ;
+// }
 
 //*************************************************************
 // static int process_keystroke (HWND hwnd, unsigned inchr)
@@ -209,11 +209,11 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
       set_hwnd_values();
       // SendDlgItemMessage (hDlgWnd, IDC_DLG_TEXT, EM_SETLIMITTEXT, (WPARAM) BUFFER_SIZE - 1, (LPARAM) 0);
       // SetDlgItemText (hDlgWnd, IDC_DLG_TEXT, "Enter Text");
+      Initialize(1, NULL);
       Heading2();
       Message("We are ready...");
-      return TRUE;
       }
-      break;
+      return TRUE;
 
    // case WM_KEYDOWN:
    // case WM_SYSKEYDOWN:
@@ -334,7 +334,6 @@ INT WINAPI WinMain (HINSTANCE hInstance,
 {
    hInst = hInstance;
 
-   Initialize(0, 0);
    HWND hWnd = CreateDialog (hInstance, 
       MAKEINTRESOURCE(IDD_MAIN_DIALOG), 
       NULL,

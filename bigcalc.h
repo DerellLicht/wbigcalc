@@ -18,6 +18,8 @@
  *    **************************************************
  */
  
+ #include <windows.h>
+
 /*
  *    **************************************************
  *    *                                                *
@@ -64,7 +66,6 @@
 #define REG_ATTR     2
 #define MENU_ATTR    3
 
-// extern char tempstr[1024] ;
 /*
  *    **************************************************
  *    *                                                *
@@ -81,13 +82,22 @@
 #define FALSE 0
 #endif
 
-//lint -esym(652, BOOLEAN)
 #ifndef BOOLEAN
 #define BOOLEAN int
 #endif
 
 #define GETNORMTEMP(n) (NORMTYPE *) malloc((n) * sizeof(NORMTYPE))
 #define GETCOMPTEMP(n) (COMPTYPE *) malloc((n) * sizeof(COMPTYPE))
+
+//  from conio32.h
+void set_text_attrx(WORD tFGBG);
+void dputc(const CHAR c);
+void dputs(const char *outstr);
+void dprints(unsigned row, unsigned col, const char* outstr);
+void dgotoxy(int x, int y);
+void dclrscr(void);
+void dclreol(void);
+void dclreos(void);
 
 /*
  *    **************************************************
@@ -148,6 +158,9 @@
 #define LN         1102 /* CTRL-F9     */
 #define EXPE       1103 /* CTRL-F10    */
 
+
+
+
 /*
  *    **************************************************
  *    *                                                *
@@ -155,7 +168,6 @@
  *    *                                                *
  *    **************************************************
  */
-//lint -esym(1709, NORMDIGIT, WORKDIGIT, NORMTYPE, WORKTYPE, COMPTYPE)
 
 typedef char NORMDIGIT;
 typedef int  WORKDIGIT;
@@ -181,6 +193,11 @@ typedef struct {
    WORKDIGIT man[MAXCOMP];
    } COMPTYPE;
 
+
+//  Windows functions
+void put_stack(unsigned n, char *msg);
+void put_register(unsigned n, char *msg);
+
 /*
  *    **************************************************
  *    *                                                *
@@ -189,34 +206,40 @@ typedef struct {
  *    **************************************************
  */
 
-int GetChar(void);
-// int KeyPressed(void);
+extern  int GetChar(void);
+extern  int KeyPressed(void);
 
-void ScrClr(void);
-void EraEol(void);
-void EraEop(void);
-void CurPos(int row,int col);
-void CurGet(int *row,int *col);
-void WChar(int chr);
-void WString(char *str);
-void WInteger(long integer);
-void WriteAt(int row,int col,char *str);
-void WriteCenter(int row,char *msg);
-void Message(char *msg);
-void MessageWait(char *msg);
-void MessageEsc(char *msg);
+// extern  void ScrInit(void);
+// extern  void ScrTerm(void);
+extern  void ScrClr(void);
+extern  void EraEol(void);
+extern  void EraEop(void);
+extern  void CurPos(int row,int col);
+extern  void CurGet(int *row,int *col);
+extern  void WChar(int chr);
+extern  void WString(char *str);
+extern  void WInteger(long integer);
+extern  void WriteAt(int row,int col,char *str);
+extern  void WriteCenter(int row,char *msg);
+extern  void Message(char *msg);
+extern  void MessageWait(char *msg);
+extern  void MessageEsc(char *msg);
 
-void DisplayChar(int *row,int *col,int chr);
-void BackSpace(int *row,int *col);
-void DisplayExpChar(int *row,int *col,int chr);
-void BackSpaceExp(int *row,int *col);
-void DisplayExp(int *row,int *col,int exprow,int expcol,int expsign,long exponent);
+extern  void DisplayChar(int *row,int *col,int chr);
+extern  void BackSpace(int *row,int *col);
+extern  void DisplayExpChar(int *row,int *col,int chr);
+extern  void BackSpaceExp(int *row,int *col);
+extern  void DisplayExp(int *row,int *col,int exprow,int expcol,int expsign,long exponent);
 
-// void PChar(int chr);
-// void PString(char *str);
-// void PInteger(long integer);
-// void NewLine(void);
-void NewPage(void);
+extern  void PChar(int chr);
+extern  void PString(char *str);
+extern  void PInteger(long integer);
+extern  void NewLine(void);
+extern  void NewPage(void);
+
+extern  long TimerTicks(void);
+
+
 
 /*
  *    **************************************************
@@ -226,22 +249,24 @@ void NewPage(void);
  *    **************************************************
  */
 
-int ExtendedAdd(void);
-int ExtendedSubtract(void);
-int ExtendedMultiply(void);
-int ExtendedDivide(void);
-int ExtendedSquareRoot(void);
-int ExtendedPower(void);
-int ExtendedSinCos(int scflag);
-int ExtendedTan(void);
-int ExtendedArcSinCos(int scflag);
-int ExtendedArcTan(void);
-int ExtendedLog(void);
-int ExtendedExp10(void);
-int ExtendedLn(void);
-int ExtendedExpE(void);
-int ExtendedReciprocal(void);
-int ExtendedFactorial(void);
+extern  int ExtendedAdd(void);
+extern  int ExtendedSubtract(void);
+extern  int ExtendedMultiply(void);
+extern  int ExtendedDivide(void);
+extern  int ExtendedSquareRoot(void);
+extern  int ExtendedPower(void);
+extern  int ExtendedSinCos(int scflag);
+extern  int ExtendedTan(void);
+extern  int ExtendedArcSinCos(int scflag);
+extern  int ExtendedArcTan(void);
+extern  int ExtendedLog(void);
+extern  int ExtendedExp10(void);
+extern  int ExtendedLn(void);
+extern  int ExtendedExpE(void);
+extern  int ExtendedReciprocal(void);
+extern  int ExtendedFactorial(void);
+
+
 
 /*
  *    **************************************************
@@ -251,43 +276,46 @@ int ExtendedFactorial(void);
  *    **************************************************
  */
 
-int Normalize(int w);
-int FlipSign(int sign);
-int ExtendedRound(int w);
-int ExtendedIntegerPart(void);
-int ExtendedFractionPart(void);
-int ExtendedGetX(unsigned chr);
+extern  int Normalize(int w);
+extern  int FlipSign(int sign);
+extern  int ExtendedRound(int w);
+extern  int ExtendedIntegerPart(void);
+extern  int ExtendedFractionPart(void);
+extern  int ExtendedGetX(void);
 
-void ExtendedInitConstants(void);
-void ExtendedRecallPi(int dest);
-void ExtendedRecallHalfPi(int dest);
-void ExtendedRecallE(int dest);
-void ExtendedRecallLn10(int dest);
-void ExtendedRecallLnP9(int dest);
-void ExtendedRecallLnP99(int dest);
-void ExtendedRecallLnP999(int dest);
-void ExtendedRecallLnP9999(int dest);
-void ExtendedRecallLnP99999(int dest);
-void ExtendedRecallSinP1(int dest);
-void ExtendedRecallSinP01(int dest);
-void ExtendedRecallSinP001(int dest);
-void ExtendedRecallCosP1(int dest);
-void ExtendedRecallCosP01(int dest);
-void ExtendedRecallCosP001(int dest);
+extern  void ExtendedInitConstants(void);
+extern  void ExtendedRecallPi(int dest);
+extern  void ExtendedRecallHalfPi(int dest);
+extern  void ExtendedRecallE(int dest);
+extern  void ExtendedRecallLn10(int dest);
+extern  void ExtendedRecallLnP9(int dest);
+extern  void ExtendedRecallLnP99(int dest);
+extern  void ExtendedRecallLnP999(int dest);
+extern  void ExtendedRecallLnP9999(int dest);
+extern  void ExtendedRecallLnP99999(int dest);
+extern  void ExtendedRecallSinP1(int dest);
+extern  void ExtendedRecallSinP01(int dest);
+extern  void ExtendedRecallSinP001(int dest);
+extern  void ExtendedRecallCosP1(int dest);
+extern  void ExtendedRecallCosP01(int dest);
+extern  void ExtendedRecallCosP001(int dest);
 
-void ClearStack(int lo,int hi);
-void ClearReg(int lo,int hi);
-void ClearWork(int w);
-void MoveStackWork(int source,int dest);
-void MoveRegWork(int source,int dest);
-void MoveWorkStack(int source,int dest);
-void MoveWorkReg(int source,int dest);
-void MoveWorkWork(int source,int dest);
-void MoveWorkTemp(int source,COMPTYPE *dest);
-void MoveTempWork(COMPTYPE *source,int dest);
-void MoveTempTemp(COMPTYPE *source,COMPTYPE *dest);
-void SetWorkInteger(int dest,long integer);
-void SetTempInteger(COMPTYPE *dest,long integer);
+extern  void ClearStack(int lo,int hi);
+extern  void ClearReg(int lo,int hi);
+extern  void ClearWork(int w);
+extern  void ClearTemp(COMPTYPE *temp);
+extern  void MoveStackWork(int source,int dest);
+extern  void MoveRegWork(int source,int dest);
+extern  void MoveWorkStack(int source,int dest);
+extern  void MoveWorkReg(int source,int dest);
+extern  void MoveWorkWork(int source,int dest);
+extern  void MoveWorkTemp(int source,COMPTYPE *dest);
+extern  void MoveTempWork(COMPTYPE *source,int dest);
+extern  void MoveTempTemp(COMPTYPE *source,COMPTYPE *dest);
+extern  void SetWorkInteger(int dest,long integer);
+extern  void SetTempInteger(COMPTYPE *dest,long integer);
+
+
 
 /*
  *    **************************************************
@@ -297,39 +325,28 @@ void SetTempInteger(COMPTYPE *dest,long integer);
  *    **************************************************
  */
 
-// void PrintHeading(void);
-// void PrintReg(int lo,int hi);
-// void PrintStack(int lo,int hi);
-void DisplayReg(int r);
-void DisplayStack(int s);
-void DumpStack(void);   //  debug function
+extern  void PrintHeading(void);
+extern  void PrintReg(int lo,int hi);
+extern  void PrintStack(int lo,int hi);
+extern  void DisplayReg(int r);
+extern  void DisplayStack(int s);
+extern  void PrintNumber(NORMTYPE *nbr);
 
-void WriteReg(int lo,int hi);
-void WriteStack(int lo,int hi);
-// int  GetPrompt(void);
-void Overflow(void);
-void DivideByZero(void);
-void ZeroArgument(void);
-void NegativeArgument(void);
-void ArgumentNotInteger(void);
-void ArgumentInvalid(void);
-void MemoryError(void);
+extern  void WriteReg(int lo,int hi);
+extern  void WriteStack(int lo,int hi);
+extern  void WriteNumber(NORMTYPE *nbr);
+extern  int  GetPrompt(void);
+extern  void Overflow(void);
+extern  void DivideByZero(void);
+extern  void ZeroArgument(void);
+extern  void NegativeArgument(void);
+extern  void ArgumentNotInteger(void);
+extern  void ArgumentInvalid(void);
+extern  void MemoryError(void);
 
-void OnScreenMenu(void);
-void HelpScreen(void);
-void Heading2(void);
-void WorkScreen(void);
-
-//  wbigcalc.cpp 
-// #define  regT  (unsigned) 3
-// #define  regZ  (unsigned) 2
-// #define  regY  (unsigned) 1
-// #define  regX  (unsigned) 0
-void put_stack(unsigned n);
-void put_register(unsigned n);
-void put_work(void);
-char *get_iostr(void);
-void reset_iostr(void);
-void init_work_variables(void);
-extern unsigned regX_edit_active ;
-
+extern  void OnScreenMenu(void);
+extern  void InitialScreen(void);
+extern  void HelpScreen(void);
+extern  void Heading1(void);
+extern  void Heading2(void);
+extern  void WorkScreen(void);

@@ -58,7 +58,7 @@ static  int ResolveAngle(void);
  *    **************************************************
  */
 
-int ExtendedAdd(void)
+extern int ExtendedAdd(void)
 
 {
 
@@ -152,7 +152,7 @@ int ExtendedAdd(void)
  *    **************************************************
  */
 
-int ExtendedSubtract(void)
+extern int ExtendedSubtract(void)
 
 {
 
@@ -272,7 +272,7 @@ int ExtendedSubtract(void)
  *    **************************************************
  */
 
-int ExtendedMultiply(void)
+extern int ExtendedMultiply(void)
 
 {
 
@@ -370,9 +370,9 @@ int ExtendedMultiply(void)
             }
          } while (--bx >= bl);                  /* Multiplicand loop end */
 
-      // if (KeyPressed() == ESCAPE) {             /* User abort */
-      //    return(FALSE);
-      // }
+      if (KeyPressed() == ESCAPE) {             /* User abort */
+         return(FALSE);
+         }
 
       } while ((ax -= 3) >= al);                /* Multiplier loop end */
 
@@ -386,7 +386,11 @@ int ExtendedMultiply(void)
       }
 
    return(Normalize(2));
+
 }
+
+
+
 
 /*
  *    **************************************************
@@ -398,7 +402,7 @@ int ExtendedMultiply(void)
  *    **************************************************
  */
 
-int ExtendedDivide(void)
+extern int ExtendedDivide(void)
 
 {
 
@@ -539,9 +543,9 @@ int ExtendedDivide(void)
          bl++;
          }
 
-      // if (KeyPressed() == ESCAPE) { /* User abort */
-      //    return(FALSE);
-      // }
+      if (KeyPressed() == ESCAPE) { /* User abort */
+         return(FALSE);
+         }
 
       } while (cx <= cr);  /* Divide loop end */
 
@@ -565,12 +569,12 @@ int ExtendedDivide(void)
  *    **************************************************
  */
 
-int ExtendedSquareRoot(void)
+extern int ExtendedSquareRoot(void)
 
 {
 
    long nl, apxl, lapxl;
-   int i, j, result = TRUE;
+   int i, j, result;
    int oldprec, cmpsize;
    COMPTYPE *temp;
    COMPTYPE *arg, *apx;
@@ -583,7 +587,7 @@ int ExtendedSquareRoot(void)
       return(FALSE);
       }
 
-   if (! work[0].digits) {                   /* Zero: return TRUE */
+   if (! work[0].digits) {                   /* Zero: return zero */
       ClearWork(2);
       return(TRUE);
       }
@@ -616,7 +620,7 @@ int ExtendedSquareRoot(void)
 
    for (i = 1; i <= 6; i++) {
       lapxl = apxl;
-      apxl = ((lapxl + (nl / lapxl)) >> 1);  //lint !e704
+      apxl = ((lapxl + (nl / lapxl)) >> 1);
       }
    SetWorkInteger(2, apxl);                  /* Put 1st appx in work[2] */
 
@@ -710,7 +714,7 @@ int ExtendedSquareRoot(void)
          cmpsize = compprec * sizeof(WORKDIGIT);
          }
 
-      } while (true);    //lint !e506     Loop until precision gained 
+      } while (TRUE);               /* Loop until precision gained */
 
 
    if (normprec < oldprec) {        /* Reset precision if needed */
@@ -725,6 +729,9 @@ int ExtendedSquareRoot(void)
 
 }
 
+
+
+
 /*
  *    **************************************************
  *    *                                                *
@@ -737,7 +744,7 @@ int ExtendedSquareRoot(void)
  *    **************************************************
  */
 
-int ExtendedPower(void)
+extern int ExtendedPower(void)
 
 {
 
@@ -964,7 +971,7 @@ int ExtendedPower(void)
  *    **************************************************
  */
 
-int ExtendedSinCos(int scflag)
+extern int ExtendedSinCos(int scflag)
 
 {
 
@@ -1234,7 +1241,7 @@ int ExtendedSinCos(int scflag)
  *    **************************************************
  */
 
-int ExtendedTan(void)
+extern int ExtendedTan(void)
 
 {
 
@@ -1286,15 +1293,14 @@ int ExtendedTan(void)
       return(FALSE);
       }
 
+   free(temp);
 
    MoveWorkWork(2, 0);           /* Compute sin(X) / cos(X) */
    MoveTempWork(temp, 1);
    if (! ExtendedDivide()) {
-      free(temp);
       return(FALSE);
       }
 
-   free(temp);
    return(TRUE);
 
 }
@@ -1318,7 +1324,7 @@ int ExtendedTan(void)
  *    **************************************************
  */
 
-int ExtendedArcSinCos(int scflag)
+extern int ExtendedArcSinCos(int scflag)
 
 {
 
@@ -1423,7 +1429,7 @@ int ExtendedArcSinCos(int scflag)
  *    **************************************************
  */
 
-int ExtendedArcTan(void)
+extern int ExtendedArcTan(void)
 
 {
 
@@ -1546,7 +1552,7 @@ static int ResolveAngle(void)
 
          /* Set up temp registers */
 
-   if ((temp = (COMPTYPE *) GETCOMPTEMP(4)) == NULL) {
+   if ((temp = GETCOMPTEMP(4)) == NULL) {
       MemoryError();
       return(FALSE);
       }
@@ -1940,7 +1946,7 @@ static int ResolveAngle(void)
  *    **************************************************
  */
 
-int ExtendedLog(void)
+extern int ExtendedLog(void)
 
 {
 
@@ -1987,7 +1993,7 @@ int ExtendedLog(void)
  *    **************************************************
  */
 
-int ExtendedExp10(void)
+extern int ExtendedExp10(void)
 
 {
 
@@ -2082,7 +2088,7 @@ int ExtendedExp10(void)
  *    **************************************************
  */
 
-int ExtendedLn(void)
+extern int ExtendedLn(void)
 
 {
 
@@ -2316,7 +2322,7 @@ int ExtendedLn(void)
 
          /* Set up temp registers */
 
-   if ((temp = (COMPTYPE *) GETCOMPTEMP(3)) == NULL) {
+   if ((temp = GETCOMPTEMP(3)) == NULL) {
       MemoryError();
       return(FALSE);
       }
@@ -2630,7 +2636,7 @@ int ExtendedLn(void)
  *    **************************************************
  */
 
-int ExtendedExpE(void)
+extern int ExtendedExpE(void)
 
 {
 
@@ -2740,7 +2746,7 @@ int ExtendedExpE(void)
 
          /* Set up temp registers */
 
-   if ((temp = (COMPTYPE *) GETCOMPTEMP(2)) == NULL) {
+   if ((temp = GETCOMPTEMP(2)) == NULL) {
       MemoryError();
       return(FALSE);
       }
@@ -2896,7 +2902,7 @@ int ExtendedExpE(void)
  *    **************************************************
  */
 
-int ExtendedReciprocal(void)
+extern int ExtendedReciprocal(void)
 
 {
 
@@ -2919,7 +2925,7 @@ int ExtendedReciprocal(void)
  *    **************************************************
  */
 
-int ExtendedFactorial(void)
+extern int ExtendedFactorial(void)
 
 {
 
