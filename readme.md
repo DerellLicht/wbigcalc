@@ -12,7 +12,7 @@ Neither the author nor the original program appear to be present on the internet
 
 <hr>
 
-###Status  
+### Status  
 The Windows version of BigCalc is currently under development.  
 The main challenge that I am currently facing, is that  the program uses getch() loops in several places, to manage keyboard acquisition.  This technique is incompatible with Windows programs, which use a message handler for all inputs; calling getch() or any other polling function, just stalls the message handler.  
 I will need to re-factor the keyboard handler, to avoid getch(), which will likely be a great deal of work...
