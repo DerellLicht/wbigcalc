@@ -1,7 +1,7 @@
 #include <windows.h>
 #include "resource.h"
 
-IDI_ICON ICON "link04.ico"
+IDI_ICON ICON "sci_calc2.ico"
 
 //*******************************************************************
 //  keyboard accelerators
@@ -28,8 +28,8 @@ BEGIN
     "e",       IDB_KBD_e  ,       ASCII, NOINVERT
     VK_RETURN, IDB_KBD_RETURN,    VIRTKEY, NOINVERT
     VK_ESCAPE, IDB_CLOSE,         VIRTKEY, NOINVERT
-    "q",       IDB_CLOSE,         ASCII, NOINVERT
-    "^q",      IDB_CLOSE,         ASCII, NOINVERT
+    // "q",       IDB_CLOSE,         ASCII, NOINVERT
+    // "^q",      IDB_CLOSE,         ASCII, NOINVERT
 END
 
 //*******************************************************************
