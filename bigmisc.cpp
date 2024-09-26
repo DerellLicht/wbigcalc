@@ -684,18 +684,14 @@ extern int ExtendedFractionPart(void)
  *    *                                                *
  *    **************************************************
  */
-
-extern int ExtendedGetX(void)
-
+int ExtendedGetX(void)
 {
-
    long exponent;
    int sign, expsign;
    int row, col, exprow, expcol;
    int digits, intdigits, decdigits, exdigits, digitval;
    enum {ININT, INDEC, INEX} mode;
    BOOLEAN decimal;
-
 
 /*  ******  I N I T I A L I Z E   V A R I A B L E S  ******  */
 
@@ -758,7 +754,6 @@ extern int ExtendedGetX(void)
          case (ENTER):
          case (SCINOT):
          case (CLEAR):
-         case (PRINT):
          case (STOREX):
          case (RECALLREG):
          case (XCHGXY1):
@@ -997,7 +992,7 @@ extern int ExtendedGetX(void)
  *    **************************************************
  */
 
-extern void ExtendedInitConstants(void)
+void ExtendedInitConstants(void)
 
 {
 
@@ -1094,7 +1089,7 @@ extern void ExtendedInitConstants(void)
  *    **************************************************
  */
 
-extern void ExtendedRecallPi(int dest)
+void ExtendedRecallPi(int dest)
 
 {
 
@@ -1130,7 +1125,7 @@ extern void ExtendedRecallPi(int dest)
  *    **************************************************
  */
 
-extern void ExtendedRecallHalfPi(int dest)
+void ExtendedRecallHalfPi(int dest)
 
 {
 
@@ -1166,7 +1161,7 @@ extern void ExtendedRecallHalfPi(int dest)
  *    **************************************************
  */
 
-extern void ExtendedRecallE(int dest)
+void ExtendedRecallE(int dest)
 
 {
 
@@ -1202,7 +1197,7 @@ extern void ExtendedRecallE(int dest)
  *    **************************************************
  */
 
-extern void ExtendedRecallLn10(int dest)
+void ExtendedRecallLn10(int dest)
 
 {
 
@@ -1238,7 +1233,7 @@ extern void ExtendedRecallLn10(int dest)
  *    **************************************************
  */
 
-extern void ExtendedRecallLnP9(int dest)
+void ExtendedRecallLnP9(int dest)
 
 {
 
@@ -1274,7 +1269,7 @@ extern void ExtendedRecallLnP9(int dest)
  *    **************************************************
  */
 
-extern void ExtendedRecallLnP99(int dest)
+void ExtendedRecallLnP99(int dest)
 
 {
 
@@ -1310,7 +1305,7 @@ extern void ExtendedRecallLnP99(int dest)
  *    **************************************************
  */
 
-extern void ExtendedRecallLnP999(int dest)
+void ExtendedRecallLnP999(int dest)
 
 {
 
@@ -1346,7 +1341,7 @@ extern void ExtendedRecallLnP999(int dest)
  *    **************************************************
  */
 
-extern void ExtendedRecallLnP9999(int dest)
+void ExtendedRecallLnP9999(int dest)
 
 {
 
@@ -1382,7 +1377,7 @@ extern void ExtendedRecallLnP9999(int dest)
  *    **************************************************
  */
 
-extern void ExtendedRecallLnP99999(int dest)
+void ExtendedRecallLnP99999(int dest)
 
 {
 
@@ -1418,7 +1413,7 @@ extern void ExtendedRecallLnP99999(int dest)
  *    **************************************************
  */
 
-extern void ExtendedRecallSinP1(int dest)
+void ExtendedRecallSinP1(int dest)
 
 {
 
@@ -1454,7 +1449,7 @@ extern void ExtendedRecallSinP1(int dest)
  *    **************************************************
  */
 
-extern void ExtendedRecallSinP01(int dest)
+void ExtendedRecallSinP01(int dest)
 
 {
 
@@ -1489,14 +1484,10 @@ extern void ExtendedRecallSinP01(int dest)
  *    *                                                *
  *    **************************************************
  */
-
-extern void ExtendedRecallSinP001(int dest)
-
+void ExtendedRecallSinP001(int dest)
 {
-
    WORKDIGIT *workx, *workend;
    char *sinP001x;
-
 
    work[dest].exp = -3L;
    work[dest].sign = '+';
@@ -1510,11 +1501,7 @@ extern void ExtendedRecallSinP001(int dest)
       *(workx++) = (int) *(sinP001x++);
 
    Normalize(dest);
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1525,11 +1512,8 @@ extern void ExtendedRecallSinP001(int dest)
  *    *                                                *
  *    **************************************************
  */
-
-extern void ExtendedRecallCosP1(int dest)
-
+void ExtendedRecallCosP1(int dest)
 {
-
    WORKDIGIT *workx, *workend;
    char *cosP1x;
 
@@ -1546,11 +1530,7 @@ extern void ExtendedRecallCosP1(int dest)
       *(workx++) = (int) *(cosP1x++);
 
    Normalize(dest);
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1561,11 +1541,8 @@ extern void ExtendedRecallCosP1(int dest)
  *    *                                                *
  *    **************************************************
  */
-
-extern void ExtendedRecallCosP01(int dest)
-
+void ExtendedRecallCosP01(int dest)
 {
-
    WORKDIGIT *workx, *workend;
    char *cosP01x;
 
@@ -1582,11 +1559,7 @@ extern void ExtendedRecallCosP01(int dest)
       *(workx++) = (int) *(cosP01x++);
 
    Normalize(dest);
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1598,7 +1571,7 @@ extern void ExtendedRecallCosP01(int dest)
  *    **************************************************
  */
 
-extern void ExtendedRecallCosP001(int dest)
+void ExtendedRecallCosP001(int dest)
 
 {
 
@@ -1631,11 +1604,8 @@ extern void ExtendedRecallCosP001(int dest)
  *    *                                                *
  *    **************************************************
  */
-
-extern void ClearStack(int lo, int hi)
-
+void ClearStack(int lo, int hi)
 {
-
    int s;
 
    for (s = lo; s <= hi; s++) {
@@ -1644,11 +1614,7 @@ extern void ClearStack(int lo, int hi)
       stack[s].digits = 0;
       memset(stack[s].man, 0, (normprec * sizeof(NORMDIGIT)));
       }
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1657,11 +1623,8 @@ extern void ClearStack(int lo, int hi)
  *    *                                                *
  *    **************************************************
  */
-
-extern void ClearReg(int lo, int hi)
-
+void ClearReg(int lo, int hi)
 {
-
    int r;
 
    for (r = lo; r <= hi; r++) {
@@ -1670,11 +1633,7 @@ extern void ClearReg(int lo, int hi)
       reg[r].digits = 0;
       memset(reg[r].man, 0, (normprec * sizeof(NORMDIGIT)));
       }
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1683,20 +1642,13 @@ extern void ClearReg(int lo, int hi)
  *    *                                                *
  *    **************************************************
  */
-
-extern void ClearWork(int w)
-
+void ClearWork(int w)
 {
-
    work[w].exp = 0L;
    work[w].sign = ' ';
    work[w].digits = 0;
    memset(work[w].man, 0, (workprec * sizeof(WORKDIGIT)));
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1705,20 +1657,13 @@ extern void ClearWork(int w)
  *    *                                                *
  *    **************************************************
  */
-
-extern void ClearTemp(COMPTYPE *temp)
-
+void ClearTemp(COMPTYPE *temp)
 {
-
    temp->exp = 0L;
    temp->sign = ' ';
    temp->digits = 0;
    memset(temp->man, 0, (compprec * sizeof(WORKDIGIT)));
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1727,11 +1672,8 @@ extern void ClearTemp(COMPTYPE *temp)
  *    *                                                *
  *    **************************************************
  */
-
-extern void MoveStackWork(int source, int dest)
-
+void MoveStackWork(int source, int dest)
 {
-
    int size, i;
 
    if ((size = stack[source].digits)) {
@@ -1749,11 +1691,7 @@ extern void MoveStackWork(int source, int dest)
       }
    else
       ClearWork(dest);
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1762,11 +1700,8 @@ extern void MoveStackWork(int source, int dest)
  *    *                                                *
  *    **************************************************
  */
-
-extern void MoveRegWork(int source, int dest)
-
+void MoveRegWork(int source, int dest)
 {
-
    int size, i;
 
    if ((size = reg[source].digits)) {
@@ -1784,11 +1719,7 @@ extern void MoveRegWork(int source, int dest)
       }
    else
       ClearWork(dest);
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1797,11 +1728,8 @@ extern void MoveRegWork(int source, int dest)
  *    *                                                *
  *    **************************************************
  */
-
-extern void MoveWorkStack(int source, int dest)
-
+void MoveWorkStack(int source, int dest)
 {
-
    int size, i;
 
    if ((size = work[source].digits)) {
@@ -1822,11 +1750,7 @@ extern void MoveWorkStack(int source, int dest)
       }
    else
       ClearStack(dest, dest);
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1835,11 +1759,8 @@ extern void MoveWorkStack(int source, int dest)
  *    *                                                *
  *    **************************************************
  */
-
-extern void MoveWorkReg(int source, int dest)
-
+void MoveWorkReg(int source, int dest)
 {
-
    int size, i;
 
    if ((size = work[source].digits)) {
@@ -1860,11 +1781,7 @@ extern void MoveWorkReg(int source, int dest)
       }
    else
       ClearReg(dest, dest);
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1873,11 +1790,8 @@ extern void MoveWorkReg(int source, int dest)
  *    *                                                *
  *    **************************************************
  */
-
-extern void MoveWorkWork(int source, int dest)
-
+void MoveWorkWork(int source, int dest)
 {
-
    int size;
 
    if ((size = work[source].digits)) {
@@ -1894,11 +1808,7 @@ extern void MoveWorkWork(int source, int dest)
       }
    else
       ClearWork(dest);
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1908,7 +1818,7 @@ extern void MoveWorkWork(int source, int dest)
  *    **************************************************
  */
 
-extern void MoveWorkTemp(int source, COMPTYPE *dest)
+void MoveWorkTemp(int source, COMPTYPE *dest)
 
 {
 
@@ -1942,7 +1852,7 @@ extern void MoveWorkTemp(int source, COMPTYPE *dest)
  *    **************************************************
  */
 
-extern void MoveTempWork(COMPTYPE *source, int dest)
+void MoveTempWork(COMPTYPE *source, int dest)
 
 {
 
@@ -1976,7 +1886,7 @@ extern void MoveTempWork(COMPTYPE *source, int dest)
  *    **************************************************
  */
 
-extern void MoveTempTemp(COMPTYPE *source, COMPTYPE *dest)
+void MoveTempTemp(COMPTYPE *source, COMPTYPE *dest)
 
 {
 
@@ -2010,7 +1920,7 @@ extern void MoveTempTemp(COMPTYPE *source, COMPTYPE *dest)
  *    **************************************************
  */
 
-extern void SetWorkInteger(int dest, long integer)
+void SetWorkInteger(int dest, long integer)
 
 {
 
@@ -2055,7 +1965,7 @@ extern void SetWorkInteger(int dest, long integer)
  *    **************************************************
  */
 
-extern void SetTempInteger(COMPTYPE *dest, long integer)
+void SetTempInteger(COMPTYPE *dest, long integer)
 
 {
 

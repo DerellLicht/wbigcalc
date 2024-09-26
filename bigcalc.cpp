@@ -66,7 +66,6 @@ static  void RecallPi(void);
 static  void RecallE(void);
 static  void RecallLastX(void);
 static  void ChangeSign(void);
-static  void PrintDisk(void);
 static  void GroupSize(void);
 static  void MenuRoll(void);
 static  void ViewReg(void);
@@ -75,7 +74,6 @@ static  void ClearX(void);
 static  void Enter(void);
 static  void SciNotation(void);
 static  void Clear(void);
-static  void Print(void);
 static  void StoreX(void);
 static  void AddXReg(void);
 static  void SubtractXReg(void);
@@ -123,14 +121,12 @@ long
    minfloatprn,            /* Min exp for float */
    maxfloatprn;            /* Max exp for float */
 
-FILE
-   *printfile;             /* Print file handle */
+// FILE *printfile;             /* Print file handle */
 
-char
-   stackname[4]            /* Stack register names */
-      = {'X','Y','Z','T'},
-   printid[15]             /* Print file name      */
-      = "Printer";
+char stackname[4]            /* Stack register names */
+      = {'X','Y','Z','T'};
+// char printid[15]             /* Print file name      */
+//       = "Printer";
 
 BOOLEAN
    stacklift = TRUE,       /* Lift stack for new X if TRUE */
@@ -147,11 +143,13 @@ BOOLEAN
  *    **************************************************
  */
 // int main(int argc,char *argv[])
-int dos_main(unsigned chr)
+int dos_main(unsigned inchr)
 {
    // Initialize(argc, argv[1]);
 
+   //  chr is a global var, used by ExtendedGetX() et al
    // chr = GetPrompt();
+   chr = inchr ;  
 
    // while (chr != ESCAPE) {
 
@@ -261,10 +259,6 @@ int dos_main(unsigned chr)
             ChangeSign();        /* Change sign X */
             break;
 
-         case (PRINTDISK):
-            PrintDisk();         /* Toggle Print to Disk */
-            break;
-
          case (GROUPSIZE):
             GroupSize();         /* Toggle Group Size (3/5) */
             break;
@@ -306,10 +300,6 @@ int dos_main(unsigned chr)
 
          case (CLEAR):
             Clear();             /* Clear (prompt for what) */
-            break;
-
-         case (PRINT):
-            Print();             /* Print on printer (prompt for what) */
             break;
 
          case (STOREX):
@@ -1094,32 +1084,6 @@ static void ChangeSign(void)
 /*
  *    **************************************************
  *    *                                                *
- *    *              Toggle Print to Disk              *
- *    *                                                *
- *    **************************************************
- */
-static void PrintDisk(void)
-{
-   // if (printid[0] == 'B') {
-   //    fclose(printfile);                  /* BIGCALC.PRN open, close */
-   //    strcpy(printid, "Printer");         /*  and switch to printer  */
-   //    printfile = stdprn;
-   //    }
-   // else {                                 /* Open BIGCALC.PRN */
-   //    strcpy(printid, "BIGCALC.PRN");
-   //    if ((printfile = fopen(printid, "ab")) == NULL) {
-   //       strcpy(printid, "Printer");
-   //       printfile = stdprn;
-   //       MessageWait("** Cannot open disk file **");
-   //       }
-   //    }
-
-   Heading2();
-}
-
-/*
- *    **************************************************
- *    *                                                *
  *    *             Toggle Group Size (3/5)            *
  *    *                                                *
  *    **************************************************
@@ -1226,6 +1190,7 @@ static void ViewReg(void)
 static void AcceptX(void)
 {
    NORMTYPE *temp;
+   int result ;
 
    if ((temp = GETNORMTEMP(1)) == NULL) {
       MemoryError();
@@ -1245,7 +1210,8 @@ static void AcceptX(void)
       WriteAt(entrysignrow - 1, 1, "========================="
                                    "  E N T E R I N G   X  "
                                    "=========================");
-      if (ExtendedGetX() ) {
+      result = ExtendedGetX();
+      if (result) {
           if (stacklift)
              PushStack();
          MoveWorkStack(0, 0);
@@ -1261,7 +1227,9 @@ static void AcceptX(void)
          PushStack();
          WriteStack(1, 3);
          }
-      if (ExtendedGetX() ) {
+         
+      result = ExtendedGetX();
+      if (result) {
          MoveWorkStack(0, 0);
          stacklift = TRUE;
          }
@@ -1433,104 +1401,14 @@ static void Clear(void)
 /*
  *    **************************************************
  *    *                                                *
- *    *        Print (S, X,Y,Z,T, R, 0-9, All)         *
- *    *                                                *
- *    **************************************************
- */
-
-static void Print(void)
-
-{
-
-   int r;
-
-   Message("Press to print (S, X,Y,Z,T, R, 0-9, A=All, P=Page Eject,"
-           " Esc=Exit):");
-
-   while ((chr = GetChar()) != ESCAPE) {
-
-      switch (chr) {
-
-         case ('S'):
-            PrintHeading();
-            PrintStack(0, 3);
-            return;
-
-         case ('X'):
-            PrintHeading();
-            PrintStack(0, 0);
-            return;
-
-         case ('Y'):
-            PrintHeading();
-            PrintStack(1, 1);
-            return;
-
-         case ('Z'):
-            PrintHeading();
-            PrintStack(2, 2);
-            return;
-
-         case ('T'):
-            PrintHeading();
-            PrintStack(3, 3);
-            return;
-
-         case ('R'):
-            PrintReg(0, 9);
-            return;
-
-         case ('0'):
-         case ('1'):
-         case ('2'):
-         case ('3'):
-         case ('4'):
-         case ('5'):
-         case ('6'):
-         case ('7'):
-         case ('8'):
-         case ('9'):
-            r = chr - '0';
-            PrintHeading();
-            PrintReg(r, r);
-            return;
-
-         case ('A'):
-            PrintHeading();
-            PrintReg(0, 9);
-            PrintStack(0, 3);
-            return;
-
-         case ('P'):
-            NewPage();
-            return;
-
-         default:
-            ;
-
-         }  /* switch */
-
-      }  /* while */
-
-}
-
-
-
-
-/*
- *    **************************************************
- *    *                                                *
  *    *              Store X in Register               *
  *    *                                                *
  *    *             Allows + - * / as well             *
  *    *                                                *
  *    **************************************************
  */
-
 static void StoreX(void)
-
 {
-
    int r;
 
    Message("Store X to: Press Reg (0-9) or Operation (+,-,*,/)"
@@ -1570,11 +1448,7 @@ static void StoreX(void)
          }  /* switch */
 
       } /* while */
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1583,11 +1457,8 @@ static void StoreX(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void AddXReg(void)
-
 {
-
    int r;
 
    Message("Add X to: Reg (0-9) or Esc:");
@@ -1611,11 +1482,7 @@ static void AddXReg(void)
             ;
 
       }  /* while */
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1624,11 +1491,8 @@ static void AddXReg(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void SubtractXReg(void)
-
 {
-
    int r;
 
    Message("Subtract X from: Reg (0-9) or Esc:");
@@ -1652,11 +1516,7 @@ static void SubtractXReg(void)
             ;
 
       }  /* while */
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1665,11 +1525,8 @@ static void SubtractXReg(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void MultiplyXReg(void)
-
 {
-
    int r;
 
    Message("Multiply X times: Reg (0-9) or Esc:");
@@ -1695,11 +1552,7 @@ static void MultiplyXReg(void)
             ;
 
       }  /* while */
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1708,11 +1561,8 @@ static void MultiplyXReg(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void DivideXReg(void)
-
 {
-
    int r;
 
    Message("Divide X into: Reg (0-9) or Esc:");
@@ -1738,11 +1588,7 @@ static void DivideXReg(void)
             ;
 
       }  /* while */
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1751,11 +1597,8 @@ static void DivideXReg(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void RecallReg(void)
-
 {
-
    int r;
 
    Message("Recall to X: Press Reg (0-9) or Operation (+,-,*,/)"
@@ -1807,11 +1650,8 @@ static void RecallReg(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void AddRegX(void)
-
 {
-
    int r;
 
    Message("Add to X: Reg (0-9) or Esc:");
@@ -1836,11 +1676,7 @@ static void AddRegX(void)
             ;
 
       }  /* while */
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1883,11 +1719,8 @@ static void SubtractRegX(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void MultiplyRegX(void)
-
 {
-
    int r;
 
    Message("Multiply times X: Reg (0-9) or Esc:");
@@ -1917,9 +1750,6 @@ static void MultiplyRegX(void)
 
 }
 
-
-
-
 /*
  *    **************************************************
  *    *                                                *
@@ -1927,11 +1757,8 @@ static void MultiplyRegX(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void DivideRegX(void)
-
 {
-
    int r;
 
    Message("Divide into X: Reg (0-9) or Esc:");
@@ -1958,7 +1785,6 @@ static void DivideRegX(void)
             ;
 
       }  /* while */
-
 }
 
 /*
@@ -1968,11 +1794,8 @@ static void DivideRegX(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void ExchangeXY(void)
-
 {
-
    NORMTYPE *temp;
 
    if ((temp = GETNORMTEMP(1)) == NULL) {
@@ -2061,11 +1884,8 @@ static void RollDown(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void RollUp(void)
-
 {
-
    NORMTYPE *temp;
 
    if ((temp = GETNORMTEMP(1)) == NULL) {

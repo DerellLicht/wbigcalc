@@ -34,10 +34,10 @@
 #include "bigcalc.h"
 #include "biggvar.h"
 
-static  void PExponent(long exponent);
+// static  void PExponent(long exponent);
 static  void WExponent(long exponent);
-static  void PSign(int sign);
-static  void PCharWrap(int chr);
+// static  void PSign(int sign);
+// static  void PCharWrap(int chr);
 /*
  *    **************************************************
  *    *                                                *
@@ -46,9 +46,7 @@ static  void PCharWrap(int chr);
  *    **************************************************
  */
 
-static int
-   ppos = 0,            /* Current print column */
-   prevchr;             /* Previous character printed */
+static int ppos = 0;            /* Current print column */
 
 //**********************************************************
 //  conio.cpp functions
@@ -121,97 +119,25 @@ void dclreos(void)
 /*
  *    **************************************************
  *    *                                                *
- *    *               Printing routines                *
- *    *                                                *
- *    **************************************************
- */
-
-
-/*
- *    **************************************************
- *    *                                                *
- *    *                 Print Heading                  *
- *    *                                                *
- *    **************************************************
- */
-void PrintHeading(void)
-{
-   Message("Printing...");
-
-   PString("\r\n***  BIGCALC  (precision ");
-   PInteger((long) normprec);
-   PString(" digits, ");
-   PChar(PRINTDECIMAL);
-   PString(" is decimal point)  ***\r\n\n");
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *     Print Registers [lo to hi] on Printer      *
- *    *                                                *
- *    **************************************************
- */
-void PrintReg(int lo, int hi)
-{
-   int r;
-
-   for (r = lo; r <= hi; r++) {
-      PChar(r + '0');
-      PrintNumber(&reg[r]);
-      NewLine();
-      }
-   NewLine();
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *       Print Stack [lo to hi] on Printer        *
- *    *                                                *
- *    **************************************************
- */
-
-void PrintStack(int lo, int hi)
-
-{
-
-   int s;
-
-   for (s = hi; s >= lo; s--) {
-      PChar(stackname[s]);
-      PrintNumber(&stack[s]);
-      NewLine();
-      }
-
-   NewLine();
-
-}
-
-
-
-
-/*
- *    **************************************************
- *    *                                                *
  *    *   Display Memory Register in Full on Screen    *
  *    *                                                *
+ For wbigcalc, this will open a new modal window
  *    **************************************************
  */
 void DisplayReg(int r)
 {
    printtoscreen = TRUE;      /* Temporarily print to screen */
 
-   set_text_attrx(REG_ATTR) ;
+   // set_text_attrx(REG_ATTR) ;
    // CurPos(1, 1);
    // EraEop();
-   dclrscr() ;
+   // dclrscr() ;
    menucleared = TRUE;
 
-   PChar(r + '0');
-   PrintNumber(&reg[r]);
+   // PChar(r + '0');
+   // PrintNumber(&reg[r]);
 
-   MessageWait("");
+   // MessageWait("");
 
    WorkScreen();
 
@@ -223,225 +149,27 @@ void DisplayReg(int r)
  *    *                                                *
  *    *    Display Stack Register in Full on Screen    *
  *    *                                                *
+ For wbigcalc, this will open a new modal window
  *    **************************************************
  */
-
 void DisplayStack(int s)
-
 {
-
    printtoscreen = TRUE;      /* Temporarily print to screen */
 
-   set_text_attrx(REG_ATTR) ;
+   // set_text_attrx(REG_ATTR) ;
    // CurPos(1, 1);
    // EraEop();
-   dclrscr() ;
+   // dclrscr() ;
    menucleared = TRUE;
 
-   PChar(stackname[s]);
-   PrintNumber(&stack[s]);
+   // PChar(stackname[s]);
+   // PrintNumber(&stack[s]);
 
-   MessageWait("");
+   // MessageWait("");
 
    WorkScreen();
 
    printtoscreen = FALSE;     /* Reset print to screen */
-
-}
-
-
-
-
-/*
- *    **************************************************
- *    *                                                *
- *    *       Print Number [*number] on Printer        *
- *    *                                                *
- *    **************************************************
- */
-
-void PrintNumber(NORMTYPE *nbr)
-
-{
-
-   long exponent;
-   int i, digits, chrcount;
-
-   prevchr = '0';
-
-   PString(": ");
-   ppos = SIGNPRTCOL;
-
-   chrcount = 0;
-   digits = nbr->digits;
-   exponent = nbr->exp;
-
-   if (nbr->digits == 0) {
-      PString(" 0\r\n\n");
-      return;
-      }
-
-
-   if ( (scinotation)
-         ||
-        (exponent < minfloatprn)
-         ||
-        (exponent > maxfloatprn) )
-
-      {                             /* Scientific Notation */
-
-      for (i = 1; i < groupsize; i++)
-         PCharWrap(' ');
-
-      PSign(nbr->sign);                   /* Print sign */
-
-      PCharWrap(nbr->man[0]+ '0');        /* First digit and decimal point */
-      PCharWrap(PRINTDECIMAL);
-
-      if (digits <= 1)                    /* If no more digits, */
-         PCharWrap('0');                  /*  print one zero    */
-      else {
-         for (i = 1; i < digits; i++) {   /*  print remaining digits */
-            PCharWrap(nbr->man[i]+ '0');
-            if (! (i % groupsize))
-               PCharWrap(' ');
-            }
-         }
-      PExponent(nbr->exp - 1L);           /* Print exponent */
-
-      }                             /* Scientific Notation end */
-   else
-      {                             /* Floating Decimal */
-      if (exponent <= 0L)
-
-         {                                /* Number < 1 */
-
-         for (i = 1; i < groupsize; i++)
-            PCharWrap(' ');
-
-         PSign(nbr->sign);                   /* Print sign */
-         PCharWrap('0');                     /* Zero left of decimal looks good */
-         PCharWrap(PRINTDECIMAL);            /* Decimal point */
-
-         for (i = 0; i > (int)exponent; i--) {  /* Zeros to left of number */
-            PCharWrap('0');
-            if (! (++chrcount % groupsize))
-               PCharWrap(' ');
-            }
-
-         for (i = 0; i < digits; i++) {      /* Print mantissa digits */
-            PCharWrap(nbr->man[i] + '0');
-            if (! (++chrcount % groupsize))
-               PCharWrap(' ');
-            }
-         }                                /* Number < 1 */
-      else
-         {                                /* Number >= 1 */
-         /* Calculate digit allignment   */
-         i = (int)((3000000L - exponent) % (long)groupsize);
-         while (i-- > 0)                     /*  here 1 <= exponent <= maxfloatprn */
-            PCharWrap(' ');
-
-         PSign(nbr->sign);                   /* Print sign */
-
-         chrcount = (int)exponent;           /* Distance from decimal point to    */
-                                             /*  print groups of groupsize digits */
-
-         for (i = 0; i < (int)exponent; i++) {  /* Digits to left of decimal */
-            if (i < digits)
-               PCharWrap(nbr->man[i] + '0'); /* Mantissa digits while they last */
-            else
-               PCharWrap('0');               /* Zeros if mantissa exhausted */
-
-            if (! (--chrcount % groupsize))  /* Space between groups */
-               if (chrcount)                 /*  of groupsize digits */
-                  PCharWrap(' ');
-            }
-
-         chrcount = 0;                       /* Distance from decimal */
-
-         if (i < digits) {                   /* If digits to right of decimal */
-            PCharWrap(PRINTDECIMAL);         /*  print decimal point          */
-
-            for (i = (int)exponent; i < digits; i++) {   /* digits to right of decimal */
-               PCharWrap(nbr->man[i] + '0');
-               if (! (++chrcount % groupsize))
-                  PCharWrap(' ');
-               }
-            }
-
-         }                                /* Number >= 1 */
-
-      }                             /* Floating Decimal */
-
-   NewLine();
-
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *         Print Char & Wrap Print Line           *
- *    *                                                *
- *    **************************************************
- */
-
-static void PCharWrap(int chr)
-
-{
-
-   int col;
-
-   if ( (ppos > MAXPRTCOL)
-         &&
-        (chr != ' ')
-         &&
-        ( (prevchr == ' ')
-           ||
-          (prevchr == PRINTDECIMAL) ) ) {
-      PString("\r\n");
-      for (col = 1; col < MINPRTCOL; col++)
-         PChar(' ');
-      ppos = MINPRTCOL;
-      }
-
-   PChar(chr);
-   ppos++;
-   prevchr = chr;
-
-}
-
-
-
-
-/*
- *    **************************************************
- *    *                                                *
- *    *              Print Sign Character              *
- *    *                                                *
- *    **************************************************
- */
-static void PSign(int sign)
-{
-   if (sign == '-')
-      PCharWrap('-');
-   else
-      PCharWrap(' ');
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *            Print Exponent on Printer           *
- *    *                                                *
- *    **************************************************
- */
-static void PExponent(long exponent)
-{
-   if (prevchr != ' ')
-      PChar(' ');
-   PChar('e');
-   PInteger(exponent);
 }
 
 /*
@@ -741,8 +469,8 @@ void OnScreenMenu(void)
    WriteAt(20, 1, "0-9.E  Number   + >Add        X >Xchg X R   V >View full");
    WriteAt(21, 1, "    S  ChgSign  - >Sub   Lft/Rt >Xchg X Y   F >Float/Sci");
    WriteAt(22, 1, "BkSpc  Clear X  * >Mul   Up/Dwn >Roll UpDn  G >Group 3/5");
-   WriteAt(23, 1, "Enter >Enter    / >Div     PgUp >Store      P >Print");
-   WriteAt(24, 1, "    L >Last X   C >Clear   PgDn >Recall     D >Disk/Print");
+   WriteAt(23, 1, "Enter >Enter    / >Div     PgUp >Store      ");
+   WriteAt(24, 1, "    L >Last X   C >Clear   PgDn >Recall     ");
 
    WriteAt(19, 58, "(M rotates Fn key menu)");
 
@@ -887,43 +615,27 @@ static void HelpScreen3(void)
    Heading1();
 
    set_text_attrx(HELP_ATTR) ;
-   WriteAt( 3,  1, "This program emulates a Hewlett-Packard calculator w"
-                   "ith four register stack");
-   WriteAt( 4,  1, "and ten memory registers.  The stack consists of the"
-                   " X, Y, Z & T registers.");
+   WriteAt( 3,  1, "This program emulates a Hewlett-Packard calculator with four register stack");
+   WriteAt( 4,  1, "and ten memory registers.  The stack consists of the X, Y, Z & T registers.");
    WriteAt( 5,  1, "The memory registers are 0-9.");
 
-   WriteAt( 7,  1, "The X register is 'where the action is'.  When you e"
-                   "nter a number it is entered");
-   WriteAt( 8,  1, "into the X register.  If X already contains a number"
-                   ", that number is 'pushed'");
-   WriteAt( 9,  1, "up to Y, Y is pushed to Z, Z to T, and the contents "
-                   "of T is lost.  The 'Enter'");
-   WriteAt(10,  1, "key pushes the stack and duplicates X into Y. A numb"
-                   "er entered into X after");
-   WriteAt(11,  1, "Enter or ClearX DOES NOT push the stack. When you us"
-                   "e a function that acts on");
-   WriteAt(12,  1, "two numbers (like + or -) it always acts on X & Y (e"
-                   "xcept for Store, Recall &");
-   WriteAt(13,  1, "eXchange which act on X and a memory register).  The"
-                   " result is put in X, and");
-   WriteAt(14,  1, "the stack is 'Dropped'.  That is, Z copies to Y and "
-                   "T duplicates into Z.");
+   WriteAt( 7,  1, "The X register is 'where the action is'.  When you enter a number it is entered");
+   WriteAt( 8,  1, "into the X register.  If X already contains a number, that number is 'pushed'");
+   WriteAt( 9,  1, "up to Y, Y is pushed to Z, Z to T, and the contents of T is lost.  The 'Enter'");
+   WriteAt(10,  1, "key pushes the stack and duplicates X into Y. A number entered into X after");
+   WriteAt(11,  1, "Enter or ClearX DOES NOT push the stack. When you use a function that acts on");
+   WriteAt(12,  1, "two numbers (like + or -) it always acts on X & Y (except for Store, Recall &");
+   WriteAt(13,  1, "eXchange which act on X and a memory register).  The result is put in X, and");
+   WriteAt(14,  1, "the stack is 'Dropped'.  That is, Z copies to Y and T duplicates into Z.");
 
-   WriteAt(16,  1, "Numbers are displayed in 'Floating Decimal' or 'Scie"
-                   "ntific Notation' format.");
-   WriteAt(17,  1, "Floating Decimal looks like this:    1.2     123.45 "
-                   "    -12300000000  0.000002");
-   WriteAt(18,  1, "Scientific Notation looks like this: 1.2 e0  1.2345 "
-                   "e2  -1.23 e10     2.0 e-6");
-   WriteAt(19,  1, "Very long numbers take longer to compute, of course."
-                   " You can abort a long");
-   WriteAt(20,  1, "calculation by pressing the Escape key.");
+   WriteAt(16,  1, "Numbers are displayed in 'Floating Decimal' or 'Scientific Notation' format.");
+   WriteAt(17,  1, "Floating Decimal looks like this:    1.2     123.45     -12300000000  0.000002");
+   WriteAt(18,  1, "Scientific Notation looks like this: 1.2 e0  1.2345 e2  -1.23 e10     2.0 e-6");
+   WriteAt(19,  1, "Very long numbers take longer to compute, of course.");
+   WriteAt(20,  1, "You can abort a long calculation by pressing the Escape key.");
 
-   WriteAt(22,  1, "If a number is too large or small for the screen, Sc"
-                   "ientific Notation is used.");
-   WriteAt(23,  1, "All results are truncated except for Y^X which is ro"
-                   "unded: 5 up 4 down.");
+   WriteAt(22,  1, "If a number is too large or small for the screen, Scientific Notation is used.");
+   WriteAt(23,  1, "All results are truncated except for Y^X which is rounded: 5 up 4 down.");
 
 }
 

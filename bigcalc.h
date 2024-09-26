@@ -121,7 +121,6 @@ void dclreos(void);
 #define DIVIDE     47   /*  /          */
 #define LASTX      76   /*  L          */
 #define CLEAR      67   /*  C          */
-#define PRINT      80   /*  P          */
 #define SCINOT     70   /*  F          */
 #define XCHGXREG   88   /*  X          */
 #define CHGSIGN    83   /*  S          */
@@ -325,12 +324,11 @@ extern  void SetTempInteger(COMPTYPE *dest,long integer);
  *    **************************************************
  */
 
-extern  void PrintHeading(void);
 extern  void PrintReg(int lo,int hi);
 extern  void PrintStack(int lo,int hi);
+
 extern  void DisplayReg(int r);
 extern  void DisplayStack(int s);
-extern  void PrintNumber(NORMTYPE *nbr);
 
 extern  void WriteReg(int lo,int hi);
 extern  void WriteStack(int lo,int hi);

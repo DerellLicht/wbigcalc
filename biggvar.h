@@ -49,12 +49,7 @@ extern long
    minfloatprn,            /* Min exp for float */
    maxfloatprn;            /* Max exp for float */
 
-extern FILE
-   *printfile;             /* Print file handle */
-
-extern char
-   stackname[4],           /* Stack register names */
-   printid[15];            /* Print file name      */
+extern char stackname[4];           /* Stack register names */
 
 extern BOOLEAN
    stacklift,              /* Lift stack for new X if TRUE */
