@@ -367,15 +367,13 @@ extern int ExtendedMultiply(void)
          if ((*(cx--) += (*bx * ad)) >= 10000) {   /* Partial carry to      */
             *cx += 1000;                           /*  prevent digit overflow */
             *(cx + 1) -= 10000;
-            }
-         } while (--bx >= bl);                  /* Multiplicand loop end */
-
-      if (KeyPressed() == ESCAPE) {             /* User abort */
-         return(FALSE);
          }
+      } while (--bx >= bl);                  /* Multiplicand loop end */
 
-      } while ((ax -= 3) >= al);                /* Multiplier loop end */
-
+      // if (KeyPressed() == ESCAPE) {             /* User abort */
+      //    return(FALSE);
+      // }
+   } while ((ax -= 3) >= al);                /* Multiplier loop end */
 
    cx = &work[2].man[work[2].digits];        /* Satisfy all carrys */
    while (--cx > cl) {
@@ -383,14 +381,10 @@ extern int ExtendedMultiply(void)
          *(cx - 1) += *cx / 10;
          *cx %= 10;
          }
-      }
+   }
 
    return(Normalize(2));
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -401,11 +395,8 @@ extern int ExtendedMultiply(void)
  *    *                                                *
  *    **************************************************
  */
-
 extern int ExtendedDivide(void)
-
 {
-
    WORKDIGIT *ax, *bx, *cx;        /* Indexes               */
    WORKDIGIT *al, *bl;             /* left pointers         */
    WORKDIGIT *ar,      *cr;        /* right pointers        */
@@ -480,7 +471,6 @@ extern int ExtendedDivide(void)
     *    **************************************************
     */
 
-
    do {                    /* Divide by repeated subtraction */
       ax = al;
       bx = bl;
@@ -543,19 +533,14 @@ extern int ExtendedDivide(void)
          bl++;
          }
 
-      if (KeyPressed() == ESCAPE) { /* User abort */
-         return(FALSE);
-         }
+      // if (KeyPressed() == ESCAPE) { /* User abort */
+      //    return(FALSE);
+      // }
 
-      } while (cx <= cr);  /* Divide loop end */
-
+   } while (cx <= cr);  /* Divide loop end */
 
    return(Normalize(2));
-
 }
-
-
-
 
 /*
  *    **************************************************

@@ -138,215 +138,6 @@ BOOLEAN
 /*
  *    **************************************************
  *    *                                                *
- *    *                     Main                       *
- *    *                                                *
- *    **************************************************
- */
-// int main(int argc,char *argv[])
-int dos_main(unsigned inchr)
-{
-   // Initialize(argc, argv[1]);
-
-   //  chr is a global var, used by ExtendedGetX() et al
-   // chr = GetPrompt();
-   chr = inchr ;  
-
-   // while (chr != ESCAPE) {
-
-      switch (chr) {
-
-         case (ADD):
-            Add();               /* Add Y + X */
-            break;
-
-         case (SUBTRACT):
-            Subtract();          /* Subtract Y - X */
-            break;
-
-         case (MULTIPLY):
-            Multiply();          /* Multiply Y * X */
-            break;
-
-         case (DIVIDE):
-            Divide();            /* Divide Y / X */
-            break;
-
-         case (HELP):
-            HelpScreen();        /* Help Screen */
-            break;
-
-         case (POWER):
-            Power();             /* Power (Y^X) */
-            break;
-
-         case (SQUAREROOT):
-            SquareRoot();        /* Square Root X */
-            break;
-
-         case (SQUARE):
-            Square();            /* Square X */
-            break;
-
-         case (RECIPROCAL):
-            Reciprocal();        /* Reciprocal X */
-            break;
-
-         case (FACTORIAL):
-            Factorial();         /* Factorial X */
-            break;
-
-         case (INTEGER):
-            IntegerPart();       /* Integer Part X */
-            break;
-
-         case (FRACTION):
-            FractionPart();      /* Fraction Part X */
-            break;
-
-         case (SIN):
-            Sin();               /* Sine X */
-            break;
-
-         case (ARCSIN):
-            ArcSin();            /* ArcSine X */
-            break;
-
-         case (COS):
-            Cos();               /* Cosine X */
-            break;
-
-         case (ARCCOS):
-            ArcCos();            /* ArcCosine X */
-            break;
-
-         case (TAN):
-            Tan();               /* Tangent X */
-            break;
-
-         case (ARCTAN):
-            ArcTan();            /* ArcTangent X */
-            break;
-
-         case (LOG):
-            Log();               /* Common Log X */
-            break;
-
-         case (EXP10):
-            Exp10();             /* Exponent 10^X */
-            break;
-
-         case (LN):
-            Ln();                /* Natural Log X */
-            break;
-
-         case (EXPE):
-            ExpE();              /* Exponent e^X */
-            break;
-
-         case (RECALLPI):
-            RecallPi();          /* Recall pi */
-            break;
-
-         case (RECALLE):
-            RecallE();           /* Recall e */
-            break;
-
-         case (LASTX):
-            RecallLastX();       /* Recall Last X */
-            break;
-
-         case (CHGSIGN):
-            ChangeSign();        /* Change sign X */
-            break;
-
-         case (GROUPSIZE):
-            GroupSize();         /* Toggle Group Size (3/5) */
-            break;
-
-         case (MENUROLL):
-            MenuRoll();          /* Roll Function Key Menu */
-            break;
-
-         case (VIEWREG):
-            ViewReg();           /* View Register on Screen */
-            break;
-
-         case ('0'):
-         case ('1'):
-         case ('2'):
-         case ('3'):
-         case ('4'):
-         case ('5'):
-         case ('6'):
-         case ('7'):
-         case ('8'):
-         case ('9'):
-         case ('.'):
-         case ('E'):
-            AcceptX();           /* Accept new X from keyboard with first */
-            break;               /*  character passed to AcceptX routine */
-
-         case (CLEARX):
-            ClearX();            /* Clear X to zero */
-            break;
-
-         case (ENTER):
-            Enter();             /* Push up stack */
-            break;
-
-         case (SCINOT):
-            SciNotation();       /* Use Scientific Notation */
-            break;
-
-         case (CLEAR):
-            Clear();             /* Clear (prompt for what) */
-            break;
-
-         case (STOREX):
-            StoreX();            /* Store X in register (prompt for which) */
-            break;
-
-         case (RECALLREG):
-            RecallReg();         /* Recall register to X (prompt for which) */
-            break;
-
-         case (XCHGXY1):
-         case (XCHGXY2):
-            ExchangeXY();        /* Exchange X and Y */
-            break;
-
-         case (XCHGXREG):
-            ExchangeXReg();      /* Exchange X and Reg (prompt for which) */
-            break;
-
-         case (ROLLDOWN):
-            RollDown();          /* Roll stack down */
-            break;
-
-         case (ROLLUP):
-            RollUp();            /* Roll stack up */
-            break;
-
-         default:
-            ;              /* Unknown key */
-
-         }  /* end switch */
-
-      // flushall();
-
-      // chr = GetPrompt();
-      // }  /* while */
-
-
-   // ScrTerm();
-
-   // exit(0);
-   return 0;
-}
-
-/*
- *    **************************************************
- *    *                                                *
  *    *              Initialize Variables              *
  *    *                                                *
  *    **************************************************
@@ -1931,5 +1722,214 @@ static void DropStack(void)
 
    for (s = 0; s <= 2; s++)
       stack[s] = stack[s + 1];
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *                     Main                       *
+ *    *                                                *
+ *    **************************************************
+ */
+// int main(int argc,char *argv[])
+int dos_main(unsigned inchr)
+{
+   // Initialize(argc, argv[1]);
+
+   //  chr is a global var, used by ExtendedGetX() et al
+   // chr = GetPrompt();
+   chr = inchr ;  
+
+   // while (chr != ESCAPE) {
+
+      switch (chr) {
+
+         case (ADD):
+            Add();               /* Add Y + X */
+            break;
+
+         case (SUBTRACT):
+            Subtract();          /* Subtract Y - X */
+            break;
+
+         case (MULTIPLY):
+            Multiply();          /* Multiply Y * X */
+            break;
+
+         case (DIVIDE):
+            Divide();            /* Divide Y / X */
+            break;
+
+         case (HELP):
+            HelpScreen();        /* Help Screen */
+            break;
+
+         case (POWER):
+            Power();             /* Power (Y^X) */
+            break;
+
+         case (SQUAREROOT):
+            SquareRoot();        /* Square Root X */
+            break;
+
+         case (SQUARE):
+            Square();            /* Square X */
+            break;
+
+         case (RECIPROCAL):
+            Reciprocal();        /* Reciprocal X */
+            break;
+
+         case (FACTORIAL):
+            Factorial();         /* Factorial X */
+            break;
+
+         case (INTEGER):
+            IntegerPart();       /* Integer Part X */
+            break;
+
+         case (FRACTION):
+            FractionPart();      /* Fraction Part X */
+            break;
+
+         case (SIN):
+            Sin();               /* Sine X */
+            break;
+
+         case (ARCSIN):
+            ArcSin();            /* ArcSine X */
+            break;
+
+         case (COS):
+            Cos();               /* Cosine X */
+            break;
+
+         case (ARCCOS):
+            ArcCos();            /* ArcCosine X */
+            break;
+
+         case (TAN):
+            Tan();               /* Tangent X */
+            break;
+
+         case (ARCTAN):
+            ArcTan();            /* ArcTangent X */
+            break;
+
+         case (LOG):
+            Log();               /* Common Log X */
+            break;
+
+         case (EXP10):
+            Exp10();             /* Exponent 10^X */
+            break;
+
+         case (LN):
+            Ln();                /* Natural Log X */
+            break;
+
+         case (EXPE):
+            ExpE();              /* Exponent e^X */
+            break;
+
+         case (RECALLPI):
+            RecallPi();          /* Recall pi */
+            break;
+
+         case (RECALLE):
+            RecallE();           /* Recall e */
+            break;
+
+         case (LASTX):
+            RecallLastX();       /* Recall Last X */
+            break;
+
+         case (CHGSIGN):
+            ChangeSign();        /* Change sign X */
+            break;
+
+         case (GROUPSIZE):
+            GroupSize();         /* Toggle Group Size (3/5) */
+            break;
+
+         case (MENUROLL):
+            MenuRoll();          /* Roll Function Key Menu */
+            break;
+
+         case (VIEWREG):
+            ViewReg();           /* View Register on Screen */
+            break;
+
+         case ('0'):
+         case ('1'):
+         case ('2'):
+         case ('3'):
+         case ('4'):
+         case ('5'):
+         case ('6'):
+         case ('7'):
+         case ('8'):
+         case ('9'):
+         case ('.'):
+         case ('E'):
+            AcceptX();           /* Accept new X from keyboard with first */
+            break;               /*  character passed to AcceptX routine */
+
+         case (CLEARX):
+            ClearX();            /* Clear X to zero */
+            break;
+
+         case (ENTER):
+            Enter();             /* Push up stack */
+            break;
+
+         case (SCINOT):
+            SciNotation();       /* Use Scientific Notation */
+            break;
+
+         case (CLEAR):
+            Clear();             /* Clear (prompt for what) */
+            break;
+
+         case (STOREX):
+            StoreX();            /* Store X in register (prompt for which) */
+            break;
+
+         case (RECALLREG):
+            RecallReg();         /* Recall register to X (prompt for which) */
+            break;
+
+         case (XCHGXY1):
+         case (XCHGXY2):
+            ExchangeXY();        /* Exchange X and Y */
+            break;
+
+         case (XCHGXREG):
+            ExchangeXReg();      /* Exchange X and Reg (prompt for which) */
+            break;
+
+         case (ROLLDOWN):
+            RollDown();          /* Roll stack down */
+            break;
+
+         case (ROLLUP):
+            RollUp();            /* Roll stack up */
+            break;
+
+         default:
+            ;              /* Unknown key */
+
+         }  /* end switch */
+
+      // flushall();
+
+      // chr = GetPrompt();
+      // }  /* while */
+
+
+   // ScrTerm();
+
+   // exit(0);
+   return 0;
 }
 

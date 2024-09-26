@@ -103,16 +103,18 @@ extern int GetChar(void)
  *    **************************************************
  *    *                                                *
  *    *         Return character if key pressed        *
+ Only used to interrupt long math operations,
+ But not usable in Windows program
  *    *                                                *
  *    **************************************************
  */
-extern int KeyPressed(void)
-{
-   if (kbhit())
-      return(GetChar());
-   else
-      return(0);
-}
+// int KeyPressed(void)
+// {
+//    if (kbhit())
+//       return(GetChar());
+//    else
+//       return(0);
+// }
 
 /*
  *    **************************************************
@@ -315,8 +317,8 @@ void MessageWait(char *msg)
       strcat(tmsg, "  ");
    strcat(tmsg, "(Press a key to continue)");
 
-   Message(tmsg);
-   GetChar();
+   MessageBox(NULL, tmsg, NULL, MB_OK | MB_ICONEXCLAMATION);
+   // GetChar();
 }
 
 /*

@@ -206,7 +206,7 @@ void put_register(unsigned n, char *msg);
  */
 
 extern  int GetChar(void);
-extern  int KeyPressed(void);
+// extern  int KeyPressed(void);
 
 // extern  void ScrInit(void);
 // extern  void ScrTerm(void);
@@ -229,16 +229,6 @@ extern  void BackSpace(int *row,int *col);
 extern  void DisplayExpChar(int *row,int *col,int chr);
 extern  void BackSpaceExp(int *row,int *col);
 extern  void DisplayExp(int *row,int *col,int exprow,int expcol,int expsign,long exponent);
-
-extern  void PChar(int chr);
-extern  void PString(char *str);
-extern  void PInteger(long integer);
-extern  void NewLine(void);
-extern  void NewPage(void);
-
-extern  long TimerTicks(void);
-
-
 
 /*
  *    **************************************************
