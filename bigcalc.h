@@ -119,7 +119,7 @@ bool keyboard_state_set(keyboard_state_t new_kbd_state);
 //  GetX functions
 void init_getx_vars(void);
 bool ExtendedGetX(unsigned inchr);
-
+int exit_GetX(void); //  reset local GetX vars
 
 /*
  *    **************************************************

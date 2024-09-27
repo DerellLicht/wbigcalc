@@ -733,6 +733,8 @@ int exit_GetX(void)
 }
 
 //***************************************************************************
+//  This returns FALSE only on ESCAPE
+//***************************************************************************
 bool ExtendedGetX(unsigned chr)
 {
    int row, col, exprow, expcol;
@@ -855,13 +857,9 @@ bool ExtendedGetX(unsigned chr)
 
          else if (chr == ESCAPE)                /* Changed his/her mind */
             return(FALSE);
-
-
-         }  /* End integer part */
-
+      }  /* End integer part */
 
 /*  ******  D E C I M A L   M O D E  ******  */
-
       else if (mode == INDEC) {
 
          if (isdigit(chr)) {                    /* Numeric digit */
@@ -912,16 +910,14 @@ bool ExtendedGetX(unsigned chr)
             }
 
          else if (chr == ESCAPE)                /* Changed his/her mind */
-            return(FALSE);
+            return(false);
 
          else                                   /* Bad keystroke */
             ;
 
-         }  /* End decimal part  */
-
+      }  /* End decimal part  */
 
 /*  ******  E X P O N E N T   M O D E  ******  */
-
       else {   /* mode == INEXP */
 
          if (isdigit(chr)) {                    /* numeric digit */
@@ -961,12 +957,12 @@ bool ExtendedGetX(unsigned chr)
             }
 
          else if (chr == ESCAPE)                /* Changed his/her mind */
-            return(FALSE);
+            return(false);
 
          else                                   /* Bad keystroke */
             ;
 
-         }  /* mode == INEX */
+      }  /* if mode == INEX */
 
       // chr = GetChar();                    /* Get next char from kbd */
       // 

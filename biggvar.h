@@ -42,8 +42,9 @@ extern int
    workprec,               /* Work precision    */
    groupsize,              /* Digit group size  */
    entrysignrow,           /* Row for X entry   */
-   menunbr,                /* Menu number       */
-   chr;                    /* Input Character   */
+   menunbr;                /* Menu number       */
+   
+extern int chr;                    /* Input Character   */
 
 extern long
    minfloatprn,            /* Min exp for float */

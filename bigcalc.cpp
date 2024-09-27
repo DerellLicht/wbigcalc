@@ -116,8 +116,9 @@ int
    workprec = 0,           /* Work precision    */
    groupsize = 0,          /* Digit group size  */
    entrysignrow,           /* Row for X entry   */
-   menunbr = 0,            /* Menu number       */
-   chr = 0;                /* Input Character   */
+   menunbr = 0;            /* Menu number       */
+   
+int chr = 0;                /* Input Character   */
 
 long
    minfloatprn,            /* Min exp for float */
@@ -1610,6 +1611,37 @@ static void DropStack(void)
 }
 
 //*********************************************************************
+//  Exit from GetX state
+//*********************************************************************
+static NORMTYPE *tempStackX = NULL; //  used by GetX function
+   
+static void ExitGetXState(void)
+{
+   if (normprec > SIZEOFSMALL) {
+      // result = ExtendedGetX();
+      WorkScreen();
+   }
+   else {
+      // result = ExtendedGetX();
+      if (stacklift) {
+         DropStack();
+         stack[3] = *tempStackX;
+         WriteStack(1, 3);
+      }
+      // CurPos(entrysignrow, SIGNDISPCOL);
+      // EraEop();
+      WriteStack(0, 0);
+   }
+
+   if (tempStackX != NULL) {
+      free(tempStackX);
+      tempStackX = NULL ;
+   }
+   exit_GetX(); //  reset local GetX vars
+   keyboard_state_set(KBD_STATE_DEFAULT);
+}
+
+//*********************************************************************
 static keyboard_state_t keyboard_state = KBD_STATE_DEFAULT ;
 
 int keyboard_state_handler(char inchr)
@@ -1623,6 +1655,9 @@ int keyboard_state_handler(char inchr)
       
    case KBD_STATE_GETX:
       result = ExtendedGetX(inchr);
+      if (!result) {
+         ExitGetXState();
+      }
       break ;
       
    default:
@@ -1650,6 +1685,7 @@ bool keyboard_state_set(keyboard_state_t new_kbd_state)
       return false ;
    }
 }
+
 /*
  *    **************************************************
  *    *                                                *
@@ -1658,13 +1694,14 @@ bool keyboard_state_set(keyboard_state_t new_kbd_state)
  *    *                                                *
  *    **************************************************
  */
-static NORMTYPE *tempStackX = NULL;
-   
 static void AcceptX(char inchr)
 {
    int result ;
    if (keyboard_state == KBD_STATE_GETX) {
       result = ExtendedGetX(inchr);
+      if (!result) {
+         ExitGetXState();
+      }
       return ;      
    }
 
@@ -1700,8 +1737,11 @@ static void AcceptX(char inchr)
          MoveWorkStack(0, 0);
          stacklift = TRUE;
          }
+         else {
+            ExitGetXState();
+         }
       WorkScreen();
-      }
+   }
 
    else {
 
@@ -1716,62 +1756,11 @@ static void AcceptX(char inchr)
          MoveWorkStack(0, 0);
          stacklift = TRUE;
          }
-      else
-         if (stacklift) {
-            DropStack();
-            stack[3] = *tempStackX;
-            WriteStack(1, 3);
-         }
-      // CurPos(entrysignrow, SIGNDISPCOL);
-      // EraEop();
+      else {
+         ExitGetXState();
+      }
       WriteStack(0, 0);
-      }
-}
-
-//*********************************************************************
-//  Exit from GetX state
-//*********************************************************************
-void ExitGetXState(void)
-{
-   bool result = true;
-
-   if (normprec > SIZEOFSMALL) {
-
-      // CurPos(entrysignrow - 1, 1);  /* Big numbers, use full screen */
-      // EraEol();
-      // WriteAt(entrysignrow - 1, 1, "========================="
-      //                              "  E N T E R I N G   X  "
-      //                              "=========================");
-      // result = ExtendedGetX();
-      if (result) {
-          if (stacklift)
-             PushStack();
-         MoveWorkStack(0, 0);
-         stacklift = TRUE;
-         }
-      WorkScreen();
-      }
-
-   else {
-
-      // result = ExtendedGetX();
-      if (result) {
-         MoveWorkStack(0, 0);
-         stacklift = TRUE;
-         }
-      else
-         if (stacklift) {
-            DropStack();
-            stack[3] = *tempStackX;
-            WriteStack(1, 3);
-         }
-      // CurPos(entrysignrow, SIGNDISPCOL);
-      // EraEop();
-      WriteStack(0, 0);
-      }
-
-   free(tempStackX);
-   
+   }
 }
 
 /*
@@ -1786,6 +1775,7 @@ static void Enter(void)
    PushStack();
    WriteStack(1, 3);
    stacklift = FALSE;
+   ExitGetXState();
 }
 
 /*
