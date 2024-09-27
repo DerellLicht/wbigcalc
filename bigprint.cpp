@@ -41,6 +41,8 @@
 static void WExponent(long exponent);
 static void WriteNumber(NORMTYPE *nbr);
 
+#define HELP_ATTR    2
+
 /*
  *    **************************************************
  *    *                                                *
@@ -68,8 +70,6 @@ static void set_text_attrx(WORD tFGBG)
  */
 void DisplayReg(int r)
 {
-   printtoscreen = TRUE;      /* Temporarily print to screen */
-
    // set_text_attrx(REG_ATTR) ;
    // CurPos(1, 1);
    // EraEop();
@@ -82,8 +82,6 @@ void DisplayReg(int r)
    // MessageWait("");
 
    WorkScreen();
-
-   printtoscreen = FALSE;     /* Reset print to screen */
 }
 
 /*
@@ -96,12 +94,6 @@ void DisplayReg(int r)
  */
 void DisplayStack(int s)
 {
-   printtoscreen = TRUE;      /* Temporarily print to screen */
-
-   // set_text_attrx(REG_ATTR) ;
-   // CurPos(1, 1);
-   // EraEop();
-   // dclrscr() ;
    menucleared = TRUE;
 
    // PChar(stackname[s]);
@@ -110,8 +102,6 @@ void DisplayStack(int s)
    // MessageWait("");
 
    WorkScreen();
-
-   printtoscreen = FALSE;     /* Reset print to screen */
 }
 
 /*

@@ -55,15 +55,6 @@
 #define DISPDECIMAL '.'                   /* Display decimal point */
 #define PRINTDECIMAL '*'                  /* Print decimal point */
 
-//  colors
-#define TITLE_ATTR   0x1B
-#define HEADER_ATTR  0x0B
-#define TEXT_ATTR    3
-#define HELP_ATTR    2
-#define LOGO_ATTR    6
-#define REG_ATTR     2
-#define MENU_ATTR    3
-
 /*
  *    **************************************************
  *    *                                                *

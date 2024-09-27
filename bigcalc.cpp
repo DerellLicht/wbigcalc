@@ -130,8 +130,7 @@ BOOLEAN
    stacklift = TRUE,       /* Lift stack for new X if TRUE */
    scinotation = FALSE,    /* Force sci notation if TRUE   */
 //   charpresent = FALSE,    /* Character present if TRUE    */
-   menucleared = TRUE,     /* Screen menu cleared if TRUE  */
-   printtoscreen = FALSE;  /* Print to screen if TRUE      */
+   menucleared = TRUE;     /* Screen menu cleared if TRUE  */
 
 /*
  *    **************************************************

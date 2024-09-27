@@ -53,6 +53,4 @@ extern long
 extern BOOLEAN
    stacklift,              /* Lift stack for new X if TRUE */
    scinotation,            /* Force sci notation if TRUE   */
-//    charpresent,            /* Character present if TRUE    */
-   menucleared,            /* Screen menu cleared if TRUE  */
-   printtoscreen;          /* Print to screen if TRUE      */
+   menucleared;            /* Screen menu cleared if TRUE  */
