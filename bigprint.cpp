@@ -32,6 +32,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "common.h"
 #include "bigcalc.h"
 #include "biggvar.h"
 
@@ -52,13 +53,6 @@ static void WriteNumber(NORMTYPE *nbr);
  */
 
 static int ppos = 0;            /* Current print column */
-
-//**********************************************************
-static void set_text_attrx(WORD tFGBG)
-   {
-   // sinfo.wAttributes = tFGBG ;
-   // SetConsoleTextAttribute(hStdOut, sinfo.wAttributes) ;
-   }   
 
 /*
  *    **************************************************
@@ -126,7 +120,7 @@ void WriteReg(int lo, int hi)
       // CurPos(r + 4, SIGNDISPCOL);
       WriteNumber(&reg[r]);
       // dprints(r + 4, SIGNDISPCOL, &reg[r]);
-      }
+   }
 }
 
 /*
@@ -139,12 +133,11 @@ void WriteReg(int lo, int hi)
 void WriteStack(int lo, int hi)
 {
    int s;
-
    for (s = hi; s >= lo; s--) {
       // CurPos(XSIGNROW - s, SIGNDISPCOL);
       WriteNumber(&stack[s]);
       // dprints(XSIGNROW - s, SIGNDISPCOL, &stack[s]);
-      }
+   }
 }
 
 /*
@@ -160,13 +153,13 @@ static void WriteNumber(NORMTYPE *nbr)
 {
    long exponent;
    int i, digits;
-
-   // EraEol();
-
+   
    if (nbr->digits == 0) {
-      WString(" 0");
+      // WString(" 0");
       return;
-      }
+   }
+
+   reset_output_str();
 
    if (nbr->sign == '-')
       WChar('-');
@@ -177,15 +170,10 @@ static void WriteNumber(NORMTYPE *nbr)
    digits = nbr->digits;
    exponent = nbr->exp;
 
-   if ( (scinotation)
-         ||
-        (exponent < MINFLOATDSP)
-         ||
-        (exponent > MAXFLOATDSP)
-         ||
-        (exponent > normprec) )
-
-      {                             /* Scientific Notation */
+   if ( (scinotation) ||
+        (exponent < MINFLOATDSP) ||
+        (exponent > MAXFLOATDSP) ||
+        (exponent > normprec) ) {      /* Scientific Notation */
 
       WChar(nbr->man[0]+ '0');         /* First digit and decimal point */
       WChar(DISPDECIMAL);
@@ -202,15 +190,10 @@ static void WriteNumber(NORMTYPE *nbr)
                break;
             }
       WExponent(nbr->exp - 1L);           /* Write exponent */
-
-      }                             /* Scientific Notation end */
-
-   else
-
-      {                             /* Floating Decimal */
-      if (exponent <= 0L)
-
-         {                             /* Number < 1 */
+   }                             /* Scientific Notation end */
+   else {                             /* Floating Decimal */
+   syslog("I got here (integer)\n");
+      if (exponent <= 0L) {                             /* Number < 1 */
 
          WChar(DISPDECIMAL);                 /* Decimal point */
          ppos++;
@@ -224,13 +207,11 @@ static void WriteNumber(NORMTYPE *nbr)
             WChar(nbr->man[i] + '0');
             if (++ppos > 79)                 /* Until end of digits or line */
                break;
-            }
-         }                             /* Number < 1 end */
+         }
+      }                             /* Number < 1 end */
 
-      else
-
-         {                             /* Number >= 1 */
-
+      else {                             /* Number >= 1 */
+   syslog("I got here (+exp)\n");
          for (i = 0; i < (int)exponent; i++) {  /* Digits to left of decimal */
             if (i < digits)
                WChar(nbr->man[i] + '0');  /* Mantissa digits while they last */
@@ -252,10 +233,8 @@ static void WriteNumber(NORMTYPE *nbr)
 
       }                             /* Floating Decimal end */
 
+   syslog("%u [%s]\n", get_output_str_len(), get_output_str());
 }
-
-
-
 
 /*
  *    **************************************************
@@ -425,216 +404,14 @@ void OnScreenMenu(void)
 /*
  *    **************************************************
  *    *                                                *
- *    *             Display Help Screen 1              *
- *    *                                                *
- *    **************************************************
- */
-static void HelpScreen1(void)
-{
-
-   Heading1();
-
-   set_text_attrx(HELP_ATTR) ;
-   WriteAt( 3,  1, "BIGCALC works like an H-P calculator with stack and ten m"
-                   "emory registers.");
-   WriteAt( 4,  1, "Maximum precision settable from ");
-   WInteger((long)MINPREC);
-   WString(" to ");
-   WInteger((long)MAXNORM);
-   WString(" digits. Exponents to ñ");
-   WInteger(MAXEXP);
-   WString(".");
-   WriteAt( 5,  1, "Execute BIGCALC like this:");
-
-   WriteAt( 7,  3, "BIGCALC precision   (precision is maximum number of digit"
-                   "s, default is ");
-   WInteger((long)DEFAULTPREC);
-   WString(")");
-
-   WriteAt( 9,  1, "BIGCALC has +, -, x, ö, ûX, Xý, X!, Y^X, logs, trig, pi, "
-                   "e, print, much more.");
-   WriteAt(10,  1, "All trig functions work in radians. BIGCALC is fast, but "
-                   "some operations on");
-   WriteAt(11,  1, "large numbers may take up to several minutes. You can abo"
-                   "rt long calculations");
-   WriteAt(12,  1, "by pressing the Escape key. Press F1 for on-screen help. "
-                   "Registers can be");
-   WriteAt(13,  1, "viewed in full, or printed to printer or disk.");
-
-   WriteAt(15,  1, "You can specify floating decimal or scientific notation d"
-                   "isplay. Large numbers");
-   WriteAt(16,  1, "display in scientific notation to about 65 digits all the"
-                   " time, but the view");
-   WriteAt(17,  1, "and print commands show full precision in 3 or 5 digit gr"
-                   "oups.");
-
-   WriteAt(19,  1, " Judson D. McClendon           $20 gets you a disk with t"
-                   "he complete C source.");
-   WriteAt(20,  1, " Sun Valley Systems");
-   WriteAt(21,  1, " 4522 Shadow Ridge Pkwy        There is no warranty of an"
-                   "y kind.");
-   WriteAt(22,  1, " Pinson, AL 35126-2192         The author assumes no resp"
-                   "onsibility for the");
-   WriteAt(23,  1, "     205-680-0460              use of this program.");
-
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *             Display Help Screen 2              *
- *    *                                                *
- *    **************************************************
- */
-static void HelpScreen2(void)
-{
-   Heading1();
-   set_text_attrx(HELP_ATTR) ;
-
-   WriteAt( 3,  1, "  KEY  FUNCTION     KEY  FUNCTION      "
-                   "KEY  FUNCTION        KEY  FUNCTION");
-
-   WriteAt( 4, 45, "(M rotates Fn key menu)");
-
-   WriteAt( 5,  1, "0-9.E  Enter number   V >View number    F1 >Help         "
-                   "   ^F1 >sin X");
-   WriteAt( 6,  1, "    S  change Sign    F >Float/Sci      F2 >Power Y^X    "
-                   "   ^F2 >arcsin X");
-   WriteAt( 7,  1, "BkSpc  CLX/Backspace  G >Group 3/5      F3 >Sq root ûx   "
-                   "   ^F3 >cos X");
-   WriteAt( 8,  1, "Enter >Enter          P >Print          F4 >Square Xý    "
-                   "   ^F4 >arccos X");
-   WriteAt( 9,  1, "    + >Add Y + X      D >Disk/Print     F5 >Recip 1 ö X  "
-                   "   ^F5 >tan X");
-   WriteAt(10,  1, "    - >Sub Y - X   PgUp >Store X        F6 >Fact X!      "
-                   "   ^F6 >arctan X");
-   WriteAt(11,  1, "    * >Mul Y x X   PgDn >Recall X       F7 >Integer XXX. "
-                   "   ^F7 >Common log X");
-   WriteAt(12,  1, "    / >Div Y ö X      X >eXchg X & Reg  F8 >Fraction .XXX"
-                   "   ^F8 >Exponent 10^X");
-   WriteAt(13,  1, "    C >Clear      Up/Dn >Roll Up/Dn     F9 >Recall ã to X"
-                   "   ^F9 >Natural log X");
-   WriteAt(14,  1, "    L >Last X    Lft/Rt >Exchg X & Y   F10 >Recall e to X"
-                   "  ^F10 >Exponent e^X");
-
-   WriteAt(16,  5, "To enter a number just begin typing it in. Use Backspace "
-                   "to back up.");
-   WriteAt(17,  5, "To enter an exponent press E then enter the exponent.");
-   WriteAt(18,  5, "Press S while entering mantissa or exponent to change res"
-                   "pective sign.");
-   WriteAt(19,  5, "If you start a number with E a mantissa of 1 is assumed.");
-   WriteAt(20,  5, "Functions marked '>' complete a number being entered befo"
-                   "re acting.");
-   WriteAt(21,  5, "View displays any register to full precision.");
-   WriteAt(22,  5, "Clear, Print, View, Store, Recall & eXchange ask for affe"
-                   "cted register.");
-   WriteAt(23,  5, "BackSpace backs up while entering number, otherwise acts "
-                   "as Clear X.");
-   WriteAt(24,  5, "M rotates function key menus. ^ means control: ^F1 = ctrl"
-                   "-F1");
-
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *             Display Help Screen 3              *
- *    *                                                *
- *    **************************************************
- */
-static void HelpScreen3(void)
-{
-   Heading1();
-
-   set_text_attrx(HELP_ATTR) ;
-   WriteAt( 3,  1, "This program emulates a Hewlett-Packard calculator with four register stack");
-   WriteAt( 4,  1, "and ten memory registers.  The stack consists of the X, Y, Z & T registers.");
-   WriteAt( 5,  1, "The memory registers are 0-9.");
-
-   WriteAt( 7,  1, "The X register is 'where the action is'.  When you enter a number it is entered");
-   WriteAt( 8,  1, "into the X register.  If X already contains a number, that number is 'pushed'");
-   WriteAt( 9,  1, "up to Y, Y is pushed to Z, Z to T, and the contents of T is lost.  The 'Enter'");
-   WriteAt(10,  1, "key pushes the stack and duplicates X into Y. A number entered into X after");
-   WriteAt(11,  1, "Enter or ClearX DOES NOT push the stack. When you use a function that acts on");
-   WriteAt(12,  1, "two numbers (like + or -) it always acts on X & Y (except for Store, Recall &");
-   WriteAt(13,  1, "eXchange which act on X and a memory register).  The result is put in X, and");
-   WriteAt(14,  1, "the stack is 'Dropped'.  That is, Z copies to Y and T duplicates into Z.");
-
-   WriteAt(16,  1, "Numbers are displayed in 'Floating Decimal' or 'Scientific Notation' format.");
-   WriteAt(17,  1, "Floating Decimal looks like this:    1.2     123.45     -12300000000  0.000002");
-   WriteAt(18,  1, "Scientific Notation looks like this: 1.2 e0  1.2345 e2  -1.23 e10     2.0 e-6");
-   WriteAt(19,  1, "Very long numbers take longer to compute, of course.");
-   WriteAt(20,  1, "You can abort a long calculation by pressing the Escape key.");
-
-   WriteAt(22,  1, "If a number is too large or small for the screen, Scientific Notation is used.");
-   WriteAt(23,  1, "All results are truncated except for Y^X which is rounded: 5 up 4 down.");
-
-}
-
-/*
- *    **************************************************
- *    *                                                *
  *    *                Initial Screen                  *
  *    *                                                *
  *    **************************************************
  */
 void InitialScreen(void)
 {
-   HelpScreen1();
-   MessageWait("");
-   WorkScreen();
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *                  Help Screen                   *
- *    *                                                *
- *    **************************************************
- */
-void HelpScreen(void)
-{
-   int screen;
-
-   menucleared = TRUE;
-
-   screen = 2;
-
-   do {
-      switch (screen) {
-         case (1):
-            HelpScreen1();
-            break;
-         case (2):
-            HelpScreen2();
-            break;
-         case (3):
-            HelpScreen3();
-            break;
-         }  /* switch */
-
-      Message("(Press PgDn=Next page, PgUp=Prev page, Esc=Exit to BIGCALC)");
-
-      while (TRUE) {
-         chr = GetChar();
-         if (chr == PGDN || chr == '+') {
-            if (++screen > 3)
-               screen = 1;
-            break;
-            }
-         else if (chr == PGUP || chr == '-') {
-            if (--screen < 1)
-               screen = 3;
-            break;
-            }
-         else if (chr == ESCAPE)
-            break;
-         else 
-            ;
-         }  /* while (TRUE) */
-
-      } while (chr != ESCAPE);
-
+   // HelpScreen1();
+   // MessageWait("");
    WorkScreen();
 }
 

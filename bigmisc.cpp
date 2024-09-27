@@ -1759,7 +1759,6 @@ bool ExtendedGetX(unsigned chr)
    }
 
    // do {  /* while (TRUE) */
-
       /* First digit already entered on first pass */
 
       //  these aren't going to be possible here, now...

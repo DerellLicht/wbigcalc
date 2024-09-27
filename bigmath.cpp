@@ -28,10 +28,13 @@
  *    **************************************************
  */
 
+#include <windows.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "common.h"
 #include "bigcalc.h"
 #include "biggvar.h"
 

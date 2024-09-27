@@ -77,19 +77,6 @@ char *Version = "WBigCalc, Version " VER_NUMBER " " ;
 //**********************************************************
 
 //**********************************************************
-static void dputc(const CHAR c)
-{
-   // WriteFile(hStdOut, &c, 1, NULL, NULL) ;
-   // sinfo.dwCursorPosition.X++ ;
-}
-
-//**********************************************************
-static void dputs(const char *outstr)
-{
-   
-}
-
-//**********************************************************
 static void dprints(unsigned row, unsigned col, const char* outstr)
    {
    // dgotoxy(col, row) ;
@@ -212,28 +199,64 @@ void CurGet(int *row, int *col)
    // *col = _where_x() + 1;
 }
 
-/*
- *    **************************************************
- *    *                                                *
- *    *            Write Character to Screen           *
- *    *                                                *
- *    **************************************************
- */
-void WChar(int chr)
+//***************************************************************************
+#define  MAX_OUTPUT_STR    1100
+static char output_str[MAX_OUTPUT_STR+1];
+static uint outstr_idx = 0 ;
+
+//***************************************************************************
+void reset_output_str(void)
 {
-   dputc((char) chr) ;
+   ZeroMemory(output_str, MAX_OUTPUT_STR+1);
+   outstr_idx = 0 ;
 }
 
 /*
  *    **************************************************
- *    *                                                *
+ *    *            Write Character to Screen           *
+ *    **************************************************
+ */
+void WChar(int chr)
+{
+   // dputc((char) chr) ;
+   if (outstr_idx >= MAX_OUTPUT_STR) {
+      syslog("output string overrun (char)\n");
+      return ;
+   }
+   syslog("%X [%c]", (unsigned char) chr, (char) chr);
+   output_str[outstr_idx++] = chr ;
+   output_str[outstr_idx] = 0 ;  // keep string NULL-terminated
+}
+
+/*
+ *    **************************************************
  *    *             Write String to Screen             *
- *    *                                                *
  *    **************************************************
  */
 void WString(char *str)
 {
-   dputs(str) ;
+   // dputs(str) ;
+   uint slen = strlen(str);
+   if ((outstr_idx + slen) >= MAX_OUTPUT_STR) {
+      syslog("output string overrun (string)\n");
+      return ;
+   }
+   syslog("%u <%s>\n", slen, str);
+   uint idx ;
+   for (idx=0; idx<slen; idx++) {
+      WChar(*(str+idx));
+   }
+}
+
+//***********************************************************
+char *get_output_str(void)
+{
+   return output_str ;
+}
+
+uint get_output_str_len(void)
+{
+   return outstr_idx ;
 }
 
 /*
@@ -368,16 +391,17 @@ void MessageEsc(char *msg)
  */
 void DisplayChar(int *row, int *col, int chr)
 {
-   CurPos(*row, *col);
+   // CurPos(*row, *col);
+   syslog("[%c]", (char) chr);
    WChar(chr);
 
-   if (*col < MAXDISPCOL)     /* Find position for next character */
-      (*col)++;
-   else {
-      *col = MINDISPCOL;
-      (*row)++;
-      }
-   CurPos(*row, *col);
+   // if (*col < MAXDISPCOL)     /* Find position for next character */
+   //    (*col)++;
+   // else {
+   //    *col = MINDISPCOL;
+   //    (*row)++;
+   //    }
+   // CurPos(*row, *col);
 }
 
 /*
