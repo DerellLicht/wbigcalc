@@ -99,6 +99,28 @@ void dclrscr(void);
 void dclreol(void);
 void dclreos(void);
 
+//*********************************************************************************
+//  manage keyboard state machine
+//  The DOS/console version of BigCalc, had nested keyboard loops for 
+//  entering different data elements.  This cannot be done in a message-driven
+//  environment such as Windows; a getch() loop will just stall the message thread.
+//  
+//  This program will use a state machine to determine which keyboard handler
+//  to call for keyboard inputs from the message handler.
+//*********************************************************************************
+typedef enum {
+   KBD_STATE_DEFAULT=0,
+   KBD_STATE_GETX
+} keyboard_state_t ;
+
+int keyboard_state_handler(char chr);
+bool keyboard_state_set(keyboard_state_t new_kbd_state);
+
+//  GetX functions
+void init_getx_vars(void);
+bool ExtendedGetX(unsigned inchr);
+
+
 /*
  *    **************************************************
  *    *                                                *
@@ -124,7 +146,6 @@ void dclreos(void);
 #define SCINOT     70   /*  F          */
 #define XCHGXREG   88   /*  X          */
 #define CHGSIGN    83   /*  S          */
-#define PRINTDISK  68   /*  D          */
 #define GROUPSIZE  71   /*  G          */
 #define MENUROLL   77   /*  M          */
 #define VIEWREG    86   /*  V          */
@@ -156,9 +177,6 @@ void dclreos(void);
 #define EXP10      1101 /* CTRL-F8     */
 #define LN         1102 /* CTRL-F9     */
 #define EXPE       1103 /* CTRL-F10    */
-
-
-
 
 /*
  *    **************************************************
@@ -269,7 +287,6 @@ extern  int FlipSign(int sign);
 extern  int ExtendedRound(int w);
 extern  int ExtendedIntegerPart(void);
 extern  int ExtendedFractionPart(void);
-extern  int ExtendedGetX(void);
 
 extern  void ExtendedInitConstants(void);
 extern  void ExtendedRecallPi(int dest);

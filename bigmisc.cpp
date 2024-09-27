@@ -26,10 +26,13 @@
  *    **************************************************
  */
 
+#include <windows.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "common.h"
 #include "bigcalc.h"
 #include "biggvar.h"
 
@@ -647,11 +650,8 @@ extern int ExtendedIntegerPart(void)
  *    *                                                *
  *    **************************************************
  */
-
 extern int ExtendedFractionPart(void)
-
 {
-
    int digits;
 
    digits = work[0].digits;
@@ -671,11 +671,7 @@ extern int ExtendedFractionPart(void)
    memset(&work[0].man[0], 0, (digits * sizeof(WORKDIGIT)));
 
    return(Normalize(0));
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -684,23 +680,25 @@ extern int ExtendedFractionPart(void)
  *    *                                                *
  *    **************************************************
  */
-int ExtendedGetX(void)
-{
-   long exponent;
-   int sign, expsign;
-   int row, col, exprow, expcol;
-   int digits, intdigits, decdigits, exdigits, digitval;
-   enum {ININT, INDEC, INEX} mode;
-   BOOLEAN decimal;
-
+//  these were originally local to ExtendedGetX(),
+//  but that operation now needs to be divided into multiple functions
+static int sign, expsign;
+static long exponent;
+static int digits, intdigits, decdigits, exdigits, digitval;
+typedef enum {ININT, INDEC, INEX} mode_e;
+mode_e mode = ININT ;
+static BOOLEAN decimal;
+   
 /*  ******  I N I T I A L I Z E   V A R I A B L E S  ******  */
+void init_getx_vars(void)
+{
 
    sign = '+';                      /* Default to positive numbers */
    expsign = '+';
 
-   row = entrysignrow;              /* Starting point for entry */
-   col = MINDISPCOL;
-   CurPos(row, col);
+   // row = entrysignrow;              /* Starting point for entry */
+   // col = MINDISPCOL;
+   // CurPos(row, col);
 
    exponent = 0L;                   /* Initialize digit work areas */
    digits = 0;
@@ -712,13 +710,36 @@ int ExtendedGetX(void)
    mode = ININT;                    /* Begin in integer mode */
 
    decimal = FALSE;                 /* No decimal point entered */
+}
 
-   ClearWork(0);
+//***************************************************************************
+int exit_GetX(void)
+{
+   if (expsign == '-')                 /* Invert exponent if neg sign */
+      exponent = - exponent;
 
+   if (digitval) {                     /* Number not zero */
+      work[0].exp    = exponent + (long)intdigits;
+      work[0].sign   = sign;
+      work[0].digits = digits;
+      return(Normalize(0));
+      }
+   else {                              /* Null number == 0 */
+      work[0].exp    = 0L;
+      work[0].sign   = ' ';
+      work[0].digits = 0;
+      return(TRUE);
+      }
+}
+
+//***************************************************************************
+bool ExtendedGetX(unsigned chr)
+{
+   int row, col, exprow, expcol;
 
 /*  ******  C H A R A C T E R   W A I T   L O O P  ******  */
 
-   do {  /* while (TRUE) */
+   // do {  /* while (TRUE) */
 
       /* First digit already entered on first pass */
 
@@ -748,7 +769,6 @@ int ExtendedGetX(void)
          case (LN):
          case (EXPE):
          case (LASTX):
-         // case (PRINTDISK):
          case (GROUPSIZE):
          case (VIEWREG):
          case (ENTER):
@@ -762,13 +782,14 @@ int ExtendedGetX(void)
          case (ROLLDOWN):
          case (ROLLUP):
             charpresent = TRUE;  /* Pass terminating operator */
-         }  /* switch */
+            break;
+      }  /* switch */
 
       if (charpresent)           /* Break from while */
-         break;
+         return true ;
 
       if (! isascii(chr))        /* Ignore non ASCII characters */
-         continue;
+         return true ;
 
 /*  ******  I N T E G E R   M O D E  ******  */
 
@@ -947,58 +968,28 @@ int ExtendedGetX(void)
 
          }  /* mode == INEX */
 
-      chr = GetChar();                    /* Get next char from kbd */
-
-      } while (TRUE);
-
-   if (expsign == '-')                 /* Invert exponent if neg sign */
-      exponent = - exponent;
-
-   if (digitval) {                     /* Number not zero */
-      work[0].exp    = exponent + (long)intdigits;
-      work[0].sign   = sign;
-      work[0].digits = digits;
-      return(Normalize(0));
-      }
-   else {                              /* Null number == 0 */
-      work[0].exp    = 0L;
-      work[0].sign   = ' ';
-      work[0].digits = 0;
-      return(TRUE);
-      }
+      // chr = GetChar();                    /* Get next char from kbd */
+      // 
+      // } while (TRUE);
+/*  ******  END  C H A R A C T E R   W A I T   L O O P  ******  */
+   return true ;
 
 }
 
-
-
-
-
 /*
  *    **************************************************
- *    *                                                *
  *    *                 Data Movement                  *
- *    *                                                *
  *    **************************************************
  */
-
-
-
 
 /*
  *    **************************************************
- *    *                                                *
  *    *         Extended Initialize Constants          *
- *    *                                                *
  *    **************************************************
  */
-
 void ExtendedInitConstants(void)
-
 {
-
    char *cx, *ce;
-
-
    cx = pi;                /* pi */
    ce = &pi[1100];
    while (cx < ce)

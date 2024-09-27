@@ -40,7 +40,9 @@ static CStatusBar *MainStatusBar = NULL;
 
 //  bigcalc.cpp
 extern void Initialize(int argc, char *argv);
-extern int dos_main(unsigned inchr);
+
+//  bigprint.cpp
+extern void Heading2(void);
 
 //*************************************************************
 static void set_hwnd_values(void)
@@ -229,21 +231,21 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
       case BN_CLICKED:
          switch(target) {
             
-         case IDB_KBD_0  : dos_main(k0);   break ;
-         case IDB_KBD_1  : dos_main(k1);   break ;
-         case IDB_KBD_2  : dos_main(k2);   break ;
-         case IDB_KBD_3  : dos_main(k3);   break ;
-         case IDB_KBD_4  : dos_main(k4);   break ;
-         case IDB_KBD_5  : dos_main(k5);   break ;
-         case IDB_KBD_6  : dos_main(k6);   break ;
-         case IDB_KBD_7  : dos_main(k7);   break ;
-         case IDB_KBD_8  : dos_main(k8);   break ;
-         case IDB_KBD_9  : dos_main(k9);   break ;
-         case IDB_KBD_DOT: dos_main(kPeriod);  break ;
-         case IDB_KBD_e  : dos_main(ke);   break ;
+         case IDB_KBD_0  : keyboard_state_handler(k0);   break ;
+         case IDB_KBD_1  : keyboard_state_handler(k1);   break ;
+         case IDB_KBD_2  : keyboard_state_handler(k2);   break ;
+         case IDB_KBD_3  : keyboard_state_handler(k3);   break ;
+         case IDB_KBD_4  : keyboard_state_handler(k4);   break ;
+         case IDB_KBD_5  : keyboard_state_handler(k5);   break ;
+         case IDB_KBD_6  : keyboard_state_handler(k6);   break ;
+         case IDB_KBD_7  : keyboard_state_handler(k7);   break ;
+         case IDB_KBD_8  : keyboard_state_handler(k8);   break ;
+         case IDB_KBD_9  : keyboard_state_handler(k9);   break ;
+         case IDB_KBD_DOT: keyboard_state_handler(kPeriod);  break ;
+         case IDB_KBD_e  : keyboard_state_handler(ke);   break ;
             
          case IDB_KBD_RETURN:
-            dos_main(ENTER);
+            keyboard_state_handler(ENTER);
             Message("Return/Enter received");
             break ;            
             

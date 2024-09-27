@@ -42,6 +42,7 @@
  */
 
 void Initialize(int argc,char *argv);
+static  int dos_main(unsigned inchr);
 
 static  void Add(void);
 static  void Subtract(void);
@@ -71,7 +72,6 @@ static  void ChangeSign(void);
 static  void GroupSize(void);
 static  void MenuRoll(void);
 static  void ViewReg(void);
-static  void AcceptX(void);
 static  void ClearX(void);
 static  void Enter(void);
 static  void SciNotation(void);
@@ -1609,29 +1609,82 @@ static void DropStack(void)
       stack[s] = stack[s + 1];
 }
 
+//*********************************************************************
+static keyboard_state_t keyboard_state = KBD_STATE_DEFAULT ;
+
+int keyboard_state_handler(char inchr)
+{
+   int result = TRUE ;
+   switch(keyboard_state) {
+   case KBD_STATE_DEFAULT:
+      dos_main(inchr);
+      result = TRUE ;
+      break ;
+      
+   case KBD_STATE_GETX:
+      result = ExtendedGetX(inchr);
+      break ;
+      
+   default:
+      {
+      char msg[30];
+      sprintf(msg, "Invalid kbd state: %u", (uint) keyboard_state);
+      MessageBox(NULL, msg, NULL, MB_OK | MB_ICONERROR);
+      }
+      keyboard_state = KBD_STATE_DEFAULT ;
+      result = FALSE ;
+      break ;
+   }
+   return result;
+}
+
+bool keyboard_state_set(keyboard_state_t new_kbd_state)
+{
+   switch(new_kbd_state) {
+   case KBD_STATE_DEFAULT:
+   case KBD_STATE_GETX:
+      keyboard_state = new_kbd_state ;
+      return true ;
+      
+   default:
+      return false ;
+   }
+}
 /*
  *    **************************************************
  *    *                                                *
  *    *               Accept X from KBD                *
+ //  later: enter GetX state
  *    *                                                *
  *    **************************************************
  */
-static void AcceptX(void)
+static NORMTYPE *tempStackX = NULL;
+   
+static void AcceptX(char inchr)
 {
-   NORMTYPE *temp;
    int result ;
+   if (keyboard_state == KBD_STATE_GETX) {
+      result = ExtendedGetX(inchr);
+      return ;      
+   }
 
-   if ((temp = GETNORMTEMP(1)) == NULL) {
+   if ((tempStackX = GETNORMTEMP(1)) == NULL) {
       MemoryError();
       return;
       }
 
+   init_getx_vars();
+
+   ClearWork(0);
+   
    // CurPos(entrysignrow, 1);      /* Clear area to enter new X */
    // EraEop();
    menucleared = TRUE;
    // WriteAt(entrysignrow, 1, "X:");
    Message("Entering X: S=ChgSign, E=Exp, BakSpc=Backup, Other=Complete, ESC=Exit");
 
+   keyboard_state_set(KBD_STATE_GETX);
+   
    if (normprec > SIZEOFSMALL) {
 
       // CurPos(entrysignrow - 1, 1);  /* Big numbers, use full screen */
@@ -1639,7 +1692,8 @@ static void AcceptX(void)
       // WriteAt(entrysignrow - 1, 1, "========================="
       //                              "  E N T E R I N G   X  "
       //                              "=========================");
-      result = ExtendedGetX();
+      //  initial call to GetX function
+      result = ExtendedGetX(inchr);
       if (result) {
           if (stacklift)
              PushStack();
@@ -1652,12 +1706,12 @@ static void AcceptX(void)
    else {
 
       if (stacklift) {              /* Small numbers, use bottom of screen */
-         *temp = stack[3];
+         *tempStackX = stack[3];
          PushStack();
          WriteStack(1, 3);
          }
          
-      result = ExtendedGetX();
+      result = ExtendedGetX(inchr);
       if (result) {
          MoveWorkStack(0, 0);
          stacklift = TRUE;
@@ -1665,15 +1719,59 @@ static void AcceptX(void)
       else
          if (stacklift) {
             DropStack();
-            stack[3] = *temp;
+            stack[3] = *tempStackX;
             WriteStack(1, 3);
          }
-      CurPos(entrysignrow, SIGNDISPCOL);
-      EraEop();
+      // CurPos(entrysignrow, SIGNDISPCOL);
+      // EraEop();
+      WriteStack(0, 0);
+      }
+}
+
+//*********************************************************************
+//  Exit from GetX state
+//*********************************************************************
+void ExitGetXState(void)
+{
+   bool result = true;
+
+   if (normprec > SIZEOFSMALL) {
+
+      // CurPos(entrysignrow - 1, 1);  /* Big numbers, use full screen */
+      // EraEol();
+      // WriteAt(entrysignrow - 1, 1, "========================="
+      //                              "  E N T E R I N G   X  "
+      //                              "=========================");
+      // result = ExtendedGetX();
+      if (result) {
+          if (stacklift)
+             PushStack();
+         MoveWorkStack(0, 0);
+         stacklift = TRUE;
+         }
+      WorkScreen();
+      }
+
+   else {
+
+      // result = ExtendedGetX();
+      if (result) {
+         MoveWorkStack(0, 0);
+         stacklift = TRUE;
+         }
+      else
+         if (stacklift) {
+            DropStack();
+            stack[3] = *tempStackX;
+            WriteStack(1, 3);
+         }
+      // CurPos(entrysignrow, SIGNDISPCOL);
+      // EraEop();
       WriteStack(0, 0);
       }
 
-   free(temp);
+   free(tempStackX);
+   
 }
 
 /*
@@ -1694,11 +1792,12 @@ static void Enter(void)
  *    **************************************************
  *    *                                                *
  *    *                     Main                       *
+ //  DEFAULT STATE keyboard handler
  *    *                                                *
  *    **************************************************
  */
 // int main(int argc,char *argv[])
-int dos_main(unsigned inchr)
+static  int dos_main(unsigned inchr)
 {
    // Initialize(argc, argv[1]);
 
@@ -1708,8 +1807,7 @@ int dos_main(unsigned inchr)
 
    // while (chr != ESCAPE) {
 
-      switch (chr) {
-
+      switch (inchr) {
          case ('0'):
          case ('1'):
          case ('2'):
@@ -1722,10 +1820,14 @@ int dos_main(unsigned inchr)
          case ('9'):
          case ('.'):
          case ('E'):
-            AcceptX();           /* Accept new X from keyboard with first */
-            break;               /*  character passed to AcceptX routine */
+            /* Accept new X from keyboard with first */
+            /*  character passed to AcceptX routine */
+            //  This enters GetX state if no errors occur
+            AcceptX(inchr);           
+            break;                  
 
          case (ENTER):        Enter();    break;            /* Push up stack */
+         
          case (ADD):          Add();      break;           /* Add Y + X */
          case (SUBTRACT):     Subtract(); break;         /* Subtract Y - X */
          case (MULTIPLY):     Multiply(); break;         /* Multiply Y * X */
@@ -1779,44 +1881,6 @@ int dos_main(unsigned inchr)
       // }  /* while */
    // ScrTerm();
 
-   return 0;
-}
-
-//*********************************************************************************
-//  manage keyboard state machine
-//  The DOS/console version of BigCalc, had nested keyboard loops for 
-//  entering different data elements.  This cannot be done in a message-driven
-//  environment such as Windows; a getch() loop will just stall the message thread.
-//  
-//  This program will use a state machine to determine which keyboard handler
-//  to call for keyboard inputs from the message handler.
-//*********************************************************************************
-typedef enum {
-   KBD_STATE_DEFAULT=0,
-   KBD_STATE_GETX
-} keyboard_state_t ;
-
-static keyboard_state_t keyboard_state = KBD_STATE_DEFAULT ;
-
-int keyboard_state_handler(char chr)
-{
-   switch(keyboard_state) {
-   case KBD_STATE_DEFAULT:
-      dos_main(chr);
-      break ;
-      
-   case KBD_STATE_GETX:
-      break ;
-      
-   default:
-      {
-      char msg[30];
-      sprintf(msg, "Invalid kbd state: %u", (uint) keyboard_state);
-      MessageBox(NULL, msg, NULL, MB_OK | MB_ICONERROR);
-      }
-      keyboard_state = KBD_STATE_DEFAULT ;
-      break ;
-   }
    return 0;
 }
 
