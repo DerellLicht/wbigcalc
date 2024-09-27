@@ -36,9 +36,11 @@
 #include "biggvar.h"
 
 // static  void PExponent(long exponent);
-static  void WExponent(long exponent);
-// static  void PSign(int sign);
-// static  void PCharWrap(int chr);
+// static void PSign(int sign);
+// static void PCharWrap(int chr);
+static void WExponent(long exponent);
+static void WriteNumber(NORMTYPE *nbr);
+
 /*
  *    **************************************************
  *    *                                                *
@@ -50,72 +52,11 @@ static  void WExponent(long exponent);
 static int ppos = 0;            /* Current print column */
 
 //**********************************************************
-//  conio.cpp functions
-//**********************************************************
-
-//**********************************************************
-void set_text_attrx(WORD tFGBG)
+static void set_text_attrx(WORD tFGBG)
    {
    // sinfo.wAttributes = tFGBG ;
    // SetConsoleTextAttribute(hStdOut, sinfo.wAttributes) ;
    }   
-
-//**********************************************************
-void dputc(const CHAR c)
-{
-   // WriteFile(hStdOut, &c, 1, NULL, NULL) ;
-   // sinfo.dwCursorPosition.X++ ;
-}
-
-//**********************************************************
-void dputs(const char *outstr)
-{
-   
-}
-
-//**********************************************************
-void dprints(unsigned row, unsigned col, const char* outstr)
-   {
-   // dgotoxy(col, row) ;
-   // dputs(outstr) ;
-   }   
-
-//**********************************************************
-void dgotoxy(int x, int y)
-   {
-   // sinfo.dwCursorPosition.X = x ;
-   // sinfo.dwCursorPosition.Y = y ;
-   // SetConsoleCursorPosition(hStdOut, sinfo.dwCursorPosition) ;
-   }
-
-//**********************************************************
-void dclrscr(void)
-{
-   // COORD coord = { 0, 0 };
-   // int slen ;
-   // DWORD wrlen ;
-   // 
-   // slen = sinfo.dwSize.X * sinfo.dwSize.Y ;
-   // 
-   // FillConsoleOutputCharacter(hStdOut, ' ', slen, coord, &wrlen) ;
-   // FillConsoleOutputAttribute(hStdOut,   7, slen, coord, &wrlen) ;
-   // 
-   // dgotoxy(0,0) ; // home the cursor
-}   
-
-//**********************************************************
-void dclreol(void)
-{
-}   
-
-//**********************************************************
-//  This could be better done with FillConsoleOutput...(),
-//  but to get this working now, I'll do it the cheap way,
-//  and bank on fast machines to cover my laziness...
-//**********************************************************
-void dclreos(void)
-{
-}         
 
 /*
  *    **************************************************
@@ -224,7 +165,7 @@ void WriteStack(int lo, int hi)
  *    **************************************************
  */
 
-void WriteNumber(NORMTYPE *nbr)
+static void WriteNumber(NORMTYPE *nbr)
 
 {
    long exponent;

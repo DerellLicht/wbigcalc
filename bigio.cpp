@@ -72,6 +72,30 @@ char *Version = "WBigCalc, Version " VER_NUMBER " " ;
 
 // static char color = 0;                    /* Screen Color    */
 
+//**********************************************************
+//  conio.cpp functions
+//**********************************************************
+
+//**********************************************************
+static void dputc(const CHAR c)
+{
+   // WriteFile(hStdOut, &c, 1, NULL, NULL) ;
+   // sinfo.dwCursorPosition.X++ ;
+}
+
+//**********************************************************
+static void dputs(const char *outstr)
+{
+   
+}
+
+//**********************************************************
+static void dprints(unsigned row, unsigned col, const char* outstr)
+   {
+   // dgotoxy(col, row) ;
+   // dputs(outstr) ;
+   }   
+
 /*
  *    **************************************************
  *    *                                                *
@@ -164,7 +188,7 @@ extern int GetChar(void)
  */
 void ScrClr(void)
 {
-   dclrscr() ;
+   // dclrscr() ;
 }
 
 /*
@@ -174,7 +198,7 @@ void ScrClr(void)
  */
 void CurPos(int row, int col)
 {
-   dgotoxy(col-1, row-1) ;
+   // dgotoxy(col-1, row-1) ;
 }
 
 /*

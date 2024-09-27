@@ -30,8 +30,6 @@
 
 #define TITLE "Extended Precision Calculator 6.0"
 
-// #define REALMODE                          /* Remove for OS/2 protected mode */
-
 #define MINPREC 3                         /* Min nbr of digits  */
 #define DEFAULTPREC 50                    /* Default precision  */
 #define MAXNORM 1075                      /* Max normal digits  */
@@ -88,14 +86,6 @@
 
 #define GETNORMTEMP(n) (NORMTYPE *) malloc((n) * sizeof(NORMTYPE))
 #define GETCOMPTEMP(n) (COMPTYPE *) malloc((n) * sizeof(COMPTYPE))
-
-//  from conio32.h
-void set_text_attrx(WORD tFGBG);
-void dputc(const CHAR c);
-void dputs(const char *outstr);
-void dprints(unsigned row, unsigned col, const char* outstr);
-void dgotoxy(int x, int y);
-void dclrscr(void);
 
 //  wbigcalc.cpp
 void status_message(char *msgstr);
@@ -339,8 +329,6 @@ extern  void DisplayStack(int s);
 
 extern  void WriteReg(int lo,int hi);
 extern  void WriteStack(int lo,int hi);
-extern  void WriteNumber(NORMTYPE *nbr);
-// extern  int  GetPrompt(void);
 extern  void Overflow(void);
 extern  void DivideByZero(void);
 extern  void ZeroArgument(void);
