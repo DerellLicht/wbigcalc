@@ -120,6 +120,7 @@ void WriteReg(int lo, int hi)
       // CurPos(r + 4, SIGNDISPCOL);
       WriteNumber(&reg[r]);
       // dprints(r + 4, SIGNDISPCOL, &reg[r]);
+      put_register(r, get_output_str());
    }
 }
 
@@ -137,6 +138,8 @@ void WriteStack(int lo, int hi)
       // CurPos(XSIGNROW - s, SIGNDISPCOL);
       WriteNumber(&stack[s]);
       // dprints(XSIGNROW - s, SIGNDISPCOL, &stack[s]);
+      put_stack(s, get_output_str());
+      
    }
 }
 
@@ -192,7 +195,6 @@ static void WriteNumber(NORMTYPE *nbr)
       WExponent(nbr->exp - 1L);           /* Write exponent */
    }                             /* Scientific Notation end */
    else {                             /* Floating Decimal */
-   syslog("I got here (integer)\n");
       if (exponent <= 0L) {                             /* Number < 1 */
 
          WChar(DISPDECIMAL);                 /* Decimal point */
@@ -211,7 +213,6 @@ static void WriteNumber(NORMTYPE *nbr)
       }                             /* Number < 1 end */
 
       else {                             /* Number >= 1 */
-   syslog("I got here (+exp)\n");
          for (i = 0; i < (int)exponent; i++) {  /* Digits to left of decimal */
             if (i < digits)
                WChar(nbr->man[i] + '0');  /* Mantissa digits while they last */
@@ -374,9 +375,6 @@ void MemoryError(void)
  */
 void OnScreenMenu(void)
 {
-   // set_text_attrx(MENU_ATTR) ;
-   // CurPos(19, 1);
-   // EraEop();
    WriteAt(20, 1, "0-9.E  Number   + >Add        X >Xchg X R   V >View full");
    WriteAt(21, 1, "    S  ChgSign  - >Sub   Lft/Rt >Xchg X Y   F >Float/Sci");
    WriteAt(22, 1, "BkSpc  Clear X  * >Mul   Up/Dwn >Roll UpDn  G >Group 3/5");

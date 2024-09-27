@@ -1801,6 +1801,11 @@ static void Enter(bool success)
       Message("Return/Enter received");
       PushStack();
       WriteStack(1, 3);
+      MoveWorkStack(0, 0);
+      stacklift = TRUE;
+
+      // syslog("%u: [%s]\n", get_output_str_len(), get_output_str());
+      // [28728] 6: [838283]
    }
    else {
       Message("Data entry aborted by user");

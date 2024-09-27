@@ -223,7 +223,7 @@ void WChar(int chr)
       syslog("output string overrun (char)\n");
       return ;
    }
-   syslog("%X [%c]", (unsigned char) chr, (char) chr);
+   // syslog("%X [%c]", (unsigned char) chr, (char) chr);
    output_str[outstr_idx++] = chr ;
    output_str[outstr_idx] = 0 ;  // keep string NULL-terminated
 }
@@ -241,11 +241,32 @@ void WString(char *str)
       syslog("output string overrun (string)\n");
       return ;
    }
-   syslog("%u <%s>\n", slen, str);
+   // syslog("%u <%s>\n", slen, str);
    uint idx ;
    for (idx=0; idx<slen; idx++) {
       WChar(*(str+idx));
    }
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *         Display Character at row, col          *
+ *    *                                                *
+ *    **************************************************
+ */
+void DisplayChar(int *row, int *col, int chr)
+{
+   // CurPos(*row, *col);
+   WChar(chr);
+
+   // if (*col < MAXDISPCOL)     /* Find position for next character */
+   //    (*col)++;
+   // else {
+   //    *col = MINDISPCOL;
+   //    (*row)++;
+   //    }
+   // CurPos(*row, *col);
 }
 
 //***********************************************************
@@ -381,28 +402,6 @@ void MessageEsc(char *msg)
  *    **************************************************
  */
 
-
-/*
- *    **************************************************
- *    *                                                *
- *    *         Display Character at row, col          *
- *    *                                                *
- *    **************************************************
- */
-void DisplayChar(int *row, int *col, int chr)
-{
-   // CurPos(*row, *col);
-   syslog("[%c]", (char) chr);
-   WChar(chr);
-
-   // if (*col < MAXDISPCOL)     /* Find position for next character */
-   //    (*col)++;
-   // else {
-   //    *col = MINDISPCOL;
-   //    (*row)++;
-   //    }
-   // CurPos(*row, *col);
-}
 
 /*
  *    **************************************************
