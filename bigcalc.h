@@ -96,8 +96,10 @@ void dputs(const char *outstr);
 void dprints(unsigned row, unsigned col, const char* outstr);
 void dgotoxy(int x, int y);
 void dclrscr(void);
-void dclreol(void);
-void dclreos(void);
+
+//  wbigcalc.cpp
+void status_message(char *msgstr);
+void status_message(unsigned idx, char *msgstr);
 
 //*********************************************************************************
 //  manage keyboard state machine
@@ -115,11 +117,13 @@ typedef enum {
 
 int keyboard_state_handler(char chr);
 bool keyboard_state_set(keyboard_state_t new_kbd_state);
+keyboard_state_t keyboard_state_get(void);
 
 //  GetX functions
 void init_getx_vars(void);
 bool ExtendedGetX(unsigned inchr);
 int exit_GetX(void); //  reset local GetX vars
+void show_keyboard_state(char *msg);
 
 /*
  *    **************************************************

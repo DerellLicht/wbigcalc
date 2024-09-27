@@ -27,8 +27,8 @@ BEGIN
     ".",       IDB_KBD_DOT,       ASCII, NOINVERT
     "e",       IDB_KBD_e  ,       ASCII, NOINVERT
     VK_RETURN, IDB_KBD_RETURN,    VIRTKEY, NOINVERT
-    VK_ESCAPE, IDB_CLOSE,         VIRTKEY, NOINVERT
-    // "q",       IDB_CLOSE,         ASCII, NOINVERT
+    VK_ESCAPE, IDB_KBD_ESCAPE,    VIRTKEY, NOINVERT
+    "^q",      IDB_CLOSE,         ASCII, NOINVERT
     // "^q",      IDB_CLOSE,         ASCII, NOINVERT
 END
 
@@ -45,6 +45,7 @@ END
 #define  ST_Y     PI_Y+170
 
 #define  Y_OFS2   22
+#define  Y_OFS3   40
 
 IDD_MAIN_DIALOG DIALOG DISCARDABLE  160, 40, REGS_GRP_DX+30, 500
 STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
@@ -97,8 +98,11 @@ BEGIN
    LTEXT           " ",             IDC_REG_X,   PI_FX+15,           ST_Y+55,           REGS_DX,  10, SS_SUNKEN
    PUSHBUTTON      "View",          IDC_VIEW_X,  PI_FX+15+REGS_DX+3, ST_Y+55,                19,  10
 
-   LTEXT           "MSG:",          IDS_MSG,     PI_X,               ST_Y+Y_OFS+84,          Y_OFS2,  10
+   LTEXT           "MSG:",          IDS_MSG,     PI_X,               ST_Y+Y_OFS+84,         Y_OFS2,  10
    LTEXT           " ",             IDC_MSG,     PI_X+Y_OFS2,        ST_Y+84, REGS_GRP_DX - Y_OFS2,  10, SS_SUNKEN
+   
+   LTEXT           "Kbd State:",    IDS_KSTATE,  PI_X,               ST_Y+Y_OFS+99,         Y_OFS3-2, 10
+   LTEXT           " ",             IDC_KSTATE,  PI_X+Y_OFS3,        ST_Y+99, REGS_GRP_DX - Y_OFS3,  10, SS_SUNKEN
    
 END
 

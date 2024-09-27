@@ -34,6 +34,7 @@
 
 #include "common.h"
 #include "bigcalc.h"
+#include "keywin32.h"
 
 /*
  *    **************************************************
@@ -43,6 +44,8 @@
 
 void Initialize(int argc,char *argv);
 static  int dos_main(unsigned inchr);
+static void Enter(bool success);
+static void ExitGetXState(bool success);
 
 static  void Add(void);
 static  void Subtract(void);
@@ -73,7 +76,6 @@ static  void GroupSize(void);
 static  void MenuRoll(void);
 static  void ViewReg(void);
 static  void ClearX(void);
-static  void Enter(void);
 static  void SciNotation(void);
 static  void Clear(void);
 static  void StoreX(void);
@@ -127,7 +129,7 @@ long
 BOOLEAN
    stacklift = TRUE,       /* Lift stack for new X if TRUE */
    scinotation = FALSE,    /* Force sci notation if TRUE   */
-   charpresent = FALSE,    /* Character present if TRUE    */
+//   charpresent = FALSE,    /* Character present if TRUE    */
    menucleared = TRUE,     /* Screen menu cleared if TRUE  */
    printtoscreen = FALSE;  /* Print to screen if TRUE      */
 
@@ -1611,37 +1613,6 @@ static void DropStack(void)
 }
 
 //*********************************************************************
-//  Exit from GetX state
-//*********************************************************************
-static NORMTYPE *tempStackX = NULL; //  used by GetX function
-   
-static void ExitGetXState(void)
-{
-   if (normprec > SIZEOFSMALL) {
-      // result = ExtendedGetX();
-      WorkScreen();
-   }
-   else {
-      // result = ExtendedGetX();
-      if (stacklift) {
-         DropStack();
-         stack[3] = *tempStackX;
-         WriteStack(1, 3);
-      }
-      // CurPos(entrysignrow, SIGNDISPCOL);
-      // EraEop();
-      WriteStack(0, 0);
-   }
-
-   if (tempStackX != NULL) {
-      free(tempStackX);
-      tempStackX = NULL ;
-   }
-   exit_GetX(); //  reset local GetX vars
-   keyboard_state_set(KBD_STATE_DEFAULT);
-}
-
-//*********************************************************************
 static keyboard_state_t keyboard_state = KBD_STATE_DEFAULT ;
 
 int keyboard_state_handler(char inchr)
@@ -1652,11 +1623,17 @@ int keyboard_state_handler(char inchr)
       dos_main(inchr);
       result = TRUE ;
       break ;
-      
+
    case KBD_STATE_GETX:
-      result = ExtendedGetX(inchr);
-      if (!result) {
-         ExitGetXState();
+      if (inchr == kENTER) {
+         Enter(true);   //  executed from GetX state
+      }
+      else {
+         result = ExtendedGetX(inchr);
+         if (!result) {
+            // ExitGetXState(false);
+            Enter(false);
+         }
       }
       break ;
       
@@ -1677,13 +1654,22 @@ bool keyboard_state_set(keyboard_state_t new_kbd_state)
 {
    switch(new_kbd_state) {
    case KBD_STATE_DEFAULT:
+      show_keyboard_state("default");
+      keyboard_state = new_kbd_state ;
+      return true ;
    case KBD_STATE_GETX:
+      show_keyboard_state("Input X value");
       keyboard_state = new_kbd_state ;
       return true ;
       
    default:
       return false ;
    }
+}
+
+keyboard_state_t keyboard_state_get(void)
+{
+   return keyboard_state ;
 }
 
 /*
@@ -1694,13 +1680,15 @@ bool keyboard_state_set(keyboard_state_t new_kbd_state)
  *    *                                                *
  *    **************************************************
  */
+static NORMTYPE *tempStackX = NULL; //  used by GetX function
+   
 static void AcceptX(char inchr)
 {
    int result ;
    if (keyboard_state == KBD_STATE_GETX) {
       result = ExtendedGetX(inchr);
       if (!result) {
-         ExitGetXState();
+         ExitGetXState(false);
       }
       return ;      
    }
@@ -1738,7 +1726,7 @@ static void AcceptX(char inchr)
          stacklift = TRUE;
          }
          else {
-            ExitGetXState();
+            ExitGetXState(false);
          }
       WorkScreen();
    }
@@ -1757,10 +1745,48 @@ static void AcceptX(char inchr)
          stacklift = TRUE;
          }
       else {
-         ExitGetXState();
+         ExitGetXState(false);
       }
       WriteStack(0, 0);
    }
+}
+
+//*********************************************************************
+//  Exit from GetX state
+//*********************************************************************
+static void ExitGetXState(bool success)
+{
+   if (normprec > SIZEOFSMALL) {
+      // result = ExtendedGetX();
+      if (success) {
+          if (stacklift)
+             PushStack();
+         MoveWorkStack(0, 0);
+         stacklift = TRUE;
+         }
+         // else {
+         //    ExitGetXState();
+         // }
+      WorkScreen();
+   }
+   else {
+      // result = ExtendedGetX();
+      if (success) {
+         MoveWorkStack(0, 0);
+         stacklift = TRUE;
+         }
+      // else {
+         // ExitGetXState();
+      // }
+      WriteStack(0, 0);
+   }
+
+   if (tempStackX != NULL) {
+      free(tempStackX);
+      tempStackX = NULL ;
+   }
+   exit_GetX(); //  reset local GetX vars
+   keyboard_state_set(KBD_STATE_DEFAULT);
 }
 
 /*
@@ -1770,12 +1796,18 @@ static void AcceptX(char inchr)
  *    *                                                *
  *    **************************************************
  */
-static void Enter(void)
+static void Enter(bool success)
 {
-   PushStack();
-   WriteStack(1, 3);
+   if (success) {
+      Message("Return/Enter received");
+      PushStack();
+      WriteStack(1, 3);
+   }
+   else {
+      Message("Data entry aborted by user");
+   }
    stacklift = FALSE;
-   ExitGetXState();
+   ExitGetXState(success);
 }
 
 /*
@@ -1816,7 +1848,12 @@ static  int dos_main(unsigned inchr)
             AcceptX(inchr);           
             break;                  
 
-         case (ENTER):        Enter();    break;            /* Push up stack */
+         case (kENTER):        
+            Enter(true);    break;            //  executed from dos_main()
+            
+         //  what is done with ESCAPE, depends upon keyboard state!!
+         case (kESC):
+            Enter(false);   break ; //  executed from dos_main()
          
          case (ADD):          Add();      break;           /* Add Y + X */
          case (SUBTRACT):     Subtract(); break;         /* Subtract Y - X */

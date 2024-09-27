@@ -51,6 +51,8 @@
                            
 #define  IDC_MSG           300
 #define  IDS_MSG           301
+#define  IDC_KSTATE        302
+#define  IDS_KSTATE        303
                            
 #define  IDB_KBD_0         310
 #define  IDB_KBD_1         311
@@ -65,4 +67,5 @@
 #define  IDB_KBD_DOT       320
 #define  IDB_KBD_e         321
 #define  IDB_KBD_RETURN    322
+#define  IDB_KBD_ESCAPE    323
 

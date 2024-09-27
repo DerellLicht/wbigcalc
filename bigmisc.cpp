@@ -675,305 +675,6 @@ extern int ExtendedFractionPart(void)
 
 /*
  *    **************************************************
- *    *                                                *
- *    *           Extended Get X from KBD              *
- *    *                                                *
- *    **************************************************
- */
-//  these were originally local to ExtendedGetX(),
-//  but that operation now needs to be divided into multiple functions
-static int sign, expsign;
-static long exponent;
-static int digits, intdigits, decdigits, exdigits, digitval;
-typedef enum {ININT, INDEC, INEX} mode_e;
-mode_e mode = ININT ;
-static BOOLEAN decimal;
-   
-/*  ******  I N I T I A L I Z E   V A R I A B L E S  ******  */
-void init_getx_vars(void)
-{
-
-   sign = '+';                      /* Default to positive numbers */
-   expsign = '+';
-
-   // row = entrysignrow;              /* Starting point for entry */
-   // col = MINDISPCOL;
-   // CurPos(row, col);
-
-   exponent = 0L;                   /* Initialize digit work areas */
-   digits = 0;
-   intdigits = 0;
-   decdigits = 0;
-   exdigits = 0;
-   digitval = 0;
-
-   mode = ININT;                    /* Begin in integer mode */
-
-   decimal = FALSE;                 /* No decimal point entered */
-}
-
-//***************************************************************************
-int exit_GetX(void)
-{
-   if (expsign == '-')                 /* Invert exponent if neg sign */
-      exponent = - exponent;
-
-   if (digitval) {                     /* Number not zero */
-      work[0].exp    = exponent + (long)intdigits;
-      work[0].sign   = sign;
-      work[0].digits = digits;
-      return(Normalize(0));
-      }
-   else {                              /* Null number == 0 */
-      work[0].exp    = 0L;
-      work[0].sign   = ' ';
-      work[0].digits = 0;
-      return(TRUE);
-      }
-}
-
-//***************************************************************************
-//  This returns FALSE only on ESCAPE
-//***************************************************************************
-bool ExtendedGetX(unsigned chr)
-{
-   int row, col, exprow, expcol;
-
-/*  ******  C H A R A C T E R   W A I T   L O O P  ******  */
-
-   // do {  /* while (TRUE) */
-
-      /* First digit already entered on first pass */
-
-      switch (chr) {             /* Test for number terminating operations */
-         case (ADD):
-         case (SUBTRACT):
-         case (MULTIPLY):
-         case (DIVIDE):
-         case (HELP):
-         case (POWER):
-         case (SQUAREROOT):
-         case (SQUARE):
-         case (RECIPROCAL):
-         case (FACTORIAL):
-         case (INTEGER):
-         case (FRACTION):
-         case (RECALLPI):
-         case (RECALLE):
-         case (SIN):
-         case (ARCSIN):
-         case (COS):
-         case (ARCCOS):
-         case (TAN):
-         case (ARCTAN):
-         case (LOG):
-         case (EXP10):
-         case (LN):
-         case (EXPE):
-         case (LASTX):
-         case (GROUPSIZE):
-         case (VIEWREG):
-         case (ENTER):
-         case (SCINOT):
-         case (CLEAR):
-         case (STOREX):
-         case (RECALLREG):
-         case (XCHGXY1):
-         case (XCHGXY2):
-         case (XCHGXREG):
-         case (ROLLDOWN):
-         case (ROLLUP):
-            charpresent = TRUE;  /* Pass terminating operator */
-            break;
-      }  /* switch */
-
-      if (charpresent)           /* Break from while */
-         return true ;
-
-      if (! isascii(chr))        /* Ignore non ASCII characters */
-         return true ;
-
-/*  ******  I N T E G E R   M O D E  ******  */
-
-      if (mode == ININT) {
-
-         if (isdigit(chr)) {                    /* Numeric digit */
-            if (digits < normprec) {
-               DisplayChar(&row, &col, chr);
-               work[0].man[digits] = chr - '0';
-               digitval += work[0].man[digits];
-               intdigits++;
-               digits++;
-               }
-            else
-               ;
-            }
-
-         else if (chr == '.') {                 /* . invokes decimal mode */
-            DisplayChar(&row, &col, chr);
-            decimal = TRUE;
-            mode = INDEC;
-            }
-
-         else if (chr == 'E') {                 /* E invokes exponent mode, */
-            if (! digits) {
-               DisplayChar(&row, &col, '1');    /*  if no digits, make it 1, */
-               work[0].man[digits] = 1;
-               digitval += 1;
-               intdigits++;
-               digits++;
-               DisplayExpChar(&row, &col, ' ');
-               DisplayExpChar(&row, &col, 'e');
-               CurGet(&exprow, &expcol);
-               mode = INEX;
-               }
-            else if (digitval > 0) {            /*  or if non zero already */
-               DisplayExpChar(&row, &col, ' ');
-               DisplayExpChar(&row, &col, 'e');
-               CurGet(&exprow, &expcol);
-               mode = INEX;
-               }
-            }
-
-         else if (chr == CHGSIGN) {             /* Reverse mantissa sign */
-            sign = FlipSign(sign);
-            CurPos(entrysignrow, SIGNDISPCOL);
-            if (sign == '+')
-               WChar(' ');
-            else
-               WChar('-');
-            CurPos(row, col);
-            }
-
-         else if (chr == BACKSPACE) {           /* Backspace backs up char */
-            if (digits) {
-               BackSpace(&row, &col);
-               digits--;
-               intdigits--;
-               digitval -= work[0].man[digits];
-               work[0].man[digits] = 0;
-               }
-            }
-
-         else if (chr == ESCAPE)                /* Changed his/her mind */
-            return(FALSE);
-      }  /* End integer part */
-
-/*  ******  D E C I M A L   M O D E  ******  */
-      else if (mode == INDEC) {
-
-         if (isdigit(chr)) {                    /* Numeric digit */
-            if (digits < normprec) {
-               DisplayChar(&row, &col, chr);
-               work[0].man[digits] = chr - '0';
-               digitval += work[0].man[digits];
-               decdigits++;
-               digits++;
-               }
-            else {
-               }
-            }
-
-         else if (chr == 'E') {                 /* E invokes exponent mode     */
-            if (digitval > 0) {                 /*  if non zero digits entered */
-               DisplayExpChar(&row, &col, ' ');
-               DisplayExpChar(&row, &col, 'e');
-               CurGet(&exprow, &expcol);
-               mode = INEX;
-               }
-            }
-
-         else if (chr == CHGSIGN) {             /* Reverse mantissa sign */
-            sign = FlipSign(sign);
-            CurPos(entrysignrow, SIGNDISPCOL);
-            if (sign == '+')
-               WChar(' ');
-            else
-               WChar('-');
-            CurPos(row, col);
-            }
-
-         else if (chr == BACKSPACE) {           /* Backspace backs up char */
-            BackSpace(&row, &col);
-
-            if (decdigits) {           /* Decimal digits, stay decimal mode */
-               digits--;
-               decdigits--;
-               digitval -= work[0].man[digits];
-               work[0].man[digits] = 0;
-               }
-
-            else {
-               decimal = FALSE;        /* Wiped out decimal point */
-               mode = ININT;           /* No digits, back in integer mode */
-               }
-            }
-
-         else if (chr == ESCAPE)                /* Changed his/her mind */
-            return(false);
-
-         else                                   /* Bad keystroke */
-            ;
-
-      }  /* End decimal part  */
-
-/*  ******  E X P O N E N T   M O D E  ******  */
-      else {   /* mode == INEXP */
-
-         if (isdigit(chr)) {                    /* numeric digit */
-            if (exdigits < MAXEXDIGITS) {
-               exponent = (exponent * 10L) + (long)(chr - '0');
-               DisplayExpChar(&row, &col, chr);
-               exdigits++;
-               }
-            else {
-               }
-            }
-
-         else if (chr == CHGSIGN) {             /* Sign ok if first char */
-               expsign = FlipSign(expsign);
-               DisplayExp(&row, &col, exprow, expcol, expsign, exponent);
-               }
-
-         else if (chr == BACKSPACE) {           /* Backspace backs up char */
-            BackSpaceExp(&row, &col);
-
-            if (exdigits) {            /* Exdigits means more exp to left */
-               exdigits--;             /* Back out latest digits */
-               exponent /= 10L;
-               }
-
-            else if (expsign == '-')    /* If sign entered, its gone now */
-               expsign = '+';
-
-            else {
-               BackSpaceExp(&row, &col);  /* Must have been " e", dump space */
-
-               if (decdigits || decimal)  /* If decimal digits or decimal */
-                  mode = INDEC;           /*  point entered, decimal mode */
-               else
-                  mode = ININT;           /*  else must be integer part */
-               }
-            }
-
-         else if (chr == ESCAPE)                /* Changed his/her mind */
-            return(false);
-
-         else                                   /* Bad keystroke */
-            ;
-
-      }  /* if mode == INEX */
-
-      // chr = GetChar();                    /* Get next char from kbd */
-      // 
-      // } while (TRUE);
-/*  ******  END  C H A R A C T E R   W A I T   L O O P  ******  */
-   return true ;
-
-}
-
-/*
- *    **************************************************
  *    *                 Data Movement                  *
  *    **************************************************
  */
@@ -1985,3 +1686,303 @@ void SetTempInteger(COMPTYPE *dest, long integer)
    dest->exp = (long) i;
 
 }
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *           Extended Get X from KBD              *
+ *    *                                                *
+ *    **************************************************
+ */
+//  these were originally local to ExtendedGetX(),
+//  but that operation now needs to be divided into multiple functions
+static int sign, expsign;
+static long exponent;
+static int digits, intdigits, decdigits, exdigits, digitval;
+typedef enum {ININT, INDEC, INEX} mode_e;
+mode_e mode = ININT ;
+static BOOLEAN decimal;
+   
+/*  ******  I N I T I A L I Z E   V A R I A B L E S  ******  */
+void init_getx_vars(void)
+{
+
+   sign = '+';                      /* Default to positive numbers */
+   expsign = '+';
+
+   // row = entrysignrow;              /* Starting point for entry */
+   // col = MINDISPCOL;
+   // CurPos(row, col);
+
+   exponent = 0L;                   /* Initialize digit work areas */
+   digits = 0;
+   intdigits = 0;
+   decdigits = 0;
+   exdigits = 0;
+   digitval = 0;
+
+   mode = ININT;                    /* Begin in integer mode */
+
+   decimal = FALSE;                 /* No decimal point entered */
+}
+
+//***************************************************************************
+int exit_GetX(void)
+{
+   if (expsign == '-')                 /* Invert exponent if neg sign */
+      exponent = - exponent;
+
+   if (digitval) {                     /* Number not zero */
+      work[0].exp    = exponent + (long)intdigits;
+      work[0].sign   = sign;
+      work[0].digits = digits;
+      return(Normalize(0));
+      }
+   else {                              /* Null number == 0 */
+      work[0].exp    = 0L;
+      work[0].sign   = ' ';
+      work[0].digits = 0;
+      return(TRUE);
+      }
+}
+
+//***************************************************************************
+//  This returns FALSE only on ESCAPE
+//***************************************************************************
+bool ExtendedGetX(unsigned chr)
+{
+   int row, col, exprow, expcol;
+
+/*  ******  C H A R A C T E R   W A I T   L O O P  ******  */
+   if (chr == ESCAPE) {      /* Changed his/her mind */
+      return(false);
+   }
+
+   // do {  /* while (TRUE) */
+
+      /* First digit already entered on first pass */
+
+      //  these aren't going to be possible here, now...
+      switch (chr) {             /* Test for number terminating operations */
+         case (ENTER):
+         case (ADD):
+         case (SUBTRACT):
+         case (MULTIPLY):
+         case (DIVIDE):
+         case (HELP):
+         case (POWER):
+         case (SQUAREROOT):
+         case (SQUARE):
+         case (RECIPROCAL):
+         case (FACTORIAL):
+         case (INTEGER):
+         case (FRACTION):
+         case (RECALLPI):
+         case (RECALLE):
+         case (SIN):
+         case (ARCSIN):
+         case (COS):
+         case (ARCCOS):
+         case (TAN):
+         case (ARCTAN):
+         case (LOG):
+         case (EXP10):
+         case (LN):
+         case (EXPE):
+         case (LASTX):
+         case (GROUPSIZE):
+         case (VIEWREG):
+         case (SCINOT):
+         case (CLEAR):
+         case (STOREX):
+         case (RECALLREG):
+         case (XCHGXY1):
+         case (XCHGXY2):
+         case (XCHGXREG):
+         case (ROLLDOWN):
+         case (ROLLUP):
+            return true ;
+            // charpresent = TRUE;  /* Pass terminating operator */
+            // break;
+      }  /* switch */
+
+      // if (charpresent)           /* Break from while */
+      //    return true ;
+
+      if (!isascii(chr))        /* Ignore non ASCII characters */
+         return true ;
+
+/*  ******  I N T E G E R   M O D E  ******  */
+
+      if (mode == ININT) {
+
+         if (isdigit(chr)) {                    /* Numeric digit */
+            if (digits < normprec) {
+               DisplayChar(&row, &col, chr);
+               work[0].man[digits] = chr - '0';
+               digitval += work[0].man[digits];
+               intdigits++;
+               digits++;
+               }
+            else
+               ;
+            }
+
+         else if (chr == '.') {                 /* . invokes decimal mode */
+            DisplayChar(&row, &col, chr);
+            decimal = TRUE;
+            mode = INDEC;
+            }
+
+         else if (chr == 'E') {                 /* E invokes exponent mode, */
+            if (! digits) {
+               DisplayChar(&row, &col, '1');    /*  if no digits, make it 1, */
+               work[0].man[digits] = 1;
+               digitval += 1;
+               intdigits++;
+               digits++;
+               DisplayExpChar(&row, &col, ' ');
+               DisplayExpChar(&row, &col, 'e');
+               CurGet(&exprow, &expcol);
+               mode = INEX;
+               }
+            else if (digitval > 0) {            /*  or if non zero already */
+               DisplayExpChar(&row, &col, ' ');
+               DisplayExpChar(&row, &col, 'e');
+               CurGet(&exprow, &expcol);
+               mode = INEX;
+               }
+            }
+
+         else if (chr == CHGSIGN) {             /* Reverse mantissa sign */
+            sign = FlipSign(sign);
+            CurPos(entrysignrow, SIGNDISPCOL);
+            if (sign == '+')
+               WChar(' ');
+            else
+               WChar('-');
+            CurPos(row, col);
+            }
+
+         else if (chr == BACKSPACE) {           /* Backspace backs up char */
+            if (digits) {
+               BackSpace(&row, &col);
+               digits--;
+               intdigits--;
+               digitval -= work[0].man[digits];
+               work[0].man[digits] = 0;
+               }
+            }
+
+         else                                   /* Bad keystroke */
+            ;
+
+      }  /* End integer part */
+
+/*  ******  D E C I M A L   M O D E  ******  */
+      else if (mode == INDEC) {
+
+         if (isdigit(chr)) {                    /* Numeric digit */
+            if (digits < normprec) {
+               DisplayChar(&row, &col, chr);
+               work[0].man[digits] = chr - '0';
+               digitval += work[0].man[digits];
+               decdigits++;
+               digits++;
+               }
+            else {
+               }
+            }
+
+         else if (chr == 'E') {                 /* E invokes exponent mode     */
+            if (digitval > 0) {                 /*  if non zero digits entered */
+               DisplayExpChar(&row, &col, ' ');
+               DisplayExpChar(&row, &col, 'e');
+               CurGet(&exprow, &expcol);
+               mode = INEX;
+               }
+            }
+
+         else if (chr == CHGSIGN) {             /* Reverse mantissa sign */
+            sign = FlipSign(sign);
+            CurPos(entrysignrow, SIGNDISPCOL);
+            if (sign == '+')
+               WChar(' ');
+            else
+               WChar('-');
+            CurPos(row, col);
+            }
+
+         else if (chr == BACKSPACE) {           /* Backspace backs up char */
+            BackSpace(&row, &col);
+
+            if (decdigits) {           /* Decimal digits, stay decimal mode */
+               digits--;
+               decdigits--;
+               digitval -= work[0].man[digits];
+               work[0].man[digits] = 0;
+               }
+
+            else {
+               decimal = FALSE;        /* Wiped out decimal point */
+               mode = ININT;           /* No digits, back in integer mode */
+               }
+            }
+
+         else                                   /* Bad keystroke */
+            ;
+
+      }  /* End decimal part  */
+
+/*  ******  E X P O N E N T   M O D E  ******  */
+      else {   /* mode == INEXP */
+
+         if (isdigit(chr)) {                    /* numeric digit */
+            if (exdigits < MAXEXDIGITS) {
+               exponent = (exponent * 10L) + (long)(chr - '0');
+               DisplayExpChar(&row, &col, chr);
+               exdigits++;
+               }
+            else {
+               }
+            }
+
+         else if (chr == CHGSIGN) {             /* Sign ok if first char */
+               expsign = FlipSign(expsign);
+               DisplayExp(&row, &col, exprow, expcol, expsign, exponent);
+               }
+
+         else if (chr == BACKSPACE) {           /* Backspace backs up char */
+            BackSpaceExp(&row, &col);
+
+            if (exdigits) {            /* Exdigits means more exp to left */
+               exdigits--;             /* Back out latest digits */
+               exponent /= 10L;
+               }
+
+            else if (expsign == '-')    /* If sign entered, its gone now */
+               expsign = '+';
+
+            else {
+               BackSpaceExp(&row, &col);  /* Must have been " e", dump space */
+
+               if (decdigits || decimal)  /* If decimal digits or decimal */
+                  mode = INDEC;           /*  point entered, decimal mode */
+               else
+                  mode = ININT;           /*  else must be integer part */
+               }
+            }
+
+         else                                   /* Bad keystroke */
+            ;
+
+      }  /* if mode == INEX */
+
+      // chr = GetChar();                    /* Get next char from kbd */
+      // 
+      // } while (TRUE);
+/*  ******  END  C H A R A C T E R   W A I T   L O O P  ******  */
+   return true ;
+
+}
+

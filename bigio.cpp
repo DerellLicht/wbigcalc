@@ -169,26 +169,6 @@ void ScrClr(void)
 
 /*
  *    **************************************************
- *    *              Erase to End of Line              *
- *    **************************************************
- */
-void EraEol(void)
-{
-   dclreol() ;
-}
-
-/*
- *    **************************************************
- *    *              Erase to End of Page              *
- *    **************************************************
- */
-void EraEop(void)
-{
-   dclreos() ;
-}
-
-/*
- *    **************************************************
  *    *         Position Cursor at row, column         *
  *    **************************************************
  */
@@ -452,8 +432,8 @@ void DisplayExp(int *row, int *col, int exprow, int expcol, int expsign, long ex
 
    *row = exprow;
    *col = expcol;
-   CurPos(exprow, expcol);          /* Locate to beginning of exponent */
-   EraEol();
+   // CurPos(exprow, expcol);          /* Locate to beginning of exponent */
+   // EraEol();
 
    if (expsign == '-')
       DisplayExpChar(row, col, '-');

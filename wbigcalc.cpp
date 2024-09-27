@@ -29,6 +29,7 @@ HBRUSH g_hbrBackground = (HBRUSH) (COLOR_WINDOW + 1) ;
 HINSTANCE hInst;
 static HWND hwndMain = NULL ;
 static HWND hwndMsg = NULL ;
+static HWND hwndKbdState = NULL ;
 
 static HWND hwndRegs[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ;
 static HWND hwndStack[4] = { 0, 0, 0, 0 } ;
@@ -48,6 +49,7 @@ extern void Heading2(void);
 static void set_hwnd_values(void)
 {
    hwndMsg = GetDlgItem(hwndMain, IDC_MSG) ;
+   hwndKbdState = GetDlgItem(hwndMain, IDC_KSTATE) ;
    
    hwndRegs[0] = GetDlgItem(hwndMain, IDC_R0) ;
    hwndRegs[1] = GetDlgItem(hwndMain, IDC_R1) ;
@@ -77,6 +79,12 @@ void status_message(char *msgstr)
 void status_message(uint idx, char *msgstr)
 {
    MainStatusBar->show_message(idx, msgstr);
+}
+
+//*************************************************************
+void show_keyboard_state(char *msg)
+{
+   SetWindowText(hwndKbdState, msg) ;
 }
 
 //*************************************************************
@@ -213,6 +221,7 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
       // SetDlgItemText (hDlgWnd, IDC_DLG_TEXT, "Enter Text");
       Initialize(1, NULL);
       Heading2();
+      keyboard_state_set(KBD_STATE_DEFAULT);
       Message("We are ready...");
       }
       return TRUE;
@@ -243,10 +252,19 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
          case IDB_KBD_9  : keyboard_state_handler(k9);   break ;
          case IDB_KBD_DOT: keyboard_state_handler(kPeriod);  break ;
          case IDB_KBD_e  : keyboard_state_handler(ke);   break ;
+         case IDB_KBD_ESCAPE  : 
+            switch (keyboard_state_get()) {
+            case KBD_STATE_DEFAULT:
+               PostMessageA(hDlgWnd, WM_CLOSE, 0, 0);
+               break ;
+            case KBD_STATE_GETX:
+               keyboard_state_handler(kESC);   break ;
+               break ;
+            }
+            break ;
             
          case IDB_KBD_RETURN:
-            keyboard_state_handler(ENTER);
-            Message("Return/Enter received");
+            keyboard_state_handler(kENTER);
             break ;            
             
          case IDB_CLOSE:

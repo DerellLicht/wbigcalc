@@ -31,6 +31,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "bigcalc.h"
 #include "biggvar.h"
 
@@ -229,7 +230,7 @@ void WriteNumber(NORMTYPE *nbr)
    long exponent;
    int i, digits;
 
-   EraEol();
+   // EraEol();
 
    if (nbr->digits == 0) {
       WString(" 0");
@@ -463,9 +464,9 @@ void MemoryError(void)
  */
 void OnScreenMenu(void)
 {
-   set_text_attrx(MENU_ATTR) ;
-   CurPos(19, 1);
-   EraEop();
+   // set_text_attrx(MENU_ATTR) ;
+   // CurPos(19, 1);
+   // EraEop();
    WriteAt(20, 1, "0-9.E  Number   + >Add        X >Xchg X R   V >View full");
    WriteAt(21, 1, "    S  ChgSign  - >Sub   Lft/Rt >Xchg X Y   F >Float/Sci");
    WriteAt(22, 1, "BkSpc  Clear X  * >Mul   Up/Dwn >Roll UpDn  G >Group 3/5");
@@ -728,9 +729,6 @@ void Heading1(void)
  *    *                                                *
  *    **************************************************
  */
-void status_message(char *msgstr);
-void status_message(unsigned idx, char *msgstr);
-
 void Heading2(void)
 {
    // set_text_attrx(HEADER_ATTR) ;
@@ -744,7 +742,7 @@ void Heading2(void)
    // WString(printid);
    
    char tempstr[20];
-   sprintf (tempstr, " Prec: %d", normprec);
+   sprintf (tempstr, " Precision: %d", normprec);
    status_message(1, tempstr);
    
    sprintf (tempstr, " dgroup: %d", groupsize);
