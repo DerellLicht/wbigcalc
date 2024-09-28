@@ -1,7 +1,8 @@
-#define IDI_ICON 100
+#define IDI_ICON           100
 #define IDD_MAIN_DIALOG    101
 #define IDR_ACCELERATOR1   102
 #define IDB_CLOSE          103
+#define IDC_TITLE          104
 
 #define IDC_REG_X          110
 #define IDC_REG_Y          111

@@ -26,8 +26,6 @@
  *    **************************************************
  */
 
-#define TITLE "Extended Precision Calculator 6.0"
-
 #define MINPREC 3                         /* Min nbr of digits  */
 #define DEFAULTPREC 50                    /* Default precision  */
 #define MAXNORM 1075                      /* Max normal digits  */
@@ -229,9 +227,9 @@ extern int
    groupsize,              /* Digit group size  */
    menunbr;                /* Menu number       */
    
-extern long
-   minfloatprn,            /* Min exp for float */
-   maxfloatprn;            /* Max exp for float */
+// extern long
+//    minfloatprn,            /* Min exp for float */
+//    maxfloatprn;            /* Max exp for float */
 
 extern bool scinotation;   /* Force sci notation if TRUE   */
 /*
@@ -243,15 +241,7 @@ extern bool scinotation;   /* Force sci notation if TRUE   */
  */
 
 extern  int GetChar(void);
-// extern  int KeyPressed(void);
 
-// extern  void ScrInit(void);
-// extern  void ScrTerm(void);
-extern  void ScrClr(void);
-extern  void EraEol(void);
-extern  void EraEop(void);
-extern  void CurPos(int row,int col);
-extern  void CurGet(int *row,int *col);
 extern  void WChar(int chr);
 extern  void WString(char *str);
 extern  void WInteger(long integer);
@@ -327,7 +317,6 @@ extern  void ExtendedRecallCosP001(int dest);
 extern  void ClearStack(int lo,int hi);
 extern  void ClearReg(int lo,int hi);
 extern  void ClearWork(int w);
-extern  void ClearTemp(COMPTYPE *temp);
 extern  void MoveStackWork(int source,int dest);
 extern  void MoveRegWork(int source,int dest);
 extern  void MoveWorkStack(int source,int dest);
@@ -364,6 +353,5 @@ extern  void MemoryError(void);
 
 extern  void OnScreenMenu(void);
 extern  void InitialScreen(void);
-extern  void Heading1(void);
 extern  void Heading2(void);
 extern  void WorkScreen(void);

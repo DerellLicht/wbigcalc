@@ -122,9 +122,9 @@ int
    
 static int chr = 0;                /* Input Character   */
 
-long
-   minfloatprn,            /* Min exp for float */
-   maxfloatprn;            /* Max exp for float */
+// long
+//    minfloatprn,            /* Min exp for float */
+//    maxfloatprn;            /* Max exp for float */
 
 bool scinotation = false;    /* Force sci notation if TRUE   */
 //   charpresent = FALSE,    /* Character present if TRUE    */
@@ -886,13 +886,13 @@ static void GroupSize(void)
 
    if (groupsize == 5) {
       groupsize = 3;
-      minfloatprn = (long)normprec - 1077L;
-      maxfloatprn = 1080L;
+      // minfloatprn = (long)normprec - 1077L;
+      // maxfloatprn = 1080L;
       }
    else {
       groupsize = 5;
-      minfloatprn = (long)normprec - 1195L;
-      maxfloatprn = 1200L;
+      // minfloatprn = (long)normprec - 1195L;
+      // maxfloatprn = 1200L;
       }
 
    if (flag)

@@ -4,6 +4,12 @@
 //  by Judson D. McClendon (c) 1999
 //*********************************************************************************
 
+
+// #define TITLE "Extended Precision Calculator 6.0"
+
+#define  VER_NUMBER "6.0"
+static char const * const Version = "WBigCalc Extended Precision Calculator, Version " VER_NUMBER " " ;
+
 #include <windows.h>
 #include <stdio.h>
 
@@ -16,14 +22,9 @@
 
 //lint -esym(537, 'c:\mingw\include\commdlg.h')
 
-#define BUFFER_SIZE 256
-
-char szText[BUFFER_SIZE];
-
-// static unsigned key_mask = 0;
 // HBRUSH g_hbrBackground = CreateSolidBrush (RGB (255, 255, 255));
 //  other colors are in winuser.h (line 822 in mingw)
-HBRUSH g_hbrBackground = (HBRUSH) (COLOR_WINDOW + 1) ;
+static HBRUSH const g_hbrBackground = (HBRUSH) (COLOR_WINDOW + 1) ;
 // #ifdef   USE_SYS_BG_COLOR  
 //    wndclass.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1) ;
 // #else
@@ -32,6 +33,7 @@ HBRUSH g_hbrBackground = (HBRUSH) (COLOR_WINDOW + 1) ;
 
 static HINSTANCE hInst;
 static HWND hwndMain = NULL ;
+static HWND hwndTitle = NULL ;
 static HWND hwndMsg = NULL ;
 static HWND hwndKbdState = NULL ;
 
@@ -46,19 +48,19 @@ static CStatusBar *MainStatusBar = NULL;
 //*************************************************************
 static void set_hwnd_values(void)
 {
-   hwndMsg = GetDlgItem(hwndMain, IDC_MSG) ;
+   hwndMsg      = GetDlgItem(hwndMain, IDC_MSG) ;
    hwndKbdState = GetDlgItem(hwndMain, IDC_KSTATE) ;
    
-   hwndRegs[0] = GetDlgItem(hwndMain, IDC_R0) ;
-   hwndRegs[1] = GetDlgItem(hwndMain, IDC_R1) ;
-   hwndRegs[2] = GetDlgItem(hwndMain, IDC_R2) ;
-   hwndRegs[3] = GetDlgItem(hwndMain, IDC_R3) ;
-   hwndRegs[4] = GetDlgItem(hwndMain, IDC_R4) ;
-   hwndRegs[5] = GetDlgItem(hwndMain, IDC_R5) ;
-   hwndRegs[6] = GetDlgItem(hwndMain, IDC_R6) ;
-   hwndRegs[7] = GetDlgItem(hwndMain, IDC_R7) ;
-   hwndRegs[8] = GetDlgItem(hwndMain, IDC_R8) ;
-   hwndRegs[9] = GetDlgItem(hwndMain, IDC_R9) ;
+   hwndRegs[0]  = GetDlgItem(hwndMain, IDC_R0) ;
+   hwndRegs[1]  = GetDlgItem(hwndMain, IDC_R1) ;
+   hwndRegs[2]  = GetDlgItem(hwndMain, IDC_R2) ;
+   hwndRegs[3]  = GetDlgItem(hwndMain, IDC_R3) ;
+   hwndRegs[4]  = GetDlgItem(hwndMain, IDC_R4) ;
+   hwndRegs[5]  = GetDlgItem(hwndMain, IDC_R5) ;
+   hwndRegs[6]  = GetDlgItem(hwndMain, IDC_R6) ;
+   hwndRegs[7]  = GetDlgItem(hwndMain, IDC_R7) ;
+   hwndRegs[8]  = GetDlgItem(hwndMain, IDC_R8) ;
+   hwndRegs[9]  = GetDlgItem(hwndMain, IDC_R9) ;
    
    hwndStack[0] = GetDlgItem(hwndMain, IDC_REG_X) ;
    hwndStack[1] = GetDlgItem(hwndMain, IDC_REG_Y);
@@ -68,6 +70,9 @@ static void set_hwnd_values(void)
 }
 
 //*******************************************************************
+//lint -esym(714, status_message)
+//lint -esym(759, status_message)
+//lint -esym(765, status_message)
 void status_message(char *msgstr)
 {
    MainStatusBar->show_message(msgstr);
@@ -146,7 +151,7 @@ void Message(char *msg)
 
 //*************************************************************
 
-BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
    //***************************************************
    //  debug: log all windows messages
@@ -191,6 +196,8 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
          (DesktopRect.bottom - DialogRect.bottom) / 2,
          0, 0, SWP_NOSIZE);
 
+      hwndTitle = GetDlgItem(hwndMain, IDC_TITLE) ;
+      SetWindowText(hwndTitle, Version);
       
       // RECT rWindow;
       // unsigned stTop ;

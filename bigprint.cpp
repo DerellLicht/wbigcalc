@@ -336,37 +336,12 @@ void InitialScreen(void)
 /*
  *    **************************************************
  *    *                                                *
- *    *             Screen Header Line 1               *
- *    *                                                *
- *    **************************************************
- */
-void Heading1(void)
-{
-   // set_text_attrx(TEXT_ATTR) ;
-   // ScrClr();
-   // set_text_attrx(TITLE_ATTR) ;
-   // WriteCenter(1, TITLE);
-}
-
-/*
- *    **************************************************
- *    *                                                *
  *    *             Screen Header Line 2               *
  *    *                                                *
  *    **************************************************
  */
 void Heading2(void)
 {
-   // set_text_attrx(HEADER_ATTR) ;
-   // CurPos(2, 1);
-   // EraEol();
-   // WriteAt(2, 8, "Precision is ");
-   // WInteger((long) normprec);
-   // WString(" digits,  Digit grouping is ");
-   // WInteger((long) groupsize);
-   // WString(",  Print to ");
-   // WString(printid);
-   
    char tempstr[20];
    sprintf (tempstr, " Precision: %d", normprec);
    status_message(1, tempstr);

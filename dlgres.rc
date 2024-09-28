@@ -36,13 +36,14 @@ BEGIN
 END
 
 //*******************************************************************
-#define  PI_X   12
-#define  PI_Y    4
-#define  PI_FX (PI_X + 5)
+#define  PI_X     12
+#define  PI_Y     34
+#define  PI_FX    (PI_X + 5)
 
 #define  Y_OFS    1
 
 #define  REGS_GRP_DX  600
+#define  DLG_DX      (REGS_GRP_DX+30)
 #define  REGS_DX     (REGS_GRP_DX - PI_FX - 8 - 20)
 
 #define  ST_Y     (PI_Y + 170)
@@ -50,11 +51,13 @@ END
 #define  Y_OFS2   22
 #define  Y_OFS3   40
 
-IDD_MAIN_DIALOG DIALOG DISCARDABLE  160, 40, REGS_GRP_DX+30, 500
+IDD_MAIN_DIALOG DIALOG DISCARDABLE  160, 40, DLG_DX, 500
 STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
 CAPTION "BigCalc for Windows"
 FONT 10, "Times New Roman"
 BEGIN
+   CTEXT           " ",             IDC_TITLE,     150,  5, REGS_GRP_DX-300,  12, SS_SUNKEN
+   
    GROUPBOX        " Registers ",   IDC_REGS,    PI_X,               PI_Y,          REGS_GRP_DX, 160 
    LTEXT           "R0",            IDS_R0,      PI_FX,              PI_Y+Y_OFS+10,          12,  10
    LTEXT           " ",             IDC_R0,      PI_FX+15,           PI_Y+10,           REGS_DX,  10, SS_SUNKEN

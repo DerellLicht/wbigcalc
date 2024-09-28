@@ -1358,6 +1358,9 @@ void ClearWork(int w)
 //    WORKDIGIT man[MAXCOMP];
 //    } COMPTYPE;
 
+//lint -esym(714, dump_norm_reg)
+//lint -esym(759, dump_norm_reg)
+//lint -esym(765, dump_norm_reg)
 void dump_norm_reg(NORMTYPE *nptr, char *msg)
 {
    char outmsg[1024] = "" ;
@@ -1378,6 +1381,9 @@ void dump_norm_reg(NORMTYPE *nptr, char *msg)
    syslog("DNR: [%s]\n");
 }  //lint !e843
 
+//lint -esym(714, dump_work_reg)
+//lint -esym(759, dump_work_reg)
+//lint -esym(765, dump_work_reg)
 void dump_work_reg(WORKTYPE *nptr, char *msg)
 {
    char outmsg[100] = "" ;
@@ -1405,7 +1411,7 @@ void dump_work_reg(WORKTYPE *nptr, char *msg)
  *    *                                                *
  *    **************************************************
  */
-void ClearTemp(COMPTYPE *temp)
+static void ClearTemp(COMPTYPE *temp)
 {
    temp->exp = 0L;
    temp->sign = ' ';
@@ -1763,8 +1769,8 @@ static int sign, expsign;
 static long exponent;
 static int digits, intdigits, decdigits, exdigits, digitval;
 typedef enum {ININT, INDEC, INEX} mode_e;
-mode_e mode = ININT ;
-static BOOLEAN decimal;
+static mode_e mode = ININT ;
+static bool decimal;
    
 /*  ******  I N I T I A L I Z E   V A R I A B L E S  ******  */
 void init_getx_vars(void)
@@ -1786,10 +1792,13 @@ void init_getx_vars(void)
 
    mode = ININT;                    /* Begin in integer mode */
 
-   decimal = FALSE;                 /* No decimal point entered */
+   decimal = false;                 /* No decimal point entered */
 }
 
 //***************************************************************************
+//lint -esym(714, ExtendedGetX_unused)
+//lint -esym(759, ExtendedGetX_unused)
+//lint -esym(765, ExtendedGetX_unused)
 bool ExtendedGetX_unused(u16 chr)
 {
       //  these aren't going to be possible here, now...
@@ -1868,7 +1877,7 @@ int exit_GetX(void)
 //***************************************************************************
 bool ExtendedGetX(u16 chr)
 {
-   int row, col, exprow, expcol;
+   int row, col;
 
 /*  ******  C H A R A C T E R   W A I T   L O O P  ******  */
    if (chr == ESCAPE) {      /* Changed his/her mind */
@@ -1905,7 +1914,7 @@ bool ExtendedGetX(u16 chr)
          else if (chr == '.') {                 /* . invokes decimal mode */
             // DisplayChar(&row, &col, chr);
             WChar(chr);
-            decimal = TRUE;
+            decimal = true;
             mode = INDEC;
             }
 
@@ -1919,13 +1928,13 @@ bool ExtendedGetX(u16 chr)
                digits++;
                DisplayExpChar(&row, &col, ' ');
                DisplayExpChar(&row, &col, 'e');
-               CurGet(&exprow, &expcol);
+               // CurGet(&exprow, &expcol);
                mode = INEX;
                }
             else if (digitval > 0) {            /*  or if non zero already */
                DisplayExpChar(&row, &col, ' ');
                DisplayExpChar(&row, &col, 'e');
-               CurGet(&exprow, &expcol);
+               // CurGet(&exprow, &expcol);
                mode = INEX;
                }
             }
@@ -1972,7 +1981,7 @@ bool ExtendedGetX(u16 chr)
             if (digitval > 0) {                 /*  if non zero digits entered */
                DisplayExpChar(&row, &col, ' ');
                DisplayExpChar(&row, &col, 'e');
-               CurGet(&exprow, &expcol);
+               // CurGet(&exprow, &expcol);
                mode = INEX;
                }
             }
@@ -1997,7 +2006,7 @@ bool ExtendedGetX(u16 chr)
                }
 
             else {
-               decimal = FALSE;        /* Wiped out decimal point */
+               decimal = false;        /* Wiped out decimal point */
                mode = ININT;           /* No digits, back in integer mode */
                }
             }
@@ -2022,7 +2031,7 @@ bool ExtendedGetX(u16 chr)
 
          else if (chr == CHGSIGN) {             /* Sign ok if first char */
                expsign = FlipSign(expsign);
-               DisplayExp(&row, &col, exprow, expcol, expsign, exponent);
+               DisplayExp(&row, &col, row, col, expsign, exponent);
                }
 
          else if (chr == BACKSPACE) {           /* Backspace backs up char */

@@ -17,9 +17,6 @@
  *    *                                                *
  *    **************************************************
  */
-#define  VER_NUMBER "6.0"
-char *Version = "WBigCalc, Version " VER_NUMBER " " ;
-
 /*
  *    **************************************************
  *    *                                                *
@@ -130,72 +127,13 @@ extern int GetChar(void)
 
 /*
  *    **************************************************
- *    *                                                *
- *    *                Screen Routines                 *
- *    *                                                *
- *    **************************************************
- */
-
-
-/*
- *    **************************************************
- *    *                                                *
- *    *            Initialize Screen Drivers           *
- *    *                                                *
- *    **************************************************
- */
-// void ScrInit(void)
-// {
-//    console_init(Version) ;
-//    if (!is_redirected())
-//       set_linewrap_state(FALSE) ;
-// }
-
-/*
- *    **************************************************
- *    *                                                *
- *    *            End of Job Screen Cleanup           *
- *    *                                                *
- *    **************************************************
- */
-// void ScrTerm(void)
-// {
-//    color = MONOCOLOR;            /* Clear end of screen to B/W */
-//    CurPos(XSIGNROW + 1, 1);
-//    EraEop();
-// }
-
-/*
- *    **************************************************
- *    *                                                *
- *    *                Clear the Screen                *
- *    *                                                *
- *    **************************************************
- */
-void ScrClr(void)
-{
-   // dclrscr() ;
-}
-
-/*
- *    **************************************************
  *    *         Position Cursor at row, column         *
+ //  not actually used in this application
  *    **************************************************
  */
-void CurPos(int row, int col)
+static void CurPos(int row, int col)
 {
    // dgotoxy(col-1, row-1) ;
-}
-
-/*
- *    **************************************************
- *    *            Get Cursor row, column              *
- *    **************************************************
- */
-void CurGet(int *row, int *col)
-{
-   // *row = _where_y() + 1;
-   // *col = _where_x() + 1;
 }
 
 //***************************************************************************
@@ -216,6 +154,9 @@ char *get_output_str(void)
    return output_str ;
 }
 
+//lint -esym(714, get_output_str_len)
+//lint -esym(759, get_output_str_len)
+//lint -esym(765, get_output_str_len)
 uint get_output_str_len(void)
 {
    return outstr_idx ;
