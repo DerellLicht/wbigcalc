@@ -30,14 +30,11 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include "common.h"
 #include "bigcalc.h"
 
 static void WExponent(long exponent);
-
-#define HELP_ATTR    2
 
 /*
  *    **************************************************
@@ -389,7 +386,7 @@ void Heading2(void)
 void DisplayReg(int r)
 {
    WorkScreen();
-}
+}  //lint !e715
 
 /*
  *    **************************************************
@@ -402,7 +399,7 @@ void DisplayReg(int r)
 void DisplayStack(int s)
 {
    WorkScreen();
-}
+}  //lint !e715
 
 /*
  *    **************************************************

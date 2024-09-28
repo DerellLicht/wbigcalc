@@ -1,5 +1,8 @@
 #include <windows.h>
+
 #include "resource.h"
+
+//lint -e2  Unclosed Quote
 
 IDI_ICON ICON "Link04.ico"
 
@@ -42,7 +45,7 @@ END
 #define  REGS_GRP_DX  600
 #define  REGS_DX     (REGS_GRP_DX - PI_FX - 8 - 20)
 
-#define  ST_Y     PI_Y+170
+#define  ST_Y     (PI_Y + 170)
 
 #define  Y_OFS2   22
 #define  Y_OFS3   40

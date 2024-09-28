@@ -30,7 +30,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+//#include <string.h>
 
 #include "common.h"
 #include "bigcalc.h"
@@ -42,8 +42,7 @@
  *    **************************************************
  */
 
-void Initialize(int argc,char *argv);
-static  int dos_main(unsigned inchr);
+static  int dos_main(u16 inchr);
 static void Enter(bool success);
 static void ExitGetXState(bool success);
 
@@ -121,19 +120,17 @@ int
 //    entrysignrow,           /* Row for X entry   */
    menunbr = 0;            /* Menu number       */
    
-int chr = 0;                /* Input Character   */
+static int chr = 0;                /* Input Character   */
 
 long
    minfloatprn,            /* Min exp for float */
    maxfloatprn;            /* Max exp for float */
 
-BOOLEAN
-   scinotation = FALSE;    /* Force sci notation if TRUE   */
+bool scinotation = false;    /* Force sci notation if TRUE   */
 //   charpresent = FALSE,    /* Character present if TRUE    */
 //    menucleared = TRUE;     /* Screen menu cleared if TRUE  */
 
-static BOOLEAN
-   stacklift = TRUE;       /* Lift stack for new X if TRUE */
+static BOOLEAN stacklift = TRUE;       /* Lift stack for new X if TRUE */
 
 /*
  *    **************************************************
@@ -843,7 +840,7 @@ static void RecallLastX(void)
    if (stacklift) {
       PushStack();
       WriteStack(1, 3);
-      }
+   }
 
    stack[0] = lastx;
    WriteStack(0, 0);
@@ -861,7 +858,7 @@ static void ChangeSign(void)
 {
    if (stack[0].digits) {        /* Only if X non zero */
       stack[0].sign = FlipSign(stack[0].sign);
-      CurPos(XSIGNROW, SIGNDISPCOL);
+      // CurPos(XSIGNROW, SIGNDISPCOL);
       if (stack[0].sign == '-')
          WChar('-');
       else
@@ -994,9 +991,9 @@ static void ClearX(void)
 static void SciNotation(void)
 {
    if (scinotation)
-      scinotation = FALSE;
+      scinotation = false ;
    else
-      scinotation = TRUE;
+      scinotation = true;
 
    WriteReg(0, 9);
    WriteStack(0, 3);
@@ -1616,7 +1613,7 @@ static void DropStack(void)
 //*********************************************************************
 static keyboard_state_t keyboard_state = KBD_STATE_DEFAULT ;
 
-int keyboard_state_handler(char inchr)
+int keyboard_state_handler(u16 inchr)
 {
    int result = TRUE ;
    switch(keyboard_state) {
@@ -1683,7 +1680,7 @@ keyboard_state_t keyboard_state_get(void)
  */
 static NORMTYPE *tempStackX = NULL; //  used by GetX function
    
-static void AcceptX(char inchr)
+static void AcceptX(u16 inchr)
 {
    int result ;
    if (keyboard_state == KBD_STATE_GETX) {
@@ -1798,16 +1795,11 @@ static void Enter(bool success)
    ExitGetXState(success);
 }
 
-/*
- *    **************************************************
- *    *                                                *
- *    *                     Main                       *
- //  DEFAULT STATE keyboard handler
- *    *                                                *
- *    **************************************************
- */
+//***************************************************************************
+//  called from keyboard_state_handler() in GetX state
+//***************************************************************************
 // int main(int argc,char *argv[])
-static  int dos_main(unsigned inchr)
+static int dos_main(u16 inchr)
 {
    // Initialize(argc, argv[1]);
 

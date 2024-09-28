@@ -27,7 +27,7 @@ wc:
 	wc -l *.cpp *.rc
 
 lint:
-	cmd /C "c:\lint9\lint-nt +v -width(160,4) +fcp -ic:\lint9 mingw.lnt -os(_lint.tmp) lintdefs.cpp *.rc $(CPPSRC)"
+	cmd /C "c:\lint9\lint-nt +v -width(160,4) -Ider_libs +fcp -ic:\lint9 mingw.lnt -os(_lint.tmp) lintdefs.cpp *.rc $(CPPSRC)"
 
 src:
 	zip wbigcalc.zip *.cpp *.h *.rc makefile *.txt *.doc *.ico

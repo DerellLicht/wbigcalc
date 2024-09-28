@@ -1,6 +1,8 @@
-// Win32 Tutorial (Dialog Box as main window)
-// Alan Baylis 2004
-// http://members.net-tech.com.au/alaneb/main_dialog.html
+//*********************************************************************************
+//  WBigCalc.cpp 
+//  Windows wrapper for BigCalc Extended Precision Calculator
+//  by Judson D. McClendon (c) 1999
+//*********************************************************************************
 
 #include <windows.h>
 #include <stdio.h>
@@ -11,6 +13,8 @@
 #include "bigcalc.h"
 #include "statbar.h"
 #include "winmsgs.h"
+
+//lint -esym(537, 'c:\mingw\include\commdlg.h')
 
 #define BUFFER_SIZE 256
 
@@ -26,7 +30,7 @@ HBRUSH g_hbrBackground = (HBRUSH) (COLOR_WINDOW + 1) ;
 //    wndclass.hbrBackground = (HBRUSH) GetStockObject (BLACK_BRUSH) ;
 // #endif
 
-HINSTANCE hInst;
+static HINSTANCE hInst;
 static HWND hwndMain = NULL ;
 static HWND hwndMsg = NULL ;
 static HWND hwndKbdState = NULL ;
@@ -34,16 +38,10 @@ static HWND hwndKbdState = NULL ;
 static HWND hwndRegs[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ;
 static HWND hwndStack[4] = { 0, 0, 0, 0 } ;
 
-uint cxClient = 0 ;
-uint cyClient = 0 ;
+static uint cxClient = 0 ;
+static uint cyClient = 0 ;
 
 static CStatusBar *MainStatusBar = NULL;
-
-//  bigcalc.cpp
-extern void Initialize(int argc, char *argv);
-
-//  bigprint.cpp
-extern void Heading2(void);
 
 //*************************************************************
 static void set_hwnd_values(void)
@@ -154,7 +152,7 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
    //  debug: log all windows messages
    //***************************************************
    // if (dbg_flags & DBG_WINMSGS) {
-   if (false) {
+   if (false) {   //lint !e506 !e774
       switch (msg) {
       //  list messages to be ignored
       // case WM_CTLCOLORBTN:
@@ -252,13 +250,14 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
          case IDB_KBD_9  : keyboard_state_handler(k9);   break ;
          case IDB_KBD_DOT: keyboard_state_handler(kPeriod);  break ;
          case IDB_KBD_e  : keyboard_state_handler(ke);   break ;
+         
          case IDB_KBD_ESCAPE  : 
             switch (keyboard_state_get()) {
             case KBD_STATE_DEFAULT:
                PostMessageA(hDlgWnd, WM_CLOSE, 0, 0);
                break ;
             case KBD_STATE_GETX:
-               keyboard_state_handler(kESC);   break ;
+               keyboard_state_handler(kESC);   
                break ;
             }
             break ;
@@ -302,7 +301,7 @@ BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)
       return FALSE ;
    }
    return FALSE;
-}
+}  //lint !e715
 
 //*****************************************************************
 INT WINAPI WinMain (HINSTANCE hInstance,
@@ -323,5 +322,5 @@ INT WINAPI WinMain (HINSTANCE hInstance,
       }
    }
    return Msg.wParam;
-}
+}  //lint !e715
 

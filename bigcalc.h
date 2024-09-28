@@ -18,8 +18,6 @@
  *    **************************************************
  */
  
- #include <windows.h>
-
 /*
  *    **************************************************
  *    *                                                *
@@ -63,17 +61,13 @@
  *    **************************************************
  */
 
-#ifndef TRUE
-#define TRUE 1
-#endif
-
-#ifndef FALSE
-#define FALSE 0
-#endif
-
-#ifndef BOOLEAN
-#define BOOLEAN int
-#endif
+// #ifndef TRUE
+// #define TRUE 1
+// #endif
+// 
+// #ifndef FALSE
+// #define FALSE 0
+// #endif
 
 #define GETNORMTEMP(n) (NORMTYPE *) malloc((n) * sizeof(NORMTYPE))
 #define GETCOMPTEMP(n) (COMPTYPE *) malloc((n) * sizeof(COMPTYPE))
@@ -81,6 +75,9 @@
 //  wbigcalc.cpp
 void status_message(char *msgstr);
 void status_message(unsigned idx, char *msgstr);
+
+//  bigcalc.cpp
+void Initialize(int argc, char *argv);
 
 //  bigio.cpp
 void reset_output_str(void);
@@ -101,13 +98,13 @@ typedef enum {
    KBD_STATE_GETX
 } keyboard_state_t ;
 
-int keyboard_state_handler(char chr);
+int keyboard_state_handler(u16 chr);
 bool keyboard_state_set(keyboard_state_t new_kbd_state);
 keyboard_state_t keyboard_state_get(void);
 
 //  GetX functions
 void init_getx_vars(void);
-bool ExtendedGetX(unsigned inchr);
+bool ExtendedGetX(u16 inchr);
 int exit_GetX(void); //  reset local GetX vars
 void show_keyboard_state(char *msg);
 
@@ -232,14 +229,11 @@ extern int
    groupsize,              /* Digit group size  */
    menunbr;                /* Menu number       */
    
-extern int chr;            /* Input Character   */
-
 extern long
    minfloatprn,            /* Min exp for float */
    maxfloatprn;            /* Max exp for float */
 
-extern BOOLEAN
-   scinotation;            /* Force sci notation if TRUE   */
+extern bool scinotation;   /* Force sci notation if TRUE   */
 /*
  *    **************************************************
  *    *                                                *

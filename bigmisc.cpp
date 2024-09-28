@@ -30,10 +30,11 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include "common.h"
 #include "bigcalc.h"
+
+//lint -esym(530, row, col, exprow, expcol)
 
 /*
  *    **************************************************
@@ -1375,7 +1376,7 @@ void dump_norm_reg(NORMTYPE *nptr, char *msg)
       }
    }
    syslog("DNR: [%s]\n");
-}
+}  //lint !e843
 
 void dump_work_reg(WORKTYPE *nptr, char *msg)
 {
@@ -1395,7 +1396,7 @@ void dump_work_reg(WORKTYPE *nptr, char *msg)
       }
    }
    syslog("DWR: [%s]\n", outmsg);
-}
+}  //lint !e843
 
 /*
  *    **************************************************
@@ -1423,7 +1424,7 @@ void MoveStackWork(int source, int dest)
 {
    int size, i;
 
-   if ((size = stack[source].digits)) {
+   if ((size = stack[source].digits) != 0) {
       if (size > workprec)
          size = workprec;
       work[dest].exp    = stack[source].exp;
@@ -1451,7 +1452,7 @@ void MoveRegWork(int source, int dest)
 {
    int size, i;
 
-   if ((size = reg[source].digits)) {
+   if ((size = reg[source].digits) != 0) {
       if (size > workprec)
          size = workprec;
       work[dest].exp    = reg[source].exp;
@@ -1480,7 +1481,7 @@ void MoveWorkStack(int source, int dest)
    int size, i;
 
    // syslog("MWS %d->%d: digits: %u\n", source, dest, work[source].digits);
-   if ((size = work[source].digits)) {
+   if ((size = work[source].digits) != 0) {
       if (size > normprec)
          size = normprec;
       stack[dest].exp  = work[source].exp;
@@ -1492,8 +1493,9 @@ void MoveWorkStack(int source, int dest)
       if (size < normprec)
          memset(&stack[dest].man[size], 0, ((normprec - size) * sizeof(NORMDIGIT)));
 
-      while (!stack[dest].man[size - 1])
+      while (!stack[dest].man[size - 1]) {   //lint !e676  possibly negative subscript
          size--;
+      }
       stack[dest].digits = size;
       }
    else
@@ -1511,7 +1513,7 @@ void MoveWorkReg(int source, int dest)
 {
    int size, i;
 
-   if ((size = work[source].digits)) {
+   if ((size = work[source].digits) != 0) {
       if (size > normprec)
          size = normprec;
       reg[dest].exp  = work[source].exp;
@@ -1523,8 +1525,9 @@ void MoveWorkReg(int source, int dest)
       if (size < normprec)
          memset(&reg[dest].man[size], 0, ((normprec - size) * sizeof(NORMDIGIT)));
 
-      while (!reg[dest].man[size - 1])
+      while (!reg[dest].man[size - 1]) {   //lint !e676  possibly negative subscript
          size--;
+      }
       reg[dest].digits = size;
       }
    else
@@ -1542,7 +1545,7 @@ void MoveWorkWork(int source, int dest)
 {
    int size;
 
-   if ((size = work[source].digits)) {
+   if ((size = work[source].digits) != 0) {
       if (size > compprec)
          size = compprec;
       work[dest].exp    = work[source].exp;
@@ -1572,7 +1575,7 @@ void MoveWorkTemp(int source, COMPTYPE *dest)
 
    int size;
 
-   if ((size = work[source].digits)) {
+   if ((size = work[source].digits) != 0) {
       if (size > compprec)
          size = compprec;
       dest->exp    = work[source].exp;
@@ -1587,7 +1590,7 @@ void MoveWorkTemp(int source, COMPTYPE *dest)
    else
       ClearTemp(dest);
 
-}
+}  //lint !e593
 
 
 
@@ -1606,7 +1609,7 @@ void MoveTempWork(COMPTYPE *source, int dest)
 
    int size;
 
-   if ((size = source->digits)) {
+   if ((size = source->digits) != 0) {
       if (size > workprec)
          size = workprec;
       work[dest].exp    = source->exp;
@@ -1640,7 +1643,7 @@ void MoveTempTemp(COMPTYPE *source, COMPTYPE *dest)
 
    int size;
 
-   if ((size = source->digits)) {
+   if ((size = source->digits) != 0) {
       if (size > compprec)
          size = compprec;
       dest->exp    = source->exp;
@@ -1787,7 +1790,7 @@ void init_getx_vars(void)
 }
 
 //***************************************************************************
-bool ExtendedGetX_unused(void)
+bool ExtendedGetX_unused(u16 chr)
 {
       //  these aren't going to be possible here, now...
       switch (chr) {             /* Test for number terminating operations */
@@ -1831,6 +1834,8 @@ bool ExtendedGetX_unused(void)
             return true ;
             // charpresent = TRUE;  /* Pass terminating operator */
             // break;
+         default:
+            break ;
       }  /* switch */
 
       // if (charpresent)           /* Break from while */
@@ -1861,7 +1866,7 @@ int exit_GetX(void)
 //***************************************************************************
 //  This returns FALSE only on ESCAPE
 //***************************************************************************
-bool ExtendedGetX(unsigned chr)
+bool ExtendedGetX(u16 chr)
 {
    int row, col, exprow, expcol;
 
@@ -1931,7 +1936,6 @@ bool ExtendedGetX(unsigned chr)
                WChar(' ');
             else
                WChar('-');
-            CurPos(row, col);
             }
 
          else if (chr == BACKSPACE) {           /* Backspace backs up char */
@@ -1979,7 +1983,7 @@ bool ExtendedGetX(unsigned chr)
                WChar(' ');
             else
                WChar('-');
-            CurPos(row, col);
+            // CurPos(row, col);
             }
 
          else if (chr == BACKSPACE) {           /* Backspace backs up char */

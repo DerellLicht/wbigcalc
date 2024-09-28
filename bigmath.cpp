@@ -32,7 +32,6 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include "common.h"
 #include "bigcalc.h"
@@ -560,7 +559,7 @@ extern int ExtendedSquareRoot(void)
 {
 
    long nl, apxl, lapxl;
-   int i, j, result;
+   int i, j, result = TRUE;
    int oldprec, cmpsize;
    COMPTYPE *temp;
    COMPTYPE *arg, *apx;
@@ -606,8 +605,8 @@ extern int ExtendedSquareRoot(void)
 
    for (i = 1; i <= 6; i++) {
       lapxl = apxl;
-      apxl = ((lapxl + (nl / lapxl)) >> 1);
-      }
+      apxl = ((lapxl + (nl / lapxl)) >> 1);  //lint !e704  Shift right of signed quantity (long)
+   }
    SetWorkInteger(2, apxl);                  /* Put 1st appx in work[2] */
 
    if (arg->exp > 0L)                        /* Calc 1st approx exponent */
@@ -700,8 +699,7 @@ extern int ExtendedSquareRoot(void)
          cmpsize = compprec * sizeof(WORKDIGIT);
          }
 
-      } while (TRUE);               /* Loop until precision gained */
-
+      } while (TRUE);   //lint !e506     Constant value Boolean   /* Loop until precision gained */
 
    if (normprec < oldprec) {        /* Reset precision if needed */
       normprec = oldprec;
@@ -710,13 +708,8 @@ extern int ExtendedSquareRoot(void)
       }
 
    free(temp);
-
    return(result);
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1267,32 +1260,28 @@ extern int ExtendedTan(void)
    MoveWorkTemp(0, temp);        /* Save X */
 
    if (! ExtendedSinCos(0)) {    /* Compute sin(X) */
-      free(temp);
-      return(FALSE);
-      }
+      goto error_exit;
+   }
 
    MoveTempWork(temp, 0);        /* Get X */
    MoveWorkTemp(2, temp);        /* Save sin(X) */
 
    if (! ExtendedSinCos(1)) {    /* Compute cos(X) */
-      free(temp);
-      return(FALSE);
-      }
-
-   free(temp);
+      goto error_exit;
+   }
 
    MoveWorkWork(2, 0);           /* Compute sin(X) / cos(X) */
    MoveTempWork(temp, 1);
    if (! ExtendedDivide()) {
-      return(FALSE);
-      }
+      goto error_exit;
+   }
+   free(temp);
 
    return(TRUE);
-
+error_exit:   
+   free(temp);
+   return(FALSE);
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1337,8 +1326,6 @@ extern int ExtendedArcSinCos(int scflag)
       return(FALSE);
       }
 
-
-
 /*
  *    **************************************************
  *    *                                                *
@@ -1346,7 +1333,6 @@ extern int ExtendedArcSinCos(int scflag)
  *    *                                                *
  *    **************************************************
  */
-
    if (! work[0].digits) {             /* Zero: result 0 */
       ClearWork(2);
       }
@@ -1994,8 +1980,8 @@ extern int ExtendedExp10(void)
       return(TRUE);
       }
 
-   if (! work[0].exp > MAXEXDIGITS) {
-      if (! work[0].sign == '-') {        /* Underflow: return zero */
+   if (! (work[0].exp > MAXEXDIGITS)) {
+      if (! (work[0].sign == '-')) {        /* Underflow: return zero */
          ClearWork(2);
          return(TRUE);
          }

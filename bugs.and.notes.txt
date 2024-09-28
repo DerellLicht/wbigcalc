@@ -2,13 +2,13 @@ Bugs in Win32 port of BigCalc
 Last Update: 11/08/01 11:44
 ============================================
 
-1. dclreos() (clear to end of page) doesn't work...
+> Enter()
+On Enter, new X contents should be pushed to Y as well
 
-2. Clearing X reg when entering new number isn't working, probably because of bug #1 .
 
 ============================================
 Notes:
 DDM 08/10/24
-I'm going to remove all 'print to printer/file' routines from Windows version.
+Removed all 'print to printer/file' routines from Windows version.
 I don't really think those operations are required in a calculator such as this.
-Instead, I will make it possible to copy-and-paste from any display windows.
+Instead, I will try to make it possible to copy-and-paste from any display windows.

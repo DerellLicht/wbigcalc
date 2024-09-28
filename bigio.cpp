@@ -33,10 +33,11 @@ char *Version = "WBigCalc, Version " VER_NUMBER " " ;
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include "common.h"
 #include "bigcalc.h"
+
+//lint -esym(715, row, outstr, col) 
 
 /*
  *    **************************************************
@@ -233,7 +234,7 @@ void WChar(int chr)
       return ;
    }
    // syslog("%X [%c]", (unsigned char) chr, (char) chr);
-   output_str[outstr_idx++] = chr ;
+   output_str[outstr_idx++] = (char) chr ;
    output_str[outstr_idx] = 0 ;  // keep string NULL-terminated
    // syslog("WChar: %u: [%s]\n", get_output_str_len(), get_output_str());
 }
