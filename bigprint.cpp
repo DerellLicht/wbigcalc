@@ -40,7 +40,6 @@
 // static void PSign(int sign);
 // static void PCharWrap(int chr);
 static void WExponent(long exponent);
-static void WriteNumber(NORMTYPE *nbr);
 
 #define HELP_ATTR    2
 
@@ -57,50 +56,6 @@ static int ppos = 0;            /* Current print column */
 /*
  *    **************************************************
  *    *                                                *
- *    *   Display Memory Register in Full on Screen    *
- *    *                                                *
- For wbigcalc, this will open a new modal window
- *    **************************************************
- */
-void DisplayReg(int r)
-{
-   // set_text_attrx(REG_ATTR) ;
-   // CurPos(1, 1);
-   // EraEop();
-   // dclrscr() ;
-   menucleared = TRUE;
-
-   // PChar(r + '0');
-   // PrintNumber(&reg[r]);
-
-   // MessageWait("");
-
-   WorkScreen();
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *    Display Stack Register in Full on Screen    *
- *    *                                                *
- For wbigcalc, this will open a new modal window
- *    **************************************************
- */
-void DisplayStack(int s)
-{
-   menucleared = TRUE;
-
-   // PChar(stackname[s]);
-   // PrintNumber(&stack[s]);
-
-   // MessageWait("");
-
-   WorkScreen();
-}
-
-/*
- *    **************************************************
- *    *                                                *
  *    *               Writing routines                 *
  *    *                                                *
  *    **************************************************
@@ -109,60 +64,32 @@ void DisplayStack(int s)
 /*
  *    **************************************************
  *    *                                                *
- *    *          Write Registers [lo to hi]            *
- *    *                                                *
- *    **************************************************
- */
-void WriteReg(int lo, int hi)
-{
-   int r;
-   for (r = lo; r <= hi; r++) {
-      // CurPos(r + 4, SIGNDISPCOL);
-      WriteNumber(&reg[r]);
-      // dprints(r + 4, SIGNDISPCOL, &reg[r]);
-      put_register(r, get_output_str());
-   }
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *            Write Stack [lo to hi]              *
- *    *                                                *
- *    **************************************************
- */
-void WriteStack(int lo, int hi)
-{
-   int s;
-   for (s = hi; s >= lo; s--) {
-      // CurPos(XSIGNROW - s, SIGNDISPCOL);
-      WriteNumber(&stack[s]);
-      // dprints(XSIGNROW - s, SIGNDISPCOL, &stack[s]);
-      put_stack(s, get_output_str());
-      
-   }
-}
-
-/*
- *    **************************************************
- *    *                                                *
  *    *        Write Number [*number] on Screen        *
+ //  idx 0-9 are registers
+ //   idx 10 = regX
+ //   idx 11 = regY
+ //   idx 12 = regZ
+ //   idx 13 = regT
  *    *                                                *
  *    **************************************************
  */
-
-static void WriteNumber(NORMTYPE *nbr)
-
+static void WriteNumber(NORMTYPE *nbr, uint idx)
 {
    long exponent;
    int i, digits;
    
+   reset_output_str();
+
    if (nbr->digits == 0) {
       // WString(" 0");
+      if (idx < 10) {
+         put_register(idx, " 0");
+      }
+      else {
+         put_stack(idx-10, " 0");
+      }
       return;
    }
-
-   reset_output_str();
 
    if (nbr->sign == '-')
       WChar('-');
@@ -458,6 +385,69 @@ void Heading2(void)
 /*
  *    **************************************************
  *    *                                                *
+ *    *   Display Memory Register in Full on Screen    *
+ *    *                                                *
+ For wbigcalc, this will open a new modal window
+ *    **************************************************
+ */
+void DisplayReg(int r)
+{
+   WorkScreen();
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *    Display Stack Register in Full on Screen    *
+ *    *                                                *
+ For wbigcalc, this will open a new modal window
+ *    **************************************************
+ */
+void DisplayStack(int s)
+{
+   WorkScreen();
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *          Write Registers [lo to hi]            *
+ *    *                                                *
+ *    **************************************************
+ */
+void WriteReg(int lo, int hi)
+{
+   int r;
+   for (r = lo; r <= hi; r++) {
+      // CurPos(r + 4, SIGNDISPCOL);
+      WriteNumber(&reg[r], r);
+      // dprints(r + 4, SIGNDISPCOL, &reg[r]);
+      put_register(r, get_output_str());
+   }
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *            Write Stack [lo to hi]              *
+ *    *                                                *
+ *    **************************************************
+ */
+void WriteStack(int lo, int hi)
+{
+   int s;
+   for (s = hi; s >= lo; s--) {
+      // CurPos(XSIGNROW - s, SIGNDISPCOL);
+      WriteNumber(&stack[s], 10+s);
+      // dprints(XSIGNROW - s, SIGNDISPCOL, &stack[s]);
+      put_stack(s, get_output_str());
+      
+   }
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
  *    *              Display Work Screen               *
  *    *                                                *
  *    **************************************************
@@ -466,37 +456,15 @@ void Heading2(void)
 void WorkScreen(void)
 {
    int r, s;
-   // char str[30];
 
    // Heading1();
    Heading2();
 
-   // set_text_attrx(LOGO_ATTR) ;
-   // WriteAt(3, 1, "============================="
-   //               "  R E G I S T E R S  "
-   //               "=============================");
-   // set_text_attrx(REG_ATTR) ;
    for (r = 0; r <= 9; r++) {
-      // sprintf(str, "")
-      // CurPos(4 + r, 1);
-      // WChar(r + '0');
-      // WChar(':');
-      // WriteReg(r, r);
-      WriteNumber(&reg[r]);
+      WriteNumber(&reg[r], r);
    }
 
-   // set_text_attrx(LOGO_ATTR) ;
-   // WriteAt(14, 1, "================================="
-   //                "  S T A C K  "
-   //                "=================================");
-   // set_text_attrx(REG_ATTR) ;
    for (s = 3; s >= 0; s--) {
-      // CurPos(XSIGNROW - s, 1);
-      // WChar(stackname[s]);
-      // WChar(':');
-      // WriteStack(s, s);
-      WriteNumber(&stack[s]);
+      WriteNumber(&stack[s], 10+s);
    }
-   // set_text_attrx(TEXT_ATTR) ;
-
 }

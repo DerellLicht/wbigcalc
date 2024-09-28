@@ -106,11 +106,12 @@ static  void DropStack(void);
 
 NORMTYPE
    stack[4],               /* Stack registers  */
-   reg[10],                /* Memory registers */
+   reg[10];                /* Memory registers */
+   
+static NORMTYPE
    lastx;                  /* Last X register  */
 
-WORKTYPE
-   work[3];                /* Work registers   */
+WORKTYPE work[3];          /* Work registers   */
 
 int
    normprec = 0,           /* Normal precision  */
@@ -128,9 +129,9 @@ long
 
 BOOLEAN
    stacklift = TRUE,       /* Lift stack for new X if TRUE */
-   scinotation = FALSE,    /* Force sci notation if TRUE   */
+   scinotation = FALSE;    /* Force sci notation if TRUE   */
 //   charpresent = FALSE,    /* Character present if TRUE    */
-   menucleared = TRUE;     /* Screen menu cleared if TRUE  */
+//    menucleared = TRUE;     /* Screen menu cleared if TRUE  */
 
 /*
  *    **************************************************
@@ -1695,34 +1696,25 @@ static void AcceptX(char inchr)
    if ((tempStackX = GETNORMTEMP(1)) == NULL) {
       MemoryError();
       return;
-      }
+   }
 
    init_getx_vars();
 
    ClearWork(0);
    
-   // CurPos(entrysignrow, 1);      /* Clear area to enter new X */
-   // EraEop();
-   menucleared = TRUE;
-   // WriteAt(entrysignrow, 1, "X:");
    Message("Entering X: S=ChgSign, E=Exp, BakSpc=Backup, Other=Complete, ESC=Exit");
 
    keyboard_state_set(KBD_STATE_GETX);
    
    if (normprec > SIZEOFSMALL) {
 
-      // CurPos(entrysignrow - 1, 1);  /* Big numbers, use full screen */
-      // EraEol();
-      // WriteAt(entrysignrow - 1, 1, "========================="
-      //                              "  E N T E R I N G   X  "
-      //                              "=========================");
       //  initial call to GetX function
-      result = ExtendedGetX(inchr);
+      result = ExtendedGetX(inchr); //  process first input char
       if (result) {
-          if (stacklift)
-             PushStack();
-         MoveWorkStack(0, 0);
-         stacklift = TRUE;
+         // if (stacklift)
+         //     PushStack();
+         // MoveWorkStack(0, 0);
+         // stacklift = TRUE;
          }
          else {
             ExitGetXState(false);
@@ -1738,11 +1730,11 @@ static void AcceptX(char inchr)
          WriteStack(1, 3);
          }
          
-      result = ExtendedGetX(inchr);
+      result = ExtendedGetX(inchr); //  process first input char
       if (result) {
-         MoveWorkStack(0, 0);
-         stacklift = TRUE;
-         }
+         // MoveWorkStack(0, 0);
+         // stacklift = TRUE;
+      }
       else {
          ExitGetXState(false);
       }
@@ -1798,13 +1790,14 @@ static void ExitGetXState(bool success)
 static void Enter(bool success)
 {
    if (success) {
+dump_work_reg(&work[0], "work0");
       Message("Return/Enter received");
+      syslog("Enter: %u: [%s]\n", get_output_str_len(), get_output_str());
       PushStack();
       WriteStack(1, 3);
       MoveWorkStack(0, 0);
       stacklift = TRUE;
 
-      // syslog("%u: [%s]\n", get_output_str_len(), get_output_str());
       // [28728] 6: [838283]
    }
    else {

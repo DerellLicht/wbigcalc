@@ -226,6 +226,7 @@ void WChar(int chr)
    // syslog("%X [%c]", (unsigned char) chr, (char) chr);
    output_str[outstr_idx++] = chr ;
    output_str[outstr_idx] = 0 ;  // keep string NULL-terminated
+   syslog("WChar: %u: [%s]\n", get_output_str_len(), get_output_str());
 }
 
 /*

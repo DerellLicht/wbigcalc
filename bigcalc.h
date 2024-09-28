@@ -205,6 +205,11 @@ typedef struct {
 void put_stack(unsigned n, char *msg);
 void put_register(unsigned n, char *msg);
 
+//  debug dump functions
+void dump_norm_reg(NORMTYPE *nptr, char *msg);
+void dump_work_reg(WORKTYPE *nptr, char *msg);
+
+
 /*
  *    **************************************************
  *    *                                                *

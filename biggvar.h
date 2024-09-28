@@ -30,8 +30,7 @@
 
 extern NORMTYPE
    stack[4],               /* Stack registers  */
-   reg[10],                /* Memory registers */
-   lastx;                  /* Last X register  */
+   reg[10];                /* Memory registers */
 
 extern WORKTYPE
    work[3];                /* Work registers   */
@@ -52,5 +51,5 @@ extern long
 
 extern BOOLEAN
    stacklift,              /* Lift stack for new X if TRUE */
-   scinotation,            /* Force sci notation if TRUE   */
-   menucleared;            /* Screen menu cleared if TRUE  */
+   scinotation;            /* Force sci notation if TRUE   */
+//    menucleared;            /* Screen menu cleared if TRUE  */

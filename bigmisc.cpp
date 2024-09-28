@@ -1338,6 +1338,73 @@ void ClearWork(int w)
    memset(work[w].man, 0, (workprec * sizeof(WORKDIGIT)));
 }
 
+//*****************************************************************
+//  debug-dump functions
+//*****************************************************************
+// typedef char NORMDIGIT;
+// typedef int  WORKDIGIT;
+// 
+// typedef struct {
+//    long exp;
+//    int sign;
+//    int digits;
+//    NORMDIGIT man[MAXNORM];
+//    } NORMTYPE;
+// 
+// typedef struct {
+//    long exp;
+//    int sign;
+//    int digits;
+//    WORKDIGIT man[MAXWORK];
+//    } WORKTYPE;
+// 
+// typedef struct {
+//    long exp;
+//    int sign;
+//    int digits;
+//    WORKDIGIT man[MAXCOMP];
+//    } COMPTYPE;
+
+void dump_norm_reg(NORMTYPE *nptr, char *msg)
+{
+   char outmsg[1024] = "" ;
+   static char *dfltmsg = "MT";
+   int slen, idx ;
+   if (msg == NULL) {
+      msg = dfltmsg ;
+   }
+   if (nptr->digits == 0) {
+      sprintf(outmsg, "%s: %ld,%d,%d: empty\n", msg, nptr->exp, nptr->sign, nptr->digits);
+   }
+   else {
+      slen = sprintf(outmsg, "%s: %ld,%d,%d: ", msg, nptr->exp, nptr->sign, nptr->digits);
+      for (idx=0; idx<nptr->digits; idx++) {
+         sprintf(&outmsg[slen], "%d,", nptr->man[idx]);
+      }
+   }
+   syslog("DNR: [%s]\n");
+}
+
+void dump_work_reg(WORKTYPE *nptr, char *msg)
+{
+   char outmsg[1024] = "" ;
+   static char *dfltmsg = "MT";
+   int slen, idx ;
+   if (msg == NULL) {
+      msg = dfltmsg ;
+   }
+   if (nptr->digits == 0) {
+      sprintf(outmsg, "%s: %ld,%d,%d: empty\n", msg, nptr->exp, nptr->sign, nptr->digits);
+   }
+   else {
+      slen = sprintf(outmsg, "%s: %ld,%d,%d: ", msg, nptr->exp, nptr->sign, nptr->digits);
+      for (idx=0; idx<nptr->digits; idx++) {
+         sprintf(&outmsg[slen], "%d,", nptr->man[idx]);
+      }
+   }
+   syslog("DWR: [%s]\n");
+}
+
 /*
  *    **************************************************
  *    *                                                *
@@ -1420,6 +1487,7 @@ void MoveWorkStack(int source, int dest)
 {
    int size, i;
 
+   syslog("MWS %d->%d: digits: %u\n", source, dest, work[source].digits);
    if ((size = work[source].digits)) {
       if (size > normprec)
          size = normprec;
@@ -1746,21 +1814,8 @@ int exit_GetX(void)
       }
 }
 
-//***************************************************************************
-//  This returns FALSE only on ESCAPE
-//***************************************************************************
-bool ExtendedGetX(unsigned chr)
+bool ExtendedGetX_unused(void)
 {
-   int row, col, exprow, expcol;
-
-/*  ******  C H A R A C T E R   W A I T   L O O P  ******  */
-   if (chr == ESCAPE) {      /* Changed his/her mind */
-      return(false);
-   }
-
-   // do {  /* while (TRUE) */
-      /* First digit already entered on first pass */
-
       //  these aren't going to be possible here, now...
       switch (chr) {             /* Test for number terminating operations */
          case (ENTER):
@@ -1807,13 +1862,33 @@ bool ExtendedGetX(unsigned chr)
 
       // if (charpresent)           /* Break from while */
       //    return true ;
+      return false ;
+}
 
-      if (!isascii(chr))        /* Ignore non ASCII characters */
+//***************************************************************************
+//  This returns FALSE only on ESCAPE
+//***************************************************************************
+bool ExtendedGetX(unsigned chr)
+{
+   int row, col, exprow, expcol;
+
+/*  ******  C H A R A C T E R   W A I T   L O O P  ******  */
+   if (chr == ESCAPE) {      /* Changed his/her mind */
+      return(false);
+   }
+
+   // do {  /* while (TRUE) */
+      /* First digit already entered on first pass */
+
+      if (!isascii(chr)) {
+         syslog("GetX: NOT_ASCII  %02X, %c\n", (u8) chr, chr);
          return true ;
+      }       /* Ignore non ASCII characters */
 
 /*  ******  I N T E G E R   M O D E  ******  */
 
       if (mode == ININT) {
+         syslog("GetX: %02X, %c\n", (u8) chr, chr);
 
          if (isdigit(chr)) {                    /* Numeric digit */
             if (digits < normprec) {
