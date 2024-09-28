@@ -37,7 +37,7 @@ END
 
 //*******************************************************************
 #define  PI_X     12
-#define  PI_Y     34
+#define  PI_Y     25
 #define  PI_FX    (PI_X + 5)
 
 #define  Y_OFS    1
