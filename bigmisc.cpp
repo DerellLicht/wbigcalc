@@ -34,7 +34,6 @@
 
 #include "common.h"
 #include "bigcalc.h"
-#include "biggvar.h"
 
 /*
  *    **************************************************
@@ -468,11 +467,8 @@ static char cosP001[] = {
  *    *                                                *
  *    **************************************************
  */
-
-extern int Normalize(int w)
-
+int Normalize(int w)
 {
-
    int digits, shift;
    WORKDIGIT *wl, *wr;          /* Work left & right pointers */
 
@@ -528,11 +524,7 @@ extern int Normalize(int w)
       }
 
    return(TRUE);
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1374,7 +1366,7 @@ void dump_norm_reg(NORMTYPE *nptr, char *msg)
       msg = dfltmsg ;
    }
    if (nptr->digits == 0) {
-      sprintf(outmsg, "%s: %ld,%c,%d: empty\n", msg, nptr->exp, nptr->sign, nptr->digits);
+      sprintf(outmsg, "%s: %ld,%c,%d: empty", msg, nptr->exp, nptr->sign, nptr->digits);
    }
    else {
       slen = sprintf(outmsg, "%s: %ld,%c,%d: ", msg, nptr->exp, nptr->sign, nptr->digits);
@@ -1387,14 +1379,14 @@ void dump_norm_reg(NORMTYPE *nptr, char *msg)
 
 void dump_work_reg(WORKTYPE *nptr, char *msg)
 {
-   char outmsg[1024] = "" ;
+   char outmsg[100] = "" ;
    static char *dfltmsg = "MT";
    int slen, idx ;
    if (msg == NULL) {
       msg = dfltmsg ;
    }
    if (nptr->digits == 0) {
-      sprintf(outmsg, "%s: %ld,%c,%d: empty\n", msg, nptr->exp, nptr->sign, nptr->digits);
+      sprintf(outmsg, "%s: %ld,%c,%d: empty", msg, nptr->exp, nptr->sign, nptr->digits);
    }
    else {
       slen = sprintf(outmsg, "%s: %ld,%c,%d: ", msg, nptr->exp, nptr->sign, nptr->digits);
@@ -1402,7 +1394,7 @@ void dump_work_reg(WORKTYPE *nptr, char *msg)
          sprintf(&outmsg[slen], "%d,", nptr->man[idx]);
       }
    }
-   syslog("DWR: [%s]\n");
+   syslog("DWR: [%s]\n", outmsg);
 }
 
 /*
@@ -1487,7 +1479,7 @@ void MoveWorkStack(int source, int dest)
 {
    int size, i;
 
-   syslog("MWS %d->%d: digits: %u\n", source, dest, work[source].digits);
+   // syslog("MWS %d->%d: digits: %u\n", source, dest, work[source].digits);
    if ((size = work[source].digits)) {
       if (size > normprec)
          size = normprec;
@@ -1795,25 +1787,6 @@ void init_getx_vars(void)
 }
 
 //***************************************************************************
-int exit_GetX(void)
-{
-   if (expsign == '-')                 /* Invert exponent if neg sign */
-      exponent = - exponent;
-
-   if (digitval) {                     /* Number not zero */
-      work[0].exp    = exponent + (long)intdigits;
-      work[0].sign   = sign;
-      work[0].digits = digits;
-      return(Normalize(0));
-      }
-   else {                              /* Null number == 0 */
-      work[0].exp    = 0L;
-      work[0].sign   = ' ';
-      work[0].digits = 0;
-      return(TRUE);
-      }
-}
-
 bool ExtendedGetX_unused(void)
 {
       //  these aren't going to be possible here, now...
@@ -1866,6 +1839,26 @@ bool ExtendedGetX_unused(void)
 }
 
 //***************************************************************************
+int exit_GetX(void)
+{
+   if (expsign == '-')                 /* Invert exponent if neg sign */
+      exponent = - exponent;
+
+   if (digitval) {                     /* Number not zero */
+      work[0].exp    = exponent + (long)intdigits;
+      work[0].sign   = sign;
+      work[0].digits = digits;
+      return(Normalize(0));
+      }
+   else {                              /* Null number == 0 */
+      work[0].exp    = 0L;
+      work[0].sign   = ' ';
+      work[0].digits = 0;
+      return(TRUE);
+      }
+}
+
+//***************************************************************************
 //  This returns FALSE only on ESCAPE
 //***************************************************************************
 bool ExtendedGetX(unsigned chr)
@@ -1881,36 +1874,40 @@ bool ExtendedGetX(unsigned chr)
       /* First digit already entered on first pass */
 
       if (!isascii(chr)) {
-         syslog("GetX: NOT_ASCII  %02X, %c\n", (u8) chr, chr);
+         // syslog("GetX: NOT_ASCII  %02X, %c\n", (u8) chr, chr);
          return true ;
       }       /* Ignore non ASCII characters */
 
 /*  ******  I N T E G E R   M O D E  ******  */
 
       if (mode == ININT) {
-         syslog("GetX: %02X, %c\n", (u8) chr, chr);
+         // syslog("GetX: %02X, %c\n", (u8) chr, chr);
 
          if (isdigit(chr)) {                    /* Numeric digit */
             if (digits < normprec) {
-               DisplayChar(&row, &col, chr);
+               // DisplayChar(&row, &col, chr);
+               WChar(chr);
                work[0].man[digits] = chr - '0';
                digitval += work[0].man[digits];
                intdigits++;
                digits++;
+               // syslog("GetX: %c, %X,%d,%d\n", chr, digitval, intdigits, digits);
                }
             else
                ;
             }
 
          else if (chr == '.') {                 /* . invokes decimal mode */
-            DisplayChar(&row, &col, chr);
+            // DisplayChar(&row, &col, chr);
+            WChar(chr);
             decimal = TRUE;
             mode = INDEC;
             }
 
          else if (chr == 'E') {                 /* E invokes exponent mode, */
             if (! digits) {
-               DisplayChar(&row, &col, '1');    /*  if no digits, make it 1, */
+               // DisplayChar(&row, &col, '1');    /*  if no digits, make it 1, */
+               WChar('1');
                work[0].man[digits] = 1;
                digitval += 1;
                intdigits++;
@@ -1930,7 +1927,6 @@ bool ExtendedGetX(unsigned chr)
 
          else if (chr == CHGSIGN) {             /* Reverse mantissa sign */
             sign = FlipSign(sign);
-            CurPos(entrysignrow, SIGNDISPCOL);
             if (sign == '+')
                WChar(' ');
             else
@@ -1979,7 +1975,6 @@ bool ExtendedGetX(unsigned chr)
 
          else if (chr == CHGSIGN) {             /* Reverse mantissa sign */
             sign = FlipSign(sign);
-            CurPos(entrysignrow, SIGNDISPCOL);
             if (sign == '+')
                WChar(' ');
             else
@@ -2056,6 +2051,9 @@ bool ExtendedGetX(unsigned chr)
       // 
       // } while (TRUE);
 /*  ******  END  C H A R A C T E R   W A I T   L O O P  ******  */
+   //  try to update temp regX display
+   put_stack(0, get_output_str());
+   
    return true ;
 
 }

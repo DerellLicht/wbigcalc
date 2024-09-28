@@ -37,8 +37,6 @@ char *Version = "WBigCalc, Version " VER_NUMBER " " ;
 
 #include "common.h"
 #include "bigcalc.h"
-#include "biggvar.h"
-// #include "conio32.h"
 
 /*
  *    **************************************************
@@ -211,6 +209,17 @@ void reset_output_str(void)
    outstr_idx = 0 ;
 }
 
+//***********************************************************
+char *get_output_str(void)
+{
+   return output_str ;
+}
+
+uint get_output_str_len(void)
+{
+   return outstr_idx ;
+}
+
 /*
  *    **************************************************
  *    *            Write Character to Screen           *
@@ -226,7 +235,7 @@ void WChar(int chr)
    // syslog("%X [%c]", (unsigned char) chr, (char) chr);
    output_str[outstr_idx++] = chr ;
    output_str[outstr_idx] = 0 ;  // keep string NULL-terminated
-   syslog("WChar: %u: [%s]\n", get_output_str_len(), get_output_str());
+   // syslog("WChar: %u: [%s]\n", get_output_str_len(), get_output_str());
 }
 
 /*
@@ -268,17 +277,6 @@ void DisplayChar(int *row, int *col, int chr)
    //    (*row)++;
    //    }
    // CurPos(*row, *col);
-}
-
-//***********************************************************
-char *get_output_str(void)
-{
-   return output_str ;
-}
-
-uint get_output_str_len(void)
-{
-   return outstr_idx ;
 }
 
 /*

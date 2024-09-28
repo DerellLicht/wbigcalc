@@ -118,7 +118,7 @@ int
    compprec = 0,           /* Compute precision */
    workprec = 0,           /* Work precision    */
    groupsize = 0,          /* Digit group size  */
-   entrysignrow,           /* Row for X entry   */
+//    entrysignrow,           /* Row for X entry   */
    menunbr = 0;            /* Menu number       */
    
 int chr = 0;                /* Input Character   */
@@ -128,10 +128,12 @@ long
    maxfloatprn;            /* Max exp for float */
 
 BOOLEAN
-   stacklift = TRUE,       /* Lift stack for new X if TRUE */
    scinotation = FALSE;    /* Force sci notation if TRUE   */
 //   charpresent = FALSE,    /* Character present if TRUE    */
 //    menucleared = TRUE;     /* Screen menu cleared if TRUE  */
+
+static BOOLEAN
+   stacklift = TRUE;       /* Lift stack for new X if TRUE */
 
 /*
  *    **************************************************
@@ -169,12 +171,11 @@ void Initialize(int argc, char *argv)
    ClearStack(0, 3);             /* Initialize work areas */
    ClearReg(0, 9);
    lastx = stack[0];
-   // printfile = stdprn;
                                  /* Allow full screen entry for big numbers */
-   if (normprec > SIZEOFSMALL)
-      entrysignrow = ENTRYSIGNROWBIG;
-   else
-      entrysignrow = ENTRYSIGNROWSMALL;
+   // if (normprec > SIZEOFSMALL)
+   //    entrysignrow = ENTRYSIGNROWBIG;
+   // else
+   //    entrysignrow = ENTRYSIGNROWSMALL;
 
    GroupSize();                  /* Toggle group size to 5 & set xxxfloatprn */
 
@@ -1699,6 +1700,8 @@ static void AcceptX(char inchr)
    }
 
    init_getx_vars();
+   reset_output_str();
+   put_stack(0, " ");
 
    ClearWork(0);
    
@@ -1710,35 +1713,23 @@ static void AcceptX(char inchr)
 
       //  initial call to GetX function
       result = ExtendedGetX(inchr); //  process first input char
-      if (result) {
-         // if (stacklift)
-         //     PushStack();
-         // MoveWorkStack(0, 0);
-         // stacklift = TRUE;
-         }
-         else {
-            ExitGetXState(false);
-         }
+      if (!result) {
+         ExitGetXState(false);         
+      }
       WorkScreen();
    }
 
    else {
-
       if (stacklift) {              /* Small numbers, use bottom of screen */
          *tempStackX = stack[3];
-         PushStack();
-         WriteStack(1, 3);
-         }
+         // PushStack();
+         // WriteStack(1, 3);
+      }
          
       result = ExtendedGetX(inchr); //  process first input char
-      if (result) {
-         // MoveWorkStack(0, 0);
-         // stacklift = TRUE;
-      }
-      else {
+      if (!result) {
          ExitGetXState(false);
       }
-      WriteStack(0, 0);
    }
 }
 
@@ -1747,6 +1738,7 @@ static void AcceptX(char inchr)
 //*********************************************************************
 static void ExitGetXState(bool success)
 {
+   exit_GetX(); //  reset local GetX vars
    if (normprec > SIZEOFSMALL) {
       // result = ExtendedGetX();
       if (success) {
@@ -1776,7 +1768,6 @@ static void ExitGetXState(bool success)
       free(tempStackX);
       tempStackX = NULL ;
    }
-   exit_GetX(); //  reset local GetX vars
    keyboard_state_set(KBD_STATE_DEFAULT);
 }
 
@@ -1790,9 +1781,9 @@ static void ExitGetXState(bool success)
 static void Enter(bool success)
 {
    if (success) {
-dump_work_reg(&work[0], "work0");
+// dump_work_reg(&work[0], "work0");
       Message("Return/Enter received");
-      syslog("Enter: %u: [%s]\n", get_output_str_len(), get_output_str());
+      // syslog("Enter: %u: [%s]\n", get_output_str_len(), get_output_str());
       PushStack();
       WriteStack(1, 3);
       MoveWorkStack(0, 0);

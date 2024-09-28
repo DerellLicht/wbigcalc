@@ -34,11 +34,7 @@
 
 #include "common.h"
 #include "bigcalc.h"
-#include "biggvar.h"
 
-// static  void PExponent(long exponent);
-// static void PSign(int sign);
-// static void PCharWrap(int chr);
 static void WExponent(long exponent);
 
 #define HELP_ATTR    2
@@ -161,7 +157,7 @@ static void WriteNumber(NORMTYPE *nbr, uint idx)
 
       }                             /* Floating Decimal end */
 
-   syslog("%u [%s]\n", get_output_str_len(), get_output_str());
+   // syslog("%u [%s]\n", get_output_str_len(), get_output_str());
 }
 
 /*

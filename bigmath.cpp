@@ -36,10 +36,8 @@
 
 #include "common.h"
 #include "bigcalc.h"
-#include "biggvar.h"
 
 static  int ResolveAngle(void);
-
 
 /*
  *    **************************************************

@@ -213,6 +213,36 @@ void dump_work_reg(WORKTYPE *nptr, char *msg);
 /*
  *    **************************************************
  *    *                                                *
+ *    *           External Global Variables            *
+ *    *                                                *
+ *    **************************************************
+ */
+
+extern NORMTYPE
+   stack[4],               /* Stack registers  */
+   reg[10];                /* Memory registers */
+
+extern WORKTYPE
+   work[3];                /* Work registers   */
+
+extern int
+   normprec,               /* Normal precision  */
+   compprec,               /* Compute precision */
+   workprec,               /* Work precision    */
+   groupsize,              /* Digit group size  */
+   menunbr;                /* Menu number       */
+   
+extern int chr;            /* Input Character   */
+
+extern long
+   minfloatprn,            /* Min exp for float */
+   maxfloatprn;            /* Max exp for float */
+
+extern BOOLEAN
+   scinotation;            /* Force sci notation if TRUE   */
+/*
+ *    **************************************************
+ *    *                                                *
  *    *         BIGIO.C Function Declarations          *
  *    *                                                *
  *    **************************************************
