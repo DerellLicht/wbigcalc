@@ -1374,10 +1374,10 @@ void dump_norm_reg(NORMTYPE *nptr, char *msg)
       msg = dfltmsg ;
    }
    if (nptr->digits == 0) {
-      sprintf(outmsg, "%s: %ld,%d,%d: empty\n", msg, nptr->exp, nptr->sign, nptr->digits);
+      sprintf(outmsg, "%s: %ld,%c,%d: empty\n", msg, nptr->exp, nptr->sign, nptr->digits);
    }
    else {
-      slen = sprintf(outmsg, "%s: %ld,%d,%d: ", msg, nptr->exp, nptr->sign, nptr->digits);
+      slen = sprintf(outmsg, "%s: %ld,%c,%d: ", msg, nptr->exp, nptr->sign, nptr->digits);
       for (idx=0; idx<nptr->digits; idx++) {
          sprintf(&outmsg[slen], "%d,", nptr->man[idx]);
       }
@@ -1394,10 +1394,10 @@ void dump_work_reg(WORKTYPE *nptr, char *msg)
       msg = dfltmsg ;
    }
    if (nptr->digits == 0) {
-      sprintf(outmsg, "%s: %ld,%d,%d: empty\n", msg, nptr->exp, nptr->sign, nptr->digits);
+      sprintf(outmsg, "%s: %ld,%c,%d: empty\n", msg, nptr->exp, nptr->sign, nptr->digits);
    }
    else {
-      slen = sprintf(outmsg, "%s: %ld,%d,%d: ", msg, nptr->exp, nptr->sign, nptr->digits);
+      slen = sprintf(outmsg, "%s: %ld,%c,%d: ", msg, nptr->exp, nptr->sign, nptr->digits);
       for (idx=0; idx<nptr->digits; idx++) {
          sprintf(&outmsg[slen], "%d,", nptr->man[idx]);
       }
