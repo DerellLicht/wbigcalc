@@ -12,8 +12,10 @@ static char const * const Version = "WBigCalc Extended Precision Calculator, Ver
 
 #include <windows.h>
 #include <stdio.h>
+#include <tchar.h>
 
 #include "common.h"
+#include "commonw.h"
 #include "keywin32.h"
 #include "resource.h"
 #include "bigcalc.h"
@@ -45,7 +47,26 @@ static uint cyClient = 0 ;
 
 static CStatusBar *MainStatusBar = NULL;
 
-//*************************************************************
+//**********************************************************************
+#define  FONT_HEIGHT_TITLE    21
+// #define  FONT_HEIGHT_MESSAGE  22
+// static char ascii_font_name[LF_FULLFACESIZE] = "Wingdings" ;
+// static char ascii_font_name[LF_FULLFACESIZE] = "Times New Roman" ;
+// static TCHAR font_name_title[LF_FULLFACESIZE] = _T("CaligulaA") ;
+static TCHAR font_name_message[LF_FULLFACESIZE] = _T("Times New Roman") ;
+
+static void set_control_font(HWND hwnd, TCHAR *fname, uint fheight, uint flags)
+{
+   // HFONT hfont = build_font(ascii_font_name, STAT_FONT_HEIGHT, EZ_ATTR_BOLD) ;
+   HFONT hfont = build_font(fname, fheight, flags) ;
+   if (hfont == 0) {
+      syslog("build_font: %s\n", get_system_message()) ;
+   } else {
+      PostMessage(hwnd, WM_SETFONT, (WPARAM) hfont, (LPARAM) true) ;
+   }
+}
+
+//**********************************************************************
 static void set_hwnd_values(void)
 {
    hwndMsg      = GetDlgItem(hwndMain, IDC_MSG) ;
@@ -197,6 +218,7 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
          0, 0, SWP_NOSIZE);
 
       hwndTitle = GetDlgItem(hwndMain, IDC_TITLE) ;
+      set_control_font(hwndTitle, font_name_message, FONT_HEIGHT_TITLE, EZ_ATTR_BOLD);
       SetWindowText(hwndTitle, Version);
       
       // RECT rWindow;
