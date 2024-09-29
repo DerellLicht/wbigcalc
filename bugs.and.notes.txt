@@ -5,6 +5,10 @@ Last Update: 11/08/01 11:44
 > Enter()
 On Enter, new X contents should be pushed to Y as well
 
+> WriteNumber() is outputting " 0" for empty strings,
+  but depending on caller to output any other strings generated...
+  
+  That is inconsistent...
 
 ============================================
 Notes:

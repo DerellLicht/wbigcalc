@@ -74,7 +74,6 @@ static void WriteNumber(NORMTYPE *nbr, uint idx)
    reset_output_str();
 
    if (nbr->digits == 0) {
-      // WString(" 0");
       if (idx < 10) {
          put_register(idx, " 0");
       }
@@ -387,10 +386,10 @@ void WriteReg(int lo, int hi)
 {
    int r;
    for (r = lo; r <= hi; r++) {
-      // CurPos(r + 4, SIGNDISPCOL);
       WriteNumber(&reg[r], r);
-      // dprints(r + 4, SIGNDISPCOL, &reg[r]);
-      put_register(r, get_output_str());
+      if (reg[r].digits > 0) {
+         put_register(r, get_output_str());
+      }
    }
 }
 
@@ -405,11 +404,10 @@ void WriteStack(int lo, int hi)
 {
    int s;
    for (s = hi; s >= lo; s--) {
-      // CurPos(XSIGNROW - s, SIGNDISPCOL);
       WriteNumber(&stack[s], 10+s);
-      // dprints(XSIGNROW - s, SIGNDISPCOL, &stack[s]);
-      put_stack(s, get_output_str());
-      
+      if (stack[s].digits > 0) {
+         put_stack(s, get_output_str());
+      }
    }
 }
 

@@ -1779,10 +1779,6 @@ void init_getx_vars(void)
    sign = '+';                      /* Default to positive numbers */
    expsign = '+';
 
-   // row = entrysignrow;              /* Starting point for entry */
-   // col = MINDISPCOL;
-   // CurPos(row, col);
-
    exponent = 0L;                   /* Initialize digit work areas */
    digits = 0;
    intdigits = 0;
@@ -1856,7 +1852,7 @@ bool ExtendedGetX_unused(u16 chr)
 int exit_GetX(void)
 {
    if (expsign == '-')                 /* Invert exponent if neg sign */
-      exponent = - exponent;
+      exponent = -exponent;
 
    if (digitval) {                     /* Number not zero */
       work[0].exp    = exponent + (long)intdigits;

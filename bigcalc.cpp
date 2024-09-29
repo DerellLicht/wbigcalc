@@ -1735,7 +1735,6 @@ static void AcceptX(u16 inchr)
 //*********************************************************************
 static void ExitGetXState(bool success)
 {
-   exit_GetX(); //  reset local GetX vars
    if (normprec > SIZEOFSMALL) {
       // result = ExtendedGetX();
       if (success) {
@@ -1778,7 +1777,7 @@ static void ExitGetXState(bool success)
 static void Enter(bool success)
 {
    if (success) {
-// dump_work_reg(&work[0], "work0");
+      exit_GetX(); //  reset local GetX vars
       Message("Return/Enter received");
       // syslog("Enter: %u: [%s]\n", get_output_str_len(), get_output_str());
       PushStack();
