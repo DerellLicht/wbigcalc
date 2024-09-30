@@ -54,6 +54,66 @@
 /*
  *    **************************************************
  *    *                                                *
+ *    *                  Data Types                    *
+ *    *                                                *
+ *    **************************************************
+ */
+
+typedef char NORMDIGIT;
+typedef int  WORKDIGIT;
+
+typedef struct {
+   long exp;
+   int sign;
+   int digits;
+   NORMDIGIT man[MAXNORM];
+   } NORMTYPE;
+
+typedef struct {
+   long exp;
+   int sign;
+   int digits;
+   WORKDIGIT man[MAXWORK];
+   } WORKTYPE;
+
+typedef struct {
+   long exp;
+   int sign;
+   int digits;
+   WORKDIGIT man[MAXCOMP];
+   } COMPTYPE;
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *           External Global Variables            *
+ *    *                                                *
+ *    **************************************************
+ */
+
+extern NORMTYPE
+   stack[4],               /* Stack registers  */
+   reg[10];                /* Memory registers */
+
+extern WORKTYPE
+   work[3];                /* Work registers   */
+
+extern int
+   normprec,               /* Normal precision  */
+   compprec,               /* Compute precision */
+   workprec,               /* Work precision    */
+   groupsize,              /* Digit group size  */
+   menunbr;                /* Menu number       */
+   
+// extern long
+//    minfloatprn,            /* Min exp for float */
+//    maxfloatprn;            /* Max exp for float */
+
+extern bool scinotation;   /* Force sci notation if TRUE   */
+
+/*
+ *    **************************************************
+ *    *                                                *
  *    *                    Defines                     *
  *    *                                                *
  *    **************************************************
@@ -112,6 +172,15 @@ void show_hide_buttons(bool show);
 //  bigcalc.cpp
 void clear_stack_or_register(uint button_code);
 
+//  Windows functions
+void put_stack(unsigned n, char *msg);
+void put_register(unsigned n, char *msg);
+
+//  debug dump functions
+void dump_norm_reg(NORMTYPE *nptr, char *msg);
+void dump_work_reg(WORKTYPE *nptr, char *msg);
+void dump_stack(WORKTYPE *nptr, char *msg);
+
 /*
  *    **************************************************
  *    *                                                *
@@ -169,75 +238,6 @@ void clear_stack_or_register(uint button_code);
 #define LN         1102 /* CTRL-F9     */
 #define EXPE       1103 /* CTRL-F10    */
 
-/*
- *    **************************************************
- *    *                                                *
- *    *                  Data Types                    *
- *    *                                                *
- *    **************************************************
- */
-
-typedef char NORMDIGIT;
-typedef int  WORKDIGIT;
-
-typedef struct {
-   long exp;
-   int sign;
-   int digits;
-   NORMDIGIT man[MAXNORM];
-   } NORMTYPE;
-
-typedef struct {
-   long exp;
-   int sign;
-   int digits;
-   WORKDIGIT man[MAXWORK];
-   } WORKTYPE;
-
-typedef struct {
-   long exp;
-   int sign;
-   int digits;
-   WORKDIGIT man[MAXCOMP];
-   } COMPTYPE;
-
-
-//  Windows functions
-void put_stack(unsigned n, char *msg);
-void put_register(unsigned n, char *msg);
-
-//  debug dump functions
-void dump_norm_reg(NORMTYPE *nptr, char *msg);
-void dump_work_reg(WORKTYPE *nptr, char *msg);
-
-
-/*
- *    **************************************************
- *    *                                                *
- *    *           External Global Variables            *
- *    *                                                *
- *    **************************************************
- */
-
-extern NORMTYPE
-   stack[4],               /* Stack registers  */
-   reg[10];                /* Memory registers */
-
-extern WORKTYPE
-   work[3];                /* Work registers   */
-
-extern int
-   normprec,               /* Normal precision  */
-   compprec,               /* Compute precision */
-   workprec,               /* Work precision    */
-   groupsize,              /* Digit group size  */
-   menunbr;                /* Menu number       */
-   
-// extern long
-//    minfloatprn,            /* Min exp for float */
-//    maxfloatprn;            /* Max exp for float */
-
-extern bool scinotation;   /* Force sci notation if TRUE   */
 /*
  *    **************************************************
  *    *                                                *
@@ -348,6 +348,7 @@ extern  void DisplayReg(int r);
 extern  void DisplayStack(int s);
 
 extern  void WriteReg(int lo,int hi);
+extern  void WriteStack(int s);
 extern  void WriteStack(int lo,int hi);
 extern  void Overflow(void);
 extern  void DivideByZero(void);

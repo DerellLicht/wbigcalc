@@ -1404,6 +1404,29 @@ void dump_work_reg(WORKTYPE *nptr, char *msg)
    syslog("DWR: [%s]\n", outmsg);
 }  //lint !e843
 
+//lint -esym(714, dump_stack)
+//lint -esym(759, dump_stack)
+//lint -esym(765, dump_stack)
+void dump_stack(WORKTYPE *nptr, char *msg)
+{
+   char outmsg[100] = "" ;
+   static char *dfltmsg = "MT";
+   int slen, idx ;
+   if (msg == NULL) {
+      msg = dfltmsg ;
+   }
+   if (nptr->digits == 0) {
+      sprintf(outmsg, "%s: %ld,%c,%d: empty", msg, nptr->exp, nptr->sign, nptr->digits);
+   }
+   else {
+      slen = sprintf(outmsg, "%s: %ld,%c,%d: ", msg, nptr->exp, nptr->sign, nptr->digits);
+      for (idx=0; idx<nptr->digits; idx++) {
+         sprintf(&outmsg[slen], "%d,", nptr->man[idx]);
+      }
+   }
+   syslog("DStack: [%s]\n", outmsg);
+}  //lint !e843
+
 /*
  *    **************************************************
  *    *                                                *

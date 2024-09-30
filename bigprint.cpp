@@ -409,6 +409,15 @@ void WriteStack(int lo, int hi)
    }
 }
 
+void WriteStack(int s)
+{
+   // int s;
+   // for (s = hi; s >= lo; s--) {
+      WriteNumber(&stack[s]);
+      put_stack(s, get_output_str());
+   // }
+}
+
 /*
  *    **************************************************
  *    *                                                *

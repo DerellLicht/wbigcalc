@@ -1726,7 +1726,7 @@ static void ExitGetXState(bool success)
       // else {
          // ExitGetXState();
       // }
-      WriteStack(0, 0);
+      WriteStack(0);
    }
 
    if (tempStackX != NULL) {
@@ -1749,18 +1749,20 @@ static void Enter(bool success)
       exit_GetX(); //  reset local GetX vars
       Message("Return/Enter received");
       // syslog("Enter: %u: [%s]\n", get_output_str_len(), get_output_str());
-      PushStack();
-      WriteStack(1, 3);
       MoveWorkStack(0, 0);
+      PushStack();
+      WriteStack(0, 3);
       stacklift = TRUE;
 
       // [28728] 6: [838283]
    }
    else {
       Message("Data entry aborted by user");
+      WriteStack(0);
    }
    stacklift = FALSE;
-   ExitGetXState(success);
+   keyboard_state_set(KBD_STATE_DEFAULT);
+   // ExitGetXState(success);
 }
 
 //***************************************************************************
