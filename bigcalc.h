@@ -164,7 +164,7 @@ void show_keyboard_state(char *msg);
 //  GetX functions
 void init_getx_vars(void);
 bool ExtendedGetX(u16 inchr);
-int  exit_GetX(void); //  reset local GetX vars
+int move_local_to_work0(void);
 
 //  wbigcalc.cpp
 void show_hide_buttons(bool show);

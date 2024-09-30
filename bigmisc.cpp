@@ -1871,7 +1871,9 @@ bool ExtendedGetX_unused(u16 chr)
 }
 
 //***************************************************************************
-int exit_GetX(void)
+// move local vars to work[0]
+//***************************************************************************
+int move_local_to_work0(void)
 {
    if (expsign == '-')                 /* Invert exponent if neg sign */
       exponent = -exponent;

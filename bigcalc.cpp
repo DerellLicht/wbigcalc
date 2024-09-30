@@ -1647,8 +1647,6 @@ keyboard_state_t keyboard_state_get(void)
  *    *                                                *
  *    **************************************************
  */
-static NORMTYPE *tempStackX = NULL; //  used by GetX function
-   
 static void AcceptX(u16 inchr)
 {
    int result ;
@@ -1658,11 +1656,6 @@ static void AcceptX(u16 inchr)
          ExitGetXState(false);
       }
       return ;      
-   }
-
-   if ((tempStackX = GETNORMTEMP(1)) == NULL) {
-      MemoryError();
-      return;
    }
 
    init_getx_vars();
@@ -1676,7 +1669,6 @@ static void AcceptX(u16 inchr)
    keyboard_state_set(KBD_STATE_GETX);
    
    if (normprec > SIZEOFSMALL) {
-
       //  initial call to GetX function
       result = ExtendedGetX(inchr); //  process first input char
       if (!result) {
@@ -1686,12 +1678,6 @@ static void AcceptX(u16 inchr)
    }
 
    else {
-      if (stacklift) {              /* Small numbers, use bottom of screen */
-         *tempStackX = stack[3];
-         // PushStack();
-         // WriteStack(1, 3);
-      }
-         
       result = ExtendedGetX(inchr); //  process first input char
       if (!result) {
          ExitGetXState(false);
@@ -1701,6 +1687,7 @@ static void AcceptX(u16 inchr)
 
 //*********************************************************************
 //  Exit from GetX state
+//  success: false means data entry was aborted
 //*********************************************************************
 static void ExitGetXState(bool success)
 {
@@ -1722,16 +1709,11 @@ static void ExitGetXState(bool success)
       if (success) {
          MoveWorkStack(0, 0);
          stacklift = TRUE;
-         }
+      }
       // else {
          // ExitGetXState();
       // }
       WriteStack(0);
-   }
-
-   if (tempStackX != NULL) {
-      free(tempStackX);
-      tempStackX = NULL ;
    }
    keyboard_state_set(KBD_STATE_DEFAULT);
 }
@@ -1746,12 +1728,12 @@ static void ExitGetXState(bool success)
 static void Enter(bool success)
 {
    if (success) {
-      exit_GetX(); //  reset local GetX vars
+      move_local_to_work0();
       Message("Return/Enter received");
       // syslog("Enter: %u: [%s]\n", get_output_str_len(), get_output_str());
       MoveWorkStack(0, 0);
-      PushStack();
-      WriteStack(0, 3);
+      PushStack();   //  push X to Y
+      WriteStack(0, 3); //  update display fields
       stacklift = TRUE;
 
       // [28728] 6: [838283]
