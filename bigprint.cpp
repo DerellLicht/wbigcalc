@@ -66,7 +66,7 @@ static int ppos = 0;            /* Current print column */
  *    *                                                *
  *    **************************************************
  */
-static void WriteNumber(NORMTYPE *nbr, uint idx)
+static void WriteNumber(NORMTYPE *nbr)
 {
    long exponent;
    int i, digits;
@@ -74,12 +74,14 @@ static void WriteNumber(NORMTYPE *nbr, uint idx)
    reset_output_str();
 
    if (nbr->digits == 0) {
-      if (idx < 10) {
-         put_register(idx, " 0");
-      }
-      else {
-         put_stack(idx-10, " 0");
-      }
+      WChar(' ');
+      WChar('0');
+      // if (idx < 10) {
+      //    put_register(idx, " 0");
+      // }
+      // else {
+      //    put_stack(idx-10, " 0");
+      // }
       return;
    }
 
@@ -386,10 +388,8 @@ void WriteReg(int lo, int hi)
 {
    int r;
    for (r = lo; r <= hi; r++) {
-      WriteNumber(&reg[r], r);
-      if (reg[r].digits > 0) {
-         put_register(r, get_output_str());
-      }
+      WriteNumber(&reg[r]);
+      put_register(r, get_output_str());
    }
 }
 
@@ -404,10 +404,8 @@ void WriteStack(int lo, int hi)
 {
    int s;
    for (s = hi; s >= lo; s--) {
-      WriteNumber(&stack[s], 10+s);
-      if (stack[s].digits > 0) {
-         put_stack(s, get_output_str());
-      }
+      WriteNumber(&stack[s]);
+      put_stack(s, get_output_str());
    }
 }
 
@@ -427,10 +425,12 @@ void WorkScreen(void)
    Heading2();
 
    for (r = 0; r <= 9; r++) {
-      WriteNumber(&reg[r], r);
+      WriteNumber(&reg[r]);
+      put_register(r, get_output_str());
    }
 
    for (s = 3; s >= 0; s--) {
-      WriteNumber(&stack[s], 10+s);
+      WriteNumber(&stack[s]);
+      put_stack(s, get_output_str());
    }
 }
