@@ -127,37 +127,6 @@ void put_register(unsigned n, char *msg)
    SetWindowText(hwndRegs[n], msg) ;
 }
 
-// void put_work(void)
-// {
-//    char tempstr[30];
-//    wsprintf (tempstr, "put_work %u [%s]", 0, get_iostr());
-//    syslog(tempstr);
-//    SetWindowText(hwndStack[0], get_iostr()) ;
-// }
-
-//*************************************************************
-// static int process_keystroke (HWND hwnd, unsigned inchr)
-// {
-//    char stext[10] ;
-//    //  main keyboard handler
-//    switch (inchr) {
-//    case kCc:
-//    case kESC:
-//       SendMessage(hwnd, WM_DESTROY, 0, 0) ;
-//       break;
-// 
-//    default:
-//       HWND hwndTemp = GetDlgItem(hwnd, IDC_REG_X) ;
-//       wsprintf(stext, "%c", inchr) ;
-//       SetWindowText(hwndTemp, stext) ;
-//       dos_main(inchr) ;
-//       // wsprintf (tempstr, "PRESS=0x%04X", inchr);
-//       // Statusbar_ShowMessage (tempstr);
-//       break;
-//    }
-//    return 0;
-// }
-
 /*
  *    **************************************************
  *    *                                                *
@@ -295,6 +264,25 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
             keyboard_state_handler(kENTER);
             break ;            
             
+         case IDB_CLEAR_R0:
+         case IDB_CLEAR_R1:
+         case IDB_CLEAR_R2:
+         case IDB_CLEAR_R3:
+         case IDB_CLEAR_R4:
+         case IDB_CLEAR_R5:
+         case IDB_CLEAR_R6:
+         case IDB_CLEAR_R7:
+         case IDB_CLEAR_R8:
+         case IDB_CLEAR_R9:
+         case IDB_CLEAR_X:
+         case IDB_CLEAR_Y:
+         case IDB_CLEAR_Z:
+         case IDB_CLEAR_T:
+         case IDB_IDB_CLRS:
+         case IDB_IDB_CLRR:
+            clear_stack_or_register(target);
+            break ;
+               
          case IDB_CLOSE:
             PostMessageA(hDlgWnd, WM_CLOSE, 0, 0);
             break;

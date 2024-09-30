@@ -35,20 +35,35 @@
 #define  IDC_R9            219
 #define  IDS_R9            220
                            
-#define  IDC_VIEW_R0       230
-#define  IDC_VIEW_R1       231
-#define  IDC_VIEW_R2       232
-#define  IDC_VIEW_R3       233
-#define  IDC_VIEW_R4       234
-#define  IDC_VIEW_R5       235
-#define  IDC_VIEW_R6       236
-#define  IDC_VIEW_R7       237
-#define  IDC_VIEW_R8       238
-#define  IDC_VIEW_R9       239
-#define  IDC_VIEW_X        240
-#define  IDC_VIEW_Y        241
-#define  IDC_VIEW_Z        242
-#define  IDC_VIEW_T        243
+#define  IDB_VIEW_R0       230
+#define  IDB_VIEW_R1       231
+#define  IDB_VIEW_R2       232
+#define  IDB_VIEW_R3       233
+#define  IDB_VIEW_R4       234
+#define  IDB_VIEW_R5       235
+#define  IDB_VIEW_R6       236
+#define  IDB_VIEW_R7       237
+#define  IDB_VIEW_R8       238
+#define  IDB_VIEW_R9       239
+#define  IDB_VIEW_X        240
+#define  IDB_VIEW_Y        241
+#define  IDB_VIEW_Z        242
+#define  IDB_VIEW_T        243
+                           
+#define  IDB_CLEAR_R0      250
+#define  IDB_CLEAR_R1      251
+#define  IDB_CLEAR_R2      252
+#define  IDB_CLEAR_R3      253
+#define  IDB_CLEAR_R4      254
+#define  IDB_CLEAR_R5      255
+#define  IDB_CLEAR_R6      256
+#define  IDB_CLEAR_R7      257
+#define  IDB_CLEAR_R8      258
+#define  IDB_CLEAR_R9      259
+#define  IDB_CLEAR_X       260
+#define  IDB_CLEAR_Y       261
+#define  IDB_CLEAR_Z       262
+#define  IDB_CLEAR_T       263
                            
 #define  IDC_MSG           300
 #define  IDS_MSG           301
@@ -69,4 +84,7 @@
 #define  IDB_KBD_e         321
 #define  IDB_KBD_RETURN    322
 #define  IDB_KBD_ESCAPE    323
+
+#define  IDB_IDB_CLRS      400
+#define  IDB_IDB_CLRR      401
 

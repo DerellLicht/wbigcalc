@@ -99,12 +99,15 @@ typedef enum {
 int keyboard_state_handler(u16 chr);
 bool keyboard_state_set(keyboard_state_t new_kbd_state);
 keyboard_state_t keyboard_state_get(void);
+void show_keyboard_state(char *msg);
 
 //  GetX functions
 void init_getx_vars(void);
 bool ExtendedGetX(u16 inchr);
-int exit_GetX(void); //  reset local GetX vars
-void show_keyboard_state(char *msg);
+int  exit_GetX(void); //  reset local GetX vars
+
+//  bigcalc.cpp
+void clear_stack_or_register(uint button_code);
 
 /*
  *    **************************************************

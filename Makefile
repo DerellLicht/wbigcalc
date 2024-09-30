@@ -44,7 +44,7 @@ depend:
 # DO NOT DELETE
 
 wbigcalc.o: keywin32.h resource.h bigcalc.h
-bigcalc.o: bigcalc.h keywin32.h
+bigcalc.o: resource.h bigcalc.h keywin32.h
 bigmath.o: bigcalc.h
 bigmisc.o: bigcalc.h
 bigprint.o: bigcalc.h

@@ -1828,7 +1828,6 @@ bool ExtendedGetX_unused(u16 chr)
          case (GROUPSIZE):
          case (VIEWREG):
          case (SCINOT):
-         case (CLEAR):
          case (STOREX):
          case (RECALLREG):
          case (XCHGXY1):

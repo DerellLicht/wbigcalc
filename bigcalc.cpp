@@ -32,6 +32,7 @@
 #include <stdlib.h>
 //#include <string.h>
 
+#include "resource.h"
 #include "common.h"
 #include "bigcalc.h"
 #include "keywin32.h"
@@ -76,7 +77,6 @@ static  void MenuRoll(void);
 static  void ViewReg(void);
 static  void ClearX(void);
 static  void SciNotation(void);
-static  void Clear(void);
 static  void StoreX(void);
 static  void AddXReg(void);
 static  void SubtractXReg(void);
@@ -999,81 +999,48 @@ static void SciNotation(void)
    WriteStack(0, 3);
 }
 
-/*
- *    **************************************************
- *    *                                                *
- *    *        Clear (S, X,Y,Z,T, R, 0-9, All)         *
- *    *                                                *
- *    **************************************************
- */
-static void Clear(void)
+//*******************************************************************************
+void clear_stack_or_register(uint button_code)
 {
-   int r;
+   uint r, s ;   
+   switch (button_code) {
+   case IDB_CLEAR_R0:
+   case IDB_CLEAR_R1:
+   case IDB_CLEAR_R2:
+   case IDB_CLEAR_R3:
+   case IDB_CLEAR_R4:
+   case IDB_CLEAR_R5:
+   case IDB_CLEAR_R6:
+   case IDB_CLEAR_R7:
+   case IDB_CLEAR_R8:
+   case IDB_CLEAR_R9:
+      r = button_code - IDB_CLEAR_R0 ;
+      ClearReg(r, r);
+      WriteReg(r, r);
+      break ;
+   
+   case IDB_CLEAR_X:
+   case IDB_CLEAR_Y:
+   case IDB_CLEAR_Z:
+   case IDB_CLEAR_T:
+      s = button_code - IDB_CLEAR_X ;
+      ClearStack(s, s);
+      WriteStack(s, s);
+      break ;
 
-   Message("Press to clear (S, X,Y,Z,T, R, 0-9, A=All, Esc=Exit):");
-
-   while ((chr = GetChar()) != ESCAPE) {
-
-      switch (chr) {
-
-         case ('S'):
-            ClearStack(0, 3);
-            WriteStack(0, 3);
-            return;
-
-         case ('X'):
-            ClearStack(0, 0);
-            WriteStack(0, 0);
-            return;
-
-         case ('Y'):
-            ClearStack(1, 1);
-            WriteStack(1, 1);
-            return;
-
-         case ('Z'):
-            ClearStack(2, 2);
-            WriteStack(2, 2);
-            return;
-
-         case ('T'):
-            ClearStack(3, 3);
-            WriteStack(3, 3);
-            return;
-
-         case ('R'):
-            ClearReg(0, 9);
-            WriteReg(0, 9);
-            return;
-
-         case ('0'):
-         case ('1'):
-         case ('2'):
-         case ('3'):
-         case ('4'):
-         case ('5'):
-         case ('6'):
-         case ('7'):
-         case ('8'):
-         case ('9'):
-            r = chr - '0';
-            ClearReg(r, r);
-            WriteReg(r, r);
-            return;
-
-         case ('A'):
-            ClearReg(0, 9);
-            ClearStack(0, 3);
-            WriteReg(0, 9);
-            WriteStack(0, 3);
-            return;
-
-         default:
-            ;
-
-         }  /* switch */
-
-      }  /* while */
+   case IDB_IDB_CLRS:
+      ClearStack(0, 3);
+      WriteStack(0, 3);
+      break ;
+      
+   case IDB_IDB_CLRR:
+      ClearReg(0, 9);
+      WriteReg(0, 9);
+      break ;
+      
+   default:
+      break ;
+   }
 }
 
 /*
@@ -1868,7 +1835,6 @@ static int dos_main(u16 inchr)
          case (VIEWREG):      ViewReg();  break;         /* View Register on Screen */
          case (CLEARX):       ClearX();  break;          /* Clear X to zero */
          case (SCINOT):       SciNotation();  break;     /* Use Scientific Notation */
-         case (CLEAR):        Clear(); break;            /* Clear (prompt for what) */
          case (STOREX):       StoreX();  break;          /* Store X in register (prompt for which) */
          case (RECALLREG):    RecallReg(); break;        /* Recall register to X (prompt for which) */
          case (XCHGXY1):
