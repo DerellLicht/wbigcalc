@@ -1619,10 +1619,12 @@ bool keyboard_state_set(keyboard_state_t new_kbd_state)
 {
    switch(new_kbd_state) {
    case KBD_STATE_DEFAULT:
+      show_hide_buttons(true);
       show_keyboard_state("default");
       keyboard_state = new_kbd_state ;
       return true ;
    case KBD_STATE_GETX:
+      show_hide_buttons(false);
       show_keyboard_state("Input X value");
       keyboard_state = new_kbd_state ;
       return true ;

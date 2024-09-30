@@ -139,6 +139,37 @@ void Message(char *msg)
    SetWindowText(hwndMsg, msg);
 }
 
+//************************************************************************
+//  hide all functional buttons while keyboard entry mode is in effect
+//************************************************************************
+static uint const show_hide_button_ids[] = {
+IDB_CLEAR_R0, 
+IDB_CLEAR_R1, 
+IDB_CLEAR_R2, 
+IDB_CLEAR_R3, 
+IDB_CLEAR_R4, 
+IDB_CLEAR_R5, 
+IDB_CLEAR_R6, 
+IDB_CLEAR_R7, 
+IDB_CLEAR_R8, 
+IDB_CLEAR_R9, 
+IDB_CLEAR_X,  
+IDB_CLEAR_Y,  
+IDB_CLEAR_Z,  
+IDB_CLEAR_T,  
+IDB_IDB_CLRS, 
+IDB_IDB_CLRR, 
+0 } ;
+
+void show_hide_buttons(bool show)
+{
+   uint idx ;
+   for (idx=0; show_hide_button_ids[idx]; idx++) {
+      ShowWindow(GetDlgItem(hwndMain, show_hide_button_ids[idx]), (show) ? SW_SHOW : SW_HIDE);
+   }
+}
+
+
 //*************************************************************
 
 static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lParam)

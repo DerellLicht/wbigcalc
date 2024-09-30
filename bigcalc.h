@@ -106,6 +106,9 @@ void init_getx_vars(void);
 bool ExtendedGetX(u16 inchr);
 int  exit_GetX(void); //  reset local GetX vars
 
+//  wbigcalc.cpp
+void show_hide_buttons(bool show);
+
 //  bigcalc.cpp
 void clear_stack_or_register(uint button_code);
 
