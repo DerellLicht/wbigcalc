@@ -341,7 +341,7 @@ void InitialScreen(void)
  *    *                                                *
  *    **************************************************
  */
-void Heading2(void)
+void show_status_info(void)
 {
    char tempstr[20];
    sprintf (tempstr, " Precision: %d", normprec);
@@ -421,8 +421,7 @@ void WorkScreen(void)
 {
    int r, s;
 
-   // Heading1();
-   Heading2();
+   show_status_info();
 
    for (r = 0; r <= 9; r++) {
       WriteNumber(&reg[r]);

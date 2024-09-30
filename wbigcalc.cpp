@@ -247,7 +247,7 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
       // SendDlgItemMessage (hDlgWnd, IDC_DLG_TEXT, EM_SETLIMITTEXT, (WPARAM) BUFFER_SIZE - 1, (LPARAM) 0);
       // SetDlgItemText (hDlgWnd, IDC_DLG_TEXT, "Enter Text");
       Initialize(1, NULL);
-      Heading2();
+      show_status_info();
       keyboard_state_set(KBD_STATE_DEFAULT);
       Message("We are ready...");
       }

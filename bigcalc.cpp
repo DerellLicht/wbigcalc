@@ -896,7 +896,7 @@ static void GroupSize(void)
       }
 
    if (flag)
-      Heading2();
+      show_status_info();
 }
 
 /*

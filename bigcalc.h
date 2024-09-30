@@ -353,5 +353,5 @@ extern  void MemoryError(void);
 
 extern  void OnScreenMenu(void);
 extern  void InitialScreen(void);
-extern  void Heading2(void);
+extern  void show_status_info(void);
 extern  void WorkScreen(void);
