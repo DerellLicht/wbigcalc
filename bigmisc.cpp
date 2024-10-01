@@ -31,6 +31,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "keywin32.h"
 #include "common.h"
 #include "bigcalc.h"
 
@@ -1907,10 +1908,10 @@ bool ExtendedGetX(u16 chr)
    // do {  /* while (TRUE) */
       /* First digit already entered on first pass */
 
-      if (!isascii(chr)) {
-         // syslog("GetX: NOT_ASCII  %02X, %c\n", (u8) chr, chr);
-         return true ;
-      }       /* Ignore non ASCII characters */
+      // if (!isascii(chr)) {
+      //    // syslog("GetX: NOT_ASCII  %02X, %c\n", (u8) chr, chr);
+      //    return true ;
+      // }       /* Ignore non ASCII characters */
 
 /*  ******  I N T E G E R   M O D E  ******  */
 
@@ -1938,7 +1939,7 @@ bool ExtendedGetX(u16 chr)
             mode = INDEC;
             }
 
-         else if (chr == 'E') {                 /* E invokes exponent mode, */
+         else if (chr == 'e') {                 /* E invokes exponent mode, */
             if (! digits) {
                // DisplayChar(&row, &col, '1');    /*  if no digits, make it 1, */
                WChar('1');
@@ -1959,7 +1960,7 @@ bool ExtendedGetX(u16 chr)
                }
             }
 
-         else if (chr == CHGSIGN) {             /* Reverse mantissa sign */
+         else if (chr == 's') {             /* Reverse mantissa sign */
             sign = FlipSign(sign);
             if (sign == '+')
                WChar(' ');
@@ -1967,9 +1968,10 @@ bool ExtendedGetX(u16 chr)
                WChar('-');
             }
 
-         else if (chr == BACKSPACE) {           /* Backspace backs up char */
+         else if (chr == kBSPACE) {           /* Backspace backs up char */
             if (digits) {
-               BackSpace(&row, &col);
+               // BackSpace(&row, &col);
+               WChar(' ');
                digits--;
                intdigits--;
                digitval -= work[0].man[digits];
@@ -2016,7 +2018,7 @@ bool ExtendedGetX(u16 chr)
             }
 
          else if (chr == BACKSPACE) {           /* Backspace backs up char */
-            BackSpace(&row, &col);
+            WChar(' ');
 
             if (decdigits) {           /* Decimal digits, stay decimal mode */
                digits--;

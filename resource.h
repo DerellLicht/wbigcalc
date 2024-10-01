@@ -82,8 +82,10 @@
 #define  IDB_KBD_9         319
 #define  IDB_KBD_DOT       320
 #define  IDB_KBD_e         321
-#define  IDB_KBD_RETURN    322
-#define  IDB_KBD_ESCAPE    323
+#define  IDB_KBD_s         322
+#define  IDB_KBD_BKSPC     323
+#define  IDB_KBD_RETURN    324
+#define  IDB_KBD_ESCAPE    325
 
 #define  IDB_IDB_CLRS      400
 #define  IDB_IDB_CLRR      401

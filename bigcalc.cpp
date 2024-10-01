@@ -75,7 +75,6 @@ static  void ChangeSign(void);
 static  void GroupSize(void);
 static  void MenuRoll(void);
 static  void ViewReg(void);
-static  void ClearX(void);
 static  void SciNotation(void);
 static  void StoreX(void);
 static  void AddXReg(void);
@@ -970,20 +969,6 @@ static void ViewReg(void)
 /*
  *    **************************************************
  *    *                                                *
- *    *                    Clear X                     *
- *    *                                                *
- *    **************************************************
- */
-static void ClearX(void)
-{
-   ClearStack(0, 0);
-   WriteStack(0, 0);
-   stacklift = FALSE;
-}
-
-/*
- *    **************************************************
- *    *                                                *
  *    *          Toggle Scientific Notation            *
  *    *                                                *
  *    **************************************************
@@ -1578,114 +1563,6 @@ static void DropStack(void)
 }
 
 //*********************************************************************
-static keyboard_state_t keyboard_state = KBD_STATE_DEFAULT ;
-
-int keyboard_state_handler(u16 inchr)
-{
-   int result = TRUE ;
-   switch(keyboard_state) {
-   case KBD_STATE_DEFAULT:
-      dos_main(inchr);
-      result = TRUE ;
-      break ;
-
-   case KBD_STATE_GETX:
-      if (inchr == kENTER) {
-         Enter(true);   //  executed from GetX state
-      }
-      else {
-         result = ExtendedGetX(inchr);
-         if (!result) {
-            // ExitGetXState(false);
-            Enter(false);
-         }
-      }
-      break ;
-      
-   default:
-      {
-      char msg[30];
-      sprintf(msg, "Invalid kbd state: %u", (uint) keyboard_state);
-      MessageBox(NULL, msg, NULL, MB_OK | MB_ICONERROR);
-      }
-      keyboard_state = KBD_STATE_DEFAULT ;
-      result = FALSE ;
-      break ;
-   }
-   return result;
-}
-
-bool keyboard_state_set(keyboard_state_t new_kbd_state)
-{
-   switch(new_kbd_state) {
-   case KBD_STATE_DEFAULT:
-      show_hide_buttons(true);
-      show_keyboard_state("default");
-      keyboard_state = new_kbd_state ;
-      return true ;
-   case KBD_STATE_GETX:
-      show_hide_buttons(false);
-      show_keyboard_state("Input X value");
-      keyboard_state = new_kbd_state ;
-      return true ;
-      
-   default:
-      return false ;
-   }
-}
-
-keyboard_state_t keyboard_state_get(void)
-{
-   return keyboard_state ;
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *               Accept X from KBD                *
- //  later: enter GetX state
- *    *                                                *
- *    **************************************************
- */
-static void AcceptX(u16 inchr)
-{
-   int result ;
-   if (keyboard_state == KBD_STATE_GETX) {
-      result = ExtendedGetX(inchr);
-      if (!result) {
-         ExitGetXState(false);
-      }
-      return ;      
-   }
-
-   init_getx_vars();
-   reset_output_str();
-   put_stack(0, " ");
-
-   ClearWork(0);
-   
-   Message("Entering X: S=ChgSign, E=Exp, BakSpc=Backup, Other=Complete, ESC=Exit");
-
-   keyboard_state_set(KBD_STATE_GETX);
-   
-   if (normprec > SIZEOFSMALL) {
-      //  initial call to GetX function
-      result = ExtendedGetX(inchr); //  process first input char
-      if (!result) {
-         ExitGetXState(false);         
-      }
-      WorkScreen();
-   }
-
-   else {
-      result = ExtendedGetX(inchr); //  process first input char
-      if (!result) {
-         ExitGetXState(false);
-      }
-   }
-}
-
-//*********************************************************************
 //  Exit from GetX state
 //  success: false means data entry was aborted
 //*********************************************************************
@@ -1747,6 +1624,42 @@ static void Enter(bool success)
    // ExitGetXState(success);
 }
 
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *               Accept X from KBD                *
+ //  later: enter GetX state
+ *    *                                                *
+ *    **************************************************
+ */
+static void AcceptX(u16 inchr)
+{
+   int result ;
+   if (keyboard_state_get() == KBD_STATE_GETX) {
+      result = ExtendedGetX(inchr);
+      if (!result) {
+         ExitGetXState(false);
+      }
+      return ;      
+   }
+
+   init_getx_vars();
+   reset_output_str();
+   put_stack(0, " ");
+   ClearWork(0);
+   Message("Entering X: S=ChgSign, E=Exp, BakSpc=Backup, Other=Complete, ESC=Exit");
+   keyboard_state_set(KBD_STATE_GETX);
+   
+   result = ExtendedGetX(inchr); //  process first input char
+   if (!result) {
+      ExitGetXState(false);
+   }
+   if (normprec > SIZEOFSMALL) {
+      //  initial call to GetX function
+      WorkScreen();
+   }
+}
+
 //***************************************************************************
 //  called from keyboard_state_handler() in GetX state
 //***************************************************************************
@@ -1780,6 +1693,12 @@ static int dos_main(u16 inchr)
             AcceptX(inchr);           
             break;                  
 
+         case (kBSPACE):        
+            if (!ExtendedGetX(inchr)) {
+               ExitGetXState(false);
+            }
+            break ;
+            
          case (kENTER):        
             Enter(true);    break;            //  executed from dos_main()
             
@@ -1819,7 +1738,6 @@ static int dos_main(u16 inchr)
          case (GROUPSIZE):    GroupSize();  break;       /* Toggle Group Size (3/5) */
          case (MENUROLL):     MenuRoll();   break;       /* Roll Function Key Menu */
          case (VIEWREG):      ViewReg();  break;         /* View Register on Screen */
-         case (CLEARX):       ClearX();  break;          /* Clear X to zero */
          case (SCINOT):       SciNotation();  break;     /* Use Scientific Notation */
          case (STOREX):       StoreX();  break;          /* Store X in register (prompt for which) */
          case (RECALLREG):    RecallReg(); break;        /* Recall register to X (prompt for which) */
@@ -1840,5 +1758,67 @@ static int dos_main(u16 inchr)
    // ScrTerm();
 
    return 0;
+}
+
+//*********************************************************************
+static keyboard_state_t keyboard_state = KBD_STATE_DEFAULT ;
+
+int keyboard_state_handler(u16 inchr)
+{
+   int result = TRUE ;
+   switch(keyboard_state) {
+   case KBD_STATE_DEFAULT:
+      dos_main(inchr);
+      result = TRUE ;
+      break ;
+
+   case KBD_STATE_GETX:
+      if (inchr == kENTER) {
+         Enter(true);   //  executed from GetX state
+      }
+      else {
+         result = ExtendedGetX(inchr);
+         if (!result) {
+            // ExitGetXState(false);
+            Enter(false);
+         }
+      }
+      break ;
+      
+   default:
+      {
+      char msg[30];
+      sprintf(msg, "Invalid kbd state: %u", (uint) keyboard_state);
+      MessageBox(NULL, msg, NULL, MB_OK | MB_ICONERROR);
+      }
+      keyboard_state = KBD_STATE_DEFAULT ;
+      result = FALSE ;
+      break ;
+   }
+   return result;
+}
+
+bool keyboard_state_set(keyboard_state_t new_kbd_state)
+{
+   switch(new_kbd_state) {
+   case KBD_STATE_DEFAULT:
+      show_hide_buttons(true);
+      show_keyboard_state("default");
+      keyboard_state = new_kbd_state ;
+      return true ;
+   case KBD_STATE_GETX:
+      show_hide_buttons(false);
+      show_keyboard_state("Input X value");
+      keyboard_state = new_kbd_state ;
+      return true ;
+      
+   default:
+      return false ;
+   }
+}
+
+keyboard_state_t keyboard_state_get(void)
+{
+   return keyboard_state ;
 }
 

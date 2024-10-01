@@ -347,27 +347,6 @@ void MessageEsc(char *msg)
 /*
  *    **************************************************
  *    *                                                *
- *    *               Backspace Character              *
- *    *                                                *
- *    **************************************************
- */
-void BackSpace(int *row, int *col)
-{
-   if (*col > MINDISPCOL)     /* find previous character position */
-      (*col)--;
-   else {
-      *col = MAXDISPCOL;
-      (*row)--;
-      }
-
-   CurPos(*row, *col);
-   WChar(' ');
-   CurPos(*row, *col);
-}
-
-/*
- *    **************************************************
- *    *                                                *
  *    *     Display Exponent Character at row, col     *
  *    *                                                *
  *    **************************************************

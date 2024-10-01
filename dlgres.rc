@@ -29,6 +29,8 @@ BEGIN
     "9",       IDB_KBD_9  ,       ASCII, NOINVERT
     ".",       IDB_KBD_DOT,       ASCII, NOINVERT
     "e",       IDB_KBD_e  ,       ASCII, NOINVERT
+    "s",       IDB_KBD_s  ,       ASCII, NOINVERT
+    VK_BACK,   IDB_KBD_BKSPC,     VIRTKEY, NOINVERT
     VK_RETURN, IDB_KBD_RETURN,    VIRTKEY, NOINVERT
     VK_ESCAPE, IDB_KBD_ESCAPE,    VIRTKEY, NOINVERT
     "^q",      IDB_CLOSE,         ASCII, NOINVERT

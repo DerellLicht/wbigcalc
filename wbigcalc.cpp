@@ -257,9 +257,6 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
       {  //  create local context
       DWORD cmd = HIWORD (wParam) ;
       DWORD target = LOWORD(wParam) ;
-      // char tempstr[20];
-      // sprintf (tempstr, " cmd: %u, target: %u", (uint) cmd, (uint) target);
-      // status_message(tempstr);
 
       switch (cmd) {
       case FVIRTKEY:  //  keyboard accelerators: WARNING: same code as CBN_SELCHANGE !!
@@ -267,18 +264,21 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
       case BN_CLICKED:
          switch(target) {
             
-         case IDB_KBD_0  : keyboard_state_handler(k0);   break ;
-         case IDB_KBD_1  : keyboard_state_handler(k1);   break ;
-         case IDB_KBD_2  : keyboard_state_handler(k2);   break ;
-         case IDB_KBD_3  : keyboard_state_handler(k3);   break ;
-         case IDB_KBD_4  : keyboard_state_handler(k4);   break ;
-         case IDB_KBD_5  : keyboard_state_handler(k5);   break ;
-         case IDB_KBD_6  : keyboard_state_handler(k6);   break ;
-         case IDB_KBD_7  : keyboard_state_handler(k7);   break ;
-         case IDB_KBD_8  : keyboard_state_handler(k8);   break ;
-         case IDB_KBD_9  : keyboard_state_handler(k9);   break ;
-         case IDB_KBD_DOT: keyboard_state_handler(kPeriod);  break ;
-         case IDB_KBD_e  : keyboard_state_handler(ke);   break ;
+         case IDB_KBD_0  :    keyboard_state_handler(k0);       break ;
+         case IDB_KBD_1  :    keyboard_state_handler(k1);       break ;
+         case IDB_KBD_2  :    keyboard_state_handler(k2);       break ;
+         case IDB_KBD_3  :    keyboard_state_handler(k3);       break ;
+         case IDB_KBD_4  :    keyboard_state_handler(k4);       break ;
+         case IDB_KBD_5  :    keyboard_state_handler(k5);       break ;
+         case IDB_KBD_6  :    keyboard_state_handler(k6);       break ;
+         case IDB_KBD_7  :    keyboard_state_handler(k7);       break ;
+         case IDB_KBD_8  :    keyboard_state_handler(k8);       break ;
+         case IDB_KBD_9  :    keyboard_state_handler(k9);       break ;
+         case IDB_KBD_DOT:    keyboard_state_handler(kPeriod);  break ;
+         case IDB_KBD_e  :    keyboard_state_handler(ke);       break ;
+         case IDB_KBD_s  :    keyboard_state_handler(ks);       break ;
+         case IDB_KBD_BKSPC:  keyboard_state_handler(kBSPACE);  break ;
+         case IDB_KBD_RETURN: keyboard_state_handler(kENTER);   break ;            
          
          case IDB_KBD_ESCAPE  : 
             switch (keyboard_state_get()) {
@@ -290,10 +290,6 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
                break ;
             }
             break ;
-            
-         case IDB_KBD_RETURN:
-            keyboard_state_handler(kENTER);
-            break ;            
             
          case IDB_CLEAR_R0:
          case IDB_CLEAR_R1:

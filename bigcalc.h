@@ -209,7 +209,6 @@ void dump_stack(WORKTYPE *nptr, char *msg);
 #define GROUPSIZE  71   /*  G          */
 #define MENUROLL   77   /*  M          */
 #define VIEWREG    86   /*  V          */
-#define CLEARX     8    /* Back Space  */
 #define STOREX     1073 /* PgUp        */
 #define RECALLREG  1081 /* PgDn        */
 #define ENTER      13   /* Enter       */
@@ -257,7 +256,6 @@ extern  void MessageWait(char *msg);
 extern  void MessageEsc(char *msg);
 
 extern  void DisplayChar(int *row,int *col,int chr);
-extern  void BackSpace(int *row,int *col);
 extern  void DisplayExpChar(int *row,int *col,int chr);
 extern  void BackSpaceExp(int *row,int *col);
 extern  void DisplayExp(int *row,int *col,int exprow,int expcol,int expsign,long exponent);
