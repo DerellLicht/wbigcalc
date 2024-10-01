@@ -2033,12 +2033,6 @@ bool ExtendedGetX(u16 chr)
       else if (chr == ks) {             /* Reverse mantissa sign */
          sign = FlipSign(sign);
          getx_sign = (getx_sign == '-') ? ' ' : '-' ;
-         //  just using WChar here, isn't going to work...
-         //  I'm going to need to regenerate output string
-//          if (sign == '+')
-//             WChar(' ');
-//          else
-//             WChar('-');
          }
 
       else if (chr == kBSPACE) {           /* Backspace backs up char */
@@ -2065,6 +2059,7 @@ bool ExtendedGetX(u16 chr)
 
       if (isdigit(chr)) {                    /* Numeric digit */
          if (digits < normprec) {
+            getx_putc((char) chr);
 //             DisplayChar(&row, &col, chr);
             work[0].man[digits] = chr - '0';
             digitval += work[0].man[digits];
@@ -2079,34 +2074,31 @@ bool ExtendedGetX(u16 chr)
          if (digitval > 0) {                 /*  if non zero digits entered */
 //             DisplayExpChar(&row, &col, ' ');
 //             DisplayExpChar(&row, &col, 'e');
-            // CurGet(&exprow, &expcol);
+            getx_exponent = true ;
             mode = INEX;
             }
          }
 
       else if (chr == CHGSIGN) {             /* Reverse mantissa sign */
          sign = FlipSign(sign);
-//          if (sign == '+')
-//             WChar(' ');
-//          else
-//             WChar('-');
-         }
+         getx_sign = (getx_sign == '-') ? ' ' : '-' ;
+      }
 
       else if (chr == kBSPACE) {           /* Backspace backs up char */
 //          WChar(' ');
-
          if (decdigits) {           /* Decimal digits, stay decimal mode */
             digits--;
             decdigits--;
             digitval -= work[0].man[digits];
             work[0].man[digits] = 0;
-            }
+         }
 
          else {
             decimal = false;        /* Wiped out decimal point */
             mode = ININT;           /* No digits, back in integer mode */
-            }
          }
+         getx_backspace();
+      }
 
       else                                   /* Bad keystroke */
          ;
