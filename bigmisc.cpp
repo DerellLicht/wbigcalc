@@ -1915,7 +1915,7 @@ bool ExtendedGetX(u16 chr)
       //****************************************************
 
       if (mode == ININT) {
-         syslog("GetX: %02X, %c\n", (u8) chr, chr);
+         // syslog("GetX: %02X, %c\n", (u8) chr, chr);
 
          if (isdigit(chr)) {                    /* Numeric digit */
             if (digits < normprec) {
