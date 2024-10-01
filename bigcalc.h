@@ -136,6 +136,7 @@ void status_message(unsigned idx, char *msgstr);
 
 //  bigcalc.cpp
 void Initialize(int argc, char *argv);
+int dos_main(u16 inchr);
 
 //  bigio.cpp
 void reset_output_str(void);

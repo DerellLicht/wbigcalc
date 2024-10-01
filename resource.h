@@ -89,4 +89,6 @@
 
 #define  IDB_IDB_CLRS      400
 #define  IDB_IDB_CLRR      401
+#define  IDB_IDB_FLTSCI    402
+#define  IDB_IDB_GRP35     403
 

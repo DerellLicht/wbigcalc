@@ -863,12 +863,12 @@ static void ChangeSign(void)
  */
 static void GroupSize(void)
 {
-   BOOLEAN flag;
+   // BOOLEAN flag;
 
-   if (groupsize)             /* First time thru groupsize == 0 */
-      flag = TRUE;
-   else
-      flag = FALSE;
+   // if (groupsize)             /* First time thru groupsize == 0 */
+   //    flag = TRUE;
+   // else
+   //    flag = FALSE;
 
    if (groupsize == 5) {
       groupsize = 3;
@@ -881,7 +881,7 @@ static void GroupSize(void)
       // maxfloatprn = 1200L;
       }
 
-   if (flag)
+   // if (flag)
       show_status_info();
 }
 
@@ -1597,7 +1597,7 @@ static void AcceptX(u16 inchr)
 //  called from keyboard_state_handler() in GetX state
 //***************************************************************************
 // int main(int argc,char *argv[])
-static int dos_main(u16 inchr)
+int dos_main(u16 inchr)
 {
    // Initialize(argc, argv[1]);
 
@@ -1647,7 +1647,7 @@ static int dos_main(u16 inchr)
             //  eventually, this will load a Windows help file
             // HelpScreen();        /* Help Screen */
             break;
-         case (POWER):        Power();    break;         /* Power (Y^X) */
+         case (POWER):        Power();       break;         /* Power (Y^X) */
          case (SQUAREROOT):   SquareRoot();  break;        /* Square Root X */
          case (SQUARE):       Square();      break;      /* Square X */
          case (RECIPROCAL):   Reciprocal();  break;        /* Reciprocal X */

@@ -291,6 +291,15 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
             }
             break ;
             
+         //  button operations
+         case IDB_IDB_FLTSCI:
+            dos_main(SCINOT);
+            break ;
+         
+         case IDB_IDB_GRP35:
+            dos_main(GROUPSIZE);
+            break ;
+            
          case IDB_CLEAR_R0:
          case IDB_CLEAR_R1:
          case IDB_CLEAR_R2:

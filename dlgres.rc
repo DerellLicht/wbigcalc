@@ -142,9 +142,18 @@ BEGIN
    LTEXT           "Kbd State:",    IDS_KSTATE,   PI_X,                  ST_Y+Y_OFS+99,         Y_OFS3-2, 10
    LTEXT           " ",             IDC_KSTATE,   PI_X+Y_OFS3,           ST_Y+99, REGS_GRP_DX - Y_OFS3,  10, SS_SUNKEN
    
+#define  XB1      PI_X
+#define  DXB      40
+#define  YB1      BTN_ARRAY_OFS
+
+#define  XB2      (XB1+DXB+X_GAP)
+#define  XB3      (XB2+DXB+X_GAP)
+#define  XB4      (XB3+DXB+X_GAP)
    //  button array
-   PUSHBUTTON      "Clear Stack",   IDB_IDB_CLRS,   PI_X,          BTN_ARRAY_OFS, 40,  12
-   PUSHBUTTON      "Clear Regs",    IDB_IDB_CLRR,   PI_X+X_GAP+40,  BTN_ARRAY_OFS, 40,  12
+   PUSHBUTTON      "Clear Stack",   IDB_IDB_CLRS,   XB1,  YB1, DXB,  12
+   PUSHBUTTON      "Clear Regs",    IDB_IDB_CLRR,   XB2,  YB1, DXB,  12
+   PUSHBUTTON      "Float/Sci",     IDB_IDB_FLTSCI, XB3,  YB1, DXB,  12
+   PUSHBUTTON      "Group 3/5",     IDB_IDB_GRP35,  XB4,  YB1, DXB,  12
    
 END
 
