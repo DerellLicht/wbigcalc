@@ -125,17 +125,6 @@ extern int GetChar(void)
 //       return(0);
 // }
 
-/*
- *    **************************************************
- *    *         Position Cursor at row, column         *
- //  not actually used in this application
- *    **************************************************
- */
-static void CurPos(int row, int col)
-{
-   // dgotoxy(col-1, row-1) ;
-}
-
 //***************************************************************************
 #define  MAX_OUTPUT_STR    1100
 static char output_str[MAX_OUTPUT_STR+1];
@@ -198,27 +187,6 @@ void WString(char *str)
    for (idx=0; idx<slen; idx++) {
       WChar(*(str+idx));
    }
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *         Display Character at row, col          *
- *    *                                                *
- *    **************************************************
- */
-void DisplayChar(int *row, int *col, int chr)
-{
-   // CurPos(*row, *col);
-   WChar(chr);
-
-   // if (*col < MAXDISPCOL)     /* Find position for next character */
-   //    (*col)++;
-   // else {
-   //    *col = MINDISPCOL;
-   //    (*row)++;
-   //    }
-   // CurPos(*row, *col);
 }
 
 /*
@@ -333,91 +301,5 @@ void MessageEsc(char *msg)
    strcat(tmsg, "(Press Esc to abort)");
 
    Message(tmsg);
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *         Number Entry Support Routines          *
- *    *                                                *
- *    **************************************************
- */
-
-
-/*
- *    **************************************************
- *    *                                                *
- *    *     Display Exponent Character at row, col     *
- *    *                                                *
- *    **************************************************
- */
-void DisplayExpChar(int *row, int *col, int chr)
-{
-   CurPos(*row, *col);
-   WChar(chr);
-
-   if (*col < 80)             /* Find position for next character */
-      (*col)++;
-   else {
-      *col = MINDISPCOL;
-      (*row)++;
-      }
-   CurPos(*row, *col);
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *          Backspace Exponent Character          *
- *    *                                                *
- *    **************************************************
- */
-void BackSpaceExp(int *row, int *col)
-{
-   if (*col > MINDISPCOL)     /* find previous character position */
-      (*col)--;
-   else {
-      *col = 80;
-      (*row)--;
-      }
-
-   CurPos(*row, *col);
-   WChar(' ');
-   CurPos(*row, *col);
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *          Display Exponent at row, col          *
- *    *                                                *
- *    **************************************************
- */
-void DisplayExp(int *row, int *col, int exprow, int expcol, int expsign, long exponent)
-{
-   long order;
-
-   *row = exprow;
-   *col = expcol;
-   // CurPos(exprow, expcol);          /* Locate to beginning of exponent */
-   // EraEol();
-
-   if (expsign == '-')
-      DisplayExpChar(row, col, '-');
-
-   if (exponent) {                  /* Write exponent value */
-      if (exponent < 0L) {
-         DisplayExpChar(row, col, '-');
-         exponent = - exponent;
-         }
-      order = 1000000000L;
-      while (order > exponent)
-         order /= 10L;
-      while (order) {
-         DisplayExpChar(row, col, (int)((exponent / order) + (long) '0'));
-         exponent %= order;
-         order /= 10L;
-         }
-      }
 }
 

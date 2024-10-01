@@ -255,10 +255,6 @@ extern  void Message(char *msg);
 extern  void MessageWait(char *msg);
 extern  void MessageEsc(char *msg);
 
-extern  void DisplayChar(int *row,int *col,int chr);
-extern  void DisplayExpChar(int *row,int *col,int chr);
-extern  void BackSpaceExp(int *row,int *col);
-extern  void DisplayExp(int *row,int *col,int exprow,int expcol,int expsign,long exponent);
 
 /*
  *    **************************************************

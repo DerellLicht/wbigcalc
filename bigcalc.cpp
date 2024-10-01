@@ -1537,9 +1537,9 @@ static void ExitGetXState(bool success)
 static void Enter(bool success)
 {
    if (success) {
-      move_local_to_work0();
       Message("Return/Enter received");
       // syslog("Enter: %u: [%s]\n", get_output_str_len(), get_output_str());
+      move_local_to_work0();
       MoveWorkStack(0, 0);
       PushStack();   //  push X to Y
       WriteStack(0, 3); //  update display fields

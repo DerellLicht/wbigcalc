@@ -4,6 +4,8 @@ Last Update: 09/30/24 11:44
 
 > GetX - test ., S, E, BackSpc
 
+  Exponent not working
+
 > finish eliminating GetCh() from the project
 
 ==============================================================
