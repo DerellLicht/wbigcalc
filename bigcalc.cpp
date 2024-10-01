@@ -43,10 +43,6 @@
  *    **************************************************
  */
 
-static  int dos_main(u16 inchr);
-static void Enter(bool success);
-static void ExitGetXState(bool success);
-
 static  void Add(void);
 static  void Subtract(void);
 static  void Multiply(void);
@@ -74,7 +70,6 @@ static  void RecallLastX(void);
 static  void ChangeSign(void);
 static  void GroupSize(void);
 static  void MenuRoll(void);
-static  void ViewReg(void);
 static  void SciNotation(void);
 static  void StoreX(void);
 static  void AddXReg(void);
@@ -116,18 +111,11 @@ int
    compprec = 0,           /* Compute precision */
    workprec = 0,           /* Work precision    */
    groupsize = 0,          /* Digit group size  */
-//    entrysignrow,           /* Row for X entry   */
    menunbr = 0;            /* Menu number       */
    
 static int chr = 0;                /* Input Character   */
 
-// long
-//    minfloatprn,            /* Min exp for float */
-//    maxfloatprn;            /* Max exp for float */
-
 bool scinotation = false;    /* Force sci notation if TRUE   */
-//   charpresent = FALSE,    /* Character present if TRUE    */
-//    menucleared = TRUE;     /* Screen menu cleared if TRUE  */
 
 static BOOLEAN stacklift = TRUE;       /* Lift stack for new X if TRUE */
 
@@ -174,8 +162,7 @@ void Initialize(int argc, char *argv)
    //    entrysignrow = ENTRYSIGNROWSMALL;
 
    GroupSize();                  /* Toggle group size to 5 & set xxxfloatprn */
-
-   InitialScreen();              /* Welcome screen */
+   WorkScreen();
 }
 
 /*
@@ -909,61 +896,6 @@ static void MenuRoll(void)
 {
    menunbr = 1 - menunbr;     /* Toggle menunbr 0/1 */
    OnScreenMenu();
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *             View Register on Screen            *
- *    *                                                *
- *    **************************************************
- */
-static void ViewReg(void)
-{
-   int r;
-
-   Message("Press to view (X,Y,Z,T, 0-9, Esc=Exit):");
-
-   while ((chr = GetChar()) != ESCAPE) {
-
-      switch (chr) {
-
-         case ('X'):
-            DisplayStack(0);
-            return;
-
-         case ('Y'):
-            DisplayStack(1);
-            return;
-
-         case ('Z'):
-            DisplayStack(2);
-            return;
-
-         case ('T'):
-            DisplayStack(3);
-            return;
-
-         case ('0'):
-         case ('1'):
-         case ('2'):
-         case ('3'):
-         case ('4'):
-         case ('5'):
-         case ('6'):
-         case ('7'):
-         case ('8'):
-         case ('9'):
-            r = chr - '0';
-            DisplayReg(r);
-            return;
-
-         default:
-            ;
-
-         }  /* switch */
-
-      }  /* while */
 }
 
 /*
@@ -1737,7 +1669,6 @@ static int dos_main(u16 inchr)
          case (CHGSIGN):      ChangeSign();  break;      /* Change sign X */
          case (GROUPSIZE):    GroupSize();  break;       /* Toggle Group Size (3/5) */
          case (MENUROLL):     MenuRoll();   break;       /* Roll Function Key Menu */
-         case (VIEWREG):      ViewReg();  break;         /* View Register on Screen */
          case (SCINOT):       SciNotation();  break;     /* Use Scientific Notation */
          case (STOREX):       StoreX();  break;          /* Store X in register (prompt for which) */
          case (RECALLREG):    RecallReg(); break;        /* Recall register to X (prompt for which) */

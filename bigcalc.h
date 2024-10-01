@@ -342,9 +342,6 @@ extern  void SetTempInteger(COMPTYPE *dest,long integer);
  *    **************************************************
  */
 
-extern  void DisplayReg(int r);
-extern  void DisplayStack(int s);
-
 extern  void WriteReg(int lo,int hi);
 extern  void WriteStack(int s);
 extern  void WriteStack(int lo,int hi);
@@ -357,6 +354,5 @@ extern  void ArgumentInvalid(void);
 extern  void MemoryError(void);
 
 extern  void OnScreenMenu(void);
-extern  void InitialScreen(void);
 extern  void show_status_info(void);
 extern  void WorkScreen(void);

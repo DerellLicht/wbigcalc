@@ -323,20 +323,6 @@ void OnScreenMenu(void)
 /*
  *    **************************************************
  *    *                                                *
- *    *                Initial Screen                  *
- *    *                                                *
- *    **************************************************
- */
-void InitialScreen(void)
-{
-   // HelpScreen1();
-   // MessageWait("");
-   WorkScreen();
-}
-
-/*
- *    **************************************************
- *    *                                                *
  *    *             Screen Header Line 2               *
  *    *                                                *
  *    **************************************************
@@ -350,32 +336,6 @@ void show_status_info(void)
    sprintf (tempstr, " dgroup: %d", groupsize);
    status_message(2, tempstr);
 }
-
-/*
- *    **************************************************
- *    *                                                *
- *    *   Display Memory Register in Full on Screen    *
- *    *                                                *
- For wbigcalc, this will open a new modal window
- *    **************************************************
- */
-void DisplayReg(int r)
-{
-   WorkScreen();
-}  //lint !e715
-
-/*
- *    **************************************************
- *    *                                                *
- *    *    Display Stack Register in Full on Screen    *
- *    *                                                *
- For wbigcalc, this will open a new modal window
- *    **************************************************
- */
-void DisplayStack(int s)
-{
-   WorkScreen();
-}  //lint !e715
 
 /*
  *    **************************************************
@@ -411,11 +371,8 @@ void WriteStack(int lo, int hi)
 
 void WriteStack(int s)
 {
-   // int s;
-   // for (s = hi; s >= lo; s--) {
-      WriteNumber(&stack[s]);
-      put_stack(s, get_output_str());
-   // }
+   WriteNumber(&stack[s]);
+   put_stack(s, get_output_str());
 }
 
 /*
@@ -425,7 +382,6 @@ void WriteStack(int s)
  *    *                                                *
  *    **************************************************
  */
-
 void WorkScreen(void)
 {
    int r, s;
