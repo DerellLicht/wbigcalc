@@ -1,10 +1,10 @@
 Bugs in Win32 port of BigCalc
-Last Update: 09/30/24 11:44
+Last Update: 10/01/24 11:44
 ==============================================================
 
-> GetX - test ., S, E, BackSpc
+> GetX - test .
 
-  Exponent not working
+  GetX -> Enter -> WriteNumber not working with exponents
 
 > finish eliminating GetCh() from the project
 

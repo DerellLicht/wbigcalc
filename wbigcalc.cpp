@@ -274,7 +274,7 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
          case IDB_KBD_7  :    keyboard_state_handler(k7);       break ;
          case IDB_KBD_8  :    keyboard_state_handler(k8);       break ;
          case IDB_KBD_9  :    keyboard_state_handler(k9);       break ;
-         case IDB_KBD_DOT:    keyboard_state_handler(kPeriod);  break ;
+         case IDB_KBD_DOT:    keyboard_state_handler('.');      break ;
          case IDB_KBD_e  :    keyboard_state_handler(ke);       break ;
          case IDB_KBD_s  :    keyboard_state_handler(ks);       break ;
          case IDB_KBD_BKSPC:  keyboard_state_handler(kBSPACE);  break ;
