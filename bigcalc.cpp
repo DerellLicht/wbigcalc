@@ -1576,6 +1576,7 @@ static void AcceptX(u16 inchr)
    }
 
    init_getx_vars();
+   getx_clear_output_str();
    reset_output_str();
    put_stack(0, " ");
    ClearWork(0);

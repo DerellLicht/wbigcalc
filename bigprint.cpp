@@ -34,8 +34,6 @@
 #include "common.h"
 #include "bigcalc.h"
 
-static void WExponent(long exponent);
-
 /*
  *    **************************************************
  *    *                                                *
@@ -53,6 +51,19 @@ static int ppos = 0;            /* Current print column */
  *    *                                                *
  *    **************************************************
  */
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *            Write Exponent on Screen            *
+ *    *                                                *
+ *    **************************************************
+ */
+static void WExponent(long exponent)
+{
+   WString(" e");
+   WInteger(exponent);
+}
 
 /*
  *    **************************************************
@@ -76,12 +87,6 @@ static void WriteNumber(NORMTYPE *nbr)
    if (nbr->digits == 0) {
       WChar(' ');
       WChar('0');
-      // if (idx < 10) {
-      //    put_register(idx, " 0");
-      // }
-      // else {
-      //    put_stack(idx-10, " 0");
-      // }
       return;
    }
 
@@ -156,19 +161,6 @@ static void WriteNumber(NORMTYPE *nbr)
       }                             /* Floating Decimal end */
 
    // syslog("%u [%s]\n", get_output_str_len(), get_output_str());
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *            Write Exponent on Screen            *
- *    *                                                *
- *    **************************************************
- */
-static void WExponent(long exponent)
-{
-   WString(" e");
-   WInteger(exponent);
 }
 
 /*

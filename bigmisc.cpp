@@ -535,11 +535,8 @@ int Normalize(int w)
  *    *                                                *
  *    **************************************************
  */
-
-extern int FlipSign(int sign)
-
+int FlipSign(int sign)
 {
-
    if (sign == '-')
       return('+');
 
@@ -547,11 +544,7 @@ extern int FlipSign(int sign)
       return('-');
 
    return(' ');
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1894,6 +1887,82 @@ int move_local_to_work0(void)
 }
 
 //***************************************************************************
+static char getx_output_bfr[MAXNORM+1] ;
+static char getx_digit_bfr[MAXNORM+1] = "";
+static uint getx_digits = 0 ;
+static char getx_sign = ' ' ;
+static bool getx_exponent = false ;
+static char getx_exp_digit_bfr[MAXEXDIGITS+1] = "";
+static uint getx_exp_digits = 0 ;
+static char getx_exp_sign = ' ' ;
+
+static void getx_putc(char chr)
+{
+   if (!getx_exponent) {
+      if (getx_digits > MAXNORM) {
+         return ;
+      }
+      getx_digit_bfr[getx_digits++] = chr ;
+      getx_digit_bfr[getx_digits] = 0 ;
+   }
+   else {
+      if (getx_exp_digits > MAXEXDIGITS) {
+         return ;
+      }
+      getx_exp_digit_bfr[getx_exp_digits++] = chr ;
+      getx_exp_digit_bfr[getx_exp_digits] = 0 ;
+   }
+}
+
+static void getx_backspace(void)
+{
+   if (!getx_exponent) {
+      if (getx_digits == 0) {
+         return ;
+      }
+      getx_digits-- ;
+      getx_digit_bfr[getx_digits] = 0 ;
+      if (getx_digits == 0) {
+         getx_sign = ' ' ;
+      }
+   }
+   else {
+      if (getx_exp_digits == 0) {
+         return ;
+      }
+      getx_exp_digits-- ;
+      getx_exp_digit_bfr[getx_exp_digits] = 0 ;
+   }
+}
+
+static void getx_build_output_str(void)
+{
+   if (getx_exponent) {
+      sprintf(getx_output_bfr, "%c%s e%c%s", getx_sign, getx_digit_bfr, getx_exp_sign, getx_exp_digit_bfr);
+   }
+   else {
+      sprintf(getx_output_bfr, "%c%s", getx_sign, getx_digit_bfr);
+   }
+   // syslog("ostr: [%s]\n", getx_output_bfr);
+}
+
+static char *getx_get_output_str(void)
+{
+   return getx_output_bfr ;
+}
+
+void getx_clear_output_str(void)
+{
+   getx_digit_bfr[0] = 0;
+   getx_digits = 0 ;
+   getx_sign = ' ' ;
+   getx_exponent = false ;
+   getx_exp_digit_bfr[0] = 0;
+   getx_exp_digits = 0 ;
+   getx_exp_sign = ' ' ;
+}
+
+//***************************************************************************
 //  This returns FALSE only on ESCAPE
 //***************************************************************************
 bool ExtendedGetX(u16 chr)
@@ -1903,193 +1972,204 @@ bool ExtendedGetX(u16 chr)
       return(false);
    }
 
-      /* First digit already entered on first pass */
+   /* First digit already entered on first pass */
 
-      // if (!isascii(chr)) {
-      //    // syslog("GetX: NOT_ASCII  %02X, %c\n", (u8) chr, chr);
-      //    return true ;
-      // }       /* Ignore non ASCII characters */
+   // if (!isascii(chr)) {
+   //    // syslog("GetX: NOT_ASCII  %02X, %c\n", (u8) chr, chr);
+   //    return true ;
+   // }       /* Ignore non ASCII characters */
 
-      //****************************************************
-      //  ******  I N T E G E R   M O D E  ******  
-      //****************************************************
+   //****************************************************
+   //  ******  I N T E G E R   M O D E  ******  
+   //****************************************************
 
-      if (mode == ININT) {
-         // syslog("GetX: %02X, %c\n", (u8) chr, chr);
+   if (mode == ININT) {
+      syslog("GetX [ININT]: %02X, %c\n", (u8) chr, chr);
 
-         if (isdigit(chr)) {                    /* Numeric digit */
-            if (digits < normprec) {
-//                WChar(chr);
-               work[0].man[digits] = chr - '0';
-               digitval += work[0].man[digits];
-               intdigits++;
-               digits++;
-               // syslog("GetX: %c, %X,%d,%d\n", chr, digitval, intdigits, digits);
-               }
-            else
-               ;
-            }
-
-         else if (chr == '.') {                 /* . invokes decimal mode */
+      if (isdigit(chr)) {                    /* Numeric digit */
+         if (digits < normprec) {
+            getx_putc((char) chr);
 //             WChar(chr);
-            decimal = true;
-            mode = INDEC;
+            work[0].man[digits] = chr - '0';
+            digitval += work[0].man[digits];
+            intdigits++;
+            digits++;
+            // syslog("GetX: %c, %X,%d,%d\n", chr, digitval, intdigits, digits);
             }
-
-         else if (chr == 'E') {                 /* E invokes exponent mode, */
-            if (! digits) {
-               // DisplayChar(&row, &col, '1');    /*  if no digits, make it 1, */
-//                WChar('1');
-               work[0].man[digits] = 1;
-               digitval += 1;
-               intdigits++;
-               digits++;
-//                DisplayExpChar(&row, &col, ' ');
-//                DisplayExpChar(&row, &col, 'e');
-               // CurGet(&exprow, &expcol);
-               mode = INEX;
-               }
-            else if (digitval > 0) {            /*  or if non zero already */
-//                DisplayExpChar(&row, &col, ' ');
-//                DisplayExpChar(&row, &col, 'e');
-               // CurGet(&exprow, &expcol);
-               mode = INEX;
-               }
-            }
-
-         else if (chr == 'S') {             /* Reverse mantissa sign */
-            sign = FlipSign(sign);
-            //  just using WChar here, isn't going to work...
-            //  I'm going to need to regenerate output string
-//             if (sign == '+')
-//                WChar(' ');
-//             else
-//                WChar('-');
-            }
-
-         else if (chr == kBSPACE) {           /* Backspace backs up char */
-            if (digits) {
-               // BackSpace(&row, &col);
-//                WChar(' ');
-               digits--;
-               intdigits--;
-               digitval -= work[0].man[digits];
-               work[0].man[digits] = 0;
-               }
-            }
-
-         else                                   /* Bad keystroke */
+         else
             ;
+         }
 
-      }  /* End integer part */
+      else if (chr == '.') {                 /* . invokes decimal mode */
+//          WChar(chr);
+            getx_putc((char) chr);
+         decimal = true;
+         mode = INDEC;
+         }
 
-      //****************************************************
-      /*  ******  D E C I M A L   M O D E  ******  */
-      //****************************************************
-      else if (mode == INDEC) {
+      else if (chr == 'E') {                 /* E invokes exponent mode, */
+         if (! digits) {
+            // DisplayChar(&row, &col, '1');    /*  if no digits, make it 1, */
+//             WChar('1');
+            getx_putc((char) '1');
+            work[0].man[digits] = 1;
+            digitval += 1;
+            intdigits++;
+            digits++;
+//             DisplayExpChar(&row, &col, ' ');
+//             DisplayExpChar(&row, &col, 'e');
+            // CurGet(&exprow, &expcol);
+         }
+         else if (digitval > 0) {            /*  or if non zero already */
+//             DisplayExpChar(&row, &col, ' ');
+//             DisplayExpChar(&row, &col, 'e');
+            // WChar(' ');
+            // WChar('e');
+         }
+         mode = INEX;
+         getx_exponent = true ;
+      }
 
-         if (isdigit(chr)) {                    /* Numeric digit */
-            if (digits < normprec) {
-//                DisplayChar(&row, &col, chr);
-               work[0].man[digits] = chr - '0';
-               digitval += work[0].man[digits];
-               decdigits++;
-               digits++;
-               }
-            else {
-               }
-            }
-
-         else if (chr == 'E') {                 /* E invokes exponent mode     */
-            if (digitval > 0) {                 /*  if non zero digits entered */
-//                DisplayExpChar(&row, &col, ' ');
-//                DisplayExpChar(&row, &col, 'e');
-               // CurGet(&exprow, &expcol);
-               mode = INEX;
-               }
-            }
-
-         else if (chr == CHGSIGN) {             /* Reverse mantissa sign */
-            sign = FlipSign(sign);
-//             if (sign == '+')
-//                WChar(' ');
-//             else
-//                WChar('-');
-            }
-
-         else if (chr == BACKSPACE) {           /* Backspace backs up char */
+      else if (chr == ks) {             /* Reverse mantissa sign */
+         sign = FlipSign(sign);
+         getx_sign = (getx_sign == '-') ? ' ' : '-' ;
+         //  just using WChar here, isn't going to work...
+         //  I'm going to need to regenerate output string
+//          if (sign == '+')
 //             WChar(' ');
+//          else
+//             WChar('-');
+         }
 
-            if (decdigits) {           /* Decimal digits, stay decimal mode */
-               digits--;
-               decdigits--;
-               digitval -= work[0].man[digits];
-               work[0].man[digits] = 0;
-               }
+      else if (chr == kBSPACE) {           /* Backspace backs up char */
+         if (digits) {
+            // BackSpace(&row, &col);
+//             WChar(' ');
+            digits--;
+            intdigits--;
+            digitval -= work[0].man[digits];
+            work[0].man[digits] = 0;
+         }
+         getx_backspace();
+      }
+      else                                   /* Bad keystroke */
+         ;
 
-            else {
-               decimal = false;        /* Wiped out decimal point */
-               mode = ININT;           /* No digits, back in integer mode */
-               }
+   }  /* End integer part */
+
+   //****************************************************
+   /*  ******  D E C I M A L   M O D E  ******  */
+   //****************************************************
+   else if (mode == INDEC) {
+      syslog("GetX [INDEC]: %02X, %c\n", (u8) chr, chr);
+
+      if (isdigit(chr)) {                    /* Numeric digit */
+         if (digits < normprec) {
+//             DisplayChar(&row, &col, chr);
+            work[0].man[digits] = chr - '0';
+            digitval += work[0].man[digits];
+            decdigits++;
+            digits++;
+            }
+         else {
+            }
+         }
+
+      else if (chr == 'E') {                 /* E invokes exponent mode     */
+         if (digitval > 0) {                 /*  if non zero digits entered */
+//             DisplayExpChar(&row, &col, ' ');
+//             DisplayExpChar(&row, &col, 'e');
+            // CurGet(&exprow, &expcol);
+            mode = INEX;
+            }
+         }
+
+      else if (chr == CHGSIGN) {             /* Reverse mantissa sign */
+         sign = FlipSign(sign);
+//          if (sign == '+')
+//             WChar(' ');
+//          else
+//             WChar('-');
+         }
+
+      else if (chr == kBSPACE) {           /* Backspace backs up char */
+//          WChar(' ');
+
+         if (decdigits) {           /* Decimal digits, stay decimal mode */
+            digits--;
+            decdigits--;
+            digitval -= work[0].man[digits];
+            work[0].man[digits] = 0;
             }
 
-         else                                   /* Bad keystroke */
-            ;
-
-      }  /* End decimal part  */
-
-      //****************************************************
-      /*  ******  E X P O N E N T   M O D E  ******  */
-      //****************************************************
-      else {   /* mode == INEXP */
-
-         if (isdigit(chr)) {                    /* numeric digit */
-            if (exdigits < MAXEXDIGITS) {
-               exponent = (exponent * 10L) + (long)(chr - '0');
-//                DisplayExpChar(&row, &col, chr);
-               exdigits++;
-               }
-            else {
-               }
+         else {
+            decimal = false;        /* Wiped out decimal point */
+            mode = ININT;           /* No digits, back in integer mode */
             }
+         }
 
-         else if (chr == CHGSIGN) {             /* Sign ok if first char */
-               expsign = FlipSign(expsign);
-//                DisplayExp(&row, &col, row, col, expsign, exponent);
-               }
+      else                                   /* Bad keystroke */
+         ;
 
-         else if (chr == BACKSPACE) {           /* Backspace backs up char */
-//             BackSpaceExp(&row, &col);
+   }  /* End decimal part  */
 
-            if (exdigits) {            /* Exdigits means more exp to left */
-               exdigits--;             /* Back out latest digits */
-               exponent /= 10L;
-               }
+   //****************************************************
+   /*  ******  E X P O N E N T   M O D E  ******  */
+   //****************************************************
+   else {   /* mode == INEXP */
+      syslog("GetX [INEXP]: %02X, %c; exdigits: %u\n", (u8) chr, chr, exdigits);
 
-            else if (expsign == '-')    /* If sign entered, its gone now */
-               expsign = '+';
-
-            else {
-//                BackSpaceExp(&row, &col);  /* Must have been " e", dump space */
-
-               if (decdigits || decimal)  /* If decimal digits or decimal */
-                  mode = INDEC;           /*  point entered, decimal mode */
-               else
-                  mode = ININT;           /*  else must be integer part */
-               }
+      if (isdigit(chr)) {                    /* numeric digit */
+         if (exdigits < MAXEXDIGITS) {
+            exponent = (exponent * 10L) + (long)(chr - '0');
+//             DisplayExpChar(&row, &col, chr);
+            exdigits++;
+            getx_putc((char) chr);
             }
+         else {
+            }
+         }
 
-         else                                   /* Bad keystroke */
-            ;
+      else if (chr == ks) {             /* Sign ok if first char */
+          expsign = FlipSign(expsign);
+          getx_exp_sign = (getx_exp_sign == '-') ? ' ' : '-' ;
+//        DisplayExp(&row, &col, row, col, expsign, exponent);
+      }
 
-      }  /* if mode == INEX */
+      else if (chr == kBSPACE) {           /* Backspace backs up char */
+
+         if (exdigits) {            /* Exdigits means more exp to left */
+            exdigits--;             /* Back out latest digits */
+            exponent /= 10L;
+            if (getx_exp_digits > 0) {
+   //          BackSpaceExp(&row, &col);
+               getx_backspace();
+            }
+         }
+
+         else if (expsign == '-') {   /* If sign entered, its gone now */
+            expsign = '+';
+            getx_exp_sign = ' ' ;
+         }
+
+         else {
+            getx_exponent = false ;
+//             BackSpaceExp(&row, &col);  /* Must have been " e", dump space */
+            if (decdigits || decimal)  /* If decimal digits or decimal */
+               mode = INDEC;           /*  point entered, decimal mode */
+            else
+               mode = ININT;           /*  else must be integer part */
+         }
+      }
+
+      else                                   /* Bad keystroke */
+         ;
+
+   }  /* if mode == INEX */
 
 /*  ******  END  C H A R A C T E R   W A I T   L O O P  ******  */
-   //  try to update temp regX display
-   move_local_to_work0();
-   MoveWorkStack(0, 0);
-   WriteStack(0); //  generate output string
-   put_stack(0, get_output_str());
+   getx_build_output_str();
+   put_stack(0, getx_get_output_str());
    
    return true ;
 

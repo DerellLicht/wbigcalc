@@ -142,6 +142,9 @@ void reset_output_str(void);
 char *get_output_str(void);
 uint get_output_str_len(void);
 
+//  bigmisc.cpp
+void getx_clear_output_str(void);
+
 //*********************************************************************************
 //  manage keyboard state machine
 //  The DOS/console version of BigCalc, had nested keyboard loops for 
