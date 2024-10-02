@@ -1652,16 +1652,17 @@ int dos_main(u16 inchr)
          case (MULTIPLY):     Multiply(); break;   /* Multiply Y * X */
          case (DIVIDE):       Divide();   break;   /* Divide Y / X */
          
-         case (ROLLDOWN):     RollDown();  break;        /* Roll stack down */
-         case (ROLLUP):       RollUp();  break;          /* Roll stack up */
          case (SCINOT):       SciNotation();  break;     /* Use Scientific Notation */
          case (GROUPSIZE):    GroupSize();  break;       /* Toggle Group Size (3/5) */
-         
-         case (HELP):
+         case (ROLLUP):       RollUp();  break;          /* Roll stack up */
+         case (ROLLDOWN):     RollDown();  break;        /* Roll stack down */
+         case (LASTX):        RecallLastX(); break;      /* Recall Last X */
+
+         //  button row 2         
+         case (HELP):   
+            MessageBox(NULL, "Help file is not yet ready", NULL, MB_OK | MB_ICONEXCLAMATION);
             //  eventually, this will load a Windows help file
-            // HelpScreen();        /* Help Screen */
             break;
-            
          case (POWER):        Power();       break;         /* Power (Y^X) */
          case (SQUAREROOT):   SquareRoot();  break;        /* Square Root X */
          case (SQUARE):       Square();      break;      /* Square X */
@@ -1669,19 +1670,21 @@ int dos_main(u16 inchr)
          case (FACTORIAL):    Factorial();   break;         /* Factorial X */
          case (INTEGER):      IntegerPart(); break;       /* Integer Part X */
          case (FRACTION):     FractionPart();   break;      /* Fraction Part X */
-         case (SIN):          Sin();      break;   /* Sine X */
-         case (ARCSIN):       ArcSin();   break;            /* ArcSine X */
-         case (COS):          Cos();    break;             /* Cosine X */
-         case (ARCCOS):       ArcCos(); break;           /* ArcCosine X */
-         case (TAN):          Tan();    break;           /* Tangent X */
-         case (ARCTAN):       ArcTan(); break;           /* ArcTangent X */
-         case (LOG):          Log(); break;              /* Common Log X */
-         case (EXP10):        Exp10();  break;           /* Exponent 10^X */
-         case (LN):           Ln();  break;              /* Natural Log X */
-         case (EXPE):         ExpE(); break;             /* Exponent e^X */
          case (RECALLPI):     RecallPi(); break;         /* Recall pi */
          case (RECALLE):      RecallE();  break;         /* Recall e */
-         case (LASTX):        RecallLastX(); break;      /* Recall Last X */
+
+         //  button row 3         
+         case (SIN   ):       Sin();      break;   /* Sine X */
+         case (ARCSIN):       ArcSin();   break;            /* ArcSine X */
+         case (COS   ):       Cos();    break;             /* Cosine X */
+         case (ARCCOS):       ArcCos(); break;           /* ArcCosine X */
+         case (TAN   ):       Tan();    break;           /* Tangent X */
+         case (ARCTAN):       ArcTan(); break;           /* ArcTangent X */
+         case (LOG   ):       Log(); break;              /* Common Log X */
+         case (EXP10 ):       Exp10();  break;           /* Exponent 10^X */
+         case (LN    ):       Ln();  break;              /* Natural Log X */
+         case (EXPE  ):       ExpE(); break;             /* Exponent e^X */
+         
          case (CHGSIGN):      ChangeSign();  break;      /* Change sign X */
          case (MENUROLL):     MenuRoll();   break;       /* Roll Function Key Menu */
          case (STOREX):       StoreX();  break;          /* Store X in register (prompt for which) */

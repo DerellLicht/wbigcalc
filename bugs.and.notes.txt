@@ -3,6 +3,9 @@ Last Update: 10/02/24 11:44
 ==============================================================
 
 > continue adding button functions to project
+All button functions need the same "clean up X" code as Add() etc required
+
+> LastX doesn't work
 
 > finish eliminating GetChar() from the project
 

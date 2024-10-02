@@ -100,6 +100,7 @@
 #define  IDB_GRP35         403
 #define  IDB_KBD_UP        404
 #define  IDB_KBD_DOWN      405
+#define  IDB_LAST_X        406
 
 //  button row 2
 #define  IDB_HELP          410
