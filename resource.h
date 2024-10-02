@@ -92,11 +92,35 @@
 #define  IDB_KBD_subtract  327
 #define  IDB_KBD_mult      328
 #define  IDB_KBD_divide    329
-#define  IDB_KBD_UP        330
-#define  IDB_KBD_DOWN      331
 
-#define  IDB_CLRS      400
-#define  IDB_CLRR      401
-#define  IDB_FLTSCI    402
-#define  IDB_GRP35     403
+//  button row 1
+#define  IDB_CLRS          400
+#define  IDB_CLRR          401
+#define  IDB_FLTSCI        402
+#define  IDB_GRP35         403
+#define  IDB_KBD_UP        404
+#define  IDB_KBD_DOWN      405
 
+//  button row 2
+#define  IDB_HELP          410
+#define  IDB_Y2X           411
+#define  IDB_SQRT          412
+#define  IDB_XSQRD         413
+#define  IDB_INVX          414
+#define  IDB_XFACT         415
+#define  IDB_INT           416
+#define  IDB_FRAC          417
+#define  IDB_PI            418
+#define  IDB_ECONST        419
+
+//  button row 3
+#define  IDB_SINX          420
+#define  IDB_ASINX         421
+#define  IDB_COSX          422
+#define  IDB_ACOSX         423
+#define  IDB_TANX          424
+#define  IDB_ATANX         425
+#define  IDB_LOGX          426
+#define  IDB_102X          427
+#define  IDB_LNX           428
+#define  IDB_E2X           429

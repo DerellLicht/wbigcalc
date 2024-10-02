@@ -154,6 +154,7 @@ BEGIN
    
 #define  BTN_ARRAY_OFS  (ST_Y + 100)
 
+//  button row 1
 #define  XB1      PI_X
 #define  DXB      40
 #define  YB1      BTN_ARRAY_OFS
@@ -163,6 +164,10 @@ BEGIN
 #define  XB4      (XB3+DXB+X_GAP)
 #define  XB5      (XB4+DXB+X_GAP)
 #define  XB6      (XB5+DXB+X_GAP)
+#define  XB7      (XB6+DXB+X_GAP)
+#define  XB8      (XB7+DXB+X_GAP)
+#define  XB9      (XB8+DXB+X_GAP)
+#define  XB0      (XB9+DXB+X_GAP)
    //  button array
    PUSHBUTTON      "Clear Stack",   IDB_CLRS,     XB1,  YB1, DXB,  12
    PUSHBUTTON      "Clear Regs",    IDB_CLRR,     XB2,  YB1, DXB,  12
@@ -170,6 +175,35 @@ BEGIN
    PUSHBUTTON      "Group 3/5",     IDB_GRP35,    XB4,  YB1, DXB,  12
    PUSHBUTTON      "Roll Up",       IDB_KBD_UP,   XB5,  YB1, DXB,  12
    PUSHBUTTON      "Roll Down",     IDB_KBD_DOWN, XB6,  YB1, DXB,  12
+
+//  button row 2
+#define  YB2      (YB1 + 16)
+   //  button array
+   PUSHBUTTON      "Help",    IDB_HELP,   XB1,  YB2, DXB,  12
+   PUSHBUTTON      "Y^X",     IDB_Y2X,    XB2,  YB2, DXB,  12
+   PUSHBUTTON      "Sqrt(X)", IDB_SQRT,   XB3,  YB2, DXB,  12
+   PUSHBUTTON      "X*X",     IDB_XSQRD,  XB4,  YB2, DXB,  12
+   PUSHBUTTON      "1/X",     IDB_INVX,   XB5,  YB2, DXB,  12
+   PUSHBUTTON      "X!",      IDB_XFACT,  XB6,  YB2, DXB,  12
+   PUSHBUTTON      "INT",     IDB_INT,    XB7,  YB2, DXB,  12
+   PUSHBUTTON      "FRAC",    IDB_FRAC,   XB8,  YB2, DXB,  12
+   PUSHBUTTON      "Pi",      IDB_PI,     XB9,  YB2, DXB,  12
+   PUSHBUTTON      "e",       IDB_ECONST, XB0,  YB2, DXB,  12
+
+//  button row 2
+#define  YB3      (YB2 + 16)
+   //  button array
+   PUSHBUTTON      "Sin(X)",  IDB_SINX,   XB1,  YB3, DXB,  12
+   PUSHBUTTON      "Asin(X)", IDB_ASINX,  XB2,  YB3, DXB,  12
+   PUSHBUTTON      "Cos(X)",  IDB_COSX,   XB3,  YB3, DXB,  12
+   PUSHBUTTON      "ACos(X)", IDB_ACOSX,  XB4,  YB3, DXB,  12
+   PUSHBUTTON      "Tan(X)",  IDB_TANX,   XB5,  YB3, DXB,  12
+   PUSHBUTTON      "Atan(X)", IDB_ATANX,  XB6,  YB3, DXB,  12
+   PUSHBUTTON      "Log(X)",  IDB_LOGX,   XB7,  YB3, DXB,  12
+   PUSHBUTTON      "10^X",    IDB_102X,   XB8,  YB3, DXB,  12
+   PUSHBUTTON      "Ln(X)",   IDB_LNX,    XB9,  YB3, DXB,  12
+   PUSHBUTTON      "e^X",     IDB_E2X,    XB0,  YB3, DXB,  12
+
    
 END
 
