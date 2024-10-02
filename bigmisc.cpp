@@ -1369,10 +1369,10 @@ void dump_norm_reg(NORMTYPE *nptr, char *msg)
    else {
       slen = sprintf(outmsg, "%s: %ld,%c,%d: ", msg, nptr->exp, nptr->sign, nptr->digits);
       for (idx=0; idx<nptr->digits; idx++) {
-         sprintf(&outmsg[slen], "%d,", nptr->man[idx]);
+         slen += sprintf(&outmsg[slen], "%d,", nptr->man[idx]);
       }
    }
-   syslog("DNR: [%s]\n");
+   syslog("DNR: [%s]\n", outmsg);
 }  //lint !e843
 
 //lint -esym(714, dump_work_reg)
@@ -1392,7 +1392,7 @@ void dump_work_reg(WORKTYPE *nptr, char *msg)
    else {
       slen = sprintf(outmsg, "%s: %ld,%c,%d: ", msg, nptr->exp, nptr->sign, nptr->digits);
       for (idx=0; idx<nptr->digits; idx++) {
-         sprintf(&outmsg[slen], "%d,", nptr->man[idx]);
+         slen += sprintf(&outmsg[slen], "%d,", nptr->man[idx]);
       }
    }
    syslog("DWR: [%s]\n", outmsg);
@@ -1415,7 +1415,7 @@ void dump_stack(WORKTYPE *nptr, char *msg)
    else {
       slen = sprintf(outmsg, "%s: %ld,%c,%d: ", msg, nptr->exp, nptr->sign, nptr->digits);
       for (idx=0; idx<nptr->digits; idx++) {
-         sprintf(&outmsg[slen], "%d,", nptr->man[idx]);
+         slen += sprintf(&outmsg[slen], "%d,", nptr->man[idx]);
       }
    }
    syslog("DStack: [%s]\n", outmsg);
@@ -1984,7 +1984,7 @@ bool ExtendedGetX(u16 chr)
    //****************************************************
 
    if (mode == ININT) {
-      syslog("GetX [ININT]: %02X, %c\n", (u8) chr, chr);
+      // syslog("GetX [ININT]: %02X, %c\n", (u8) chr, chr);
 
       if (isdigit(chr)) {                    /* Numeric digit */
          if (digits < normprec) {
@@ -2055,7 +2055,7 @@ bool ExtendedGetX(u16 chr)
    /*  ******  D E C I M A L   M O D E  ******  */
    //****************************************************
    else if (mode == INDEC) {
-      syslog("GetX [INDEC]: %02X, %c\n", (u8) chr, chr);
+      // syslog("GetX [INDEC]: %02X, %c\n", (u8) chr, chr);
 
       if (isdigit(chr)) {                    /* Numeric digit */
          if (digits < normprec) {
@@ -2109,7 +2109,7 @@ bool ExtendedGetX(u16 chr)
    /*  ******  E X P O N E N T   M O D E  ******  */
    //****************************************************
    else {   /* mode == INEXP */
-      syslog("GetX [INEXP]: %02X, %c; exdigits: %u\n", (u8) chr, chr, exdigits);
+      // syslog("GetX [INEXP]: %02X, %c; exdigits: %u\n", (u8) chr, chr, exdigits);
 
       if (isdigit(chr)) {                    /* numeric digit */
          if (exdigits < MAXEXDIGITS) {
@@ -2164,6 +2164,5 @@ bool ExtendedGetX(u16 chr)
    put_stack(0, getx_get_output_str());
    
    return true ;
-
 }
 

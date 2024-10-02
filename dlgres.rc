@@ -30,6 +30,10 @@ BEGIN
     ".",       IDB_KBD_DOT,       ASCII, NOINVERT
     "e",       IDB_KBD_e  ,       ASCII, NOINVERT
     "s",       IDB_KBD_s  ,       ASCII, NOINVERT
+    "+",       IDB_KBD_add,       ASCII, NOINVERT
+    "-",       IDB_KBD_subtract,  ASCII, NOINVERT
+    "*",       IDB_KBD_mult,      ASCII, NOINVERT
+    "/",       IDB_KBD_divide,    ASCII, NOINVERT
     VK_BACK,   IDB_KBD_BKSPC,     VIRTKEY, NOINVERT
     VK_RETURN, IDB_KBD_RETURN,    VIRTKEY, NOINVERT
     VK_ESCAPE, IDB_KBD_ESCAPE,    VIRTKEY, NOINVERT

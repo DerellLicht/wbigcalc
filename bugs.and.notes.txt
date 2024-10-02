@@ -1,11 +1,8 @@
 Bugs in Win32 port of BigCalc
-Last Update: 10/01/24 11:44
+Last Update: 10/02/24 11:44
 ==============================================================
 
-> GetX -> Enter -> WriteNumber not working with exponents
-  Actually, I just didn't realize how bigcalc handles exponents...
-  
-> implement + - * /  
+> continue adding button functions to project
 
 > finish eliminating GetChar() from the project
 

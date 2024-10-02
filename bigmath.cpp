@@ -57,17 +57,13 @@ static  int ResolveAngle(void);
  *    *                                                *
  *    **************************************************
  */
-
 extern int ExtendedAdd(void)
-
 {
-
    int a, b;                       /* operand indexes           */
    long shift;                     /* digit allignment shift    */
    WORKDIGIT *ax, *ar, *cx, *ct;   /* ar = a-right, ct = c-temp */
 
-
-         /* Special Cases */
+   /* Special Cases */
 
    if (! work[0].digits) {             /* work[0] zero, return work[1] */
       MoveWorkWork(1, 2);
@@ -116,7 +112,6 @@ extern int ExtendedAdd(void)
    ar = &work[a].man[work[a].digits - 1];
    cx = &work[2].man[shift + 1];
 
-
    /*
     *    **************************************************
     *    *                                                *
@@ -136,11 +131,7 @@ extern int ExtendedAdd(void)
       } while (ax <= ar);
 
    return(Normalize(2));
-
 }
-
-
-
 
 /*
  *    **************************************************

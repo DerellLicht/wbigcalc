@@ -159,6 +159,8 @@ IDB_CLEAR_Z,
 IDB_CLEAR_T,  
 IDB_IDB_CLRS, 
 IDB_IDB_CLRR, 
+IDB_IDB_FLTSCI,
+IDB_IDB_GRP35,
 0 } ;
 
 void show_hide_buttons(bool show)
@@ -289,6 +291,19 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
                keyboard_state_handler(kESC);   
                break ;
             }
+            break ;
+            
+         case IDB_KBD_add:
+            dos_main(ADD);
+            break ;
+         case IDB_KBD_subtract:
+            dos_main(SUBTRACT);
+            break ;
+         case IDB_KBD_mult:
+            dos_main(MULTIPLY);
+            break ;
+         case IDB_KBD_divide:
+            dos_main(DIVIDE);
             break ;
             
          //  button operations

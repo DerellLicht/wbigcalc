@@ -86,6 +86,10 @@
 #define  IDB_KBD_BKSPC     323
 #define  IDB_KBD_RETURN    324
 #define  IDB_KBD_ESCAPE    325
+#define  IDB_KBD_add       326
+#define  IDB_KBD_subtract  327
+#define  IDB_KBD_mult      328
+#define  IDB_KBD_divide    329
 
 #define  IDB_IDB_CLRS      400
 #define  IDB_IDB_CLRR      401

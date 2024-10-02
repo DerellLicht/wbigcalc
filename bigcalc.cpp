@@ -44,6 +44,8 @@
  *    **************************************************
  */
 
+static void restore_stack0(void);
+
 static  void Add(void);
 static  void Subtract(void);
 static  void Multiply(void);
@@ -202,13 +204,15 @@ static int GetChar(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void Add(void)
-
 {
-
+   restore_stack0();
+   // dump_norm_reg(&stack[0], "stack0");
+   // dump_norm_reg(&stack[1], "stack1");
    MoveStackWork(0, 0);
    MoveStackWork(1, 1);
+   // dump_work_reg(&work[0], "work0");
+   // dump_work_reg(&work[1], "work1");
 
    if (ExtendedAdd() ) {
       lastx = stack[0];
@@ -216,12 +220,8 @@ static void Add(void)
       MoveWorkStack(2, 0);
       WriteStack(0, 2);
       stacklift = TRUE;
-      }
-
+   }
 }
-
-
-
 
 /*
  *    **************************************************
@@ -230,11 +230,9 @@ static void Add(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void Subtract(void)
-
 {
-
+   restore_stack0();
    MoveStackWork(0, 0);
    MoveStackWork(1, 1);
 
@@ -244,12 +242,8 @@ static void Subtract(void)
       MoveWorkStack(2, 0);
       WriteStack(0, 2);
       stacklift = TRUE;
-      }
-
+   }
 }
-
-
-
 
 /*
  *    **************************************************
@@ -258,13 +252,11 @@ static void Subtract(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void Multiply(void)
-
 {
-
    MessageEsc("Multiplying");
 
+   restore_stack0();
    MoveStackWork(0, 0);
    MoveStackWork(1, 1);
 
@@ -274,12 +266,8 @@ static void Multiply(void)
       MoveWorkStack(2, 0);
       WriteStack(0, 2);
       stacklift = TRUE;
-      }
-
+   }
 }
-
-
-
 
 /*
  *    **************************************************
@@ -288,13 +276,11 @@ static void Multiply(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void Divide(void)
-
 {
-
    MessageEsc("Dividing");
 
+   restore_stack0();
    MoveStackWork(0, 0);
    MoveStackWork(1, 1);
 
@@ -304,12 +290,8 @@ static void Divide(void)
       MoveWorkStack(2, 0);
       WriteStack(0, 2);
       stacklift = TRUE;
-      }
-
+   }
 }
-
-
-
 
 /*
  *    **************************************************
@@ -883,26 +865,18 @@ static void ChangeSign(void)
  */
 static void GroupSize(void)
 {
-   // BOOLEAN flag;
-
-   // if (groupsize)             /* First time thru groupsize == 0 */
-   //    flag = TRUE;
-   // else
-   //    flag = FALSE;
-
    if (groupsize == 5) {
       groupsize = 3;
       // minfloatprn = (long)normprec - 1077L;
       // maxfloatprn = 1080L;
-      }
+   }
    else {
       groupsize = 5;
       // minfloatprn = (long)normprec - 1195L;
       // maxfloatprn = 1200L;
-      }
+   }
 
-   // if (flag)
-      show_status_info();
+   show_status_info();
 }
 
 /*
@@ -1547,6 +1521,17 @@ static void ExitGetXState(bool success)
    keyboard_state_set(KBD_STATE_DEFAULT);
 }
 
+//***********************************************************************
+static void restore_stack0(void)
+{
+   if (keyboard_state_get() == KBD_STATE_GETX) {
+      move_local_to_work0();
+      MoveWorkStack(0, 0);
+      Message("");
+      keyboard_state_set(KBD_STATE_DEFAULT);
+   }
+}
+
 /*
  *    **************************************************
  *    *                                                *
@@ -1659,14 +1644,16 @@ int dos_main(u16 inchr)
          case (kESC):
             Enter(false);   break ; //  executed from dos_main()
          
-         case (ADD):          Add();      break;           /* Add Y + X */
-         case (SUBTRACT):     Subtract(); break;         /* Subtract Y - X */
-         case (MULTIPLY):     Multiply(); break;         /* Multiply Y * X */
-         case (DIVIDE):       Divide();   break;         /* Divide Y / X */
+         case (ADD):          Add();      break;   /* Add Y + X */
+         case (SUBTRACT):     Subtract(); break;   /* Subtract Y - X */
+         case (MULTIPLY):     Multiply(); break;   /* Multiply Y * X */
+         case (DIVIDE):       Divide();   break;   /* Divide Y / X */
+         
          case (HELP):
             //  eventually, this will load a Windows help file
             // HelpScreen();        /* Help Screen */
             break;
+            
          case (POWER):        Power();       break;         /* Power (Y^X) */
          case (SQUAREROOT):   SquareRoot();  break;        /* Square Root X */
          case (SQUARE):       Square();      break;      /* Square X */
