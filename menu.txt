@@ -1,0 +1,33 @@
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *                On Screen Menu                  *
+ *    *                                                *
+ *    **************************************************
+ */
+void OnScreenMenu(void)
+{
+   WriteAt(20, 1, "0-9.E  Number   + >Add        X >Xchg X R   V >View full");
+   WriteAt(21, 1, "    S  ChgSign  - >Sub   Lft/Rt >Xchg X Y   F >Float/Sci");
+   WriteAt(22, 1, "BkSpc  Clear X  * >Mul   Up/Dwn >Roll UpDn  G >Group 3/5");
+   WriteAt(23, 1, "Enter >Enter    / >Div     PgUp >Store      ");
+   WriteAt(24, 1, "    L >Last X   C >Clear   PgDn >Recall     ");
+
+   WriteAt(19, 58, "(M rotates Fn key menu)");
+
+   if (! menunbr) {
+      WriteAt(20, 61, "F1 >Help  F2 >Y^X");
+      WriteAt(21, 61, "F3 >ûX    F4 >Xý");
+      WriteAt(22, 61, "F5 >1/X   F6 >X!");
+      WriteAt(23, 61, "F7 >INT   F8 >FRAC");
+      WriteAt(24, 61, "F9 >ã     F0 >e");
+      }
+   else {
+      WriteAt(20, 60, "^F1 >sinX ^F2 >asinX");
+      WriteAt(21, 60, "^F3 >cosX ^F4 >acosX");
+      WriteAt(22, 60, "^F5 >tanX ^F6 >atanX");
+      WriteAt(23, 60, "^F7 >logX ^F8 >10^X");
+      WriteAt(24, 60, "^F9 >lnx  ^F0 >e^X");
+      }
+}
+

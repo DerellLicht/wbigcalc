@@ -102,8 +102,8 @@ extern int
    normprec,               /* Normal precision  */
    compprec,               /* Compute precision */
    workprec,               /* Work precision    */
-   groupsize,              /* Digit group size  */
-   menunbr;                /* Menu number       */
+   groupsize;              /* Digit group size  */
+   // menunbr;                /* Menu number       */
    
 // extern long
 //    minfloatprn,            /* Min exp for float */
@@ -249,12 +249,9 @@ void dump_stack(WORKTYPE *nptr, char *msg);
  *    **************************************************
  */
 
-extern  int GetChar(void);
-
 extern  void WChar(int chr);
 extern  void WString(char *str);
 extern  void WInteger(long integer);
-extern  void WriteAt(int row,int col,char *str);
 extern  void Message(char *msg);
 extern  void MessageWait(char *msg);
 extern  void MessageEsc(char *msg);
@@ -353,6 +350,5 @@ extern  void ArgumentNotInteger(void);
 extern  void ArgumentInvalid(void);
 extern  void MemoryError(void);
 
-extern  void OnScreenMenu(void);
 extern  void show_status_info(void);
 extern  void WorkScreen(void);

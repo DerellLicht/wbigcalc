@@ -26,8 +26,6 @@
  */
 
 #include <windows.h>
-#include <conio.h>
-#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -39,91 +37,12 @@
 /*
  *    **************************************************
  *    *                                                *
- *    *                   Constants                    *
- *    *                                                *
- *    **************************************************
- */
-
-// #define CLOCKFREQ       ((unsigned)1193180L) /* Timer frequency        */
-// #define SPEAKERMODE     ((unsigned)0xB6)     /* Set timer for speaker  */
-// #define TIMERMODEPORT   ((unsigned)0x43)     /* Timer mode port        */
-// #define FREQPORT        ((unsigned)0x42)     /* Frequency-control port */
-// #define SPEAKERPORT     ((unsigned)0x61)     /* Speaker port           */
-// #define SPEAKERON       ((unsigned)0x03)     /* Speaker-on bits        */
-// #define FREQ            ((unsigned)400)      /* A frequency            */
-// #define CFREQ           CLOCKFREQ / FREQ     /* Division frequency     */
-
-// #define MONOCOLOR       0x07                 /* Grey on black          */
-// #define COLORCOLOR      0x17                 /* White on blue          */
-// #define MONOSCREEN      0xB0000000L          /* Mono buffer address    */
-// #define COLORSCREEN     0xB8000000L          /* Color buffer address   */
-
-/*
- *    **************************************************
- *    *                                                *
  *    *            Source Local Variables              *
  *    *                                                *
  *    **************************************************
  */
 
 // static char color = 0;                    /* Screen Color    */
-
-//**********************************************************
-//  conio.cpp functions
-//**********************************************************
-
-//**********************************************************
-static void dprints(unsigned row, unsigned col, const char* outstr)
-   {
-   // dgotoxy(col, row) ;
-   // dputs(outstr) ;
-   }   
-
-/*
- *    **************************************************
- *    *                                                *
- *    *              Keyboard Routines                 *
- *    *                                                *
- *    **************************************************
- */
-
-/*
- *    **************************************************
- *    *                                                *
- *    *         Get decoded character from kbd         *
- *    *                                                *
- *    **************************************************
- */
-extern int GetChar(void)
-{
-   int chr;
-
-   chr = getch();
-   if (chr == 0)
-      chr = 1000 + getch();      /* Non ASCII character */
-   else
-      if (isascii(chr) )
-         chr = toupper(chr);
-
-   return(chr);
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *         Return character if key pressed        *
- Only used to interrupt long math operations,
- But not usable in Windows program
- *    *                                                *
- *    **************************************************
- */
-// int KeyPressed(void)
-// {
-//    if (kbhit())
-//       return(GetChar());
-//    else
-//       return(0);
-// }
 
 //***************************************************************************
 #define  MAX_OUTPUT_STR    1100
@@ -218,47 +137,6 @@ void WInteger(long integer)
    else
       WChar('0');
 }
-
-/*
- *    **************************************************
- *    *                                                *
- *    *       Write String at row, col to Screen       *
- *    *                                                *
- *    **************************************************
- */
-
-void WriteAt(int row, int col, char *str)
-{
-   dprints(row-1, col-1, str) ;
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *     Display Message centered on row line       *
- *    *                                                *
- *    **************************************************
- */
-// static char *spaces80 = 
-//    "                                        "
-//    "                                        " ;
-// void WriteCenter(int row, char *msg)
-// {
-//    dprints(row-1, 0, spaces80) ;
-//    dprints(row-1, ((80 - strlen(msg)) / 2), msg) ;
-// }
-
-/*
- *    **************************************************
- *    *                                                *
- *    *      Display Message centered on 25th line     *
- *    *                                                *
- *    **************************************************
- */
-// void Message(char *msg)
-// {
-//    WriteCenter(25, msg);
-// }
 
 /*
  *    **************************************************

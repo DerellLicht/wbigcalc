@@ -28,6 +28,7 @@
 
 #include <windows.h>
 #include <ctype.h>
+#include <conio.h>   //  getch()
 #include <stdio.h>
 #include <stdlib.h>
 //#include <string.h>
@@ -110,8 +111,8 @@ int
    normprec = 0,           /* Normal precision  */
    compprec = 0,           /* Compute precision */
    workprec = 0,           /* Work precision    */
-   groupsize = 0,          /* Digit group size  */
-   menunbr = 0;            /* Menu number       */
+   groupsize = 0;          /* Digit group size  */
+   // menunbr = 0;            /* Menu number       */
    
 static int chr = 0;                /* Input Character   */
 
@@ -163,6 +164,25 @@ void Initialize(int argc, char *argv)
 
    GroupSize();                  /* Toggle group size to 5 & set xxxfloatprn */
    WorkScreen();
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *         Get decoded character from kbd         *
+ *    *                                                *
+ *    **************************************************
+ */
+static int GetChar(void)
+{
+   int inchr = getch();
+   if (inchr == 0)
+      inchr = 1000 + getch();      /* Non ASCII character */
+   else
+      if (isascii(inchr) )
+         inchr = toupper(inchr);
+
+   return(inchr);
 }
 
 /*
@@ -894,8 +914,8 @@ static void GroupSize(void)
  */
 static void MenuRoll(void)
 {
-   menunbr = 1 - menunbr;     /* Toggle menunbr 0/1 */
-   OnScreenMenu();
+   // menunbr = 1 - menunbr;     /* Toggle menunbr 0/1 */
+   // OnScreenMenu();
 }
 
 /*

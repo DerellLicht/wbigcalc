@@ -46,7 +46,7 @@ depend:
 wbigcalc.o: keywin32.h resource.h bigcalc.h
 bigcalc.o: resource.h bigcalc.h keywin32.h
 bigmath.o: bigcalc.h
-bigmisc.o: bigcalc.h
+bigmisc.o: keywin32.h bigcalc.h
 bigprint.o: bigcalc.h
 bigio.o: bigcalc.h
 der_libs/common_funcs.o: der_libs/common.h
