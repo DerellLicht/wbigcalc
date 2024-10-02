@@ -69,6 +69,8 @@
 #define  IDS_MSG           301
 #define  IDC_KSTATE        302
 #define  IDS_KSTATE        303
+#define  IDC_KEYS          304
+#define  IDS_KEYS          305
                            
 #define  IDB_KBD_0         310
 #define  IDB_KBD_1         311

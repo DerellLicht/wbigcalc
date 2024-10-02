@@ -120,7 +120,7 @@ static int chr = 0;                /* Input Character   */
 
 bool scinotation = false;    /* Force sci notation if TRUE   */
 
-static BOOLEAN stacklift = TRUE;       /* Lift stack for new X if TRUE */
+static bool stacklift = true;       /* Lift stack for new X if TRUE */
 
 /*
  *    **************************************************
@@ -219,7 +219,7 @@ static void Add(void)
       DropStack();
       MoveWorkStack(2, 0);
       WriteStack(0, 2);
-      stacklift = TRUE;
+      stacklift = true;
    }
 }
 
@@ -241,7 +241,7 @@ static void Subtract(void)
       DropStack();
       MoveWorkStack(2, 0);
       WriteStack(0, 2);
-      stacklift = TRUE;
+      stacklift = true;
    }
 }
 
@@ -265,7 +265,7 @@ static void Multiply(void)
       DropStack();
       MoveWorkStack(2, 0);
       WriteStack(0, 2);
-      stacklift = TRUE;
+      stacklift = true;
    }
 }
 
@@ -289,7 +289,7 @@ static void Divide(void)
       DropStack();
       MoveWorkStack(2, 0);
       WriteStack(0, 2);
-      stacklift = TRUE;
+      stacklift = true;
    }
 }
 
@@ -316,7 +316,7 @@ static void Power(void)
          DropStack();
          MoveWorkStack(2, 0);
          WriteStack(0, 2);
-         stacklift = TRUE;
+         stacklift = true;
          }
       }
 
@@ -344,7 +344,7 @@ static void SquareRoot(void)
       lastx = stack[0];
       MoveWorkStack(2, 0);
       WriteStack(0, 0);
-      stacklift = TRUE;
+      stacklift = true;
       }
 
 }
@@ -373,7 +373,7 @@ static void Square(void)
       lastx = stack[0];
       MoveWorkStack(2, 0);
       WriteStack(0, 0);
-      stacklift = TRUE;
+      stacklift = true;
       }
 
 }
@@ -401,7 +401,7 @@ static void Reciprocal(void)
       lastx = stack[0];
       MoveWorkStack(2, 0);
       WriteStack(0, 0);
-      stacklift = TRUE;
+      stacklift = true;
       }
 
 }
@@ -429,7 +429,7 @@ static void Factorial(void)
       lastx = stack[0];
       MoveWorkStack(2, 0);
       WriteStack(0, 0);
-      stacklift = TRUE;
+      stacklift = true;
       }
 
 }
@@ -455,7 +455,7 @@ static void IntegerPart(void)
       lastx = stack[0];
       MoveWorkStack(0, 0);
       WriteStack(0, 0);
-      stacklift = TRUE;
+      stacklift = true;
       }
 
 }
@@ -481,7 +481,7 @@ static void FractionPart(void)
       lastx = stack[0];
       MoveWorkStack(0, 0);
       WriteStack(0, 0);
-      stacklift = TRUE;
+      stacklift = true;
       }
 
 }
@@ -509,7 +509,7 @@ static void Sin(void)
       lastx = stack[0];
       MoveWorkStack(2, 0);
       WriteStack(0, 0);
-      stacklift = TRUE;
+      stacklift = true;
       }
 
 }
@@ -537,7 +537,7 @@ static void ArcSin(void)
       lastx = stack[0];
       MoveWorkStack(2, 0);
       WriteStack(0, 0);
-      stacklift = TRUE;
+      stacklift = true;
       }
 
 }
@@ -565,7 +565,7 @@ static void Cos(void)
       lastx = stack[0];
       MoveWorkStack(2, 0);
       WriteStack(0, 0);
-      stacklift = TRUE;
+      stacklift = true;
       }
 
 }
@@ -593,7 +593,7 @@ static void ArcCos(void)
       lastx = stack[0];
       MoveWorkStack(2, 0);
       WriteStack(0, 0);
-      stacklift = TRUE;
+      stacklift = true;
       }
 
 }
@@ -621,7 +621,7 @@ static void Tan(void)
       lastx = stack[0];
       MoveWorkStack(2, 0);
       WriteStack(0, 0);
-      stacklift = TRUE;
+      stacklift = true;
       }
 
 }
@@ -649,7 +649,7 @@ static void ArcTan(void)
       lastx = stack[0];
       MoveWorkStack(2, 0);
       WriteStack(0, 0);
-      stacklift = TRUE;
+      stacklift = true;
       }
 
 }
@@ -677,7 +677,7 @@ static void Log(void)
       lastx = stack[0];
       MoveWorkStack(2, 0);
       WriteStack(0, 0);
-      stacklift = TRUE;
+      stacklift = true;
       }
 
 }
@@ -705,7 +705,7 @@ static void Exp10(void)
       lastx = stack[0];
       MoveWorkStack(2, 0);
       WriteStack(0, 0);
-      stacklift = TRUE;
+      stacklift = true;
       }
 
 }
@@ -733,7 +733,7 @@ static void Ln(void)
       lastx = stack[0];
       MoveWorkStack(2, 0);
       WriteStack(0, 0);
-      stacklift = TRUE;
+      stacklift = true;
       }
 
 }
@@ -761,7 +761,7 @@ static void ExpE(void)
       lastx = stack[0];
       MoveWorkStack(2, 0);
       WriteStack(0, 0);
-      stacklift = TRUE;
+      stacklift = true;
       }
 
 }
@@ -789,7 +789,7 @@ static void RecallPi(void)
    ExtendedRecallPi(0);
    MoveWorkStack(0, 0);
    WriteStack(0, 0);
-   stacklift = TRUE;
+   stacklift = true;
 
 }
 
@@ -813,7 +813,7 @@ static void RecallE(void)
    ExtendedRecallE(0);
    MoveWorkStack(0, 0);
    WriteStack(0, 0);
-   stacklift = TRUE;
+   stacklift = true;
 }
 
 /*
@@ -832,7 +832,7 @@ static void RecallLastX(void)
 
    stack[0] = lastx;
    WriteStack(0, 0);
-   stacklift = TRUE;
+   stacklift = true;
 }
 
 /*
@@ -853,7 +853,7 @@ static void ChangeSign(void)
          WChar(' ');
       }
 
-   stacklift = TRUE;
+   stacklift = true;
 }
 
 /*
@@ -975,7 +975,7 @@ static void StoreX(void)
          r = chr - '0';
          reg[r] = stack[0];
          WriteReg(r, r);
-         stacklift = TRUE;
+         stacklift = true;
          return;
          }
 
@@ -1028,7 +1028,7 @@ static void AddXReg(void)
          if (ExtendedAdd() ) {
             MoveWorkReg(2, r);
             WriteReg(r, r);
-            stacklift = TRUE;
+            stacklift = true;
             return;
             }
          return;
@@ -1062,7 +1062,7 @@ static void SubtractXReg(void)
          if (ExtendedSubtract() ) {
             MoveWorkReg(2, r);
             WriteReg(r, r);
-            stacklift = TRUE;
+            stacklift = true;
             return;
             }
          return;
@@ -1098,7 +1098,7 @@ static void MultiplyXReg(void)
          if (ExtendedMultiply() ) {
             MoveWorkReg(2, r);
             WriteReg(r, r);
-            stacklift = TRUE;
+            stacklift = true;
             return;
             }
          return;
@@ -1134,7 +1134,7 @@ static void DivideXReg(void)
          if (ExtendedDivide() ) {
             MoveWorkReg(2, r);
             WriteReg(r, r);
-            stacklift = TRUE;
+            stacklift = true;
             return;
             }
          return;
@@ -1170,7 +1170,7 @@ static void RecallReg(void)
             WriteStack(0, 3);
          else
             WriteStack(0, 0);
-         stacklift = TRUE;
+         stacklift = true;
          return;
          }
 
@@ -1222,7 +1222,7 @@ static void AddRegX(void)
             lastx = stack[0];
             MoveWorkStack(2, 0);
             WriteStack(0, 0);
-            stacklift = TRUE;
+            stacklift = true;
             return;
             }
          return;
@@ -1257,7 +1257,7 @@ static void SubtractRegX(void)
             lastx = stack[0];
             MoveWorkStack(2, 0);
             WriteStack(0, 0);
-            stacklift = TRUE;
+            stacklift = true;
             return;
             }
          return;
@@ -1293,7 +1293,7 @@ static void MultiplyRegX(void)
             lastx = stack[0];
             MoveWorkStack(2, 0);
             WriteStack(0, 0);
-            stacklift = TRUE;
+            stacklift = true;
             return;
             }
          return;
@@ -1331,7 +1331,7 @@ static void DivideRegX(void)
             lastx = stack[0];
             MoveWorkStack(2, 0);
             WriteStack(0, 0);
-            stacklift = TRUE;
+            stacklift = true;
             return;
             }
          return;
@@ -1363,7 +1363,7 @@ static void ExchangeXY(void)
    stack[1] = *temp;
 
    WriteStack(0, 1);
-   stacklift = TRUE;
+   stacklift = true;
 
    free(temp);
 
@@ -1398,7 +1398,7 @@ static void ExchangeXReg(void)
          reg[r] = *temp;
          WriteReg(r, r);
          WriteStack(0, 0);
-         stacklift = TRUE;
+         stacklift = true;
          free(temp);
          return;
          }
@@ -1427,7 +1427,7 @@ static void RollDown(void)
    stack[3] = *temp;
 
    WriteStack(0, 3);
-   stacklift = TRUE;
+   stacklift = true;
 
    free(temp);
 }
@@ -1453,7 +1453,7 @@ static void RollUp(void)
    stack[0] = *temp;
 
    WriteStack(0, 3);
-   stacklift = TRUE;
+   stacklift = true;
 
    free(temp);
 }
@@ -1500,7 +1500,7 @@ static void ExitGetXState(bool success)
           if (stacklift)
              PushStack();
          MoveWorkStack(0, 0);
-         stacklift = TRUE;
+         stacklift = true;
          }
          // else {
          //    ExitGetXState();
@@ -1511,7 +1511,7 @@ static void ExitGetXState(bool success)
       // result = ExtendedGetX();
       if (success) {
          MoveWorkStack(0, 0);
-         stacklift = TRUE;
+         stacklift = true;
       }
       // else {
          // ExitGetXState();
@@ -1548,15 +1548,13 @@ static void Enter(bool success)
       MoveWorkStack(0, 0);
       PushStack();   //  push X to Y
       WriteStack(0, 3); //  update display fields
-      stacklift = TRUE;
-
-      // [28728] 6: [838283]
+      stacklift = true;
    }
    else {
       Message("Data entry aborted by user");
       WriteStack(0);
    }
-   stacklift = FALSE;
+   stacklift = false;
    keyboard_state_set(KBD_STATE_DEFAULT);
    // ExitGetXState(success);
 }
@@ -1572,6 +1570,11 @@ static void Enter(bool success)
 static void AcceptX(u16 inchr)
 {
    int result ;
+   if (stacklift) {
+      PushStack();   //  push X to Y
+      WriteStack(1, 3); //  update display fields
+   }
+   
    if (keyboard_state_get() == KBD_STATE_GETX) {
       result = ExtendedGetX(inchr);
       if (!result) {

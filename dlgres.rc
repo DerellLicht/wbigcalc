@@ -58,7 +58,6 @@ END
 #define  Y_OFS2   22
 #define  Y_OFS3   40
 
-#define  BTN_ARRAY_OFS  (ST_Y +99 + 20)
 #define  X_GAP          5
 
 IDD_MAIN_DIALOG DIALOG DISCARDABLE  160, 40, DLG_DX, 500
@@ -141,12 +140,20 @@ BEGIN
    PUSHBUTTON      "Clear",         IDB_CLEAR_X,  PI_FX+15+REGS_DX+3+21, ST_Y+55,                20,  10
                     
    //  text fields
-   LTEXT           "MSG:",          IDS_MSG,      PI_X,                  ST_Y+Y_OFS+84,         Y_OFS2,  10
-   LTEXT           " ",             IDC_MSG,      PI_X+Y_OFS2,           ST_Y+84, REGS_GRP_DX - Y_OFS2,  10, SS_SUNKEN
-                                                                         
-   LTEXT           "Kbd State:",    IDS_KSTATE,   PI_X,                  ST_Y+Y_OFS+99,         Y_OFS3-2, 10
-   LTEXT           " ",             IDC_KSTATE,   PI_X+Y_OFS3,           ST_Y+99, REGS_GRP_DX - Y_OFS3,  10, SS_SUNKEN
    
+   LTEXT           "MSG:",          IDS_MSG,      PI_X,                  ST_Y+Y_OFS+84,         Y_OFS2,  10
+   LTEXT           " ",             IDC_MSG,      PI_X+Y_OFS2,           ST_Y+84,               (REGS_GRP_DX/2) - Y_OFS2,  10, SS_SUNKEN
+                                                        
+#define  X_KBDST  (PI_X+Y_OFS2+(REGS_GRP_DX/2) - Y_OFS2+8)
+   LTEXT           "Kbd State:",    IDS_KSTATE,   X_KBDST,              ST_Y+Y_OFS+84,          36, 10
+   LTEXT           " ",             IDC_KSTATE,   X_KBDST+Y_OFS3-3,       ST_Y+84,              70, 10, SS_SUNKEN
+   
+#define  X_KKEYS     (X_KBDST + 36 + 70 + 8)
+   LTEXT           "Keyboard Keys:",  IDS_KEYS,   X_KKEYS,              ST_Y+Y_OFS+84,         52,  10
+   LTEXT           " Enter UP DOWN ", IDC_KEYS,   X_KKEYS+54,           ST_Y+84,              100,  10, SS_SUNKEN
+   
+#define  BTN_ARRAY_OFS  (ST_Y + 100)
+
 #define  XB1      PI_X
 #define  DXB      40
 #define  YB1      BTN_ARRAY_OFS

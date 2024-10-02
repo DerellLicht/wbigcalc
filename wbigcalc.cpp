@@ -163,6 +163,8 @@ IDB_FLTSCI,
 IDB_GRP35,
 IDB_KBD_UP,
 IDB_KBD_DOWN,
+IDC_KEYS,
+IDS_KEYS,
 0 } ;
 
 void show_hide_buttons(bool show)
