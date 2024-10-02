@@ -37,8 +37,9 @@ BEGIN
     VK_BACK,   IDB_KBD_BKSPC,     VIRTKEY, NOINVERT
     VK_RETURN, IDB_KBD_RETURN,    VIRTKEY, NOINVERT
     VK_ESCAPE, IDB_KBD_ESCAPE,    VIRTKEY, NOINVERT
+    VK_UP,     IDB_KBD_UP,        VIRTKEY, NOINVERT
+    VK_DOWN,   IDB_KBD_DOWN,      VIRTKEY, NOINVERT
     "^q",      IDB_CLOSE,         ASCII, NOINVERT
-    // "^q",      IDB_CLOSE,         ASCII, NOINVERT
 END
 
 //*******************************************************************
@@ -153,11 +154,15 @@ BEGIN
 #define  XB2      (XB1+DXB+X_GAP)
 #define  XB3      (XB2+DXB+X_GAP)
 #define  XB4      (XB3+DXB+X_GAP)
+#define  XB5      (XB4+DXB+X_GAP)
+#define  XB6      (XB5+DXB+X_GAP)
    //  button array
-   PUSHBUTTON      "Clear Stack",   IDB_IDB_CLRS,   XB1,  YB1, DXB,  12
-   PUSHBUTTON      "Clear Regs",    IDB_IDB_CLRR,   XB2,  YB1, DXB,  12
-   PUSHBUTTON      "Float/Sci",     IDB_IDB_FLTSCI, XB3,  YB1, DXB,  12
-   PUSHBUTTON      "Group 3/5",     IDB_IDB_GRP35,  XB4,  YB1, DXB,  12
+   PUSHBUTTON      "Clear Stack",   IDB_CLRS,     XB1,  YB1, DXB,  12
+   PUSHBUTTON      "Clear Regs",    IDB_CLRR,     XB2,  YB1, DXB,  12
+   PUSHBUTTON      "Float/Sci",     IDB_FLTSCI,   XB3,  YB1, DXB,  12
+   PUSHBUTTON      "Group 3/5",     IDB_GRP35,    XB4,  YB1, DXB,  12
+   PUSHBUTTON      "Roll Up",       IDB_KBD_UP,   XB5,  YB1, DXB,  12
+   PUSHBUTTON      "Roll Down",     IDB_KBD_DOWN, XB6,  YB1, DXB,  12
    
 END
 

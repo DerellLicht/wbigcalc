@@ -939,12 +939,12 @@ void clear_stack_or_register(uint button_code)
       WriteStack(s, s);
       break ;
 
-   case IDB_IDB_CLRS:
+   case IDB_CLRS:
       ClearStack(0, 3);
       WriteStack(0, 3);
       break ;
       
-   case IDB_IDB_CLRR:
+   case IDB_CLRR:
       ClearReg(0, 9);
       WriteReg(0, 9);
       break ;
@@ -1649,6 +1649,11 @@ int dos_main(u16 inchr)
          case (MULTIPLY):     Multiply(); break;   /* Multiply Y * X */
          case (DIVIDE):       Divide();   break;   /* Divide Y / X */
          
+         case (ROLLDOWN):     RollDown();  break;        /* Roll stack down */
+         case (ROLLUP):       RollUp();  break;          /* Roll stack up */
+         case (SCINOT):       SciNotation();  break;     /* Use Scientific Notation */
+         case (GROUPSIZE):    GroupSize();  break;       /* Toggle Group Size (3/5) */
+         
          case (HELP):
             //  eventually, this will load a Windows help file
             // HelpScreen();        /* Help Screen */
@@ -1675,16 +1680,12 @@ int dos_main(u16 inchr)
          case (RECALLE):      RecallE();  break;         /* Recall e */
          case (LASTX):        RecallLastX(); break;      /* Recall Last X */
          case (CHGSIGN):      ChangeSign();  break;      /* Change sign X */
-         case (GROUPSIZE):    GroupSize();  break;       /* Toggle Group Size (3/5) */
          case (MENUROLL):     MenuRoll();   break;       /* Roll Function Key Menu */
-         case (SCINOT):       SciNotation();  break;     /* Use Scientific Notation */
          case (STOREX):       StoreX();  break;          /* Store X in register (prompt for which) */
          case (RECALLREG):    RecallReg(); break;        /* Recall register to X (prompt for which) */
          case (XCHGXY1):
          case (XCHGXY2):      ExchangeXY();  break;      /* Exchange X and Y */
          case (XCHGXREG):     ExchangeXReg(); break;     /* Exchange X and Reg (prompt for which) */
-         case (ROLLDOWN):     RollDown();  break;        /* Roll stack down */
-         case (ROLLUP):       RollUp();  break;          /* Roll stack up */
          default:
             ;              /* Unknown key */
 

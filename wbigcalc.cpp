@@ -157,10 +157,12 @@ IDB_CLEAR_X,
 IDB_CLEAR_Y,  
 IDB_CLEAR_Z,  
 IDB_CLEAR_T,  
-IDB_IDB_CLRS, 
-IDB_IDB_CLRR, 
-IDB_IDB_FLTSCI,
-IDB_IDB_GRP35,
+IDB_CLRS, 
+IDB_CLRR, 
+IDB_FLTSCI,
+IDB_GRP35,
+IDB_KBD_UP,
+IDB_KBD_DOWN,
 0 } ;
 
 void show_hide_buttons(bool show)
@@ -307,12 +309,20 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
             break ;
             
          //  button operations
-         case IDB_IDB_FLTSCI:
+         case IDB_FLTSCI:
             dos_main(SCINOT);
             break ;
          
-         case IDB_IDB_GRP35:
+         case IDB_GRP35:
             dos_main(GROUPSIZE);
+            break ;
+            
+         case IDB_KBD_UP:
+            dos_main(ROLLUP);
+            break ;
+         
+         case IDB_KBD_DOWN:
+            dos_main(ROLLDOWN);
             break ;
             
          case IDB_CLEAR_R0:
@@ -329,8 +339,8 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
          case IDB_CLEAR_Y:
          case IDB_CLEAR_Z:
          case IDB_CLEAR_T:
-         case IDB_IDB_CLRS:
-         case IDB_IDB_CLRR:
+         case IDB_CLRS:
+         case IDB_CLRR:
             clear_stack_or_register(target);
             break ;
                

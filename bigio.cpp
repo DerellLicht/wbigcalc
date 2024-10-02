@@ -159,7 +159,6 @@ void MessageWait(char *msg)
    strcat(tmsg, "(Press a key to continue)");
 
    MessageBox(NULL, tmsg, NULL, MB_OK | MB_ICONEXCLAMATION);
-   // GetChar();
 }
 
 /*

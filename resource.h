@@ -90,9 +90,11 @@
 #define  IDB_KBD_subtract  327
 #define  IDB_KBD_mult      328
 #define  IDB_KBD_divide    329
+#define  IDB_KBD_UP        330
+#define  IDB_KBD_DOWN      331
 
-#define  IDB_IDB_CLRS      400
-#define  IDB_IDB_CLRR      401
-#define  IDB_IDB_FLTSCI    402
-#define  IDB_IDB_GRP35     403
+#define  IDB_CLRS      400
+#define  IDB_CLRR      401
+#define  IDB_FLTSCI    402
+#define  IDB_GRP35     403
 
