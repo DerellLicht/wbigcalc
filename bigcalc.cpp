@@ -831,7 +831,7 @@ static void RecallLastX(void)
    }
 
    stack[0] = lastx;
-   WriteStack(0, 0);
+   WriteStack(0);
    stacklift = true;
 }
 

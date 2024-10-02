@@ -165,6 +165,27 @@ IDB_KBD_UP,
 IDB_KBD_DOWN,
 IDC_KEYS,
 IDS_KEYS,
+IDB_LAST_X,
+IDB_HELP  ,
+IDB_Y2X   ,
+IDB_SQRT  ,
+IDB_XSQRD ,
+IDB_INVX  ,
+IDB_XFACT ,
+IDB_INT   ,
+IDB_FRAC  ,
+IDB_PI    ,
+IDB_ECONST,
+IDB_SINX  ,
+IDB_ASINX ,
+IDB_COSX  ,
+IDB_ACOSX ,
+IDB_TANX  ,
+IDB_ATANX ,
+IDB_LOGX  ,
+IDB_102X  ,
+IDB_LNX   ,
+IDB_E2X   ,
 0 } ;
 
 void show_hide_buttons(bool show)
@@ -310,7 +331,7 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
          case IDB_GRP35:     dos_main(GROUPSIZE); break ;
          case IDB_KBD_UP:    dos_main(ROLLUP); break ;
          case IDB_KBD_DOWN:  dos_main(ROLLDOWN); break ;
-         case IDB_LAST_X:    dos_main(ROLLDOWN); break ;
+         case IDB_LAST_X:    dos_main(LASTX); break ;
          
          //  button row 2
          case IDB_HELP  :    dos_main(HELP); break ;
