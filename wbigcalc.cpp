@@ -186,26 +186,10 @@ IDB_KBD_DOWN,
 IDC_KEYS,
 IDS_KEYS,
 IDB_LAST_X,
+IDB_XCHG_X_R,
 IDB_HELP  ,
-// IDB_Y2X   ,
-// IDB_SQRT  ,
-// IDB_XSQRD ,
-// IDB_INVX  ,
-// IDB_XFACT ,
-// IDB_INT   ,
-// IDB_FRAC  ,
 IDB_PI    ,
 IDB_ECONST,
-// IDB_SINX  ,
-// IDB_ASINX ,
-// IDB_COSX  ,
-// IDB_ACOSX ,
-// IDB_TANX  ,
-// IDB_ATANX ,
-// IDB_LOGX  ,
-// IDB_102X  ,
-// IDB_LNX   ,
-// IDB_E2X   ,
 IDB_CHG_SIGN,
 0 } ;
 
@@ -214,6 +198,118 @@ void show_hide_buttons(bool show)
    uint idx ;
    for (idx=0; show_hide_button_ids[idx]; idx++) {
       ShowWindow(GetDlgItem(hwndMain, show_hide_button_ids[idx]), (show) ? SW_SHOW : SW_HIDE);
+   }
+}
+
+//************************************************************************
+static uint const show_hide_all_button_ids[] = {
+IDB_CLEAR_R0, 
+IDB_CLEAR_R1, 
+IDB_CLEAR_R2, 
+IDB_CLEAR_R3, 
+IDB_CLEAR_R4, 
+IDB_CLEAR_R5, 
+IDB_CLEAR_R6, 
+IDB_CLEAR_R7, 
+IDB_CLEAR_R8, 
+IDB_CLEAR_R9, 
+IDB_CLEAR_X,  
+IDB_CLEAR_Y,  
+IDB_CLEAR_Z,  
+IDB_CLEAR_T,  
+IDB_CLRS, 
+IDB_CLRR, 
+IDB_FLTSCI,
+IDB_GRP35,
+IDB_KBD_UP,
+IDB_KBD_DOWN,
+IDC_KEYS,
+IDS_KEYS,
+IDB_LAST_X,
+IDB_XCHG_X_Y,
+IDB_HELP  ,
+IDB_Y2X   ,
+IDB_SQRT  ,
+IDB_XSQRD ,
+IDB_INVX  ,
+IDB_XFACT ,
+IDB_INT   ,
+IDB_FRAC  ,
+IDB_PI    ,
+IDB_ECONST,
+IDB_SINX  ,
+IDB_ASINX ,
+IDB_COSX  ,
+IDB_ACOSX ,
+IDB_TANX  ,
+IDB_ATANX ,
+IDB_LOGX  ,
+IDB_102X  ,
+IDB_LNX   ,
+IDB_E2X   ,
+IDB_CHG_SIGN,
+0 } ;
+
+void show_hide_all_buttons(bool show)
+{
+   uint idx ;
+   for (idx=0; show_hide_all_button_ids[idx]; idx++) {
+      ShowWindow(GetDlgItem(hwndMain, show_hide_all_button_ids[idx]), (show) ? SW_SHOW : SW_HIDE);
+   }
+}
+
+
+//************************************************************************
+//  Hide VIEW buttons, show XCHG buttons, for XCHG_REG function
+//************************************************************************
+static uint const view_button_ids[] = {
+IDB_VIEW_R0,
+IDB_VIEW_R1,
+IDB_VIEW_R2,
+IDB_VIEW_R3,
+IDB_VIEW_R4,
+IDB_VIEW_R5,
+IDB_VIEW_R6,
+IDB_VIEW_R7,
+IDB_VIEW_R8,
+IDB_VIEW_R9,
+IDB_VIEW_X,
+IDB_VIEW_Y,
+IDB_VIEW_Z,
+IDB_VIEW_T,
+0 } ;
+
+static uint const xchg_button_ids[] = {
+IDB_XCHG_R0,
+IDB_XCHG_R1,
+IDB_XCHG_R2,
+IDB_XCHG_R3,
+IDB_XCHG_R4,
+IDB_XCHG_R5,
+IDB_XCHG_R6,
+IDB_XCHG_R7,
+IDB_XCHG_R8,
+IDB_XCHG_R9,
+0 } ;
+
+void show_hide_view_xchg_buttons(bool show_xchg)
+{
+   uint idx ;
+   if (show_xchg) {
+      for (idx=0; view_button_ids[idx]; idx++) {
+         ShowWindow(GetDlgItem(hwndMain, view_button_ids[idx]), SW_HIDE);
+      }
+      for (idx=0; xchg_button_ids[idx]; idx++) {
+         ShowWindow(GetDlgItem(hwndMain, xchg_button_ids[idx]), SW_SHOW);
+      }
+   }
+   else {
+      for (idx=0; xchg_button_ids[idx]; idx++) {
+         ShowWindow(GetDlgItem(hwndMain, xchg_button_ids[idx]), SW_HIDE);
+      }
+      for (idx=0; view_button_ids[idx]; idx++) {
+         ShowWindow(GetDlgItem(hwndMain, view_button_ids[idx]), SW_SHOW);
+      }
    }
 }
 
@@ -334,6 +430,7 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
                PostMessageA(hDlgWnd, WM_CLOSE, 0, 0);
                break ;
             case KBD_STATE_GETX:
+            case KBD_STATE_GETREG:
                keyboard_state_handler(kESC);   
                break ;
             }
@@ -353,8 +450,10 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
          case IDB_KBD_UP:    dos_main(ROLLUP); break ;
          case IDB_KBD_DOWN:  dos_main(ROLLDOWN); break ;
          case IDB_LAST_X:    dos_main(LASTX); break ;
-         case IDB_CHG_SIGN:    dos_main(CHGSIGN); break ;
-                 
+         case IDB_CHG_SIGN:  dos_main(CHGSIGN); break ;
+         case IDB_XCHG_X_Y:  dos_main(XCHGXY1); break ;
+         case IDB_XCHG_X_R:  ExchangeXReg(); break ;
+              
          //  button row 2
          case IDB_HELP  :    dos_main(HELP); break ;
          case IDB_Y2X   :    dos_main(POWER); break ;
@@ -419,6 +518,20 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
          case IDB_VIEW_Z:
          case IDB_VIEW_T:
             view_stack_or_register(target);
+            break ;
+
+         //  only active Exchange X with Register state
+         case IDB_XCHG_R0:
+         case IDB_XCHG_R1:
+         case IDB_XCHG_R2:
+         case IDB_XCHG_R3:
+         case IDB_XCHG_R4:
+         case IDB_XCHG_R5:
+         case IDB_XCHG_R6:
+         case IDB_XCHG_R7:
+         case IDB_XCHG_R8:
+         case IDB_XCHG_R9:
+            xchg_x_with_reg(target);
             break ;
          
          case IDB_CLOSE:

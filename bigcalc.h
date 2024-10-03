@@ -137,6 +137,7 @@ void status_message(unsigned idx, char *msgstr);
 void put_stack(unsigned n, char *msg);
 void put_register(unsigned n, char *msg);
 void show_hide_buttons(bool show);
+void show_hide_all_buttons(bool show);
 void view_data_field_full(uint fidx, char *fstr);
 
 //  bigcalc.cpp
@@ -144,6 +145,8 @@ void Initialize(int argc, char *argv);
 int dos_main(u16 inchr);
 void view_stack_or_register(uint target);
 void clear_stack_or_register(uint button_code);
+void ExchangeXReg(void);
+void xchg_x_with_reg(uint target);
 
 //  bigio.cpp
 void reset_output_str(void);
@@ -169,7 +172,8 @@ void dump_stack(WORKTYPE *nptr, char *msg);
 //*********************************************************************************
 typedef enum {
    KBD_STATE_DEFAULT=0,
-   KBD_STATE_GETX
+   KBD_STATE_GETX,
+   KBD_STATE_GETREG
 } keyboard_state_t ;
 
 int keyboard_state_handler(u16 chr);

@@ -67,6 +67,21 @@
 #define  IDB_CLEAR_Z       262
 #define  IDB_CLEAR_T       263
                            
+#define  IDB_XCHG_R0       270
+#define  IDB_XCHG_R1       271
+#define  IDB_XCHG_R2       272
+#define  IDB_XCHG_R3       273
+#define  IDB_XCHG_R4       274
+#define  IDB_XCHG_R5       275
+#define  IDB_XCHG_R6       276
+#define  IDB_XCHG_R7       277
+#define  IDB_XCHG_R8       278
+#define  IDB_XCHG_R9       279
+#define  IDB_XCHG_X        280
+#define  IDB_XCHG_Y        281
+#define  IDB_XCHG_Z        282
+#define  IDB_XCHG_T        283
+                           
 #define  IDC_MSG           300
 #define  IDS_MSG           301
 #define  IDC_KSTATE        302
@@ -105,6 +120,7 @@
 #define  IDB_LAST_X        406
 #define  IDB_CHG_SIGN      407
 #define  IDB_XCHG_X_Y      408
+#define  IDB_XCHG_X_R      409
 
 //  button row 2
 #define  IDB_HELP          410

@@ -81,8 +81,6 @@ static  void AddRegX(void);
 static  void SubtractRegX(void);
 static  void MultiplyRegX(void);
 static  void DivideRegX(void);
-static  void ExchangeXY(void);
-static  void ExchangeXReg(void);
 static  void RollDown(void);
 static  void RollUp(void);
 static  void PushStack(void);
@@ -1343,6 +1341,7 @@ static void ExchangeXY(void)
       return;
       }
 
+   restore_stack0();
    *temp = stack[0];
    stack[0] = stack[1];
    stack[1] = *temp;
@@ -1361,34 +1360,48 @@ static void ExchangeXY(void)
  *    *                                                *
  *    **************************************************
  */
-static void ExchangeXReg(void)
+extern void show_hide_view_xchg_buttons(bool show);
+
+static void exit_from_xchg_reg_state(void)
 {
-   int r;
+   Message("");
+   show_hide_view_xchg_buttons(false);
+   show_hide_all_buttons(true);
+   keyboard_state_set(KBD_STATE_DEFAULT) ;
+}
+
+void ExchangeXReg(void)
+{
+   // int r;
+
+   if (keyboard_state_get() == KBD_STATE_DEFAULT) {
+      Message("Exchange X with Register: Press <Xchg> button by register, or 'XChg X/R'");
+      show_hide_view_xchg_buttons(true);
+      show_hide_all_buttons(false);
+      keyboard_state_set(KBD_STATE_GETREG) ;
+   }
+   else {
+      exit_from_xchg_reg_state();
+   }
+}
+
+void xchg_x_with_reg(uint target)
+{
    NORMTYPE *temp;
+   uint r = target - IDB_XCHG_R0 ;
+   if ((temp = GETNORMTEMP(1)) == NULL) {
+      MemoryError();
+      return;
+   }
 
-   Message("Exchange X with: Press Reg (0-9) or Esc:");
-
-   while ((chr = GetChar()) != ESCAPE) {
-
-      if (isdigit(chr) ) {
-
-      if ((temp = GETNORMTEMP(1)) == NULL) {
-         MemoryError();
-         return;
-         }
-
-         r = chr - '0';
-         *temp = stack[0];
-         stack[0] = reg[r];
-         reg[r] = *temp;
-         WriteReg(r, r);
-         WriteStack(0, 0);
-         stacklift = true;
-         free(temp);
-         return;
-         }
-
-      } /* while */
+   *temp = stack[0];
+   stack[0] = reg[r];
+   reg[r] = *temp;
+   WriteReg(r, r);
+   WriteStack(0, 0);
+   stacklift = true;
+   free(temp);
+   exit_from_xchg_reg_state();
 }
 
 /*
@@ -1757,95 +1770,87 @@ int dos_main(u16 inchr)
    // chr = GetPrompt();
    chr = inchr ;  
 
-   // while (chr != ESCAPE) {
+   switch (inchr) {
+   case ('0'):
+   case ('1'):
+   case ('2'):
+   case ('3'):
+   case ('4'):
+   case ('5'):
+   case ('6'):
+   case ('7'):
+   case ('8'):
+   case ('9'):
+   case ('.'):
+   case ('E'):
+      /* Accept new X from keyboard with first */
+      /*  character passed to AcceptX routine */
+      //  This enters GetX state if no errors occur
+      AcceptX(inchr);           
+      break;                  
 
-      switch (inchr) {
-         case ('0'):
-         case ('1'):
-         case ('2'):
-         case ('3'):
-         case ('4'):
-         case ('5'):
-         case ('6'):
-         case ('7'):
-         case ('8'):
-         case ('9'):
-         case ('.'):
-         case ('E'):
-            /* Accept new X from keyboard with first */
-            /*  character passed to AcceptX routine */
-            //  This enters GetX state if no errors occur
-            AcceptX(inchr);           
-            break;                  
+   case (kBSPACE):        
+      if (!ExtendedGetX(inchr)) {
+         ExitGetXState(false);
+      }
+      break ;
+      
+   case (kENTER):        
+      Enter(true);    break;            //  executed from dos_main()
+      
+   //  what is done with ESCAPE, depends upon keyboard state!!
+   case (kESC):
+      Enter(false);   break ; //  executed from dos_main()
+   
+   case (ADD):          Add();      break;   /* Add Y + X */
+   case (SUBTRACT):     Subtract(); break;   /* Subtract Y - X */
+   case (MULTIPLY):     Multiply(); break;   /* Multiply Y * X */
+   case (DIVIDE):       Divide();   break;   /* Divide Y / X */
+   
+   case (SCINOT):       SciNotation();  break;     /* Use Scientific Notation */
+   case (GROUPSIZE):    GroupSize();  break;       /* Toggle Group Size (3/5) */
+   case (ROLLUP):       RollUp();  break;          /* Roll stack up */
+   case (ROLLDOWN):     RollDown();  break;        /* Roll stack down */
+   case (LASTX):        RecallLastX(); break;      /* Recall Last X */
 
-         case (kBSPACE):        
-            if (!ExtendedGetX(inchr)) {
-               ExitGetXState(false);
-            }
-            break ;
-            
-         case (kENTER):        
-            Enter(true);    break;            //  executed from dos_main()
-            
-         //  what is done with ESCAPE, depends upon keyboard state!!
-         case (kESC):
-            Enter(false);   break ; //  executed from dos_main()
-         
-         case (ADD):          Add();      break;   /* Add Y + X */
-         case (SUBTRACT):     Subtract(); break;   /* Subtract Y - X */
-         case (MULTIPLY):     Multiply(); break;   /* Multiply Y * X */
-         case (DIVIDE):       Divide();   break;   /* Divide Y / X */
-         
-         case (SCINOT):       SciNotation();  break;     /* Use Scientific Notation */
-         case (GROUPSIZE):    GroupSize();  break;       /* Toggle Group Size (3/5) */
-         case (ROLLUP):       RollUp();  break;          /* Roll stack up */
-         case (ROLLDOWN):     RollDown();  break;        /* Roll stack down */
-         case (LASTX):        RecallLastX(); break;      /* Recall Last X */
+   //  button row 2         
+   case (HELP):   
+      MessageBox(NULL, "Help file is not yet ready", NULL, MB_OK | MB_ICONEXCLAMATION);
+      //  eventually, this will load a Windows help file
+      break;
+   case (POWER):        Power();       break;         /* Power (Y^X) */
+   case (SQUAREROOT):   SquareRoot();  break;        /* Square Root X */
+   case (SQUARE):       Square();      break;      /* Square X */
+   case (RECIPROCAL):   Reciprocal();  break;        /* Reciprocal X */
+   case (FACTORIAL):    Factorial();   break;         /* Factorial X */
+   case (INTEGER):      IntegerPart(); break;       /* Integer Part X */
+   case (FRACTION):     FractionPart();   break;      /* Fraction Part X */
+   case (RECALLPI):     RecallPi(); break;         /* Recall pi */
+   case (RECALLE):      RecallE();  break;         /* Recall e */
 
-         //  button row 2         
-         case (HELP):   
-            MessageBox(NULL, "Help file is not yet ready", NULL, MB_OK | MB_ICONEXCLAMATION);
-            //  eventually, this will load a Windows help file
-            break;
-         case (POWER):        Power();       break;         /* Power (Y^X) */
-         case (SQUAREROOT):   SquareRoot();  break;        /* Square Root X */
-         case (SQUARE):       Square();      break;      /* Square X */
-         case (RECIPROCAL):   Reciprocal();  break;        /* Reciprocal X */
-         case (FACTORIAL):    Factorial();   break;         /* Factorial X */
-         case (INTEGER):      IntegerPart(); break;       /* Integer Part X */
-         case (FRACTION):     FractionPart();   break;      /* Fraction Part X */
-         case (RECALLPI):     RecallPi(); break;         /* Recall pi */
-         case (RECALLE):      RecallE();  break;         /* Recall e */
+   //  button row 3         
+   case (SIN   ):       Sin();      break;   /* Sine X */
+   case (ARCSIN):       ArcSin();   break;            /* ArcSine X */
+   case (COS   ):       Cos();    break;             /* Cosine X */
+   case (ARCCOS):       ArcCos(); break;           /* ArcCosine X */
+   case (TAN   ):       Tan();    break;           /* Tangent X */
+   case (ARCTAN):       ArcTan(); break;           /* ArcTangent X */
+   case (LOG   ):       Log(); break;              /* Common Log X */
+   case (EXP10 ):       Exp10();  break;           /* Exponent 10^X */
+   case (LN    ):       Ln();  break;              /* Natural Log X */
+   case (EXPE  ):       ExpE(); break;             /* Exponent e^X */
+   
+   case (CHGSIGN):      ChangeSign();  break;      /* Change sign X */
+   case (MENUROLL):     MenuRoll();   break;       /* Roll Function Key Menu */
+   case (STOREX):       StoreX();  break;          /* Store X in register (prompt for which) */
+   case (RECALLREG):    RecallReg(); break;        /* Recall register to X (prompt for which) */
+   case (XCHGXY1):
+   case (XCHGXY2):      ExchangeXY();  break;      /* Exchange X and Y */
+   // case (XCHGXREG):     ExchangeXReg(); break;     /* Exchange X and Reg (prompt for which) */
+   default:
+      ;              /* Unknown key */
 
-         //  button row 3         
-         case (SIN   ):       Sin();      break;   /* Sine X */
-         case (ARCSIN):       ArcSin();   break;            /* ArcSine X */
-         case (COS   ):       Cos();    break;             /* Cosine X */
-         case (ARCCOS):       ArcCos(); break;           /* ArcCosine X */
-         case (TAN   ):       Tan();    break;           /* Tangent X */
-         case (ARCTAN):       ArcTan(); break;           /* ArcTangent X */
-         case (LOG   ):       Log(); break;              /* Common Log X */
-         case (EXP10 ):       Exp10();  break;           /* Exponent 10^X */
-         case (LN    ):       Ln();  break;              /* Natural Log X */
-         case (EXPE  ):       ExpE(); break;             /* Exponent e^X */
-         
-         case (CHGSIGN):      ChangeSign();  break;      /* Change sign X */
-         case (MENUROLL):     MenuRoll();   break;       /* Roll Function Key Menu */
-         case (STOREX):       StoreX();  break;          /* Store X in register (prompt for which) */
-         case (RECALLREG):    RecallReg(); break;        /* Recall register to X (prompt for which) */
-         case (XCHGXY1):
-         case (XCHGXY2):      ExchangeXY();  break;      /* Exchange X and Y */
-         case (XCHGXREG):     ExchangeXReg(); break;     /* Exchange X and Reg (prompt for which) */
-         default:
-            ;              /* Unknown key */
-
-         }  /* end switch */
-
-      // flushall();
-
-      // chr = GetPrompt();
-      // }  /* while */
-   // ScrTerm();
+   }  /* end switch */
 
    return 0;
 }
@@ -1875,6 +1880,9 @@ int keyboard_state_handler(u16 inchr)
       }
       break ;
       
+   case KBD_STATE_GETREG:
+      break ;
+      
    default:
       {
       char msg[30];
@@ -1899,6 +1907,11 @@ bool keyboard_state_set(keyboard_state_t new_kbd_state)
    case KBD_STATE_GETX:
       show_hide_buttons(false);
       show_keyboard_state("Input X value");
+      keyboard_state = new_kbd_state ;
+      return true ;
+      
+   case KBD_STATE_GETREG:
+      show_keyboard_state("Select Register");
       keyboard_state = new_kbd_state ;
       return true ;
       
