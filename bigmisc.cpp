@@ -1749,62 +1749,6 @@ void init_getx_vars(void)
 }
 
 //***************************************************************************
-//lint -esym(714, ExtendedGetX_unused)
-//lint -esym(759, ExtendedGetX_unused)
-//lint -esym(765, ExtendedGetX_unused)
-bool ExtendedGetX_unused(u16 chr)
-{
-      //  these aren't going to be possible here, now...
-      switch (chr) {             /* Test for number terminating operations */
-         case (ENTER):
-         case (ADD):
-         case (SUBTRACT):
-         case (MULTIPLY):
-         case (DIVIDE):
-         case (HELP):
-         case (POWER):
-         case (SQUAREROOT):
-         case (SQUARE):
-         case (RECIPROCAL):
-         case (FACTORIAL):
-         case (INTEGER):
-         case (FRACTION):
-         case (RECALLPI):
-         case (RECALLE):
-         case (SIN):
-         case (ARCSIN):
-         case (COS):
-         case (ARCCOS):
-         case (TAN):
-         case (ARCTAN):
-         case (LOG):
-         case (EXP10):
-         case (LN):
-         case (EXPE):
-         case (LASTX):
-         case (GROUPSIZE):
-         case (VIEWREG):
-         case (SCINOT):
-         case (STOREX):
-         case (RECALLREG):
-         case (XCHGXY1):
-         case (XCHGXY2):
-         case (XCHGXREG):
-         case (ROLLDOWN):
-         case (ROLLUP):
-            return true ;
-            // charpresent = TRUE;  /* Pass terminating operator */
-            // break;
-         default:
-            break ;
-      }  /* switch */
-
-      // if (charpresent)           /* Break from while */
-      //    return true ;
-      return false ;
-}
-
-//***************************************************************************
 // move local vars to work[0]
 //***************************************************************************
 int move_local_to_work0(void)
@@ -1929,7 +1873,6 @@ bool ExtendedGetX(u16 chr)
       if (isdigit(chr)) {                    /* Numeric digit */
          if (digits < normprec) {
             getx_putc((char) chr);
-//             WChar(chr);
             work[0].man[digits] = chr - '0';
             digitval += work[0].man[digits];
             intdigits++;
@@ -1941,28 +1884,20 @@ bool ExtendedGetX(u16 chr)
          }
 
       else if (chr == '.') {                 /* . invokes decimal mode */
-//          WChar(chr);
-            getx_putc((char) chr);
+         getx_putc((char) chr);
          decimal = true;
          mode = INDEC;
          }
 
       else if (chr == 'E') {                 /* E invokes exponent mode, */
          if (! digits) {
-            // DisplayChar(&row, &col, '1');    /*  if no digits, make it 1, */
-//             WChar('1');
             getx_putc((char) '1');
             work[0].man[digits] = 1;
             digitval += 1;
             intdigits++;
             digits++;
-//             DisplayExpChar(&row, &col, ' ');
-//             DisplayExpChar(&row, &col, 'e');
-            // CurGet(&exprow, &expcol);
          }
          else if (digitval > 0) {            /*  or if non zero already */
-//             DisplayExpChar(&row, &col, ' ');
-//             DisplayExpChar(&row, &col, 'e');
             // WChar(' ');
             // WChar('e');
          }
@@ -1977,8 +1912,6 @@ bool ExtendedGetX(u16 chr)
 
       else if (chr == kBSPACE) {           /* Backspace backs up char */
          if (digits) {
-            // BackSpace(&row, &col);
-//             WChar(' ');
             digits--;
             intdigits--;
             digitval -= work[0].man[digits];
@@ -2000,7 +1933,6 @@ bool ExtendedGetX(u16 chr)
       if (isdigit(chr)) {                    /* Numeric digit */
          if (digits < normprec) {
             getx_putc((char) chr);
-//             DisplayChar(&row, &col, chr);
             work[0].man[digits] = chr - '0';
             digitval += work[0].man[digits];
             decdigits++;
@@ -2012,8 +1944,6 @@ bool ExtendedGetX(u16 chr)
 
       else if (chr == 'E') {                 /* E invokes exponent mode     */
          if (digitval > 0) {                 /*  if non zero digits entered */
-//             DisplayExpChar(&row, &col, ' ');
-//             DisplayExpChar(&row, &col, 'e');
             getx_exponent = true ;
             mode = INEX;
             }
@@ -2025,7 +1955,6 @@ bool ExtendedGetX(u16 chr)
       }
 
       else if (chr == kBSPACE) {           /* Backspace backs up char */
-//          WChar(' ');
          if (decdigits) {           /* Decimal digits, stay decimal mode */
             digits--;
             decdigits--;
@@ -2054,7 +1983,6 @@ bool ExtendedGetX(u16 chr)
       if (isdigit(chr)) {                    /* numeric digit */
          if (exdigits < MAXEXDIGITS) {
             exponent = (exponent * 10L) + (long)(chr - '0');
-//             DisplayExpChar(&row, &col, chr);
             exdigits++;
             getx_putc((char) chr);
             }
@@ -2065,7 +1993,6 @@ bool ExtendedGetX(u16 chr)
       else if (chr == ks) {             /* Sign ok if first char */
           expsign = FlipSign(expsign);
           getx_exp_sign = (getx_exp_sign == '-') ? ' ' : '-' ;
-//        DisplayExp(&row, &col, row, col, expsign, exponent);
       }
 
       else if (chr == kBSPACE) {           /* Backspace backs up char */
@@ -2074,7 +2001,6 @@ bool ExtendedGetX(u16 chr)
             exdigits--;             /* Back out latest digits */
             exponent /= 10L;
             if (getx_exp_digits > 0) {
-   //          BackSpaceExp(&row, &col);
                getx_backspace();
             }
          }
@@ -2086,7 +2012,6 @@ bool ExtendedGetX(u16 chr)
 
          else {
             getx_exponent = false ;
-//             BackSpaceExp(&row, &col);  /* Must have been " e", dump space */
             if (decdigits || decimal)  /* If decimal digits or decimal */
                mode = INDEC;           /*  point entered, decimal mode */
             else

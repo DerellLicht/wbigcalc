@@ -150,6 +150,46 @@ void put_register(unsigned n, char *msg)
 /*
  *    **************************************************
  *    *                                                *
+ *    *      Write Message and Wait for keystroke      *
+ *    *                                                *
+ *    **************************************************
+ */
+void MessageWait(char *msg)
+{
+   char tmsg[81];
+   if (strlen(msg) == 0) {
+      return ;
+   }
+   // syslog("%u [%s]\n", strlen(msg), msg);
+
+   strcpy(tmsg, msg);
+   if (*tmsg)
+      strcat(tmsg, "  ");
+
+   MessageBox(NULL, tmsg, NULL, MB_OK | MB_ICONEXCLAMATION);
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *      Write Message and Prompt for Escape       *
+ *    *                                                *
+ *    **************************************************
+ */
+void MessageEsc(char *msg)
+{
+   char tmsg[81];
+
+   strcpy(tmsg, msg);
+   if (*tmsg)
+      strcat(tmsg, "... ");
+
+   Message(tmsg);
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
  *    *      Display Message centered on 25th line     *
  *    *                                                *
  *    **************************************************
@@ -452,8 +492,8 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
          case IDB_LAST_X:    dos_main(LASTX); break ;
          case IDB_CHG_SIGN:  dos_main(CHGSIGN); break ;
          case IDB_XCHG_X_Y:  dos_main(XCHGXY1); break ;
-         case IDB_XCHG_X_R:  ExchangeXReg(); break ;
-              
+         case IDB_XCHG_X_R:  dos_main(XCHGXREG); break ;
+                                        
          //  button row 2
          case IDB_HELP  :    dos_main(HELP); break ;
          case IDB_Y2X   :    dos_main(POWER); break ;

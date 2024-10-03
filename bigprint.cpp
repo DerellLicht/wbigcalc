@@ -52,6 +52,100 @@ static int ppos = 0;            /* Current print column */
  *    **************************************************
  */
 
+//***************************************************************************
+#define  MAX_OUTPUT_STR    1100
+static char output_str[MAX_OUTPUT_STR+1];
+static uint outstr_idx = 0 ;
+
+//***************************************************************************
+void reset_output_str(void)
+{
+   ZeroMemory(output_str, MAX_OUTPUT_STR+1);
+   outstr_idx = 0 ;
+}
+
+//***********************************************************
+static char *get_output_str(void)
+{
+   return output_str ;
+}
+
+//lint -esym(714, get_output_str_len)
+//lint -esym(759, get_output_str_len)
+//lint -esym(765, get_output_str_len)
+uint get_output_str_len(void)
+{
+   return outstr_idx ;
+}
+
+/*
+ *    **************************************************
+ *    *            Write Character to Screen           *
+ *    **************************************************
+ */
+static void WChar(int chr)
+{
+   // dputc((char) chr) ;
+   if (outstr_idx >= MAX_OUTPUT_STR) {
+      syslog("output string overrun (char)\n");
+      return ;
+   }
+   // syslog("%X [%c]", (unsigned char) chr, (char) chr);
+   output_str[outstr_idx++] = (char) chr ;
+   output_str[outstr_idx] = 0 ;  // keep string NULL-terminated
+   // syslog("WChar: %u: [%s]\n", get_output_str_len(), get_output_str());
+}
+
+/*
+ *    **************************************************
+ *    *             Write String to Screen             *
+ *    **************************************************
+ */
+static void WString(char *str)
+{
+   // dputs(str) ;
+   uint slen = strlen(str);
+   if ((outstr_idx + slen) >= MAX_OUTPUT_STR) {
+      syslog("output string overrun (string)\n");
+      return ;
+   }
+   // syslog("%u <%s>\n", slen, str);
+   uint idx ;
+   for (idx=0; idx<slen; idx++) {
+      WChar(*(str+idx));
+   }
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *             Write Integer to Screen            *
+ *    *                                                *
+ *    **************************************************
+ */
+static void WInteger(long integer)
+{
+   long order;
+
+   if (integer) {
+      if (integer < 0L) {
+         WChar('-');
+         integer = - integer;
+         }
+      order = 1000000000L;
+      while (order > integer) {
+         order /= 10L;
+         }
+      while (order) {
+         WChar((int)((integer / order) + (long)'0'));
+         integer %= order;
+         order /= 10L;
+         }
+      }
+   else
+      WChar('0');
+}
+
 /*
  *    **************************************************
  *    *                                                *

@@ -145,12 +145,10 @@ void Initialize(int argc, char *argv);
 int dos_main(u16 inchr);
 void view_stack_or_register(uint target);
 void clear_stack_or_register(uint button_code);
-void ExchangeXReg(void);
 void xchg_x_with_reg(uint target);
 
 //  bigio.cpp
 void reset_output_str(void);
-char *get_output_str(void);
 uint get_output_str_len(void);
 
 //  bigmisc.cpp
@@ -250,9 +248,6 @@ int  move_local_to_work0(void);
  *    **************************************************
  */
 
-extern  void WChar(int chr);
-extern  void WString(char *str);
-extern  void WInteger(long integer);
 extern  void Message(char *msg);
 extern  void MessageWait(char *msg);
 extern  void MessageEsc(char *msg);

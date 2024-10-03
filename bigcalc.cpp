@@ -1003,10 +1003,8 @@ static void exit_from_xchg_reg_state(void)
    keyboard_state_set(KBD_STATE_DEFAULT) ;
 }
 
-void ExchangeXReg(void)
+static void ExchangeXReg(void)
 {
-   // int r;
-
    if (keyboard_state_get() == KBD_STATE_DEFAULT) {
       Message("Exchange X with Register: Press <Xchg> button by register, or 'XChg X/R'");
       show_hide_view_xchg_buttons(true);
@@ -1333,7 +1331,6 @@ static void Enter(bool success)
 {
    if (success) {
       Message("Return/Enter received");
-      // syslog("Enter: %u: [%s]\n", get_output_str_len(), get_output_str());
       move_local_to_work0();
       MoveWorkStack(0, 0);
       PushStack();   //  push X to Y
@@ -1475,7 +1472,7 @@ int dos_main(u16 inchr)
    case (RECALLREG):    RecallReg('0'); break;        /* Recall register to X (prompt for which) */
    case (XCHGXY1):
    case (XCHGXY2):      ExchangeXY();  break;      /* Exchange X and Y */
-   // case (XCHGXREG):     ExchangeXReg(); break;     /* Exchange X and Reg (prompt for which) */
+   case (XCHGXREG):     ExchangeXReg(); break;     /* Exchange X and Reg (prompt for which) */
    default:
       ;              /* Unknown key */
 
