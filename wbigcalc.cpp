@@ -206,6 +206,7 @@ IDB_ECONST,
 // IDB_102X  ,
 // IDB_LNX   ,
 // IDB_E2X   ,
+IDB_CHG_SIGN,
 0 } ;
 
 void show_hide_buttons(bool show)
@@ -352,7 +353,8 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
          case IDB_KBD_UP:    dos_main(ROLLUP); break ;
          case IDB_KBD_DOWN:  dos_main(ROLLDOWN); break ;
          case IDB_LAST_X:    dos_main(LASTX); break ;
-         
+         case IDB_CHG_SIGN:    dos_main(CHGSIGN); break ;
+                 
          //  button row 2
          case IDB_HELP  :    dos_main(HELP); break ;
          case IDB_Y2X   :    dos_main(POWER); break ;

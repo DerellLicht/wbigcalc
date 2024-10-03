@@ -68,7 +68,6 @@ static  void ExpE(void);
 static  void RecallPi(void);
 static  void RecallE(void);
 static  void RecallLastX(void);
-static  void ChangeSign(void);
 static  void GroupSize(void);
 static  void MenuRoll(void);
 static  void SciNotation(void);
@@ -836,12 +835,8 @@ static void ChangeSign(void)
 {
    if (stack[0].digits) {        /* Only if X non zero */
       stack[0].sign = FlipSign(stack[0].sign);
-      // CurPos(XSIGNROW, SIGNDISPCOL);
-      if (stack[0].sign == '-')
-         WChar('-');
-      else
-         WChar(' ');
-      }
+      WriteStack(0);
+   }
 
    stacklift = true;
 }

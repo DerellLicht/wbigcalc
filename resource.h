@@ -1,18 +1,19 @@
-#define IDI_ICON           100
-#define IDD_MAIN_DIALOG    101
-#define IDR_ACCELERATOR1   102
-#define IDB_CLOSE          103
-#define IDC_TITLE          104
-#define IDC_VIEW_DATA      105
-
-#define IDC_REG_X          110
-#define IDC_REG_Y          111
-#define IDC_REG_Z          112
-#define IDC_REG_T          113
-#define IDS_REG_X          114
-#define IDS_REG_Y          115
-#define IDS_REG_Z          116
-#define IDS_REG_T          117
+#define  IDI_ICON          100
+#define  IDD_MAIN_DIALOG   101
+#define  IDR_ACCELERATOR1  102
+#define  IDB_CLOSE         103
+#define  IDC_TITLE         104
+#define  IDS_VIEW_DATA     105
+#define  IDC_VIEW_DATA     106
+         
+#define  IDC_REG_X         110
+#define  IDC_REG_Y         111
+#define  IDC_REG_Z         112
+#define  IDC_REG_T         113
+#define  IDS_REG_X         114
+#define  IDS_REG_Y         115
+#define  IDS_REG_Z         116
+#define  IDS_REG_T         117
                            
 #define  IDC_REGS          200
 #define  IDC_R0            201
@@ -102,6 +103,8 @@
 #define  IDB_KBD_UP        404
 #define  IDB_KBD_DOWN      405
 #define  IDB_LAST_X        406
+#define  IDB_CHG_SIGN      407
+#define  IDB_XCHG_X_Y      408
 
 //  button row 2
 #define  IDB_HELP          410

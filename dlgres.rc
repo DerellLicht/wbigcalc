@@ -176,6 +176,8 @@ BEGIN
    PUSHBUTTON      "Roll Up",       IDB_KBD_UP,   XB5,  YB1, DXB,  12
    PUSHBUTTON      "Roll Down",     IDB_KBD_DOWN, XB6,  YB1, DXB,  12
    PUSHBUTTON      "Last X",        IDB_LAST_X,   XB7,  YB1, DXB,  12
+   PUSHBUTTON      "Chg Sign",      IDB_CHG_SIGN, XB8,  YB1, DXB,  12
+   PUSHBUTTON      "XChg X<->Y",    IDB_XCHG_X_Y, XB9,  YB1, DXB,  12
 
 //  button row 2
 #define  YB2      (YB1 + 16)
@@ -207,8 +209,8 @@ BEGIN
 
 //  hideable multi-line edit control for showing large registers
 #define  YB4      (YB3 + 16)
-   // EDITTEXT IDC_VIEW_DATA, PI_X, YB4, 200, 50,ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY
-   EDITTEXT IDC_VIEW_DATA, PI_X, YB4, REGS_GRP_DX, 50,ES_MULTILINE | ES_READONLY
+   GROUPBOX   " View Stack or Register ", IDS_VIEW_DATA, PI_X, YB4, REGS_GRP_DX, 50
+   EDITTEXT                               IDC_VIEW_DATA, PI_X+5, YB4+9, REGS_GRP_DX-9, 50-14,ES_MULTILINE | ES_READONLY | NOT WS_BORDER
    
    
 END
