@@ -1467,34 +1467,6 @@ void MoveStackWork(int source, int dest)
 /*
  *    **************************************************
  *    *                                                *
- *    *      Move Register[source] to Work[dest]       *
- *    *                                                *
- *    **************************************************
- */
-void MoveRegWork(int source, int dest)
-{
-   int size, i;
-
-   if ((size = reg[source].digits) != 0) {
-      if (size > workprec)
-         size = workprec;
-      work[dest].exp    = reg[source].exp;
-      work[dest].sign   = reg[source].sign;
-      work[dest].digits = size;
-
-      for (i = 0; i < size; i++)
-         work[dest].man[i] = (WORKDIGIT)reg[source].man[i];
-
-      if (size < workprec)
-         memset(&work[dest].man[size], 0, ((workprec - size) * sizeof(WORKDIGIT)));
-      }
-   else
-      ClearWork(dest);
-}
-
-/*
- *    **************************************************
- *    *                                                *
  *    *        Move Work[source] to Stack[dest]        *
  *    *                                                *
  *    **************************************************
@@ -1523,38 +1495,6 @@ void MoveWorkStack(int source, int dest)
       }
    else
       ClearStack(dest, dest);
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *         Move Work[source] to Reg[dest]         *
- *    *                                                *
- *    **************************************************
- */
-void MoveWorkReg(int source, int dest)
-{
-   int size, i;
-
-   if ((size = work[source].digits) != 0) {
-      if (size > normprec)
-         size = normprec;
-      reg[dest].exp  = work[source].exp;
-      reg[dest].sign = work[source].sign;
-
-      for (i = 0; i < size; i++)
-         reg[dest].man[i] = (NORMDIGIT)work[source].man[i];
-
-      if (size < normprec)
-         memset(&reg[dest].man[size], 0, ((normprec - size) * sizeof(NORMDIGIT)));
-
-      while (!reg[dest].man[size - 1]) {   //lint !e676  possibly negative subscript
-         size--;
-      }
-      reg[dest].digits = size;
-      }
-   else
-      ClearReg(dest, dest);
 }
 
 /*

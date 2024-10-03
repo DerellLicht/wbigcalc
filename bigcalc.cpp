@@ -28,7 +28,6 @@
 
 #include <windows.h>
 #include <ctype.h>
-#include <conio.h>   //  getch()
 #include <stdio.h>
 #include <stdlib.h>
 //#include <string.h>
@@ -71,16 +70,6 @@ static  void RecallLastX(void);
 static  void GroupSize(void);
 static  void MenuRoll(void);
 static  void SciNotation(void);
-static  void StoreX(void);
-static  void AddXReg(void);
-static  void SubtractXReg(void);
-static  void MultiplyXReg(void);
-static  void DivideXReg(void);
-static  void RecallReg(void);
-static  void AddRegX(void);
-static  void SubtractRegX(void);
-static  void MultiplyRegX(void);
-static  void DivideRegX(void);
 static  void RollDown(void);
 static  void RollUp(void);
 static  void PushStack(void);
@@ -111,7 +100,7 @@ int
    
 uint groupsize = 0;          /* Digit group size  */
    
-static int chr = 0;                /* Input Character   */
+//static int chr = 0;                /* Input Character   */
 
 bool scinotation = false;    /* Force sci notation if TRUE   */
 
@@ -161,25 +150,6 @@ void Initialize(int argc, char *argv)
 
    GroupSize();                  /* Toggle group size to 5 & set xxxfloatprn */
    WorkScreen();
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *         Get decoded character from kbd         *
- *    *                                                *
- *    **************************************************
- */
-static int GetChar(void)
-{
-   int inchr = getch();
-   if (inchr == 0)
-      inchr = 1000 + getch();      /* Non ASCII character */
-   else
-      if (isascii(inchr) )
-         inchr = toupper(inchr);
-
-   return(inchr);
 }
 
 /*
@@ -946,13 +916,12 @@ void clear_stack_or_register(uint button_code)
  *    *                                                *
  *    **************************************************
  */
-static void StoreX(void)
+static void StoreX(char chr)
 {
    int r;
 
    Message("Store X to: Press Reg (0-9) or Operation (+,-,*,/) then Reg (0-9) or Esc:");
 
-   while ((chr = GetChar()) != ESCAPE) {
 
       if (isdigit(chr) ) {
          r = chr - '0';
@@ -960,172 +929,8 @@ static void StoreX(void)
          WriteReg(r, r);
          stacklift = true;
          return;
-         }
+      }
 
-      switch (chr) {
-
-         case (ADD):
-            AddXReg();
-            return;
-
-         case (SUBTRACT):
-            SubtractXReg();
-            return;
-
-         case (MULTIPLY):
-            MultiplyXReg();
-            return;
-
-         case (DIVIDE):
-            DivideXReg();
-            return;
-
-         default:
-            ;
-
-         }  /* switch */
-
-      } /* while */
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *               Add X to Register                *
- *    *                                                *
- *    **************************************************
- */
-static void AddXReg(void)
-{
-   int r;
-
-   Message("Add X to: Reg (0-9) or Esc:");
-
-   while ((chr = GetChar()) != ESCAPE) {
-
-      if (isdigit(chr) ) {
-         r = chr - '0';
-         MoveStackWork(0, 0);
-         MoveRegWork(r, 1);
-
-         if (ExtendedAdd() ) {
-            MoveWorkReg(2, r);
-            WriteReg(r, r);
-            stacklift = true;
-            return;
-            }
-         return;
-         }
-      else
-            ;
-
-      }  /* while */
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *           Subtract X from Register             *
- *    *                                                *
- *    **************************************************
- */
-static void SubtractXReg(void)
-{
-   int r;
-
-   Message("Subtract X from: Reg (0-9) or Esc:");
-
-   while ((chr = GetChar()) != ESCAPE) {
-
-      if (isdigit(chr) ) {
-         r = chr - '0';
-         MoveStackWork(0, 0);
-         MoveRegWork(r, 1);
-
-         if (ExtendedSubtract() ) {
-            MoveWorkReg(2, r);
-            WriteReg(r, r);
-            stacklift = true;
-            return;
-            }
-         return;
-         }
-      else
-            ;
-
-      }  /* while */
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *            Multiply X times Register           *
- *    *                                                *
- *    **************************************************
- */
-static void MultiplyXReg(void)
-{
-   int r;
-
-   Message("Multiply X times: Reg (0-9) or Esc:");
-
-   while ((chr = GetChar()) != ESCAPE) {
-
-      if (isdigit(chr) ) {
-         MessageEsc("Multiplying");
-
-         r = chr - '0';
-         MoveStackWork(0, 0);
-         MoveRegWork(r, 1);
-
-         if (ExtendedMultiply() ) {
-            MoveWorkReg(2, r);
-            WriteReg(r, r);
-            stacklift = true;
-            return;
-            }
-         return;
-         }
-      else
-            ;
-
-      }  /* while */
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *             Divide X into Register             *
- *    *                                                *
- *    **************************************************
- */
-static void DivideXReg(void)
-{
-   int r;
-
-   Message("Divide X into: Reg (0-9) or Esc:");
-
-   while ((chr = GetChar()) != ESCAPE) {
-
-      if (isdigit(chr) ) {
-         MessageEsc("Dividing");
-
-         r = chr - '0';
-         MoveStackWork(0, 0);
-         MoveRegWork(r, 1);
-
-         if (ExtendedDivide() ) {
-            MoveWorkReg(2, r);
-            WriteReg(r, r);
-            stacklift = true;
-            return;
-            }
-         return;
-         }
-      else
-            ;
-
-      }  /* while */
 }
 
 /*
@@ -1135,194 +940,22 @@ static void DivideXReg(void)
  *    *                                                *
  *    **************************************************
  */
-static void RecallReg(void)
+static void RecallReg(char chr)
 {
    int r;
 
-   Message("Recall to X: Press Reg (0-9) or Operation (+,-,*,/)"
-           " then Reg (0-9) or Esc:");
+   Message("Recall to X: Press Reg (0-9) or Esc:");
 
-   while ((chr = GetChar()) != ESCAPE) {
-
-      if (isdigit(chr) ) {
-         r = chr - '0';
-         if (stacklift)
-            PushStack();
-         stack[0] = reg[r];
-         if (stacklift)
-            WriteStack(0, 3);
-         else
-            WriteStack(0, 0);
-         stacklift = true;
-         return;
-         }
-
-      switch (chr) {
-
-         case (ADD):
-            AddRegX();
-            return;
-
-         case (SUBTRACT):
-            SubtractRegX();
-            return;
-
-         case (MULTIPLY):
-            MultiplyRegX();
-            return;
-
-         case (DIVIDE):
-            DivideRegX();
-            return;
-
-         default:
-            ;
-         }  /* switch */
-      } /* while */
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *               Add Register to X                *
- *    *                                                *
- *    **************************************************
- */
-static void AddRegX(void)
-{
-   int r;
-
-   Message("Add to X: Reg (0-9) or Esc:");
-
-   while ((chr = GetChar()) != ESCAPE) {
-
-      if (isdigit(chr) ) {
-         r = chr - '0';
-         MoveRegWork(r, 0);
-         MoveStackWork(0, 1);
-
-         if (ExtendedAdd() ) {
-            lastx = stack[0];
-            MoveWorkStack(2, 0);
-            WriteStack(0, 0);
-            stacklift = true;
-            return;
-            }
-         return;
-         }
-      else
-            ;
-
-      }  /* while */
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *           Subtract Register from X             *
- *    *                                                *
- *    **************************************************
- */
-static void SubtractRegX(void)
-{
-   int r;
-
-   Message("Subtract from X: Reg (0-9) or Esc:");
-
-   while ((chr = GetChar()) != ESCAPE) {
-
-      if (isdigit(chr) ) {
-         r = chr - '0';
-         MoveRegWork(r, 0);
-         MoveStackWork(0, 1);
-
-         if (ExtendedSubtract() ) {
-            lastx = stack[0];
-            MoveWorkStack(2, 0);
-            WriteStack(0, 0);
-            stacklift = true;
-            return;
-            }
-         return;
-         }
-      else
-            ;
-      }  /* while */
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *            Multiply Register times X           *
- *    *                                                *
- *    **************************************************
- */
-static void MultiplyRegX(void)
-{
-   int r;
-
-   Message("Multiply times X: Reg (0-9) or Esc:");
-
-   while ((chr = GetChar()) != ESCAPE) {
-
-      if (isdigit(chr) ) {
-         MessageEsc("Multiplying");
-
-         r = chr - '0';
-         MoveRegWork(r, 0);
-         MoveStackWork(0, 1);
-
-         if (ExtendedMultiply() ) {
-            lastx = stack[0];
-            MoveWorkStack(2, 0);
-            WriteStack(0, 0);
-            stacklift = true;
-            return;
-            }
-         return;
-         }
-      else
-            ;
-
-      } /* while */
-
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *             Divide Register into X             *
- *    *                                                *
- *    **************************************************
- */
-static void DivideRegX(void)
-{
-   int r;
-
-   Message("Divide into X: Reg (0-9) or Esc:");
-
-   while ((chr = GetChar()) != ESCAPE) {
-
-      if (isdigit(chr) ) {
-         MessageEsc("Dividing");
-
-         r = chr - '0';
-         MoveRegWork(r, 0);
-         MoveStackWork(0, 1);
-
-         if (ExtendedDivide() ) {
-            lastx = stack[0];
-            MoveWorkStack(2, 0);
-            WriteStack(0, 0);
-            stacklift = true;
-            return;
-            }
-         return;
-         }
-      else
-            ;
-
-      }  /* while */
+   r = chr - '0';
+   if (stacklift)
+      PushStack();
+   stack[0] = reg[r];
+   if (stacklift)
+      WriteStack(0, 3);
+   else
+      WriteStack(0, 0);
+   stacklift = true;
+   return;
 }
 
 /*
@@ -1766,10 +1399,6 @@ int dos_main(u16 inchr)
 {
    // Initialize(argc, argv[1]);
 
-   //  chr is a global var, used by ExtendedGetX() et al
-   // chr = GetPrompt();
-   chr = inchr ;  
-
    switch (inchr) {
    case ('0'):
    case ('1'):
@@ -1842,8 +1471,8 @@ int dos_main(u16 inchr)
    
    case (CHGSIGN):      ChangeSign();  break;      /* Change sign X */
    case (MENUROLL):     MenuRoll();   break;       /* Roll Function Key Menu */
-   case (STOREX):       StoreX();  break;          /* Store X in register (prompt for which) */
-   case (RECALLREG):    RecallReg(); break;        /* Recall register to X (prompt for which) */
+   case (STOREX):       StoreX('0');  break;          /* Store X in register (prompt for which) */
+   case (RECALLREG):    RecallReg('0'); break;        /* Recall register to X (prompt for which) */
    case (XCHGXY1):
    case (XCHGXY2):      ExchangeXY();  break;      /* Exchange X and Y */
    // case (XCHGXREG):     ExchangeXReg(); break;     /* Exchange X and Reg (prompt for which) */

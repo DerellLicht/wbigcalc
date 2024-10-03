@@ -2,14 +2,7 @@ Bugs in Win32 port of BigCalc
 Last Update: 10/02/24 11:44
 ==============================================================
 
-> Exchange X<-->Y and X<-->Reg
-
 > Store/Recall Registers
-
-> + - * / to/from Registers ... do I even need this?
-
-> finish eliminating GetChar() from the project
-Create child dialog to handle misc numeric data entry
 
 > we still need a help file
 
@@ -21,3 +14,9 @@ DDM 09/10/24
 Removed all 'print to printer/file' routines from Windows version.
 I don't really think those operations are required in a calculator such as this.
 Instead, I will try to make it possible to copy-and-paste from any display windows.
+
+DDM 10/03/24
+Removed add/subtract/multiply/divide with register commands, since they 
+require GetCh() operations which are awkward to implement in Windows,
+and I don't think they are very important.  
+They could be added later if someone wants to; use ExchangeXReg() as reference.
