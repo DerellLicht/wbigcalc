@@ -46,7 +46,6 @@
 
 static void restore_stack0(void);
 
-static  void Add(void);
 static  void Subtract(void);
 static  void Multiply(void);
 static  void Divide(void);
@@ -55,7 +54,6 @@ static  void SquareRoot(void);
 static  void Square(void);
 static  void Reciprocal(void);
 static  void Factorial(void);
-static  void IntegerPart(void);
 static  void FractionPart(void);
 static  void Sin(void);
 static  void ArcSin(void);
@@ -112,9 +110,9 @@ WORKTYPE work[3];          /* Work registers   */
 int
    normprec = 0,           /* Normal precision  */
    compprec = 0,           /* Compute precision */
-   workprec = 0,           /* Work precision    */
-   groupsize = 0;          /* Digit group size  */
-   // menunbr = 0;            /* Menu number       */
+   workprec = 0;           /* Work precision    */
+   
+uint groupsize = 0;          /* Digit group size  */
    
 static int chr = 0;                /* Input Character   */
 
@@ -207,12 +205,8 @@ static int GetChar(void)
 static void Add(void)
 {
    restore_stack0();
-   // dump_norm_reg(&stack[0], "stack0");
-   // dump_norm_reg(&stack[1], "stack1");
    MoveStackWork(0, 0);
    MoveStackWork(1, 1);
-   // dump_work_reg(&work[0], "work0");
-   // dump_work_reg(&work[1], "work1");
 
    if (ExtendedAdd() ) {
       lastx = stack[0];
@@ -300,13 +294,11 @@ static void Divide(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void Power(void)
-
 {
-
    MessageEsc("Computing Y^X");
 
+   restore_stack0();
    MoveStackWork(0, 0);
    MoveStackWork(1, 1);
 
@@ -319,11 +311,7 @@ static void Power(void)
          stacklift = true;
          }
       }
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -332,13 +320,11 @@ static void Power(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void SquareRoot(void)
-
 {
-
    MessageEsc("Computing ûX");
 
+   restore_stack0();
    MoveStackWork(0, 0);
    if (ExtendedSquareRoot() ) {
       lastx = stack[0];
@@ -346,11 +332,7 @@ static void SquareRoot(void)
       WriteStack(0, 0);
       stacklift = true;
       }
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -366,6 +348,7 @@ static void Square(void)
 
    MessageEsc("Computing Xý");
 
+   restore_stack0();
    MoveStackWork(0, 0);
    MoveStackWork(0, 1);
 
@@ -395,6 +378,7 @@ static void Reciprocal(void)
 
    MessageEsc("Computing 1/X");
 
+   restore_stack0();
    MoveStackWork(0, 0);
 
    if (ExtendedReciprocal() ) {
@@ -423,6 +407,7 @@ static void Factorial(void)
 
    MessageEsc("Computing X!");
 
+   restore_stack0();
    MoveStackWork(0, 0);
 
    if (ExtendedFactorial() ) {
@@ -444,11 +429,9 @@ static void Factorial(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void IntegerPart(void)
-
 {
-
+   restore_stack0();
    MoveStackWork(0, 0);
 
    if (ExtendedIntegerPart() ) {
@@ -457,11 +440,7 @@ static void IntegerPart(void)
       WriteStack(0, 0);
       stacklift = true;
       }
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -475,6 +454,7 @@ static void FractionPart(void)
 
 {
 
+   restore_stack0();
    MoveStackWork(0, 0);
 
    if (ExtendedFractionPart() ) {
@@ -503,6 +483,7 @@ static void Sin(void)
 
    MessageEsc("Computing SinX");
 
+   restore_stack0();
    MoveStackWork(0, 0);
 
    if (ExtendedSinCos(0) ) {
@@ -531,6 +512,7 @@ static void ArcSin(void)
 
    MessageEsc("Computing ArcSinX");
 
+   restore_stack0();
    MoveStackWork(0, 0);
 
    if (ExtendedArcSinCos(0) ) {
@@ -559,6 +541,7 @@ static void Cos(void)
 
    MessageEsc("Computing CosX");
 
+   restore_stack0();
    MoveStackWork(0, 0);
 
    if (ExtendedSinCos(1) ) {
@@ -587,6 +570,7 @@ static void ArcCos(void)
 
    MessageEsc("Computing ArcCosX");
 
+   restore_stack0();
    MoveStackWork(0, 0);
 
    if (ExtendedArcSinCos(1) ) {
@@ -615,6 +599,7 @@ static void Tan(void)
 
    MessageEsc("Computing TanX");
 
+   restore_stack0();
    MoveStackWork(0, 0);
 
    if (ExtendedTan() ) {
@@ -643,6 +628,7 @@ static void ArcTan(void)
 
    MessageEsc("Computing ArcTanX");
 
+   restore_stack0();
    MoveStackWork(0, 0);
 
    if (ExtendedArcTan() ) {
@@ -671,6 +657,7 @@ static void Log(void)
 
    MessageEsc("Computing LogX");
 
+   restore_stack0();
    MoveStackWork(0, 0);
 
    if (ExtendedLog() ) {
@@ -699,6 +686,7 @@ static void Exp10(void)
 
    MessageEsc("Computing 10^X");
 
+   restore_stack0();
    MoveStackWork(0, 0);
 
    if (ExtendedExp10() ) {
@@ -727,6 +715,7 @@ static void Ln(void)
 
    MessageEsc("Computing lnX");
 
+   restore_stack0();
    MoveStackWork(0, 0);
 
    if (ExtendedLn() ) {
@@ -755,6 +744,7 @@ static void ExpE(void)
 
    MessageEsc("Computing e^X");
 
+   restore_stack0();
    MoveStackWork(0, 0);
 
    if (ExtendedExpE() ) {
@@ -1486,6 +1476,165 @@ static void DropStack(void)
 
    for (s = 0; s <= 2; s++)
       stack[s] = stack[s + 1];
+}
+
+//**********************************************************************
+// DNR: [dump stack 0: 2,+,50: 2,8,9,4,8,2,2,9,6,5,2,2,6,0,2,5,7,0,0,1,5,0,0,1,1,1,3,9,4,3,2,7,8,6,9,1,2,1,3,1,8,2,8,7,8,1,5,4,2,6,]
+// slen = sprintf(outmsg, "%s: %ld,%c,%d: ", msg, nptr->exp, nptr->sign, nptr->digits);
+// for (idx=0; idx<nptr->digits; idx++) {
+//    slen += sprintf(&outmsg[slen], "%d,", nptr->man[idx]);
+// }
+//  nptr->digits is total number of digits in value
+//  nptr->exp is number of digits before decimal point
+ //**********************************************************************
+static char *form_full_view_str(NORMTYPE *nfield)
+{
+   static char view_str[1100] = "" ;
+   uint outidx = 0 ; //  index into outstr
+   uint inidx ;  //  index for walking data
+   uint slen = nfield->digits ;
+   int expdigits = nfield->exp ;
+   uint mspan ;
+   if (expdigits >= 0) {
+      mspan = (uint) expdigits % groupsize ;
+   }
+   else {
+      mspan = (uint) -expdigits % groupsize ;
+   }
+   if (mspan == 0) {
+      mspan = groupsize ;
+   }
+   
+   if (slen == 0) {
+      sprintf(view_str, "empty");
+   }
+   //  .1
+   // DNR: [dump stack 0: 0,+,1: 1,]
+   // X:    0*142 857 142 857 142 857 142 857 142 857 142 857 142 857 142 857 14   
+   // [dump stack 0: 0,+,50: 1,4,2,8,5,7,1,4,2,8,5,7,1,4,2,8,5,7,1,4,2,8,5,7,1,4,2,8,5,7,1,4,2,8,5,7,1,4,2,8,5,7,1,4,2,8,5,7,1,4,]
+   else if (expdigits == 0) {
+      outidx = sprintf(view_str, "%c0*", nfield->sign);
+      for (inidx=0; inidx < slen; inidx++) {
+         outidx += sprintf(&view_str[outidx], "%u", nfield->man[inidx]);   //lint !e705
+         if (--mspan == 0) {
+            // if (mspan != groupsize) {
+            //    syslog("mspan: %u, inidx: %u, expdigits: %u\n", mspan, inidx, expdigits);
+            // }
+            outidx += sprintf(&view_str[outidx], " ");
+            mspan = groupsize ;
+         }
+         
+      }
+   }
+   //  0.00031...
+   // X: 0*00031 04625 89257 99441 16733 93356 10058 98789 19590 18938 217
+   //  .0002308...
+   // DNR: [dump stack 0: -3,+,50: 2,3,0,8,4,0,2,5,8,5,4,1,0,8,9,5,6,6,0,2,0,3,1,3,9,4,2,7,5,1,6,1,5,8,8,1,8,0,9,7,8,7,6,2,6,9,6,2,1,4,]
+   else if (expdigits < 0) {
+      uint zeroes = -expdigits ;
+      outidx = sprintf(view_str, "%c0*", nfield->sign);
+      mspan = groupsize ;
+      for (inidx=0; inidx < zeroes; inidx++) {
+         outidx += sprintf(&view_str[outidx], "0");   //lint !e705
+         if (--mspan == 0) {
+            //   &&  (uint) expdigits != slen
+            outidx += sprintf(&view_str[outidx], " ");
+            mspan = groupsize ;
+         }
+      }
+      
+      for (inidx=0; inidx < slen; inidx++) {
+         outidx += sprintf(&view_str[outidx], "%u", nfield->man[inidx]);   //lint !e705
+         // syslog("mspan: %u, inidx: %u, expdigits: %u, slen: %u, groupsize: %u\n", 
+         //    mspan, inidx, expdigits, slen, groupsize);
+         if (--mspan == 0) {
+            outidx += sprintf(&view_str[outidx], " ");
+            mspan = groupsize ;
+         }
+      }
+   }
+   //  else expdigits > 0
+   // [dump stack 0: 2,+,50: 2,8,9,4,8,2,2,9,6,5,2,2,6,0,2,5,7,0,0,1,5,0,0,1,1,1,3,9,4,3,2,7,8,6,9,1,2,1,3,1,8,2,8,7,8,1,5,4,2,6,]
+   //  slen = 50
+   //  expdigits = 2
+   //  mspan = 2
+   // [dump stack 0: 4,+,50: 2,3,5,6,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,]
+   // X:  +2356 87878 78787 87878 78787 87878 78787 87878 78787 87878 7
+   //  slen = 50
+   //  expdigits = 4
+   //  mspan = 4
+   else {
+      outidx = sprintf(view_str, "%c", nfield->sign);
+      for (inidx=0; inidx < slen; inidx++) {
+         outidx += sprintf(&view_str[outidx], "%u", nfield->man[inidx]);   //lint !e705
+         // syslog("mspan: %u, inidx: %u, expdigits: %u, slen: %u, groupsize: %u\n", 
+         //    mspan, inidx, expdigits, slen, groupsize);
+         if (--mspan == 0) {
+            //   &&  (uint) expdigits != slen
+            if ((inidx+1) == (uint) expdigits) {
+               if (slen != (uint) expdigits) {
+                  outidx += sprintf(&view_str[outidx], "*");
+               }
+            }
+            else {
+               outidx += sprintf(&view_str[outidx], " ");
+            }
+            mspan = groupsize ;
+         }
+         
+      }
+   }
+   return (view_str);
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *             View Register on Screen            *
+ *    *                                                *
+ *    **************************************************
+ */
+void view_stack_or_register(uint target)
+{
+   uint r;
+   NORMTYPE *nfield ;
+   // char msg[20] ;
+   char *regstr ;
+
+   switch (target) {
+   case IDB_VIEW_R0:
+   case IDB_VIEW_R1:
+   case IDB_VIEW_R2:
+   case IDB_VIEW_R3:
+   case IDB_VIEW_R4:
+   case IDB_VIEW_R5:
+   case IDB_VIEW_R6:
+   case IDB_VIEW_R7:
+   case IDB_VIEW_R8:
+   case IDB_VIEW_R9:
+      r = target - IDB_VIEW_R0 ;
+      // sprintf(msg, "dump register %u", r);
+      nfield = &reg[r];
+      regstr = form_full_view_str(nfield);
+      view_data_field_full(r, regstr);
+      // dump_norm_reg(nfield, msg);
+      break ;
+      
+   case IDB_VIEW_X:
+   case IDB_VIEW_Y:
+   case IDB_VIEW_Z:
+   case IDB_VIEW_T:
+      r = target - IDB_VIEW_X ;
+      // sprintf(msg, "dump stack %u", r);
+      nfield = &stack[r];
+      regstr = form_full_view_str(nfield);
+      view_data_field_full(r+10, regstr);
+      // dump_norm_reg(nfield, msg);
+      break ;
+      
+   default:
+      return ;
+   }
 }
 
 //*********************************************************************

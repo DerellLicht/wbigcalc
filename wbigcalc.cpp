@@ -38,6 +38,7 @@ static HWND hwndMain = NULL ;
 static HWND hwndTitle = NULL ;
 static HWND hwndMsg = NULL ;
 static HWND hwndKbdState = NULL ;
+static HWND hwndViewFrame = NULL ;
 
 static HWND hwndRegs[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ;
 static HWND hwndStack[4] = { 0, 0, 0, 0 } ;
@@ -69,24 +70,25 @@ static void set_control_font(HWND hwnd, TCHAR *fname, uint fheight, uint flags)
 //**********************************************************************
 static void set_hwnd_values(void)
 {
-   hwndMsg      = GetDlgItem(hwndMain, IDC_MSG) ;
-   hwndKbdState = GetDlgItem(hwndMain, IDC_KSTATE) ;
+   hwndMsg       = GetDlgItem(hwndMain,  IDC_MSG) ;
+   hwndKbdState  = GetDlgItem(hwndMain,  IDC_KSTATE) ;
+   hwndViewFrame = GetDlgItem(hwndMain, IDC_VIEW_DATA) ;
    
-   hwndRegs[0]  = GetDlgItem(hwndMain, IDC_R0) ;
-   hwndRegs[1]  = GetDlgItem(hwndMain, IDC_R1) ;
-   hwndRegs[2]  = GetDlgItem(hwndMain, IDC_R2) ;
-   hwndRegs[3]  = GetDlgItem(hwndMain, IDC_R3) ;
-   hwndRegs[4]  = GetDlgItem(hwndMain, IDC_R4) ;
-   hwndRegs[5]  = GetDlgItem(hwndMain, IDC_R5) ;
-   hwndRegs[6]  = GetDlgItem(hwndMain, IDC_R6) ;
-   hwndRegs[7]  = GetDlgItem(hwndMain, IDC_R7) ;
-   hwndRegs[8]  = GetDlgItem(hwndMain, IDC_R8) ;
-   hwndRegs[9]  = GetDlgItem(hwndMain, IDC_R9) ;
-   
-   hwndStack[0] = GetDlgItem(hwndMain, IDC_REG_X) ;
-   hwndStack[1] = GetDlgItem(hwndMain, IDC_REG_Y);
-   hwndStack[2] = GetDlgItem(hwndMain, IDC_REG_Z) ;
-   hwndStack[3] = GetDlgItem(hwndMain, IDC_REG_T) ;
+   hwndRegs[0]   = GetDlgItem(hwndMain, IDC_R0) ;
+   hwndRegs[1]   = GetDlgItem(hwndMain, IDC_R1) ;
+   hwndRegs[2]   = GetDlgItem(hwndMain, IDC_R2) ;
+   hwndRegs[3]   = GetDlgItem(hwndMain, IDC_R3) ;
+   hwndRegs[4]   = GetDlgItem(hwndMain, IDC_R4) ;
+   hwndRegs[5]   = GetDlgItem(hwndMain, IDC_R5) ;
+   hwndRegs[6]   = GetDlgItem(hwndMain, IDC_R6) ;
+   hwndRegs[7]   = GetDlgItem(hwndMain, IDC_R7) ;
+   hwndRegs[8]   = GetDlgItem(hwndMain, IDC_R8) ;
+   hwndRegs[9]   = GetDlgItem(hwndMain, IDC_R9) ;
+                 
+   hwndStack[0]  = GetDlgItem(hwndMain, IDC_REG_X) ;
+   hwndStack[1]  = GetDlgItem(hwndMain, IDC_REG_Y);
+   hwndStack[2]  = GetDlgItem(hwndMain, IDC_REG_Z) ;
+   hwndStack[3]  = GetDlgItem(hwndMain, IDC_REG_T) ;
    
 }
 
@@ -109,6 +111,24 @@ void status_message(uint idx, char *msgstr)
 void show_keyboard_state(char *msg)
 {
    SetWindowText(hwndKbdState, msg) ;
+}
+
+//*************************************************************
+static char const stackLtr[5] = "XYZT" ;
+
+void view_data_field_full(uint fidx, char *fstr)
+{
+   uint r ;
+   char view_str[1100] = "" ;
+   if (fidx >= 10) {
+      r = fidx - 10 ;   //  stack index
+      sprintf(view_str, "%c:  %s", stackLtr[r], fstr);
+   }
+   else {
+      r = fidx ;
+      sprintf(view_str, "R%u:  %s", r, fstr);
+   }
+   SetWindowText(hwndViewFrame, view_str) ;
 }
 
 //*************************************************************
@@ -167,25 +187,25 @@ IDC_KEYS,
 IDS_KEYS,
 IDB_LAST_X,
 IDB_HELP  ,
-IDB_Y2X   ,
-IDB_SQRT  ,
-IDB_XSQRD ,
-IDB_INVX  ,
-IDB_XFACT ,
-IDB_INT   ,
-IDB_FRAC  ,
+// IDB_Y2X   ,
+// IDB_SQRT  ,
+// IDB_XSQRD ,
+// IDB_INVX  ,
+// IDB_XFACT ,
+// IDB_INT   ,
+// IDB_FRAC  ,
 IDB_PI    ,
 IDB_ECONST,
-IDB_SINX  ,
-IDB_ASINX ,
-IDB_COSX  ,
-IDB_ACOSX ,
-IDB_TANX  ,
-IDB_ATANX ,
-IDB_LOGX  ,
-IDB_102X  ,
-IDB_LNX   ,
-IDB_E2X   ,
+// IDB_SINX  ,
+// IDB_ASINX ,
+// IDB_COSX  ,
+// IDB_ACOSX ,
+// IDB_TANX  ,
+// IDB_ATANX ,
+// IDB_LOGX  ,
+// IDB_102X  ,
+// IDB_LNX   ,
+// IDB_E2X   ,
 0 } ;
 
 void show_hide_buttons(bool show)
@@ -379,6 +399,26 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
             clear_stack_or_register(target);
             break ;
                
+         //**************************************************
+         //  view data field with all digits
+         //**************************************************
+         case IDB_VIEW_R0:
+         case IDB_VIEW_R1:
+         case IDB_VIEW_R2:
+         case IDB_VIEW_R3:
+         case IDB_VIEW_R4:
+         case IDB_VIEW_R5:
+         case IDB_VIEW_R6:
+         case IDB_VIEW_R7:
+         case IDB_VIEW_R8:
+         case IDB_VIEW_R9:
+         case IDB_VIEW_X:
+         case IDB_VIEW_Y:
+         case IDB_VIEW_Z:
+         case IDB_VIEW_T:
+            view_stack_or_register(target);
+            break ;
+         
          case IDB_CLOSE:
             PostMessageA(hDlgWnd, WM_CLOSE, 0, 0);
             break;

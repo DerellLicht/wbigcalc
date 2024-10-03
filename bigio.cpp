@@ -156,7 +156,6 @@ void MessageWait(char *msg)
    strcpy(tmsg, msg);
    if (*tmsg)
       strcat(tmsg, "  ");
-   strcat(tmsg, "(Press a key to continue)");
 
    MessageBox(NULL, tmsg, NULL, MB_OK | MB_ICONEXCLAMATION);
 }
@@ -175,7 +174,6 @@ void MessageEsc(char *msg)
    strcpy(tmsg, msg);
    if (*tmsg)
       strcat(tmsg, "... ");
-   strcat(tmsg, "(Press Esc to abort)");
 
    Message(tmsg);
 }

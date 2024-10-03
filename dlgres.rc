@@ -205,6 +205,11 @@ BEGIN
    PUSHBUTTON      "Ln(X)",   IDB_LNX,    XB9,  YB3, DXB,  12
    PUSHBUTTON      "e^X",     IDB_E2X,    XB0,  YB3, DXB,  12
 
+//  hideable multi-line edit control for showing large registers
+#define  YB4      (YB3 + 16)
+   // EDITTEXT IDC_VIEW_DATA, PI_X, YB4, 200, 50,ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY
+   EDITTEXT IDC_VIEW_DATA, PI_X, YB4, REGS_GRP_DX, 50,ES_MULTILINE | ES_READONLY
+   
    
 END
 

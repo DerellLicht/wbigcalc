@@ -268,7 +268,7 @@ void show_status_info(void)
    sprintf (tempstr, " Precision: %d", normprec);
    status_message(1, tempstr);
    
-   sprintf (tempstr, " dgroup: %d", groupsize);
+   sprintf (tempstr, " dgroup: %u", groupsize);
    status_message(2, tempstr);
 }
 

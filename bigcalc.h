@@ -101,8 +101,9 @@ extern WORKTYPE
 extern int
    normprec,               /* Normal precision  */
    compprec,               /* Compute precision */
-   workprec,               /* Work precision    */
-   groupsize;              /* Digit group size  */
+   workprec;               /* Work precision    */
+   
+extern uint groupsize;              /* Digit group size  */
    // menunbr;                /* Menu number       */
    
 // extern long
@@ -133,10 +134,16 @@ extern bool scinotation;   /* Force sci notation if TRUE   */
 //  wbigcalc.cpp
 void status_message(char *msgstr);
 void status_message(unsigned idx, char *msgstr);
+void put_stack(unsigned n, char *msg);
+void put_register(unsigned n, char *msg);
+void show_hide_buttons(bool show);
+void view_data_field_full(uint fidx, char *fstr);
 
 //  bigcalc.cpp
 void Initialize(int argc, char *argv);
 int dos_main(u16 inchr);
+void view_stack_or_register(uint target);
+void clear_stack_or_register(uint button_code);
 
 //  bigio.cpp
 void reset_output_str(void);
@@ -145,6 +152,11 @@ uint get_output_str_len(void);
 
 //  bigmisc.cpp
 void getx_clear_output_str(void);
+
+//  debug dump functions
+void dump_norm_reg(NORMTYPE *nptr, char *msg);
+void dump_work_reg(WORKTYPE *nptr, char *msg);
+void dump_stack(WORKTYPE *nptr, char *msg);
 
 //*********************************************************************************
 //  manage keyboard state machine
@@ -169,21 +181,6 @@ void show_keyboard_state(char *msg);
 void init_getx_vars(void);
 bool ExtendedGetX(u16 inchr);
 int  move_local_to_work0(void);
-
-//  wbigcalc.cpp
-void show_hide_buttons(bool show);
-
-//  bigcalc.cpp
-void clear_stack_or_register(uint button_code);
-
-//  Windows functions
-void put_stack(unsigned n, char *msg);
-void put_register(unsigned n, char *msg);
-
-//  debug dump functions
-void dump_norm_reg(NORMTYPE *nptr, char *msg);
-void dump_work_reg(WORKTYPE *nptr, char *msg);
-void dump_stack(WORKTYPE *nptr, char *msg);
 
 /*
  *    **************************************************

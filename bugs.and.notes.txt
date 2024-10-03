@@ -2,12 +2,14 @@ Bugs in Win32 port of BigCalc
 Last Update: 10/02/24 11:44
 ==============================================================
 
-> continue adding button functions to project
-All button functions need the same "clean up X" code as Add() etc required
-
-> LastX doesn't work
+> implement ChgSign in non-data-entry mode
 
 > finish eliminating GetChar() from the project
+Create child dialog to handle misc numeric data entry
+
+> we still need a help file
+
+> LastX doesn't work... sorta... sometimes...
 
 ==============================================================
 Notes:
