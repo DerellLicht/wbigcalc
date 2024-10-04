@@ -910,57 +910,6 @@ void clear_stack_or_register(uint button_code)
 /*
  *    **************************************************
  *    *                                                *
- *    *              Store X in Register               *
- *    *                                                *
- *    *             Allows + - * / as well             *
- *    *                                                *
- *    **************************************************
- */
-static void StoreX(char chr)
-{
-   int r;
-
-   Message("Store X to: Press Reg (0-9) or Operation (+,-,*,/) then Reg (0-9) or Esc:");
-
-
-      if (isdigit(chr) ) {
-         r = chr - '0';
-         reg[r] = stack[0];
-         WriteReg(r, r);
-         stacklift = true;
-         return;
-      }
-
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *             Recall Register to X               *
- *    *                                                *
- *    **************************************************
- */
-static void RecallReg(char chr)
-{
-   int r;
-
-   Message("Recall to X: Press Reg (0-9) or Esc:");
-
-   r = chr - '0';
-   if (stacklift)
-      PushStack();
-   stack[0] = reg[r];
-   if (stacklift)
-      WriteStack(0, 3);
-   else
-      WriteStack(0, 0);
-   stacklift = true;
-   return;
-}
-
-/*
- *    **************************************************
- *    *                                                *
  *    *                Exchange X & Y                  *
  *    *                                                *
  *    **************************************************
@@ -993,8 +942,6 @@ static void ExchangeXY(void)
  *    *                                                *
  *    **************************************************
  */
-extern void show_hide_view_xchg_buttons(bool show);
-
 static void exit_from_xchg_reg_state(void)
 {
    Message("");
@@ -1016,7 +963,7 @@ static void ExchangeXReg(void)
    }
 }
 
-void xchg_x_with_reg(uint target)
+void ExchangeXReg_exec(uint target)
 {
    NORMTYPE *temp;
    uint r = target - IDB_XCHG_R0 ;
@@ -1033,6 +980,49 @@ void xchg_x_with_reg(uint target)
    stacklift = true;
    free(temp);
    exit_from_xchg_reg_state();
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *              Store X in Register               *
+ *    *                                                *
+ *    *             Allows + - * / as well             *
+ *    *                                                *
+ *    **************************************************
+ */
+static void StoreX(char chr)
+{
+   Message("Store X to: Press Reg (0-9) or Esc:");
+
+   int r = chr - '0';
+   reg[r] = stack[0];
+   WriteReg(r, r);
+   stacklift = true;
+
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *             Recall Register to X               *
+ *    *                                                *
+ *    **************************************************
+ */
+static void RecallReg(char chr)
+{
+   Message("Recall to X: Press Reg (0-9) or Esc:");
+
+   int r = chr - '0';
+   if (stacklift)
+      PushStack();
+   stack[0] = reg[r];
+   if (stacklift)
+      WriteStack(0, 3);
+   else
+      WriteStack(0, 0);
+   stacklift = true;
+   return;
 }
 
 /*
@@ -1468,11 +1458,11 @@ int dos_main(u16 inchr)
    
    case (CHGSIGN):      ChangeSign();  break;      /* Change sign X */
    case (MENUROLL):     MenuRoll();   break;       /* Roll Function Key Menu */
-   case (STOREX):       StoreX('0');  break;          /* Store X in register (prompt for which) */
-   case (RECALLREG):    RecallReg('0'); break;        /* Recall register to X (prompt for which) */
    case (XCHGXY1):
-   case (XCHGXY2):      ExchangeXY();  break;      /* Exchange X and Y */
+   case (XCHGXY2):      ExchangeXY();   break;     /* Exchange X and Y */
    case (XCHGXREG):     ExchangeXReg(); break;     /* Exchange X and Reg (prompt for which) */
+   case (STOREX):       StoreX('0');    break;     /* Store X in register (prompt for which) */
+   case (RECALLREG):    RecallReg('0'); break;     /* Recall register to X (prompt for which) */
    default:
       ;              /* Unknown key */
 

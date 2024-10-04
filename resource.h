@@ -121,6 +121,8 @@
 #define  IDB_CHG_SIGN      407
 #define  IDB_XCHG_X_Y      408
 #define  IDB_XCHG_X_R      409
+#define  IDB_STORE_X       440
+#define  IDB_RECALL_X      441
 
 //  button row 2
 #define  IDB_HELP          410
@@ -145,3 +147,25 @@
 #define  IDB_102X          427
 #define  IDB_LNX           428
 #define  IDB_E2X           429
+
+#define  IDB_STOR_R0       440
+#define  IDB_STOR_R1       441
+#define  IDB_STOR_R2       442
+#define  IDB_STOR_R3       443
+#define  IDB_STOR_R4       444
+#define  IDB_STOR_R5       445
+#define  IDB_STOR_R6       446
+#define  IDB_STOR_R7       447
+#define  IDB_STOR_R8       448
+#define  IDB_STOR_R9       449
+
+#define  IDB_RCALL_R0      460
+#define  IDB_RCALL_R1      461
+#define  IDB_RCALL_R2      462
+#define  IDB_RCALL_R3      463
+#define  IDB_RCALL_R4      464
+#define  IDB_RCALL_R5      465
+#define  IDB_RCALL_R6      466
+#define  IDB_RCALL_R7      467
+#define  IDB_RCALL_R8      468
+#define  IDB_RCALL_R9      469

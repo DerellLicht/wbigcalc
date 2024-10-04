@@ -332,6 +332,32 @@ IDB_XCHG_R8,
 IDB_XCHG_R9,
 0 } ;
 
+static uint const stor_button_ids[] = {
+IDB_STOR_R0,
+IDB_STOR_R1,
+IDB_STOR_R2,
+IDB_STOR_R3,
+IDB_STOR_R4,
+IDB_STOR_R5,
+IDB_STOR_R6,
+IDB_STOR_R7,
+IDB_STOR_R8,
+IDB_STOR_R9,
+0 } ;
+
+static uint const rcall_button_ids[] = {
+IDB_RCALL_R0,
+IDB_RCALL_R1,
+IDB_RCALL_R2,
+IDB_RCALL_R3,
+IDB_RCALL_R4,
+IDB_RCALL_R5,
+IDB_RCALL_R6,
+IDB_RCALL_R7,
+IDB_RCALL_R8,
+IDB_RCALL_R9,
+0 } ;
+
 void show_hide_view_xchg_buttons(bool show_xchg)
 {
    uint idx ;
@@ -346,6 +372,48 @@ void show_hide_view_xchg_buttons(bool show_xchg)
    else {
       for (idx=0; xchg_button_ids[idx]; idx++) {
          ShowWindow(GetDlgItem(hwndMain, xchg_button_ids[idx]), SW_HIDE);
+      }
+      for (idx=0; view_button_ids[idx]; idx++) {
+         ShowWindow(GetDlgItem(hwndMain, view_button_ids[idx]), SW_SHOW);
+      }
+   }
+}
+
+void show_hide_view_stor_buttons(bool show)
+{
+   uint idx ;
+   if (show) {
+      for (idx=0; view_button_ids[idx]; idx++) {
+         ShowWindow(GetDlgItem(hwndMain, view_button_ids[idx]), SW_HIDE);
+      }
+      for (idx=0; stor_button_ids[idx]; idx++) {
+         ShowWindow(GetDlgItem(hwndMain, stor_button_ids[idx]), SW_SHOW);
+      }
+   }
+   else {
+      for (idx=0; stor_button_ids[idx]; idx++) {
+         ShowWindow(GetDlgItem(hwndMain, stor_button_ids[idx]), SW_HIDE);
+      }
+      for (idx=0; view_button_ids[idx]; idx++) {
+         ShowWindow(GetDlgItem(hwndMain, view_button_ids[idx]), SW_SHOW);
+      }
+   }
+}
+
+void show_hide_view_rcall_buttons(bool show)
+{
+   uint idx ;
+   if (show) {
+      for (idx=0; view_button_ids[idx]; idx++) {
+         ShowWindow(GetDlgItem(hwndMain, view_button_ids[idx]), SW_HIDE);
+      }
+      for (idx=0; rcall_button_ids[idx]; idx++) {
+         ShowWindow(GetDlgItem(hwndMain, rcall_button_ids[idx]), SW_SHOW);
+      }
+   }
+   else {
+      for (idx=0; rcall_button_ids[idx]; idx++) {
+         ShowWindow(GetDlgItem(hwndMain, rcall_button_ids[idx]), SW_HIDE);
       }
       for (idx=0; view_button_ids[idx]; idx++) {
          ShowWindow(GetDlgItem(hwndMain, view_button_ids[idx]), SW_SHOW);
@@ -493,6 +561,8 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
          case IDB_CHG_SIGN:  dos_main(CHGSIGN); break ;
          case IDB_XCHG_X_Y:  dos_main(XCHGXY1); break ;
          case IDB_XCHG_X_R:  dos_main(XCHGXREG); break ;
+         case IDB_STORE_X:   dos_main(STOREX); break ;
+         case IDB_RECALL_X:  dos_main(RECALLREG); break ;
                                         
          //  button row 2
          case IDB_HELP  :    dos_main(HELP); break ;
@@ -571,7 +641,7 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
          case IDB_XCHG_R7:
          case IDB_XCHG_R8:
          case IDB_XCHG_R9:
-            xchg_x_with_reg(target);
+            ExchangeXReg_exec(target);
             break ;
          
          case IDB_CLOSE:

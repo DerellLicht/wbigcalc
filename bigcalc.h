@@ -145,7 +145,10 @@ void Initialize(int argc, char *argv);
 int dos_main(u16 inchr);
 void view_stack_or_register(uint target);
 void clear_stack_or_register(uint button_code);
-void xchg_x_with_reg(uint target);
+void ExchangeXReg_exec(uint target);
+void show_hide_view_xchg_buttons(bool show);
+void show_hide_view_stor_buttons(bool show);
+void show_hide_view_rcall_buttons(bool show);
 
 //  bigio.cpp
 void reset_output_str(void);
