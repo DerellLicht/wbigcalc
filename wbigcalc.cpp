@@ -288,13 +288,19 @@ IDB_102X  ,
 IDB_LNX   ,
 IDB_E2X   ,
 IDB_CHG_SIGN,
+IDB_XCHG_X_R,
+IDB_STORE_X,
+IDB_RECALL_X,
 0 } ;
 
-void show_hide_all_buttons(bool show)
+void show_hide_all_buttons(bool show, uint except_id)
 {
    uint idx ;
    for (idx=0; show_hide_all_button_ids[idx]; idx++) {
-      ShowWindow(GetDlgItem(hwndMain, show_hide_all_button_ids[idx]), (show) ? SW_SHOW : SW_HIDE);
+      
+      if (show_hide_all_button_ids[idx] != except_id) {
+         ShowWindow(GetDlgItem(hwndMain, show_hide_all_button_ids[idx]), (show) ? SW_SHOW : SW_HIDE);
+      }
    }
 }
 
@@ -642,6 +648,34 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
          case IDB_XCHG_R8:
          case IDB_XCHG_R9:
             ExchangeXReg_exec(target);
+            break ;
+         
+         //  only active Exchange X with Register state
+         case IDB_STOR_R0:
+         case IDB_STOR_R1:
+         case IDB_STOR_R2:
+         case IDB_STOR_R3:
+         case IDB_STOR_R4:
+         case IDB_STOR_R5:
+         case IDB_STOR_R6:
+         case IDB_STOR_R7:
+         case IDB_STOR_R8:
+         case IDB_STOR_R9:
+            StoreX_exec(target);
+            break ;
+         
+         //  only active Exchange X with Register state
+         case IDB_RCALL_R0:
+         case IDB_RCALL_R1:
+         case IDB_RCALL_R2:
+         case IDB_RCALL_R3:
+         case IDB_RCALL_R4:
+         case IDB_RCALL_R5:
+         case IDB_RCALL_R6:
+         case IDB_RCALL_R7:
+         case IDB_RCALL_R8:
+         case IDB_RCALL_R9:
+            RecallReg_exec(target);
             break ;
          
          case IDB_CLOSE:

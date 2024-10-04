@@ -68,7 +68,6 @@ static  void RecallPi(void);
 static  void RecallE(void);
 static  void RecallLastX(void);
 static  void GroupSize(void);
-static  void MenuRoll(void);
 static  void SciNotation(void);
 static  void RollDown(void);
 static  void RollUp(void);
@@ -835,19 +834,6 @@ static void GroupSize(void)
 /*
  *    **************************************************
  *    *                                                *
- *    *             Roll Function Key Menu             *
- *    *                                                *
- *    **************************************************
- */
-static void MenuRoll(void)
-{
-   // menunbr = 1 - menunbr;     /* Toggle menunbr 0/1 */
-   // OnScreenMenu();
-}
-
-/*
- *    **************************************************
- *    *                                                *
  *    *          Toggle Scientific Notation            *
  *    *                                                *
  *    **************************************************
@@ -946,7 +932,7 @@ static void exit_from_xchg_reg_state(void)
 {
    Message("");
    show_hide_view_xchg_buttons(false);
-   show_hide_all_buttons(true);
+   show_hide_all_buttons(true, IDB_XCHG_X_R);
    keyboard_state_set(KBD_STATE_DEFAULT) ;
 }
 
@@ -955,7 +941,7 @@ static void ExchangeXReg(void)
    if (keyboard_state_get() == KBD_STATE_DEFAULT) {
       Message("Exchange X with Register: Press <Xchg> button by register, or 'XChg X/R'");
       show_hide_view_xchg_buttons(true);
-      show_hide_all_buttons(false);
+      show_hide_all_buttons(false, IDB_XCHG_X_R);
       keyboard_state_set(KBD_STATE_GETREG) ;
    }
    else {
@@ -991,15 +977,36 @@ void ExchangeXReg_exec(uint target)
  *    *                                                *
  *    **************************************************
  */
-static void StoreX(char chr)
+static void exit_from_store_reg_state(void)
 {
-   Message("Store X to: Press Reg (0-9) or Esc:");
+   Message("");
+   show_hide_view_stor_buttons(false);
+   show_hide_all_buttons(true, IDB_STORE_X);
+   keyboard_state_set(KBD_STATE_DEFAULT) ;
+}
 
-   int r = chr - '0';
+static void StoreX(void)
+{
+   if (keyboard_state_get() == KBD_STATE_DEFAULT) {
+      Message("Store X to Register: Press <Stor> button by register, or 'Store X' to exit");
+      show_hide_view_stor_buttons(true);
+      show_hide_all_buttons(false, IDB_STORE_X);
+      keyboard_state_set(KBD_STATE_GETREG) ;
+   }
+   else {
+      exit_from_store_reg_state();
+   }
+}
+
+void StoreX_exec(uint target)
+{
+   Message("");
+
+   uint r = target - IDB_STOR_R0 ;
    reg[r] = stack[0];
    WriteReg(r, r);
+   exit_from_store_reg_state();
    stacklift = true;
-
 }
 
 /*
@@ -1009,18 +1016,42 @@ static void StoreX(char chr)
  *    *                                                *
  *    **************************************************
  */
-static void RecallReg(char chr)
+static void exit_from_recall_reg_state(void)
+{
+   Message("");
+   show_hide_view_rcall_buttons(false);
+   show_hide_all_buttons(true, IDB_RECALL_X);
+   keyboard_state_set(KBD_STATE_DEFAULT) ;
+}
+
+static void RecallReg(void)
 {
    Message("Recall to X: Press Reg (0-9) or Esc:");
+   if (keyboard_state_get() == KBD_STATE_DEFAULT) {
+      Message("Recall X from Register: Press <Rcall> button by register, or 'Recall X' to exit");
+      show_hide_view_rcall_buttons(true);
+      show_hide_all_buttons(false, IDB_RECALL_X);
+      keyboard_state_set(KBD_STATE_GETREG) ;
+   }
+   else {
+      exit_from_recall_reg_state();
+   }
+   return;
+}
 
-   int r = chr - '0';
-   if (stacklift)
-      PushStack();
+void RecallReg_exec(uint target)
+{
+   Message("");
+
+   uint r = target - IDB_RCALL_R0 ;
+   // if (stacklift)
+   //    PushStack();
    stack[0] = reg[r];
-   if (stacklift)
-      WriteStack(0, 3);
-   else
+   // if (stacklift)
+   //    WriteStack(0, 3);
+   // else
       WriteStack(0, 0);
+      exit_from_recall_reg_state();
    stacklift = true;
    return;
 }
@@ -1457,12 +1488,11 @@ int dos_main(u16 inchr)
    case (EXPE  ):       ExpE(); break;             /* Exponent e^X */
    
    case (CHGSIGN):      ChangeSign();  break;      /* Change sign X */
-   case (MENUROLL):     MenuRoll();   break;       /* Roll Function Key Menu */
    case (XCHGXY1):
    case (XCHGXY2):      ExchangeXY();   break;     /* Exchange X and Y */
    case (XCHGXREG):     ExchangeXReg(); break;     /* Exchange X and Reg (prompt for which) */
-   case (STOREX):       StoreX('0');    break;     /* Store X in register (prompt for which) */
-   case (RECALLREG):    RecallReg('0'); break;     /* Recall register to X (prompt for which) */
+   case (STOREX):       StoreX();       break;     /* Store X in register (prompt for which) */
+   case (RECALLREG):    RecallReg();    break;     /* Recall register to X (prompt for which) */
    default:
       ;              /* Unknown key */
 

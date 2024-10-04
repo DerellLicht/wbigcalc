@@ -121,32 +121,32 @@
 #define  IDB_CHG_SIGN      407
 #define  IDB_XCHG_X_Y      408
 #define  IDB_XCHG_X_R      409
-#define  IDB_STORE_X       440
-#define  IDB_RECALL_X      441
+#define  IDB_STORE_X       410
+#define  IDB_RECALL_X      411
 
 //  button row 2
-#define  IDB_HELP          410
-#define  IDB_Y2X           411
-#define  IDB_SQRT          412
-#define  IDB_XSQRD         413
-#define  IDB_INVX          414
-#define  IDB_XFACT         415
-#define  IDB_INT           416
-#define  IDB_FRAC          417
-#define  IDB_PI            418
-#define  IDB_ECONST        419
+#define  IDB_HELP          420
+#define  IDB_Y2X           421
+#define  IDB_SQRT          422
+#define  IDB_XSQRD         423
+#define  IDB_INVX          424
+#define  IDB_XFACT         425
+#define  IDB_INT           426
+#define  IDB_FRAC          427
+#define  IDB_PI            428
+#define  IDB_ECONST        429
 
 //  button row 3
-#define  IDB_SINX          420
-#define  IDB_ASINX         421
-#define  IDB_COSX          422
-#define  IDB_ACOSX         423
-#define  IDB_TANX          424
-#define  IDB_ATANX         425
-#define  IDB_LOGX          426
-#define  IDB_102X          427
-#define  IDB_LNX           428
-#define  IDB_E2X           429
+#define  IDB_SINX          430
+#define  IDB_ASINX         431
+#define  IDB_COSX          432
+#define  IDB_ACOSX         433
+#define  IDB_TANX          434
+#define  IDB_ATANX         435
+#define  IDB_LOGX          436
+#define  IDB_102X          437
+#define  IDB_LNX           438
+#define  IDB_E2X           439
 
 #define  IDB_STOR_R0       440
 #define  IDB_STOR_R1       441
@@ -159,13 +159,13 @@
 #define  IDB_STOR_R8       448
 #define  IDB_STOR_R9       449
 
-#define  IDB_RCALL_R0      460
-#define  IDB_RCALL_R1      461
-#define  IDB_RCALL_R2      462
-#define  IDB_RCALL_R3      463
-#define  IDB_RCALL_R4      464
-#define  IDB_RCALL_R5      465
-#define  IDB_RCALL_R6      466
-#define  IDB_RCALL_R7      467
-#define  IDB_RCALL_R8      468
-#define  IDB_RCALL_R9      469
+#define  IDB_RCALL_R0      450
+#define  IDB_RCALL_R1      451
+#define  IDB_RCALL_R2      452
+#define  IDB_RCALL_R3      453
+#define  IDB_RCALL_R4      454
+#define  IDB_RCALL_R5      455
+#define  IDB_RCALL_R6      456
+#define  IDB_RCALL_R7      457
+#define  IDB_RCALL_R8      458
+#define  IDB_RCALL_R9      459

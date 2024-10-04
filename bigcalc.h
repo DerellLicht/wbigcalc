@@ -137,7 +137,7 @@ void status_message(unsigned idx, char *msgstr);
 void put_stack(unsigned n, char *msg);
 void put_register(unsigned n, char *msg);
 void show_hide_buttons(bool show);
-void show_hide_all_buttons(bool show);
+void show_hide_all_buttons(bool show, uint except_id);
 void view_data_field_full(uint fidx, char *fstr);
 
 //  bigcalc.cpp
@@ -145,10 +145,12 @@ void Initialize(int argc, char *argv);
 int dos_main(u16 inchr);
 void view_stack_or_register(uint target);
 void clear_stack_or_register(uint button_code);
-void ExchangeXReg_exec(uint target);
 void show_hide_view_xchg_buttons(bool show);
 void show_hide_view_stor_buttons(bool show);
 void show_hide_view_rcall_buttons(bool show);
+void ExchangeXReg_exec(uint target);
+void StoreX_exec(uint target);
+void RecallReg_exec(uint target);
 
 //  bigio.cpp
 void reset_output_str(void);
@@ -213,7 +215,6 @@ int  move_local_to_work0(void);
 #define XCHGXREG   88   /*  X          */
 #define CHGSIGN    83   /*  S          */
 #define GROUPSIZE  71   /*  G          */
-#define MENUROLL   77   /*  M          */
 #define VIEWREG    86   /*  V          */
 #define STOREX     1073 /* PgUp        */
 #define RECALLREG  1081 /* PgDn        */
