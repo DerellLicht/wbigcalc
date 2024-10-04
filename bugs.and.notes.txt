@@ -1,12 +1,12 @@
 Bugs in Win32 port of BigCalc
-Last Update: 10/02/24 11:44
+Last Update: 10/04/24
 ==============================================================
 
-> Store/Recall Registers
+> add options dialog for setting config options
+
+> with precision = 75, Pi and e are only 59 digits
 
 > we still need a help file
-
-> add config dialog and ini file, for common options
 
 > LastX doesn't work... sorta... sometimes...
 

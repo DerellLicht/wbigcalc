@@ -5,6 +5,8 @@
 #define  IDC_TITLE         104
 #define  IDS_VIEW_DATA     105
 #define  IDC_VIEW_DATA     106
+#define  IDB_HELP          107
+#define  IDB_OPTIONS       108
          
 #define  IDC_REG_X         110
 #define  IDC_REG_Y         111
@@ -125,7 +127,6 @@
 #define  IDB_RECALL_X      411
 
 //  button row 2
-#define  IDB_HELP          420
 #define  IDB_Y2X           421
 #define  IDB_SQRT          422
 #define  IDB_XSQRD         423

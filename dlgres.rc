@@ -218,16 +218,17 @@ BEGIN
 //  button row 2
 #define  YB2      (YB1 + 16)
    //  button array
-   PUSHBUTTON      "Help",    IDB_HELP,   XB1,  YB2, DXB,  12
-   PUSHBUTTON      "Y^X",     IDB_Y2X,    XB2,  YB2, DXB,  12
-   PUSHBUTTON      "Sqrt(X)", IDB_SQRT,   XB3,  YB2, DXB,  12
-   PUSHBUTTON      "X*X",     IDB_XSQRD,  XB4,  YB2, DXB,  12
-   PUSHBUTTON      "1/X",     IDB_INVX,   XB5,  YB2, DXB,  12
-   PUSHBUTTON      "X!",      IDB_XFACT,  XB6,  YB2, DXB,  12
-   PUSHBUTTON      "INT",     IDB_INT,    XB7,  YB2, DXB,  12
-   PUSHBUTTON      "FRAC",    IDB_FRAC,   XB8,  YB2, DXB,  12
-   PUSHBUTTON      "Pi",      IDB_PI,     XB9,  YB2, DXB,  12
-   PUSHBUTTON      "e",       IDB_ECONST, XB0,  YB2, DXB,  12
+   PUSHBUTTON      "Y^X",     IDB_Y2X,     XB1,  YB2, DXB,  12
+   PUSHBUTTON      "Sqrt(X)", IDB_SQRT,    XB2,  YB2, DXB,  12
+   PUSHBUTTON      "X*X",     IDB_XSQRD,   XB3,  YB2, DXB,  12
+   PUSHBUTTON      "1/X",     IDB_INVX,    XB4,  YB2, DXB,  12
+   PUSHBUTTON      "X!",      IDB_XFACT,   XB5,  YB2, DXB,  12
+   PUSHBUTTON      "INT",     IDB_INT,     XB6,  YB2, DXB,  12
+   PUSHBUTTON      "FRAC",    IDB_FRAC,    XB7,  YB2, DXB,  12
+   PUSHBUTTON      "Pi",      IDB_PI,      XB8,  YB2, DXB,  12
+   PUSHBUTTON      "e",       IDB_ECONST,  XB9,  YB2, DXB,  12
+   PUSHBUTTON      "Help",    IDB_HELP,    XB0,  YB2, DXB,  12
+   PUSHBUTTON      "Options", IDB_OPTIONS, XBA,  YB2, DXB,  12
 
 //  button row 2
 #define  YB3      (YB2 + 16)

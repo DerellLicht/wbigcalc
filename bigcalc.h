@@ -120,14 +120,6 @@ extern bool scinotation;   /* Force sci notation if TRUE   */
  *    **************************************************
  */
 
-// #ifndef TRUE
-// #define TRUE 1
-// #endif
-// 
-// #ifndef FALSE
-// #define FALSE 0
-// #endif
-
 #define GETNORMTEMP(n) (NORMTYPE *) malloc((n) * sizeof(NORMTYPE))
 #define GETCOMPTEMP(n) (COMPTYPE *) malloc((n) * sizeof(COMPTYPE))
 
@@ -140,8 +132,13 @@ void show_hide_buttons(bool show);
 void show_hide_all_buttons(bool show, uint except_id);
 void view_data_field_full(uint fidx, char *fstr);
 
+//  config.cpp
+extern bool show_winmsgs ;
+LRESULT read_config_file(void);
+LRESULT save_cfg_file(void);
+
 //  bigcalc.cpp
-void Initialize(int argc, char *argv);
+void Initialize(void);
 int dos_main(u16 inchr);
 void view_stack_or_register(uint target);
 void clear_stack_or_register(uint button_code);

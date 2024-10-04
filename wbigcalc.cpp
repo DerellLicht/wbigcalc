@@ -228,7 +228,8 @@ IDS_KEYS,
 IDB_LAST_X,
 IDB_XCHG_X_R,
 IDB_HELP  ,
-IDB_PI    ,
+IDB_OPTIONS,
+IDB_PI,
 IDB_ECONST,
 IDB_CHG_SIGN,
 0 } ;
@@ -268,6 +269,7 @@ IDS_KEYS,
 IDB_LAST_X,
 IDB_XCHG_X_Y,
 IDB_HELP  ,
+IDB_OPTIONS,
 IDB_Y2X   ,
 IDB_SQRT  ,
 IDB_XSQRD ,
@@ -504,7 +506,8 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
       set_hwnd_values();
       // SendDlgItemMessage (hDlgWnd, IDC_DLG_TEXT, EM_SETLIMITTEXT, (WPARAM) BUFFER_SIZE - 1, (LPARAM) 0);
       // SetDlgItemText (hDlgWnd, IDC_DLG_TEXT, "Enter Text");
-      Initialize(1, NULL);
+      Initialize();
+      read_config_file() ;    //  read current screen position, etc
       show_status_info();
       keyboard_state_set(KBD_STATE_DEFAULT);
       Message("We are ready...");
@@ -720,6 +723,7 @@ INT WINAPI WinMain (HINSTANCE hInstance,
    HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdShow)
 {
    hInst = hInstance;
+   load_exec_filename() ;  //  get our executable name
 
    HWND hWnd = CreateDialog (hInstance, MAKEINTRESOURCE(IDD_MAIN_DIALOG), NULL,
                               (DLGPROC) InitProc);

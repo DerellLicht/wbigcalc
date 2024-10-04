@@ -4,7 +4,7 @@ CFLAGS += -Wno-write-strings
 #LiFLAGS = -Ider_libs
 CFLAGS += -Ider_libs
 
-CPPSRC=wbigcalc.cpp bigcalc.cpp bigmath.cpp bigmisc.cpp bigprint.cpp \
+CPPSRC=wbigcalc.cpp bigcalc.cpp bigmath.cpp bigmisc.cpp bigprint.cpp config.cpp \
 der_libs/common_funcs.cpp \
 der_libs/common_win.cpp \
 der_libs/winmsgs.cpp \
@@ -48,6 +48,7 @@ bigcalc.o: resource.h bigcalc.h keywin32.h
 bigmath.o: bigcalc.h
 bigmisc.o: keywin32.h bigcalc.h
 bigprint.o: bigcalc.h
+config.o: bigcalc.h
 der_libs/common_funcs.o: der_libs/common.h
 der_libs/common_win.o: der_libs/common.h der_libs/commonw.h
 der_libs/statbar.o: der_libs/common.h der_libs/commonw.h der_libs/statbar.h

@@ -68,7 +68,6 @@ static  void RecallPi(void);
 static  void RecallE(void);
 static  void RecallLastX(void);
 static  void GroupSize(void);
-static  void SciNotation(void);
 static  void RollDown(void);
 static  void RollUp(void);
 static  void PushStack(void);
@@ -112,28 +111,32 @@ static bool stacklift = true;       /* Lift stack for new X if TRUE */
  *    *                                                *
  *    **************************************************
  */
-void Initialize(int argc, char *argv)
+void Initialize(void)
 {
    // ScrInit();                    /* Initialize screen drivers */
 
    ExtendedInitConstants();      /* Initialize extended constants */
 
-   if (argc > 1)
-      while (*argv) {            /* Convert *argv to number */
-         if (isdigit(*argv)) {
-            normprec = (normprec * 10) + (*argv - '0');
-            if (normprec <= MAXNORM)
-               argv++;
-               continue;
-            }
-         normprec = 0;
-         break;
-         }
+   //***************************************************************
+   // if (argc > 1) {
+   //    while (*argv) {            /* Convert *argv to number */
+   //       if (isdigit(*argv)) {
+   //          normprec = (normprec * 10) + (*argv - '0');
+   //          if (normprec <= MAXNORM) {
+   //             argv++;
+   //             continue;
+   //          }
+   //       }
+   //       normprec = 0;
+   //       break;
+   //    }
+   // }
 
-   if ( (normprec < MINPREC)
-         ||
-        (normprec > MAXNORM) )
-      normprec = DEFAULTPREC;
+   //  now handled by config/options modules
+   if ( (normprec < MINPREC) ||
+        (normprec > MAXNORM) ) {
+         normprec = DEFAULTPREC;
+        }
 
    compprec = COMPPREC;
    workprec = WORKPREC;
@@ -829,6 +832,7 @@ static void GroupSize(void)
    }
 
    show_status_info();
+   save_cfg_file();
 }
 
 /*
@@ -847,6 +851,7 @@ static void SciNotation(void)
 
    WriteReg(0, 9);
    WriteStack(0, 3);
+   save_cfg_file();
 }
 
 //*******************************************************************************
