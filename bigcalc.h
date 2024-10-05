@@ -26,7 +26,7 @@
  *    **************************************************
  */
 
-#define MINPREC 3                         /* Min nbr of digits  */
+#define MINPREC 10                        /* Min nbr of digits  */
 #define DEFAULTPREC 50                    /* Default precision  */
 #define MAXNORM 1075                      /* Max normal digits  */
 #define MAXCOMP (MAXNORM + 9)             /* Max compute digits */
@@ -136,6 +136,9 @@ void view_data_field_full(uint fidx, char *fstr);
 extern bool show_winmsgs ;
 LRESULT read_config_file(void);
 LRESULT save_cfg_file(void);
+
+//  options.cpp
+void open_options_dialog(HWND hwnd);
 
 //  bigcalc.cpp
 void Initialize(void);

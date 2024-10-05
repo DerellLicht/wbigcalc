@@ -33,7 +33,7 @@ static HBRUSH const g_hbrBackground = (HBRUSH) (COLOR_WINDOW + 1) ;
 //    wndclass.hbrBackground = (HBRUSH) GetStockObject (BLACK_BRUSH) ;
 // #endif
 
-static HINSTANCE hInst;
+HINSTANCE hInst = NULL;
 static HWND hwndMain = NULL ;
 static HWND hwndTitle = NULL ;
 static HWND hwndMsg = NULL ;
@@ -574,7 +574,6 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
          case IDB_RECALL_X:  dos_main(RECALLREG); break ;
                                         
          //  button row 2
-         case IDB_HELP  :    dos_main(HELP); break ;
          case IDB_Y2X   :    dos_main(POWER); break ;
          case IDB_SQRT  :    dos_main(SQUAREROOT); break ;
          case IDB_XSQRD :    dos_main(SQUARE); break ;
@@ -584,6 +583,8 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
          case IDB_FRAC  :    dos_main(FRACTION); break ;
          case IDB_PI    :    dos_main(RECALLPI); break ;
          case IDB_ECONST:    dos_main(RECALLE); break ;
+         case IDB_HELP  :    dos_main(HELP); break ;
+         case IDB_OPTIONS:   open_options_dialog(hDlgWnd); break ;
             
          //  button row 3
          case IDB_SINX :    dos_main(SIN   ); break ;

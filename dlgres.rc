@@ -1,3 +1,49 @@
+//****************************************************************************
+//  Reference: http://www.autohotkey.com/docs/misc/Styles.htm
+//****************************************************************************
+//  Interesting notes about this file:
+//
+//  > SS_NOTIFY and "Static" controls  (LTEXT and CTEXT)
+//    If SS_NOTIFY is not specified in the control styles,
+//    you cannot attach tooltips to the control.
+//
+//*********************************************************************************************************
+// DS_3DLOOK
+//     Gives the dialog box a non-bold font and draws three-dimensional borders 
+//     around control windows in the dialog box.
+//     The DS_3DLOOK style is required only by Microsoft Win32®-based applications compiled 
+//     for system versions earlier than Windows 95 or Windows NT® 4.0. 
+//     The system automatically applies the three-dimensional look to dialog boxes created by 
+//     applications compiled for current versions of the system.
+//*********************************************************************************************************
+// What's the deal with the DS_SHELLFONT flag?
+// 
+// It indicates that you want the Windows 2000 default shell font. 
+// But that doesn't mean that you're going to get it.
+// 
+// In order to indicate that you would like the "Windows 2000" look for your 
+// dialog, you have to do three things and hope for a fourth:
+// 
+// > Use a DIALOGEX template instead of a DIALOG template.
+// > Set the DS_SHELLFONT flag in your dialog styles.
+// > Set the dialog font to "MS Shell Dlg".
+// > Hope that you're running on Windows 2000 or later on a system that has the
+//   new Windows 2000 dialog font enabled. 
+// 
+// If all four conditions are satisfied, then your dialog gets the "Windows 2000"
+// look. If any condition fails, then you get the "classic" dialog font. 
+//*********************************************************************************************************
+// 04/26/13 12:45  On Win7, WS_DLGFRAME and WS_CAPTION seem to create identical dialogs !
+// > WS_DLGFRAME  Creates a window with a double border but no title.
+// > WS_BORDER    Creates a window that has a border.
+// > WS_CAPTION   Creates a window that has a title bar (implies the WS_BORDER style). 
+//                Cannot be used with the WS_DLGFRAME style.
+// > WS_SYSMENU   Among other things, adds the CLOSE button on title bar
+//                WS_SYSMENU also needed in order to show program icon on title bar
+//*********************************************************************************************************
+//  WS_THICKFRAME   Creates a window with a thick frame that can be used to size the window.
+//  04/26/13 - initially, one of these other flags was over-riding WS_THICKFRAME
+//*********************************************************************************************************
 #include <windows.h>
 
 #include "resource.h"
@@ -39,6 +85,8 @@ BEGIN
     VK_ESCAPE, IDB_KBD_ESCAPE,    VIRTKEY, NOINVERT
     VK_UP,     IDB_KBD_UP,        VIRTKEY, NOINVERT
     VK_DOWN,   IDB_KBD_DOWN,      VIRTKEY, NOINVERT
+    VK_F1,     IDB_HELP,          VIRTKEY, NOINVERT
+    VK_F2,     IDB_OPTIONS,       VIRTKEY, NOINVERT
     "^q",      IDB_CLOSE,         ASCII, NOINVERT
 END
 
@@ -246,10 +294,36 @@ BEGIN
 
 //  hideable multi-line edit control for showing large registers
 #define  YB4      (YB3 + 16)
-   GROUPBOX   " View Stack or Register ", IDS_VIEW_DATA, PI_X, YB4, REGS_GRP_DX, 50
+   GROUPBOX   " View Stack or Register ", IDS_VIEW_DATA, PI_X,     YB4,   REGS_GRP_DX,    50
    EDITTEXT                               IDC_VIEW_DATA, PI_X+5, YB4+9, REGS_GRP_DX-9, 50-14,ES_MULTILINE | ES_READONLY | NOT WS_BORDER
    
    
+END
+
+//*******************************************************************
+//  options dialog
+//*******************************************************************
+IDD_OPTIONS DIALOGEX 800, 300, 120, 140
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "WBigCalc Options"
+FONT 10, "Times New Roman"
+BEGIN
+   LTEXT           "Number of digits:", IDS_NORMPREC, 10, 11,  56, 10, SS_NOTIFY
+   EDITTEXT                             IDC_NORMPREC, 69, 10,  25, 10, ES_NUMBER
+
+   GROUPBOX        " Group Size ", IDG_GROUPSIZE,     10, 24, 100,  40    
+   RADIOBUTTON    " 3 bytes",      IDC_GS_3BYTES,     15, 35,  40,  10, WS_GROUP
+   RADIOBUTTON    " 5 bytes",      IDC_GS_5BYTES,     15, 48,  40,  10
+    
+   CONTROL         "Scientific notation",    IDM_SCINOT, "Button",
+                   BS_AUTOCHECKBOX | WS_TABSTOP,      10, 70,  90, 10
+
+   CONTROL         "Enable WinMsgs (debug)", IDM_WINMSGS, "Button",
+                   BS_AUTOCHECKBOX | WS_TABSTOP,      10, 82, 140, 10
+
+   DEFPUSHBUTTON  "Accept Changes", IDOK,             25, 96, 70, 14
+   PUSHBUTTON     "Cancel Changes", IDCANCEL,         25,114, 70, 14
 END
 
 

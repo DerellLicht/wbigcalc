@@ -1,21 +1,35 @@
+// objects other than dialog controls
 #define  IDI_ICON          100
 #define  IDD_MAIN_DIALOG   101
 #define  IDR_ACCELERATOR1  102
-#define  IDB_CLOSE         103
-#define  IDC_TITLE         104
-#define  IDS_VIEW_DATA     105
-#define  IDC_VIEW_DATA     106
-#define  IDB_HELP          107
-#define  IDB_OPTIONS       108
-         
-#define  IDC_REG_X         110
-#define  IDC_REG_Y         111
-#define  IDC_REG_Z         112
-#define  IDC_REG_T         113
-#define  IDS_REG_X         114
-#define  IDS_REG_Y         115
-#define  IDS_REG_Z         116
-#define  IDS_REG_T         117
+#define  IDC_TITLE         103
+
+//  misc controls
+#define  IDB_CLOSE         110
+#define  IDS_VIEW_DATA     111
+#define  IDC_VIEW_DATA     112
+#define  IDB_HELP          113
+#define  IDB_OPTIONS       114
+#define  IDD_OPTIONS       115
+
+//  options dialog controls
+#define  IDS_NORMPREC      130
+#define  IDC_NORMPREC      131
+#define  IDG_GROUPSIZE     132
+#define  IDC_GS_3BYTES     133
+#define  IDC_GS_5BYTES     134    
+#define  IDM_SCINOT        135
+#define  IDM_WINMSGS       136
+
+//  main dialog controls
+#define  IDC_REG_X         160
+#define  IDC_REG_Y         161
+#define  IDC_REG_Z         162
+#define  IDC_REG_T         163
+#define  IDS_REG_X         164
+#define  IDS_REG_Y         165
+#define  IDS_REG_Z         166
+#define  IDS_REG_T         167
                            
 #define  IDC_REGS          200
 #define  IDC_R0            201
