@@ -220,16 +220,16 @@ BEGIN
                     
    //  text fields
    
-   LTEXT           "MSG:",          IDS_MSG,      PI_X,                  ST_Y+Y_OFS+84,         Y_OFS2,  10
-   LTEXT           " ",             IDC_MSG,      PI_X+Y_OFS2,           ST_Y+84,               (REGS_GRP_DX/2) - Y_OFS2,  10, SS_SUNKEN
+   LTEXT           "MSG:",          IDS_MSG,      PI_X,                  ST_Y+Y_OFS+84,           Y_OFS2,  10
+   LTEXT           " ",             IDC_MSG,      PI_X+Y_OFS2,           ST_Y+84,      (REGS_GRP_DX/2) - Y_OFS2,  10, SS_SUNKEN
                                                         
 #define  X_KBDST  (PI_X+Y_OFS2+(REGS_GRP_DX/2) - Y_OFS2+8)
-   LTEXT           "Kbd State:",    IDS_KSTATE,   X_KBDST,              ST_Y+Y_OFS+84,          36, 10
-   LTEXT           " ",             IDC_KSTATE,   X_KBDST+Y_OFS3-3,       ST_Y+84,              70, 10, SS_SUNKEN
+   LTEXT           "Kbd State:",    IDS_KSTATE,   X_KBDST,               ST_Y+Y_OFS+84,    36,  10
+   LTEXT           " ",             IDC_KSTATE,   X_KBDST+Y_OFS3-3,      ST_Y+84,          70,  10, SS_SUNKEN
    
 #define  X_KKEYS     (X_KBDST + 36 + 70 + 8)
-   LTEXT           "Keyboard Keys:",  IDS_KEYS,   X_KKEYS,              ST_Y+Y_OFS+84,         52,  10
-   LTEXT           " Enter UP DOWN ", IDC_KEYS,   X_KKEYS+54,           ST_Y+84,              100,  10, SS_SUNKEN
+   LTEXT           "Keyboard Keys:",        IDS_KEYS, X_KKEYS,           ST_Y+Y_OFS+84,    52,  10
+   LTEXT           " Enter UP DOWN F1 F2 ", IDC_KEYS, X_KKEYS+54,        ST_Y+84,         100,  10, SS_SUNKEN
    
 #define  BTN_ARRAY_OFS  (ST_Y + 100)
 
