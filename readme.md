@@ -5,21 +5,39 @@ BigCalc uses Reverse Polish Notation (RPN), as originally used in HP calculators
 RPN is an efficient method for handling complex computations,
 but is rarely seen in pocket calculators any more.
 
-The original readme file is included as bigcalc.txt
-
-The original program was written by Judson D. McClendon for MSDOS, ca 1999.  
-Neither the author nor the original program appear to be present on the internet any more.
-
 <hr>
 
-### Status  
-The Windows version of BigCalc is currently under development.  
-The main challenge that I am currently facing, is that  the program uses getch() loops in several places, to manage keyboard acquisition.  This technique is incompatible with Windows programs, which use a message handler for all inputs; calling getch() or any other polling function, just stalls the message handler.  
-I will need to re-factor the keyboard handler, to avoid getch(), which will likely be a great deal of work...
+### Pending issues
 
+- View Stack/Reg with exponent, doesn't display exponent, nor decimal point
+- we still need a help file
+- LastX doesn't work... sorta... sometimes...
+
+### Program modifications
+**DDM 09/10/24**
+Removed all 'print to printer/file' routines from Windows version.
+I don't really think those operations are required in a calculator such as this.
+Instead, I will try to make it possible to copy-and-paste from any display windows.
+
+**DDM 10/03/24**
+Removed add/subtract/multiply/divide with register commands, since they 
+require GetCh() operations which are awkward to implement in Windows,
+and I don't think they are very important.  
+They could be added later if someone wants to; use ExchangeXReg() as reference.
+
+### History
 I previously ported BigCalc to 32-bit Windows console utility, and it still works great!
 It is available at https://github.com/DerellLicht/bigcalc
 
+### Original author and notice
+The original program was written by Judson D. McClendon for MSDOS, ca 1999.  
+Neither the author nor the original program appear to be present on the internet any more.
+
+ Judson D. McClendon           $20 gets you a disk with the complete C source.
+ Sun Valley Systems
+ 4522 Shadow Ridge Pkwy        There is no warranty of any kind.
+ Pinson, AL 35126-2192         The author assumes no responsibility for the
+     205-680-0460              use of this program.
 
 
 
