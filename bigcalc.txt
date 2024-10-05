@@ -16,28 +16,15 @@ You can specify floating decimal or scientific notation display. Large numbers
 display in scientific notation to about 65 digits all the time, but the view
 and print commands show full precision in 3 or 5 digit groups.
 
-  KEY  FUNCTION     KEY  FUNCTION      KEY  FUNCTION        KEY  FUNCTION
-                                            (M rotates Fn key menu)
-0-9.E  Enter number   V >View number    F1 >Help            ^F1 >sin X
-    S  change Sign    F >Float/Sci      F2 >Power Y^X       ^F2 >arcsin X
-BkSpc  CLX/Backspace  G >Group 3/5      F3 >Square root(x)  ^F3 >cos X
-Enter >Enter          P >Print          F4 >Square X*X      ^F4 >arccos X
-    + >Add Y + X      D >Disk/Print     F5 >Reciprocal 1/X  ^F5 >tan X
-    - >Sub Y - X   PgUp >Store X        F6 >Fact X!         ^F6 >arctan X
-    * >Mul Y x X   PgDn >Recall X       F7 >Integer XXX.    ^F7 >Common log X
-    / >Div Y / X      X >eXchg X & Reg  F8 >Fraction .XXX   ^F8 >Exponent 10^X
-    C >Clear      Up/Dn >Roll Up/Dn     F9 >Recall Pi to X  ^F9 >Natural log X
-    L >Last X    Lft/Rt >Exchg X & Y   F10 >Recall e to X  ^F10 >Exponent e^X
+Data entry:
+To enter a number just begin typing it in. Use Backspace to back up.
+To enter an exponent press E then enter the exponent.
+Press S while entering mantissa or exponent to change respective sign.
+If you start a number with E a mantissa of 1 is assumed.
 
-    To enter a number just begin typing it in. Use Backspace to back up.
-    To enter an exponent press E then enter the exponent.
-    Press S while entering mantissa or exponent to change respective sign.
-    If you start a number with E a mantissa of 1 is assumed.
-    Functions marked '>' complete a number being entered before acting.
-    View displays any register to full precision.
-    Clear, Print, View, Store, Recall & eXchange ask for affected register.
-    BackSpace backs up while entering number, otherwise acts as Clear X.
-    M rotates function key menus. ^ means control: ^F1 = ctrl-F1
+View displays any register to full precision.
+Clear, Print, View, Store, Recall & eXchange ask for affected register.
+BackSpace backs up while entering number.
 
 This program emulates a Hewlett-Packard calculator with four register stack
 and ten memory registers.  The stack consists of the X, Y, Z & T registers.
