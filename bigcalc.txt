@@ -1,4 +1,4 @@
-BIGCALC Extended Precision Calculator 6.0 for Windows
+WBigCalc Extended Precision Calculator
 
 BIGCALC works like an H-P calculator with stack and ten memory registers.
 Maximum precision settable from 3 to 1075 digits. Exponents to ±999999999.

@@ -109,7 +109,7 @@ END
 
 #define  X_GAP          5
 
-IDD_MAIN_DIALOG DIALOG DISCARDABLE  160, 40, DLG_DX, 500
+IDD_MAIN_DIALOG DIALOG DISCARDABLE  160, 40, DLG_DX, 420
 STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
 CAPTION "BigCalc for Windows"
 FONT 10, "Times New Roman"
@@ -214,7 +214,8 @@ BEGIN
    PUSHBUTTON      "Clear",         IDB_CLEAR_Y,  PI_FX+15+REGS_DX+3+24, ST_Y+40,             REG_BTN_DX,  10
                                                                          
    LTEXT           "X",             IDS_REG_X,    PI_FX,                 ST_Y+Y_OFS+55,               12,  10
-   LTEXT           " ",             IDC_REG_X,    PI_FX+15,              ST_Y+55,                REGS_DX,  10, SS_SUNKEN
+   // LTEXT           " ",             IDC_REG_X,    PI_FX+15,              ST_Y+55,                REGS_DX,  10, SS_SUNKEN
+   EDITTEXT                         IDC_REG_X,    PI_FX+15,              ST_Y+55,                REGS_DX,  10, ES_READONLY | SS_SUNKEN
    PUSHBUTTON      "View",          IDB_VIEW_X,   PI_FX+15+REGS_DX+3,    ST_Y+55,             REG_BTN_DX,  10
    PUSHBUTTON      "Clear",         IDB_CLEAR_X,  PI_FX+15+REGS_DX+3+24, ST_Y+55,             REG_BTN_DX,  10
                     
@@ -227,12 +228,11 @@ BEGIN
    LTEXT           "Kbd State:",    IDS_KSTATE,   X_KBDST,               ST_Y+Y_OFS+84,    36,  10
    LTEXT           " ",             IDC_KSTATE,   X_KBDST+Y_OFS3-3,      ST_Y+84,          70,  10, SS_SUNKEN
    
-#define  X_KKEYS     (X_KBDST + 36 + 70 + 8)
-   LTEXT           "Keyboard Keys:",        IDS_KEYS, X_KKEYS,           ST_Y+Y_OFS+84,    52,  10
-   LTEXT           " Enter UP DOWN F1 F2 ", IDC_KEYS, X_KKEYS+54,        ST_Y+84,         100,  10, SS_SUNKEN
+   LTEXT           "Keyboard Keys:",        IDS_KEYS, PI_X,              ST_Y+Y_OFS+99,    52,  10
+   LTEXT           " 0-9.E Enter UP DOWN, F1=Help, F2=Options ", IDC_KEYS, PI_X+54, ST_Y+99,  REGS_GRP_DX-55,  10, SS_SUNKEN
    
-#define  BTN_ARRAY_OFS  (ST_Y + 100)
-
+#define  BTN_ARRAY_OFS  (ST_Y + 114)
+                     
 //  button row 1
 #define  XB1      PI_X
 #define  DXB      40

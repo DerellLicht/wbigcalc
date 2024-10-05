@@ -11,7 +11,7 @@ but is rarely seen in pocket calculators any more.
 
 - View Stack/Reg with exponent, doesn't display exponent, nor decimal point
 - we still need a help file
-- LastX doesn't work... sorta... sometimes...
+- LastX doesn't work... sometimes... I think...
 
 ### Program modifications
 **DDM 09/10/24**
@@ -27,7 +27,8 @@ They could be added later if someone wants to; use ExchangeXReg() as reference.
 
 ### History
 I previously ported BigCalc to 32-bit Windows console utility, and it still works great!
-It is available at https://github.com/DerellLicht/bigcalc
+Executable package is available at https://derelllicht.42web.io/bigcalc.html
+Source code is maintained at https://github.com/DerellLicht/bigcalc
 
 ### Original author and notice
 The original program was written by Judson D. McClendon for MSDOS, ca 1999.  

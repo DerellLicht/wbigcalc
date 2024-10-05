@@ -4,3 +4,6 @@
 *.zip
 _lint.tmp
 *.ini
+*.chm
+HelpNDoc/*.chm
+HelpNDoc/*.pdf
