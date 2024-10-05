@@ -2,8 +2,6 @@ Bugs in Win32 port of BigCalc
 Last Update: 10/04/24
 ==============================================================
 
-> add options dialog for setting config options
-
 > with precision = 75, Pi and e are only 59 digits
 
 > we still need a help file

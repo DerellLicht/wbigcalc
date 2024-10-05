@@ -27,12 +27,12 @@ static uint const groupsize_codes[6] = {
 //  Options dialog tooltips
 //****************************************************************************
 static tooltip_data_t const options_tooltips[] = {
-{ IDS_NORMPREC,     _T("Select foreground color of data fields")},
-{ IDC_NORMPREC,     _T("Select foreground color of data fields")},
-{ IDG_GROUPSIZE,    _T("View color selector for foreground color" )},
-{ IDC_GS_3BYTES,    _T("Select background color of data fields")},
-{ IDC_GS_5BYTES,    _T("Select background color of data fields")},
-{ IDM_SCINOT,       _T("View color selector for background color" )},
+{ IDS_NORMPREC,     _T("Set number of digits for working numbers")},
+{ IDC_NORMPREC,     _T("Set number of digits for working numbers")},
+{ IDG_GROUPSIZE,    _T("Set size of digit groups in View window (3 or 5)" )},
+{ IDC_GS_3BYTES,    _T("Set size of digit groups in View window (3 or 5)" )},
+{ IDC_GS_5BYTES,    _T("Set size of digit groups in View window (3 or 5)" )},
+{ IDM_SCINOT,       _T("Select scientific or floating-point for number display" )},
 { IDM_WINMSGS,      _T("Show WinAPI debug messages in DebugView" )},
 { IDOK,             _T("Close this dialog and accept changes" )},
 { IDCANCEL,         _T("Close this dialog and cancel changes" )},
