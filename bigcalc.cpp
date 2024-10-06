@@ -128,8 +128,9 @@ void Initialize(void)
    lastx = stack[0];
 
    read_config_file() ;    //  read current screen position, etc
+   
    //  these should be done *after* reading config file
-   GroupSize();                  /* Toggle group size to 5 & set xxxfloatprn */
+   // GroupSize();    /* Toggle group size to 5 & set xxxfloatprn */
    WorkScreen();
 }
 
