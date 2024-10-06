@@ -9,8 +9,10 @@ but is rarely seen in pocket calculators any more.
 
 ### Pending issues
 
+- After RecallX into X, Enter deletes the current X entry...
+- In fact, <Enter> just really is not working at all...
 - View Stack/Reg with exponent, doesn't display exponent, nor decimal point
-- we still need a help file
+- Pi, e both displayed at 59 digits, even with 75 digits configured.
 - LastX doesn't work... sometimes... I think...
 
 ### Program modifications

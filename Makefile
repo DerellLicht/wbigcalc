@@ -34,7 +34,7 @@ src:
 	zip wbigcalc.zip *.cpp *.h *.rc makefile *.txt *.doc *.ico
 
 $(BIN): $(OBJS)
-	g++ $(CFLAGS) -mwindows -s $(OBJS) -o $@ -lcomctl32 -lgdi32 -lcomdlg32
+	g++ $(CFLAGS) -mwindows -s $(OBJS) -o $@ -lcomctl32 -lgdi32 -lcomdlg32 -lhtmlhelp
 
 dlgres.o: dlgres.rc
 	windres -O COFF $< -o $@

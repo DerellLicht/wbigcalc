@@ -291,7 +291,7 @@ static void Power(void)
  */
 static void SquareRoot(void)
 {
-   MessageEsc("Computing ûX");
+   MessageEsc("Computing sqrt(X)");
 
    restore_stack0();
    MoveStackWork(0, 0);
@@ -310,12 +310,9 @@ static void SquareRoot(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void Square(void)
-
 {
-
-   MessageEsc("Computing Xý");
+   MessageEsc("Computing X*X");
 
    restore_stack0();
    MoveStackWork(0, 0);
@@ -327,11 +324,7 @@ static void Square(void)
       WriteStack(0, 0);
       stacklift = true;
       }
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1355,21 +1348,29 @@ static void restore_stack0(void)
  */
 static void Enter(bool success)
 {
-   if (success) {
-      Message("Return/Enter received");
-      move_local_to_work0();
-      MoveWorkStack(0, 0);
+   if (keyboard_state_get() == KBD_STATE_DEFAULT) {
+      Message("");
       PushStack();   //  push X to Y
       WriteStack(0, 3); //  update display fields
       stacklift = true;
    }
    else {
-      Message("Data entry aborted by user");
-      WriteStack(0);
+      if (success) {
+         Message("Return/Enter received");
+         move_local_to_work0();
+         MoveWorkStack(0, 0);
+         PushStack();   //  push X to Y
+         WriteStack(0, 3); //  update display fields
+         stacklift = true;
+      }
+      else {
+         Message("Data entry aborted by user");
+         WriteStack(0);
+      }
+      stacklift = false;
+      keyboard_state_set(KBD_STATE_DEFAULT);
+      // ExitGetXState(success);
    }
-   stacklift = false;
-   keyboard_state_set(KBD_STATE_DEFAULT);
-   // ExitGetXState(success);
 }
 
 /*

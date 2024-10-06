@@ -114,122 +114,122 @@ STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | WS_MINIM
 CAPTION "BigCalc for Windows"
 FONT 10, "Times New Roman"
 BEGIN
-   CTEXT           " ",             IDC_TITLE,     150,  5, REGS_GRP_DX-300,  12, SS_SUNKEN
-   
-   GROUPBOX        " Registers ",   IDC_REGS,     PI_X,                  PI_Y,          REGS_GRP_DX, 160 
-   LTEXT           "R0",            IDS_R0,       PI_FX,                 PI_Y+Y_OFS+10,          12,  10
-   LTEXT           " ",             IDC_R0,       PI_FX+15,              PI_Y+10,           REGS_DX,  10, SS_SUNKEN
-   DEFPUSHBUTTON   "Clear",         IDB_CLEAR_R0, PI_FX+15+REGS_DX+3+24, PI_Y+10,             REG_BTN_DX,  10
-   PUSHBUTTON      "View",          IDB_VIEW_R0,  PI_FX+15+REGS_DX+3,    PI_Y+10,             REG_BTN_DX,  10
-   PUSHBUTTON      "Xchg",          IDB_XCHG_R0,  PI_FX+15+REGS_DX+3,    PI_Y+10,             REG_BTN_DX,  10, NOT WS_VISIBLE
-   PUSHBUTTON      "Store",         IDB_STOR_R0,  PI_FX+15+REGS_DX+3,    PI_Y+10,             REG_BTN_DX,  10, NOT WS_VISIBLE
-   PUSHBUTTON      "Recall",        IDB_RCALL_R0, PI_FX+15+REGS_DX+3,    PI_Y+10,             REG_BTN_DX,  10, NOT WS_VISIBLE
-   
-   LTEXT           "R1",            IDS_R1,       PI_FX,                 PI_Y+Y_OFS+25,          12,  10
-   LTEXT           " ",             IDC_R1,       PI_FX+15,              PI_Y+25,           REGS_DX,  10, SS_SUNKEN
-   PUSHBUTTON      "Clear",         IDB_CLEAR_R1, PI_FX+15+REGS_DX+3+24, PI_Y+25,             REG_BTN_DX,  10
-   PUSHBUTTON      "View",          IDB_VIEW_R1,  PI_FX+15+REGS_DX+3,    PI_Y+25,             REG_BTN_DX,  10
-   PUSHBUTTON      "Xchg",          IDB_XCHG_R1,  PI_FX+15+REGS_DX+3,    PI_Y+25,             REG_BTN_DX,  10, NOT WS_VISIBLE
-   PUSHBUTTON      "Store",         IDB_STOR_R1,  PI_FX+15+REGS_DX+3,    PI_Y+25,             REG_BTN_DX,  10, NOT WS_VISIBLE
-   PUSHBUTTON      "Recall",        IDB_RCALL_R1, PI_FX+15+REGS_DX+3,    PI_Y+25,             REG_BTN_DX,  10, NOT WS_VISIBLE
-   
-   LTEXT           "R2",            IDS_R2,       PI_FX,                 PI_Y+Y_OFS+40,          12,  10
-   LTEXT           " ",             IDC_R2,       PI_FX+15,              PI_Y+40,           REGS_DX,  10, SS_SUNKEN
-   PUSHBUTTON      "Clear",         IDB_CLEAR_R2, PI_FX+15+REGS_DX+3+24, PI_Y+40,             REG_BTN_DX,  10
-   PUSHBUTTON      "View",          IDB_VIEW_R2,  PI_FX+15+REGS_DX+3,    PI_Y+40,             REG_BTN_DX,  10
-   PUSHBUTTON      "Xchg",          IDB_XCHG_R2,  PI_FX+15+REGS_DX+3,    PI_Y+40,             REG_BTN_DX,  10, NOT WS_VISIBLE
-   PUSHBUTTON      "Store",         IDB_STOR_R2,  PI_FX+15+REGS_DX+3,    PI_Y+40,             REG_BTN_DX,  10, NOT WS_VISIBLE
-   PUSHBUTTON      "Recall",        IDB_RCALL_R2, PI_FX+15+REGS_DX+3,    PI_Y+40,             REG_BTN_DX,  10, NOT WS_VISIBLE
-   
-   LTEXT           "R3",            IDS_R3,       PI_FX,                 PI_Y+Y_OFS+55,          12,  10
-   LTEXT           " ",             IDC_R3,       PI_FX+15,              PI_Y+55,           REGS_DX,  10, SS_SUNKEN
-   PUSHBUTTON      "Clear",         IDB_CLEAR_R3, PI_FX+15+REGS_DX+3+24, PI_Y+55,             REG_BTN_DX,  10
-   PUSHBUTTON      "View",          IDB_VIEW_R3,  PI_FX+15+REGS_DX+3,    PI_Y+55,             REG_BTN_DX,  10
-   PUSHBUTTON      "Xchg",          IDB_XCHG_R3,  PI_FX+15+REGS_DX+3,    PI_Y+55,             REG_BTN_DX,  10, NOT WS_VISIBLE
-   PUSHBUTTON      "Store",         IDB_STOR_R3,  PI_FX+15+REGS_DX+3,    PI_Y+55,             REG_BTN_DX,  10, NOT WS_VISIBLE
-   PUSHBUTTON      "Recall",        IDB_RCALL_R3, PI_FX+15+REGS_DX+3,    PI_Y+55,             REG_BTN_DX,  10, NOT WS_VISIBLE
-                                                                         
-   LTEXT           "R4",            IDS_R4,       PI_FX,                 PI_Y+Y_OFS+70,          12,  10
-   LTEXT           " ",             IDC_R4,       PI_FX+15,              PI_Y+70,           REGS_DX,  10, SS_SUNKEN
-   PUSHBUTTON      "Clear",         IDB_CLEAR_R4, PI_FX+15+REGS_DX+3+24, PI_Y+70,             REG_BTN_DX,  10
-   PUSHBUTTON      "View",          IDB_VIEW_R4,  PI_FX+15+REGS_DX+3,    PI_Y+70,             REG_BTN_DX,  10
-   PUSHBUTTON      "Xchg",          IDB_XCHG_R4,  PI_FX+15+REGS_DX+3,    PI_Y+70,             REG_BTN_DX,  10, NOT WS_VISIBLE
-   PUSHBUTTON      "Store",         IDB_STOR_R4,  PI_FX+15+REGS_DX+3,    PI_Y+70,             REG_BTN_DX,  10, NOT WS_VISIBLE
-   PUSHBUTTON      "Recall",        IDB_RCALL_R4, PI_FX+15+REGS_DX+3,    PI_Y+70,             REG_BTN_DX,  10, NOT WS_VISIBLE
-                                                                         
-   LTEXT           "R5",            IDS_R5,       PI_FX,                 PI_Y+Y_OFS+85,          12,  10
-   LTEXT           " ",             IDC_R5,       PI_FX+15,              PI_Y+85,           REGS_DX,  10, SS_SUNKEN
-   PUSHBUTTON      "Clear",         IDB_CLEAR_R5, PI_FX+15+REGS_DX+3+24, PI_Y+85,             REG_BTN_DX,  10
-   PUSHBUTTON      "View",          IDB_VIEW_R5,  PI_FX+15+REGS_DX+3,    PI_Y+85,             REG_BTN_DX,  10
-   PUSHBUTTON      "Xchg",          IDB_XCHG_R5,  PI_FX+15+REGS_DX+3,    PI_Y+85,             REG_BTN_DX,  10, NOT WS_VISIBLE
-   PUSHBUTTON      "Store",         IDB_STOR_R5,  PI_FX+15+REGS_DX+3,    PI_Y+85,             REG_BTN_DX,  10, NOT WS_VISIBLE
-   PUSHBUTTON      "Recall",        IDB_RCALL_R5, PI_FX+15+REGS_DX+3,    PI_Y+85,             REG_BTN_DX,  10, NOT WS_VISIBLE
-                                                                         
-   LTEXT           "R6",            IDS_R6,       PI_FX,                 PI_Y+Y_OFS+100,         12,  10
-   LTEXT           " ",             IDC_R6,       PI_FX+15,              PI_Y+100,          REGS_DX,  10, SS_SUNKEN
-   PUSHBUTTON      "Clear",         IDB_CLEAR_R6, PI_FX+15+REGS_DX+3+24, PI_Y+100,            REG_BTN_DX,  10
-   PUSHBUTTON      "View",          IDB_VIEW_R6,  PI_FX+15+REGS_DX+3,    PI_Y+100,            REG_BTN_DX,  10
-   PUSHBUTTON      "Xchg",          IDB_XCHG_R6,  PI_FX+15+REGS_DX+3,    PI_Y+100,            REG_BTN_DX,  10, NOT WS_VISIBLE
-   PUSHBUTTON      "Store",         IDB_STOR_R6,  PI_FX+15+REGS_DX+3,    PI_Y+100,            REG_BTN_DX,  10, NOT WS_VISIBLE
-   PUSHBUTTON      "Recall",        IDB_RCALL_R6, PI_FX+15+REGS_DX+3,    PI_Y+100,            REG_BTN_DX,  10, NOT WS_VISIBLE
-                                                                         
-   LTEXT           "R7",            IDS_R7,       PI_FX,                 PI_Y+Y_OFS+115,         12,  10
-   LTEXT           " ",             IDC_R7,       PI_FX+15,              PI_Y+115,          REGS_DX,  10, SS_SUNKEN
-   PUSHBUTTON      "Clear",         IDB_CLEAR_R7, PI_FX+15+REGS_DX+3+24, PI_Y+115,            REG_BTN_DX,  10
-   PUSHBUTTON      "View",          IDB_VIEW_R7,  PI_FX+15+REGS_DX+3,    PI_Y+115,            REG_BTN_DX,  10
-   PUSHBUTTON      "Xchg",          IDB_XCHG_R7,  PI_FX+15+REGS_DX+3,    PI_Y+115,            REG_BTN_DX,  10, NOT WS_VISIBLE
-   PUSHBUTTON      "Store",         IDB_STOR_R7,  PI_FX+15+REGS_DX+3,    PI_Y+115,            REG_BTN_DX,  10, NOT WS_VISIBLE
-   PUSHBUTTON      "Recall",        IDB_RCALL_R7, PI_FX+15+REGS_DX+3,    PI_Y+115,            REG_BTN_DX,  10, NOT WS_VISIBLE
-                                                                         
-   LTEXT           "R8",            IDS_R8,       PI_FX,                 PI_Y+Y_OFS+130,         12,  10
-   LTEXT           " ",             IDC_R8,       PI_FX+15,              PI_Y+130,          REGS_DX,  10, SS_SUNKEN
-   PUSHBUTTON      "Clear",         IDB_CLEAR_R8, PI_FX+15+REGS_DX+3+24, PI_Y+130,            REG_BTN_DX,  10
-   PUSHBUTTON      "View",          IDB_VIEW_R8,  PI_FX+15+REGS_DX+3,    PI_Y+130,            REG_BTN_DX,  10
-   PUSHBUTTON      "Xchg",          IDB_XCHG_R8,  PI_FX+15+REGS_DX+3,    PI_Y+130,            REG_BTN_DX,  10, NOT WS_VISIBLE
-   PUSHBUTTON      "Store",         IDB_STOR_R8,  PI_FX+15+REGS_DX+3,    PI_Y+130,            REG_BTN_DX,  10, NOT WS_VISIBLE
-   PUSHBUTTON      "Recall",        IDB_RCALL_R8, PI_FX+15+REGS_DX+3,    PI_Y+130,            REG_BTN_DX,  10, NOT WS_VISIBLE
-                                                                         
-   LTEXT           "R9",            IDS_R9,       PI_FX,                 PI_Y+Y_OFS+145,         12,  10
-   LTEXT           " ",             IDC_R9,       PI_FX+15,              PI_Y+145,          REGS_DX,  10, SS_SUNKEN
-   PUSHBUTTON      "Clear",         IDB_CLEAR_R9, PI_FX+15+REGS_DX+3+24, PI_Y+145,            REG_BTN_DX,  10
-   PUSHBUTTON      "View",          IDB_VIEW_R9,  PI_FX+15+REGS_DX+3,    PI_Y+145,            REG_BTN_DX,  10
-   PUSHBUTTON      "Xchg",          IDB_XCHG_R9,  PI_FX+15+REGS_DX+3,    PI_Y+145,            REG_BTN_DX,  10, NOT WS_VISIBLE
-   PUSHBUTTON      "Store",         IDB_STOR_R9,  PI_FX+15+REGS_DX+3,    PI_Y+145,            REG_BTN_DX,  10, NOT WS_VISIBLE
-   PUSHBUTTON      "Recall",        IDB_RCALL_R9, PI_FX+15+REGS_DX+3,    PI_Y+145,            REG_BTN_DX,  10, NOT WS_VISIBLE
-                                                                         
-   GROUPBOX        " Stack ",       IDC_REGS,     PI_X,                  ST_Y,               REGS_GRP_DX, 74 
-   LTEXT           "T",             IDS_REG_T,    PI_FX,                 ST_Y+Y_OFS+10,               12,  10
-   LTEXT           " ",             IDC_REG_T,    PI_FX+15,              ST_Y+10,                REGS_DX,  10, SS_SUNKEN
-   PUSHBUTTON      "View",          IDB_VIEW_T,   PI_FX+15+REGS_DX+3,    ST_Y+10,             REG_BTN_DX,  10
-   PUSHBUTTON      "Clear",         IDB_CLEAR_T,  PI_FX+15+REGS_DX+3+24, ST_Y+10,             REG_BTN_DX,  10
-                                                                         
-   LTEXT           "Z",             IDS_REG_Z,    PI_FX,                 ST_Y+Y_OFS+25,               12,  10
-   LTEXT           " ",             IDC_REG_Z,    PI_FX+15,              ST_Y+25,                REGS_DX,  10, SS_SUNKEN
-   PUSHBUTTON      "View",          IDB_VIEW_Z,   PI_FX+15+REGS_DX+3,    ST_Y+25,             REG_BTN_DX,  10
-   PUSHBUTTON      "Clear",         IDB_CLEAR_Z,  PI_FX+15+REGS_DX+3+24, ST_Y+25,             REG_BTN_DX,  10
-                                                                         
-   LTEXT           "Y",             IDS_REG_Y,    PI_FX,                 ST_Y+Y_OFS+40,               12,  10
-   LTEXT           " ",             IDC_REG_Y,    PI_FX+15,              ST_Y+40,                REGS_DX,  10, SS_SUNKEN
-   PUSHBUTTON      "View",          IDB_VIEW_Y,   PI_FX+15+REGS_DX+3,    ST_Y+40,             REG_BTN_DX,  10
-   PUSHBUTTON      "Clear",         IDB_CLEAR_Y,  PI_FX+15+REGS_DX+3+24, ST_Y+40,             REG_BTN_DX,  10
-                                                                         
-   LTEXT           "X",             IDS_REG_X,    PI_FX,                 ST_Y+Y_OFS+55,               12,  10
-   // LTEXT           " ",             IDC_REG_X,    PI_FX+15,              ST_Y+55,                REGS_DX,  10, SS_SUNKEN
-   EDITTEXT                         IDC_REG_X,    PI_FX+15,              ST_Y+55,                REGS_DX,  10, ES_READONLY | SS_SUNKEN
-   PUSHBUTTON      "View",          IDB_VIEW_X,   PI_FX+15+REGS_DX+3,    ST_Y+55,             REG_BTN_DX,  10
-   PUSHBUTTON      "Clear",         IDB_CLEAR_X,  PI_FX+15+REGS_DX+3+24, ST_Y+55,             REG_BTN_DX,  10
+   CTEXT           " ",              IDC_TITLE,     150,  5, REGS_GRP_DX-300,  12, SS_SUNKEN
+                                    
+   GROUPBOX        " Registers ",    IDC_REGS,     PI_X,                  PI_Y,          REGS_GRP_DX, 160 
+   LTEXT           "R0",             IDS_R0,       PI_FX,                 PI_Y+Y_OFS+10,          12,  10
+   LTEXT           " ",              IDC_R0,       PI_FX+15,              PI_Y+10,           REGS_DX,  10, SS_SUNKEN
+   DEFPUSHBUTTON   "Clear",          IDB_CLEAR_R0, PI_FX+15+REGS_DX+3+24, PI_Y+10,             REG_BTN_DX,  10
+   PUSHBUTTON      "View",           IDB_VIEW_R0,  PI_FX+15+REGS_DX+3,    PI_Y+10,             REG_BTN_DX,  10
+   PUSHBUTTON      "Xchg",           IDB_XCHG_R0,  PI_FX+15+REGS_DX+3,    PI_Y+10,             REG_BTN_DX,  10, NOT WS_VISIBLE
+   PUSHBUTTON      "Store",          IDB_STOR_R0,  PI_FX+15+REGS_DX+3,    PI_Y+10,             REG_BTN_DX,  10, NOT WS_VISIBLE
+   PUSHBUTTON      "Recall",         IDB_RCALL_R0, PI_FX+15+REGS_DX+3,    PI_Y+10,             REG_BTN_DX,  10, NOT WS_VISIBLE
+                                    
+   LTEXT           "R1",             IDS_R1,       PI_FX,                 PI_Y+Y_OFS+25,          12,  10
+   LTEXT           " ",              IDC_R1,       PI_FX+15,              PI_Y+25,           REGS_DX,  10, SS_SUNKEN
+   PUSHBUTTON      "Clear",          IDB_CLEAR_R1, PI_FX+15+REGS_DX+3+24, PI_Y+25,             REG_BTN_DX,  10
+   PUSHBUTTON      "View",           IDB_VIEW_R1,  PI_FX+15+REGS_DX+3,    PI_Y+25,             REG_BTN_DX,  10
+   PUSHBUTTON      "Xchg",           IDB_XCHG_R1,  PI_FX+15+REGS_DX+3,    PI_Y+25,             REG_BTN_DX,  10, NOT WS_VISIBLE
+   PUSHBUTTON      "Store",          IDB_STOR_R1,  PI_FX+15+REGS_DX+3,    PI_Y+25,             REG_BTN_DX,  10, NOT WS_VISIBLE
+   PUSHBUTTON      "Recall",         IDB_RCALL_R1, PI_FX+15+REGS_DX+3,    PI_Y+25,             REG_BTN_DX,  10, NOT WS_VISIBLE
+                                    
+   LTEXT           "R2",             IDS_R2,       PI_FX,                 PI_Y+Y_OFS+40,          12,  10
+   LTEXT           " ",              IDC_R2,       PI_FX+15,              PI_Y+40,           REGS_DX,  10, SS_SUNKEN
+   PUSHBUTTON      "Clear",          IDB_CLEAR_R2, PI_FX+15+REGS_DX+3+24, PI_Y+40,             REG_BTN_DX,  10
+   PUSHBUTTON      "View",           IDB_VIEW_R2,  PI_FX+15+REGS_DX+3,    PI_Y+40,             REG_BTN_DX,  10
+   PUSHBUTTON      "Xchg",           IDB_XCHG_R2,  PI_FX+15+REGS_DX+3,    PI_Y+40,             REG_BTN_DX,  10, NOT WS_VISIBLE
+   PUSHBUTTON      "Store",          IDB_STOR_R2,  PI_FX+15+REGS_DX+3,    PI_Y+40,             REG_BTN_DX,  10, NOT WS_VISIBLE
+   PUSHBUTTON      "Recall",         IDB_RCALL_R2, PI_FX+15+REGS_DX+3,    PI_Y+40,             REG_BTN_DX,  10, NOT WS_VISIBLE
+                                    
+   LTEXT           "R3",             IDS_R3,       PI_FX,                 PI_Y+Y_OFS+55,          12,  10
+   LTEXT           " ",              IDC_R3,       PI_FX+15,              PI_Y+55,           REGS_DX,  10, SS_SUNKEN
+   PUSHBUTTON      "Clear",          IDB_CLEAR_R3, PI_FX+15+REGS_DX+3+24, PI_Y+55,             REG_BTN_DX,  10
+   PUSHBUTTON      "View",           IDB_VIEW_R3,  PI_FX+15+REGS_DX+3,    PI_Y+55,             REG_BTN_DX,  10
+   PUSHBUTTON      "Xchg",           IDB_XCHG_R3,  PI_FX+15+REGS_DX+3,    PI_Y+55,             REG_BTN_DX,  10, NOT WS_VISIBLE
+   PUSHBUTTON      "Store",          IDB_STOR_R3,  PI_FX+15+REGS_DX+3,    PI_Y+55,             REG_BTN_DX,  10, NOT WS_VISIBLE
+   PUSHBUTTON      "Recall",         IDB_RCALL_R3, PI_FX+15+REGS_DX+3,    PI_Y+55,             REG_BTN_DX,  10, NOT WS_VISIBLE
+                                                                          
+   LTEXT           "R4",             IDS_R4,       PI_FX,                 PI_Y+Y_OFS+70,          12,  10
+   LTEXT           " ",              IDC_R4,       PI_FX+15,              PI_Y+70,           REGS_DX,  10, SS_SUNKEN
+   PUSHBUTTON      "Clear",          IDB_CLEAR_R4, PI_FX+15+REGS_DX+3+24, PI_Y+70,             REG_BTN_DX,  10
+   PUSHBUTTON      "View",           IDB_VIEW_R4,  PI_FX+15+REGS_DX+3,    PI_Y+70,             REG_BTN_DX,  10
+   PUSHBUTTON      "Xchg",           IDB_XCHG_R4,  PI_FX+15+REGS_DX+3,    PI_Y+70,             REG_BTN_DX,  10, NOT WS_VISIBLE
+   PUSHBUTTON      "Store",          IDB_STOR_R4,  PI_FX+15+REGS_DX+3,    PI_Y+70,             REG_BTN_DX,  10, NOT WS_VISIBLE
+   PUSHBUTTON      "Recall",         IDB_RCALL_R4, PI_FX+15+REGS_DX+3,    PI_Y+70,             REG_BTN_DX,  10, NOT WS_VISIBLE
+                                                                          
+   LTEXT           "R5",             IDS_R5,       PI_FX,                 PI_Y+Y_OFS+85,          12,  10
+   LTEXT           " ",              IDC_R5,       PI_FX+15,              PI_Y+85,           REGS_DX,  10, SS_SUNKEN
+   PUSHBUTTON      "Clear",          IDB_CLEAR_R5, PI_FX+15+REGS_DX+3+24, PI_Y+85,             REG_BTN_DX,  10
+   PUSHBUTTON      "View",           IDB_VIEW_R5,  PI_FX+15+REGS_DX+3,    PI_Y+85,             REG_BTN_DX,  10
+   PUSHBUTTON      "Xchg",           IDB_XCHG_R5,  PI_FX+15+REGS_DX+3,    PI_Y+85,             REG_BTN_DX,  10, NOT WS_VISIBLE
+   PUSHBUTTON      "Store",          IDB_STOR_R5,  PI_FX+15+REGS_DX+3,    PI_Y+85,             REG_BTN_DX,  10, NOT WS_VISIBLE
+   PUSHBUTTON      "Recall",         IDB_RCALL_R5, PI_FX+15+REGS_DX+3,    PI_Y+85,             REG_BTN_DX,  10, NOT WS_VISIBLE
+                                                                          
+   LTEXT           "R6",             IDS_R6,       PI_FX,                 PI_Y+Y_OFS+100,         12,  10
+   LTEXT           " ",              IDC_R6,       PI_FX+15,              PI_Y+100,          REGS_DX,  10, SS_SUNKEN
+   PUSHBUTTON      "Clear",          IDB_CLEAR_R6, PI_FX+15+REGS_DX+3+24, PI_Y+100,            REG_BTN_DX,  10
+   PUSHBUTTON      "View",           IDB_VIEW_R6,  PI_FX+15+REGS_DX+3,    PI_Y+100,            REG_BTN_DX,  10
+   PUSHBUTTON      "Xchg",           IDB_XCHG_R6,  PI_FX+15+REGS_DX+3,    PI_Y+100,            REG_BTN_DX,  10, NOT WS_VISIBLE
+   PUSHBUTTON      "Store",          IDB_STOR_R6,  PI_FX+15+REGS_DX+3,    PI_Y+100,            REG_BTN_DX,  10, NOT WS_VISIBLE
+   PUSHBUTTON      "Recall",         IDB_RCALL_R6, PI_FX+15+REGS_DX+3,    PI_Y+100,            REG_BTN_DX,  10, NOT WS_VISIBLE
+                                                                          
+   LTEXT           "R7",             IDS_R7,       PI_FX,                 PI_Y+Y_OFS+115,         12,  10
+   LTEXT           " ",              IDC_R7,       PI_FX+15,              PI_Y+115,          REGS_DX,  10, SS_SUNKEN
+   PUSHBUTTON      "Clear",          IDB_CLEAR_R7, PI_FX+15+REGS_DX+3+24, PI_Y+115,            REG_BTN_DX,  10
+   PUSHBUTTON      "View",           IDB_VIEW_R7,  PI_FX+15+REGS_DX+3,    PI_Y+115,            REG_BTN_DX,  10
+   PUSHBUTTON      "Xchg",           IDB_XCHG_R7,  PI_FX+15+REGS_DX+3,    PI_Y+115,            REG_BTN_DX,  10, NOT WS_VISIBLE
+   PUSHBUTTON      "Store",          IDB_STOR_R7,  PI_FX+15+REGS_DX+3,    PI_Y+115,            REG_BTN_DX,  10, NOT WS_VISIBLE
+   PUSHBUTTON      "Recall",         IDB_RCALL_R7, PI_FX+15+REGS_DX+3,    PI_Y+115,            REG_BTN_DX,  10, NOT WS_VISIBLE
+                                                                          
+   LTEXT           "R8",             IDS_R8,       PI_FX,                 PI_Y+Y_OFS+130,         12,  10
+   LTEXT           " ",              IDC_R8,       PI_FX+15,              PI_Y+130,          REGS_DX,  10, SS_SUNKEN
+   PUSHBUTTON      "Clear",          IDB_CLEAR_R8, PI_FX+15+REGS_DX+3+24, PI_Y+130,            REG_BTN_DX,  10
+   PUSHBUTTON      "View",           IDB_VIEW_R8,  PI_FX+15+REGS_DX+3,    PI_Y+130,            REG_BTN_DX,  10
+   PUSHBUTTON      "Xchg",           IDB_XCHG_R8,  PI_FX+15+REGS_DX+3,    PI_Y+130,            REG_BTN_DX,  10, NOT WS_VISIBLE
+   PUSHBUTTON      "Store",          IDB_STOR_R8,  PI_FX+15+REGS_DX+3,    PI_Y+130,            REG_BTN_DX,  10, NOT WS_VISIBLE
+   PUSHBUTTON      "Recall",         IDB_RCALL_R8, PI_FX+15+REGS_DX+3,    PI_Y+130,            REG_BTN_DX,  10, NOT WS_VISIBLE
+                                                                          
+   LTEXT           "R9",             IDS_R9,       PI_FX,                 PI_Y+Y_OFS+145,         12,  10
+   LTEXT           " ",              IDC_R9,       PI_FX+15,              PI_Y+145,          REGS_DX,  10, SS_SUNKEN
+   PUSHBUTTON      "Clear",          IDB_CLEAR_R9, PI_FX+15+REGS_DX+3+24, PI_Y+145,            REG_BTN_DX,  10
+   PUSHBUTTON      "View",           IDB_VIEW_R9,  PI_FX+15+REGS_DX+3,    PI_Y+145,            REG_BTN_DX,  10
+   PUSHBUTTON      "Xchg",           IDB_XCHG_R9,  PI_FX+15+REGS_DX+3,    PI_Y+145,            REG_BTN_DX,  10, NOT WS_VISIBLE
+   PUSHBUTTON      "Store",          IDB_STOR_R9,  PI_FX+15+REGS_DX+3,    PI_Y+145,            REG_BTN_DX,  10, NOT WS_VISIBLE
+   PUSHBUTTON      "Recall",         IDB_RCALL_R9, PI_FX+15+REGS_DX+3,    PI_Y+145,            REG_BTN_DX,  10, NOT WS_VISIBLE
+                                                                          
+   GROUPBOX        " Stack ",        IDC_REGS,     PI_X,                  ST_Y,               REGS_GRP_DX, 74 
+   LTEXT           "T",              IDS_REG_T,    PI_FX,                 ST_Y+Y_OFS+10,               12,  10
+   LTEXT           " ",              IDC_REG_T,    PI_FX+15,              ST_Y+10,                REGS_DX,  10, SS_SUNKEN
+   PUSHBUTTON      "View",           IDB_VIEW_T,   PI_FX+15+REGS_DX+3,    ST_Y+10,             REG_BTN_DX,  10
+   PUSHBUTTON      "Clear",          IDB_CLEAR_T,  PI_FX+15+REGS_DX+3+24, ST_Y+10,             REG_BTN_DX,  10
+                                                                          
+   LTEXT           "Z",              IDS_REG_Z,    PI_FX,                 ST_Y+Y_OFS+25,               12,  10
+   LTEXT           " ",              IDC_REG_Z,    PI_FX+15,              ST_Y+25,                REGS_DX,  10, SS_SUNKEN
+   PUSHBUTTON      "View",           IDB_VIEW_Z,   PI_FX+15+REGS_DX+3,    ST_Y+25,             REG_BTN_DX,  10
+   PUSHBUTTON      "Clear",          IDB_CLEAR_Z,  PI_FX+15+REGS_DX+3+24, ST_Y+25,             REG_BTN_DX,  10
+                                                                          
+   LTEXT           "Y",              IDS_REG_Y,    PI_FX,                 ST_Y+Y_OFS+40,               12,  10
+   LTEXT           " ",              IDC_REG_Y,    PI_FX+15,              ST_Y+40,                REGS_DX,  10, SS_SUNKEN
+   PUSHBUTTON      "View",           IDB_VIEW_Y,   PI_FX+15+REGS_DX+3,    ST_Y+40,             REG_BTN_DX,  10
+   PUSHBUTTON      "Clear",          IDB_CLEAR_Y,  PI_FX+15+REGS_DX+3+24, ST_Y+40,             REG_BTN_DX,  10
+                                                                          
+   LTEXT           "X",              IDS_REG_X,    PI_FX,                 ST_Y+Y_OFS+55,               12,  10
+   EDITTEXT                          IDC_REG_X,    PI_FX+15,              ST_Y+55,                REGS_DX,  10, ES_READONLY | SS_SUNKEN
+   PUSHBUTTON      "View",           IDB_VIEW_X,   PI_FX+15+REGS_DX+3,    ST_Y+55,             REG_BTN_DX,  10
+   PUSHBUTTON      "Clear",          IDB_CLEAR_X,  PI_FX+15+REGS_DX+3+24, ST_Y+55,             REG_BTN_DX,  10
                     
    //  text fields
    
-   LTEXT           "MSG:",          IDS_MSG,      PI_X,                  ST_Y+Y_OFS+84,           Y_OFS2,  10
-   LTEXT           " ",             IDC_MSG,      PI_X+Y_OFS2,           ST_Y+84,      (REGS_GRP_DX/2) - Y_OFS2,  10, SS_SUNKEN
+   LTEXT           "MSG:",          IDS_MSG,       PI_X,                  ST_Y+Y_OFS+84,           Y_OFS2,  10
+   LTEXT           " ",             IDC_MSG,       PI_X+Y_OFS2,           ST_Y+84,      (REGS_GRP_DX/2) - Y_OFS2,  10, SS_SUNKEN
                                                         
 #define  X_KBDST  (PI_X+Y_OFS2+(REGS_GRP_DX/2) - Y_OFS2+8)
-   LTEXT           "Kbd State:",    IDS_KSTATE,   X_KBDST,               ST_Y+Y_OFS+84,    36,  10
-   LTEXT           " ",             IDC_KSTATE,   X_KBDST+Y_OFS3-3,      ST_Y+84,          70,  10, SS_SUNKEN
+   LTEXT           "Kbd State:",     IDS_KSTATE,   X_KBDST,               ST_Y+Y_OFS+84,               36,  10
+   LTEXT           " ",              IDC_KSTATE,   X_KBDST+Y_OFS3-3,      ST_Y+84,                     70,  10, SS_SUNKEN
    
-   LTEXT           "Keyboard Keys:",        IDS_KEYS, PI_X,              ST_Y+Y_OFS+99,    52,  10
-   LTEXT           " 0-9.E Enter UP DOWN, F1=Help, F2=Options ", IDC_KEYS, PI_X+54, ST_Y+99,  REGS_GRP_DX-55,  10, SS_SUNKEN
+   LTEXT           "Keyboard Keys:", IDS_KEYS,     PI_X,                  ST_Y+Y_OFS+99,               52,  10
+   LTEXT           " 0-9.E Enter, UP/DOWN=Roll Stack, F1=Help, F2=Options ", 
+                                     IDC_KEYS,     PI_X+54,               ST_Y+99,         REGS_GRP_DX-55,  10, SS_SUNKEN
    
 #define  BTN_ARRAY_OFS  (ST_Y + 114)
                      

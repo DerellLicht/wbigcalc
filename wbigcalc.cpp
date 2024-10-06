@@ -13,6 +13,7 @@ static char const * const Version = "WBigCalc Extended Precision Calculator, Ver
 #include <windows.h>
 #include <stdio.h>
 #include <tchar.h>
+#include <htmlhelp.h>
 
 #include "common.h"
 #include "commonw.h"
@@ -47,6 +48,35 @@ static uint cxClient = 0 ;
 static uint cyClient = 0 ;
 
 static CStatusBar *MainStatusBar = NULL;
+
+//*************************************************************
+#ifndef PATH_MAX
+#define  PATH_MAX    1024
+#endif
+
+static char chmname[PATH_MAX] = "";
+
+static void find_chm_location(void)
+{
+   LRESULT result = derive_filename_from_exec(chmname, (char *) ".chm") ; //lint !e1773 const
+   if (result != 0) {
+      syslog("find_chm_loc: %s\n", get_system_message());
+   }
+}
+
+//*************************************************************
+static void view_help_screen(HWND hwnd)
+{
+   find_chm_location() ;
+   
+   // syslog("help=[%s]", chmname) ;
+   //  MinGw gives a couple of indecipherable linker warnings about this:
+   // Warning: .drectve `-defaultlib:uuid.lib ' unrecognized
+   // Warning: .drectve `-defaultlib:uuid.lib ' unrecognized   
+   //  But ignoring them doesn't seem to hurt anything...
+   HtmlHelp(hwnd, chmname, HH_DISPLAY_TOPIC, 0L);
+   return ;
+}
 
 //**********************************************************************
 #define  FONT_HEIGHT_TITLE    21
@@ -583,7 +613,8 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
          case IDB_FRAC  :    dos_main(FRACTION); break ;
          case IDB_PI    :    dos_main(RECALLPI); break ;
          case IDB_ECONST:    dos_main(RECALLE); break ;
-         case IDB_HELP  :    dos_main(HELP); break ;
+         // case IDB_HELP  :    dos_main(HELP); break ;
+         case IDB_HELP  :    view_help_screen(hDlgWnd); break ;
          case IDB_OPTIONS:   open_options_dialog(hDlgWnd); break ;
             
          //  button row 3
