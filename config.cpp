@@ -90,6 +90,8 @@ LRESULT read_config_file(void)
       if (strncmp(inpstr, "normprec=", 9) == 0) {
          // syslog("enabling factory mode\n") ;
          normprec = (int) strtoul(&inpstr[9], 0, 0) ;
+         compprec = COMPPREC;
+         workprec = WORKPREC;
       } else
       if (strncmp(inpstr, "groupsize=", 10) == 0) {
          groupsize = (uint) strtoul(&inpstr[10], 0, 0) ;

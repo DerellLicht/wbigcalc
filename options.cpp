@@ -133,6 +133,8 @@ static INT_PTR CALLBACK OptionsProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lPar
             if (uvalue >= MINPREC  &&
                 uvalue <= MAXNORM) {
                 normprec = uvalue ;
+                compprec = COMPPREC;
+                workprec = WORKPREC;
                 wsprintf(msgstr, " %u", normprec) ;
                 SetWindowText(hwndNormPrec , msgstr);
             }

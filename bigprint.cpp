@@ -358,8 +358,8 @@ void MemoryError(void)
  */
 void show_status_info(void)
 {
-   char tempstr[20];
-   sprintf (tempstr, " Precision: %d", normprec);
+   char tempstr[60];
+   sprintf (tempstr, " Precision: %d, compprec: %d", normprec, compprec);
    status_message(1, tempstr);
    
    sprintf (tempstr, " dgroup: %u", groupsize);

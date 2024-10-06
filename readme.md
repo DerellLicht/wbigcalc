@@ -10,7 +10,6 @@ but is rarely seen in pocket calculators any more.
 ### Pending issues
 
 - View Stack/Reg with exponent, doesn't display exponent, nor decimal point
-- Pi, e both displayed at 59 digits, even with 75 digits configured.
 - LastX doesn't work... sometimes... I think...
 
 ### Program modifications

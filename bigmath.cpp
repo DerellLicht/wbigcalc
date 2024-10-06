@@ -544,11 +544,8 @@ extern int ExtendedDivide(void)
  *    *                                                *
  *    **************************************************
  */
-
-extern int ExtendedSquareRoot(void)
-
+int ExtendedSquareRoot(void)
 {
-
    long nl, apxl, lapxl;
    int i, j, result = TRUE;
    int oldprec, cmpsize;

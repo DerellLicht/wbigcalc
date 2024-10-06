@@ -64,7 +64,6 @@ static  void Log(void);
 static  void Exp10(void);
 static  void Ln(void);
 static  void ExpE(void);
-static  void RecallPi(void);
 static  void RecallE(void);
 static  void RecallLastX(void);
 static  void GroupSize(void);
@@ -301,6 +300,8 @@ static void SquareRoot(void)
       WriteStack(0, 0);
       stacklift = true;
       }
+   show_status_info();
+   
 }
 
 /*
@@ -699,11 +700,8 @@ static void Ln(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void ExpE(void)
-
 {
-
    MessageEsc("Computing e^X");
 
    restore_stack0();
@@ -715,11 +713,7 @@ static void ExpE(void)
       WriteStack(0, 0);
       stacklift = true;
       }
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -728,11 +722,8 @@ static void ExpE(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void RecallPi(void)
-
 {
-
    if (stacklift) {
       PushStack();
       WriteStack(1, 3);
@@ -742,11 +733,7 @@ static void RecallPi(void)
    MoveWorkStack(0, 0);
    WriteStack(0, 0);
    stacklift = true;
-
 }
-
-
-
 
 /*
  *    **************************************************
