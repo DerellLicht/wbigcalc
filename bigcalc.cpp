@@ -1121,15 +1121,6 @@ static char *form_full_view_str(NORMTYPE *nfield)
    uint slen = nfield->digits ;
    int expdigits = nfield->exp ;
    uint mspan ;
-   if (expdigits >= 0) {
-      mspan = (uint) expdigits % groupsize ;
-   }
-   else {
-      mspan = (uint) -expdigits % groupsize ;
-   }
-   if (mspan == 0) {
-      mspan = groupsize ;
-   }
    
    if (slen == 0) {
       sprintf(view_str, "empty");
@@ -1139,6 +1130,12 @@ static char *form_full_view_str(NORMTYPE *nfield)
    // X:    0*142 857 142 857 142 857 142 857 142 857 142 857 142 857 142 857 14   
    // [dump stack 0: 0,+,50: 1,4,2,8,5,7,1,4,2,8,5,7,1,4,2,8,5,7,1,4,2,8,5,7,1,4,2,8,5,7,1,4,2,8,5,7,1,4,2,8,5,7,1,4,2,8,5,7,1,4,]
    else if (expdigits == 0) {
+      // mspan = (uint) expdigits % groupsize ;
+      // if (mspan == 0) {
+         mspan = groupsize ;
+      // }
+      
+      
       outidx = sprintf(view_str, "%c0*", nfield->sign);
       for (inidx=0; inidx < slen; inidx++) {
          outidx += sprintf(&view_str[outidx], "%u", nfield->man[inidx]);   //lint !e705
@@ -1157,6 +1154,11 @@ static char *form_full_view_str(NORMTYPE *nfield)
    //  .0002308...
    // DNR: [dump stack 0: -3,+,50: 2,3,0,8,4,0,2,5,8,5,4,1,0,8,9,5,6,6,0,2,0,3,1,3,9,4,2,7,5,1,6,1,5,8,8,1,8,0,9,7,8,7,6,2,6,9,6,2,1,4,]
    else if (expdigits < 0) {
+      // mspan = (uint) -expdigits % groupsize ;
+      // if (mspan == 0) {
+      //    mspan = groupsize ;
+      // }
+      
       uint zeroes = -expdigits ;
       outidx = sprintf(view_str, "%c0*", nfield->sign);
       mspan = groupsize ;
@@ -1184,30 +1186,60 @@ static char *form_full_view_str(NORMTYPE *nfield)
    //  slen = 50
    //  expdigits = 2
    //  mspan = 2
+   
    // [dump stack 0: 4,+,50: 2,3,5,6,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,8,7,]
    // X:  +2356 87878 78787 87878 78787 87878 78787 87878 78787 87878 7
    //  slen = 50
    //  expdigits = 4
    //  mspan = 4
+   
+   //  <func>: [<str> [mspan]: expdigits, sign, digits, man... ]
+   //  DNR: [ffvs [2]: 14,+,4: 8,8,3,8,]
    else {
-      outidx = sprintf(view_str, "%c", nfield->sign);
-      for (inidx=0; inidx < slen; inidx++) {
-         outidx += sprintf(&view_str[outidx], "%u", nfield->man[inidx]);   //lint !e705
-         // syslog("mspan: %u, inidx: %u, expdigits: %u, slen: %u, groupsize: %u\n", 
-         //    mspan, inidx, expdigits, slen, groupsize);
-         if (--mspan == 0) {
-            //   &&  (uint) expdigits != slen
-            if ((inidx+1) == (uint) expdigits) {
-               if (slen != (uint) expdigits) {
-                  outidx += sprintf(&view_str[outidx], "*");
-               }
+      mspan = (uint) expdigits % groupsize ;
+      if (mspan == 0) {
+         mspan = groupsize ;
+      }
+      char tstr[20] ;
+      sprintf(tstr, "ffvs [%u]", mspan);
+      dump_norm_reg(nfield, tstr);
+      //  if expdigits > digits, then there won't be any decimal point
+      //  represented at all; the difference between the two numbers will
+      //  be represented with zeroes.
+      if (expdigits > nfield->digits) {
+         outidx = sprintf(view_str, "%c", nfield->sign);
+         for (inidx=0; inidx < (uint) expdigits; inidx++) {
+            if (inidx <= (uint) nfield->digits) {
+               outidx += sprintf(&view_str[outidx], "%u", nfield->man[inidx]);   //lint !e705
             }
             else {
-               outidx += sprintf(&view_str[outidx], " ");
+               outidx += sprintf(&view_str[outidx], "0");   //lint !e705
             }
-            mspan = groupsize ;
+            if (--mspan == 0) {
+               outidx += sprintf(&view_str[outidx], " ");
+               mspan = groupsize ;
+            }
          }
-         
+      }
+      else {
+         outidx = sprintf(view_str, "%c", nfield->sign);
+         for (inidx=0; inidx < slen; inidx++) {
+            outidx += sprintf(&view_str[outidx], "%u", nfield->man[inidx]);   //lint !e705
+            // syslog("mspan: %u, inidx: %u, expdigits: %u, slen: %u, groupsize: %u\n", 
+            //    mspan, inidx, expdigits, slen, groupsize);
+            if (--mspan == 0) {
+               //   &&  (uint) expdigits != slen
+               if ((inidx+1) == (uint) expdigits) {
+                  if (slen != (uint) expdigits) {
+                     outidx += sprintf(&view_str[outidx], "*");
+                  }
+               }
+               else {
+                  outidx += sprintf(&view_str[outidx], " ");
+               }
+               mspan = groupsize ;
+            }
+         }
       }
    }
    return (view_str);

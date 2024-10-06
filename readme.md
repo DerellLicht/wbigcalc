@@ -9,7 +9,6 @@ but is rarely seen in pocket calculators any more.
 
 ### Pending issues
 
-- View Stack/Reg with exponent, doesn't display exponent, nor decimal point
 - LastX doesn't work... sometimes... I think...
 
 ### Program modifications
