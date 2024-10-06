@@ -134,6 +134,7 @@ void view_data_field_full(uint fidx, char *fstr);
 
 //  config.cpp
 extern bool show_winmsgs ;
+LRESULT set_ini_filename(void);
 LRESULT read_config_file(void);
 LRESULT save_cfg_file(void);
 

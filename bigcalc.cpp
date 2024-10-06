@@ -112,24 +112,7 @@ static bool stacklift = true;       /* Lift stack for new X if TRUE */
  */
 void Initialize(void)
 {
-   // ScrInit();                    /* Initialize screen drivers */
-
    ExtendedInitConstants();      /* Initialize extended constants */
-
-   //***************************************************************
-   // if (argc > 1) {
-   //    while (*argv) {            /* Convert *argv to number */
-   //       if (isdigit(*argv)) {
-   //          normprec = (normprec * 10) + (*argv - '0');
-   //          if (normprec <= MAXNORM) {
-   //             argv++;
-   //             continue;
-   //          }
-   //       }
-   //       normprec = 0;
-   //       break;
-   //    }
-   // }
 
    //  now handled by config/options modules
    if ( (normprec < MINPREC) ||

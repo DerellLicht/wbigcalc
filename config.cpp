@@ -34,6 +34,19 @@ static void strip_comments(char *bfr)
 }
 
 //****************************************************************************
+LRESULT set_ini_filename(void)
+{
+   LRESULT result = derive_filename_from_exec(ini_name, (char *) ".ini") ; //lint !e1773 const
+   if (result != 0) {
+      syslog("%s open: %s\n", ini_name, get_system_message(result)) ;
+   }
+   if (show_winmsgs) {
+      syslog("ini file: %s\n", ini_name);
+   }
+   return result;
+}
+
+//****************************************************************************
 static LRESULT save_default_ini_file(void)
 {
    FILE *fd = fopen(ini_name, "wt") ;
@@ -69,13 +82,6 @@ LRESULT read_config_file(void)
 {
    char inpstr[128] ;
    uint uvalue ;
-   LRESULT result = derive_filename_from_exec(ini_name, (char *) ".ini") ; //lint !e1773 const
-   if (result != 0)
-      return result;
-
-   if (show_winmsgs) {
-      syslog("ini file: %s\n", ini_name);
-   }
    FILE *fd = fopen(ini_name, "rt") ;
    if (fd == 0) {
       return save_default_ini_file() ;

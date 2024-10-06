@@ -756,6 +756,7 @@ INT WINAPI WinMain (HINSTANCE hInstance,
 {
    hInst = hInstance;
    load_exec_filename() ;  //  get our executable name
+   set_ini_filename();
 
    HWND hWnd = CreateDialog (hInstance, MAKEINTRESOURCE(IDD_MAIN_DIALOG), NULL,
                               (DLGPROC) InitProc);
