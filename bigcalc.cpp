@@ -126,12 +126,9 @@ void Initialize(void)
    ClearStack(0, 3);             /* Initialize work areas */
    ClearReg(0, 9);
    lastx = stack[0];
-                                 /* Allow full screen entry for big numbers */
-   // if (normprec > SIZEOFSMALL)
-   //    entrysignrow = ENTRYSIGNROWBIG;
-   // else
-   //    entrysignrow = ENTRYSIGNROWSMALL;
 
+   read_config_file() ;    //  read current screen position, etc
+   //  these should be done *after* reading config file
    GroupSize();                  /* Toggle group size to 5 & set xxxfloatprn */
    WorkScreen();
 }
