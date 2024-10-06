@@ -30,8 +30,9 @@ wc:
 lint:
 	cmd /C "c:\lint9\lint-nt +v -width(160,4) -Ider_libs +fcp -ic:\lint9 mingw.lnt -os(_lint.tmp) lintdefs.cpp dlgres.rc $(CPPSRC)"
 
-src:
-	zip wbigcalc.zip *.cpp *.h *.rc makefile *.txt *.doc *.ico
+dist:
+	rm -f wbigcalc.zip
+	zip wbigcalc.zip wbigcalc.exe wbigcalc.chm
 
 $(BIN): $(OBJS)
 	g++ $(CFLAGS) -mwindows -s $(OBJS) -o $@ -lcomctl32 -lgdi32 -lcomdlg32 -lhtmlhelp
