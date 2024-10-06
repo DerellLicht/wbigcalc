@@ -33,12 +33,13 @@ Source code is maintained at https://github.com/DerellLicht/bigcalc
 The original program was written by Judson D. McClendon for MSDOS, ca 1999.  
 Neither the author nor the original program appear to be present on the internet any more.
 
+```
  Judson D. McClendon           $20 gets you a disk with the complete C source.  
  Sun Valley Systems  
  4522 Shadow Ridge Pkwy        There is no warranty of any kind.  
  Pinson, AL 35126-2192         The author assumes no responsibility for the  
      205-680-0460              use of this program.  
-
+```
 
 
 
