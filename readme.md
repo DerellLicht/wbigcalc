@@ -10,6 +10,10 @@ but is rarely seen in pocket calculators any more.
 ### Pending issues
 
 - LastX doesn't work... sometimes... I think...
+- Help document:
+  1. remove bigcalc.txt
+  2. add license file
+  3. add support page with link to Github issues page
 
 ### Program modifications
 **DDM 09/10/24**

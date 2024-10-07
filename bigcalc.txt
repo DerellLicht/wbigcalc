@@ -1,4 +1,7 @@
-WBigCalc Extended Precision Calculator
+This is the original readme file from the MS-DOS program in 1999
+================================================================
+
+BigCalc Extended Precision Calculator
 
 BIGCALC works like an H-P calculator with stack and ten memory registers.
 Maximum precision settable from 3 to 1075 digits. Exponents to ±999999999.
