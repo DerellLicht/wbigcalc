@@ -9,11 +9,12 @@ but is rarely seen in pocket calculators any more.
 
 ### Pending issues
 
-- LastX doesn't work... sometimes... I think...
-- Help document:
-  1. remove bigcalc.txt
-  2. add license file
-  3. add support page with link to Github issues page
+- Store registers in INI file?  Maybe stack as well?
+
+- Although the original BigCalc actually supported numbers up to 1075 digits, 
+  this Windows program doesn't really support that many digits, simply because 
+  I haven't yet implemented any way to display such numbers.  
+  In practice, numbers above 66 digits get converted to scientific notation.  
 
 ### Program modifications
 **DDM 09/10/24**

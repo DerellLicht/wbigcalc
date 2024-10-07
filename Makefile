@@ -32,7 +32,7 @@ lint:
 
 dist:
 	rm -f wbigcalc.zip
-	zip wbigcalc.zip wbigcalc.exe wbigcalc.chm bigcalc.txt LICENSE
+	zip wbigcalc.zip wbigcalc.exe wbigcalc.chm bigcalc.txt LICENSE readme.md
 
 $(BIN): $(OBJS)
 	g++ $(CFLAGS) -mwindows -s $(OBJS) -o $@ -lcomctl32 -lgdi32 -lcomdlg32 -lhtmlhelp

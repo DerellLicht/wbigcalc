@@ -7,3 +7,5 @@ _lint.tmp
 *.chm
 HelpNDoc/*.chm
 HelpNDoc/*.pdf
+HND9/
+
