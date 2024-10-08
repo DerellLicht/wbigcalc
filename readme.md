@@ -11,10 +11,12 @@ but is rarely seen in pocket calculators any more.
 
 - Store registers in INI file?  Maybe stack as well?
 
-- Although the original BigCalc actually supported numbers up to 1075 digits, 
-  this Windows program doesn't really support that many digits, simply because 
-  I haven't yet implemented any way to display such numbers.  
-  In practice, numbers above 66 digits get converted to scientific notation.  
+### Notes about large numbers of digits
+If number of digits is set to larger than 75, the stack displays will only display
+first 75 characters; that is due to limitations in the original program;
+it was designed for an 80-character-wide MS-DOS screen.  
+However, all the specified digits will still be displayed in the View window, 
+and all computations will be done with the full number of requested digits.
 
 ### Program modifications
 **DDM 09/10/24**
