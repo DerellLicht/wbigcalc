@@ -96,7 +96,9 @@ int
    workprec = 0;           /* Work precision    */
    
 uint groupsize = 0;          /* Digit group size  */
-   
+
+char view_dec_point_char = '.' ; //  either '.' or '*'
+
 //static int chr = 0;                /* Input Character   */
 
 bool scinotation = false;    /* Force sci notation if TRUE   */
@@ -1116,6 +1118,7 @@ static void DropStack(void)
 static char *form_full_view_str(NORMTYPE *nfield)
 {
    static char view_str[1100] = "" ;
+   // static char dec_point_char = '*' ;
    uint outidx = 0 ; //  index into outstr
    uint inidx ;  //  index for walking data
    uint slen = nfield->digits ;
@@ -1200,9 +1203,10 @@ static char *form_full_view_str(NORMTYPE *nfield)
       if (mspan == 0) {
          mspan = groupsize ;
       }
-      char tstr[20] ;
-      sprintf(tstr, "ffvs [%u]", mspan);
-      dump_norm_reg(nfield, tstr);
+      // char tstr[20] ;
+      // sprintf(tstr, "ffvs [%u, %u, %u]", mspan, slen, groupsize);
+      // dump_norm_reg(nfield, tstr);
+      
       //  if expdigits > digits, then there won't be any decimal point
       //  represented at all; the difference between the two numbers will
       //  be represented with zeroes.
@@ -1228,10 +1232,9 @@ static char *form_full_view_str(NORMTYPE *nfield)
             // syslog("mspan: %u, inidx: %u, expdigits: %u, slen: %u, groupsize: %u\n", 
             //    mspan, inidx, expdigits, slen, groupsize);
             if (--mspan == 0) {
-               //   &&  (uint) expdigits != slen
                if ((inidx+1) == (uint) expdigits) {
                   if (slen != (uint) expdigits) {
-                     outidx += sprintf(&view_str[outidx], "*");
+                     outidx += sprintf(&view_str[outidx], "%c", view_dec_point_char);
                   }
                }
                else {

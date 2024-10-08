@@ -32,6 +32,8 @@ static tooltip_data_t const options_tooltips[] = {
 { IDG_GROUPSIZE,    _T("Set size of digit groups in View window (3 or 5)" )},
 { IDC_GS_3BYTES,    _T("Set size of digit groups in View window (3 or 5)" )},
 { IDC_GS_5BYTES,    _T("Set size of digit groups in View window (3 or 5)" )},
+{ IDC_DC_STAR,      _T("Set View decimal point to * character (bigcalc legacy display)" )},
+{ IDC_DC_PERIOD,    _T("Set View decimal point to . character (traditional display)" )},
 { IDM_SCINOT,       _T("Select scientific or floating-point for number display" )},
 { IDM_WINMSGS,      _T("Show WinAPI debug messages in DebugView" )},
 { IDOK,             _T("Close this dialog and accept changes" )},
@@ -93,6 +95,7 @@ static INT_PTR CALLBACK OptionsProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lPar
       PostMessage(GetDlgItem(hwnd, IDM_WINMSGS),       BM_SETCHECK, show_winmsgs, 0) ;
       PostMessage(GetDlgItem(hwnd, IDM_SCINOT),        BM_SETCHECK, scinotation, 0) ;
       CheckRadioButton (hwnd, IDC_GS_3BYTES, IDC_GS_5BYTES, groupsize_codes[groupsize]) ;
+      CheckRadioButton (hwnd, IDC_DC_STAR, IDC_DC_PERIOD, (view_dec_point_char == '.') ? IDC_DC_PERIOD : IDC_DC_STAR) ;
 
       create_and_add_tooltips(hwnd, 150, 100, 10000, options_tooltips);
       return TRUE ;
@@ -118,12 +121,20 @@ static INT_PTR CALLBACK OptionsProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lPar
             groupsize = 3 ;
             CheckRadioButton (hwnd, IDC_GS_3BYTES, IDC_GS_5BYTES, groupsize_codes[groupsize]) ;
             return TRUE;
-            
          case IDC_GS_5BYTES:
             groupsize = 5 ;
             CheckRadioButton (hwnd, IDC_GS_3BYTES, IDC_GS_5BYTES, groupsize_codes[groupsize]) ;
             return TRUE;
                
+         case IDC_DC_STAR:
+            view_dec_point_char = '*' ;
+            CheckRadioButton (hwnd, IDC_DC_STAR, IDC_DC_PERIOD, IDC_DC_STAR) ;
+            break ;
+         case IDC_DC_PERIOD:
+            view_dec_point_char = '.' ;
+            CheckRadioButton (hwnd, IDC_DC_STAR, IDC_DC_PERIOD, IDC_DC_PERIOD) ;
+            break ;
+      
          case IDOK: //  take the new settings
             tempEditLength = GetWindowTextLength (GetDlgItem(hwnd, IDC_NORMPREC));
             GetWindowText (hwndNormPrec, msgstr, tempEditLength + 1);

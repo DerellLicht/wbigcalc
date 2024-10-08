@@ -104,6 +104,7 @@ extern int
    workprec;               /* Work precision    */
    
 extern uint groupsize;              /* Digit group size  */
+extern char view_dec_point_char ; //  either '.' or '*'
    // menunbr;                /* Menu number       */
    
 // extern long

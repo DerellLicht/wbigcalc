@@ -58,6 +58,7 @@ static LRESULT save_default_ini_file(void)
    //  save any global vars
    fprintf(fd, "normprec=%d\n", normprec) ;
    fprintf(fd, "groupsize=%u\n", groupsize) ;
+   fprintf(fd, "vdec_char=%c\n", view_dec_point_char) ;
    fprintf(fd, "scinotation=%u\n", (scinotation) ? 1U : 0U) ;
    fprintf(fd, "winmsgs=%u\n", (show_winmsgs) ? 1U : 0U) ;
    
@@ -101,6 +102,9 @@ LRESULT read_config_file(void)
       } else
       if (strncmp(inpstr, "groupsize=", 10) == 0) {
          groupsize = (uint) strtoul(&inpstr[10], 0, 0) ;
+      } else
+      if (strncmp(inpstr, "vdec_char=", 10) == 0) {
+         view_dec_point_char = inpstr[10] ;
       } else
       if (strncmp(inpstr, "scinotation=", 12) == 0) {
          uvalue = (uint) strtoul(&inpstr[12], 0, 0) ;

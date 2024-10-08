@@ -303,27 +303,31 @@ END
 //*******************************************************************
 //  options dialog
 //*******************************************************************
-IDD_OPTIONS DIALOGEX 800, 300, 120, 140
+IDD_OPTIONS DIALOGEX 800, 300, 120, 180
 STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "WBigCalc Options"
 FONT 10, "Times New Roman"
 BEGIN
-   LTEXT           "Number of digits:", IDS_NORMPREC, 10, 11,  56, 10, SS_NOTIFY
-   EDITTEXT                             IDC_NORMPREC, 69, 10,  25, 10, ES_NUMBER
-
-   GROUPBOX        " Group Size ", IDG_GROUPSIZE,     10, 24, 100,  40    
-   RADIOBUTTON    " 3 bytes",      IDC_GS_3BYTES,     15, 35,  40,  10, WS_GROUP
-   RADIOBUTTON    " 5 bytes",      IDC_GS_5BYTES,     15, 48,  40,  10
+   LTEXT           "Number of digits:",   IDS_NORMPREC,   10,  11,  56, 10, SS_NOTIFY
+   EDITTEXT                               IDC_NORMPREC,   69,  10,  25, 10, ES_NUMBER
+                                                            
+   GROUPBOX        " Group Size ",        IDG_GROUPSIZE,  10,  24, 100, 40    
+   RADIOBUTTON    " 3 bytes",             IDC_GS_3BYTES,  15,  35,  40, 10, WS_GROUP
+   RADIOBUTTON    " 5 bytes",             IDC_GS_5BYTES,  15,  48,  40, 10
+                                                            
+   GROUPBOX        " Decimal Char ",      IDG_DEC_CHAR,   10,  67, 100, 40    
+   RADIOBUTTON    " *  (star char)",      IDC_DC_STAR,    15,  78,  65, 10, WS_GROUP
+   RADIOBUTTON    " .  (period)",         IDC_DC_PERIOD,  15,  90,  65, 10
     
-   CONTROL         "Scientific notation",    IDM_SCINOT, "Button",
-                   BS_AUTOCHECKBOX | WS_TABSTOP,      10, 70,  90, 10
+   CONTROL         "Scientific notation", IDM_SCINOT, "Button",
+                   BS_AUTOCHECKBOX | WS_TABSTOP,          10, 111,  90, 10
 
    CONTROL         "Enable WinMsgs (debug)", IDM_WINMSGS, "Button",
-                   BS_AUTOCHECKBOX | WS_TABSTOP,      10, 82, 140, 10
+                   BS_AUTOCHECKBOX | WS_TABSTOP,          10, 123, 140, 10
 
-   DEFPUSHBUTTON  "Accept Changes", IDOK,             25, 96, 70, 14
-   PUSHBUTTON     "Cancel Changes", IDCANCEL,         25,114, 70, 14
+   DEFPUSHBUTTON  "Accept Changes", IDOK,                 25, 136,  70, 14
+   PUSHBUTTON     "Cancel Changes", IDCANCEL,             25, 153,  70, 14
 END
 
 

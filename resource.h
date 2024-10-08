@@ -20,6 +20,10 @@
 #define  IDC_GS_5BYTES     134    
 #define  IDM_SCINOT        135
 #define  IDM_WINMSGS       136
+#define  IDG_DEC_CHAR      137
+#define  IDC_DC_STAR       138
+#define  IDC_DC_PERIOD     139
+
 
 //  main dialog controls
 #define  IDC_REG_X         160
