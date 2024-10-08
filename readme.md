@@ -9,8 +9,6 @@ but is rarely seen in pocket calculators any more.
 
 ### Pending issues
 
-- Replace '*' with '.' in View window
-
 - create debug option to dump X reg in View window, in my dump format
 
 - Store registers in INI file?  Maybe stack as well?
