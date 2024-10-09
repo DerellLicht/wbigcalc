@@ -492,7 +492,7 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
       sbparts[2] = -1;
       MainStatusBar->SetParts(3, &sbparts[0]);
       }
-
+      
       set_hwnd_values();
       Initialize();
       keyboard_state_set(KBD_STATE_DEFAULT);
