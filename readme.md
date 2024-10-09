@@ -31,8 +31,8 @@ and I don't think they are very important.
 They could be added later if someone wants to; use ExchangeXReg() as reference.
 
 ### History
-I previously ported BigCalc to 32-bit Windows console utility, and it still works great!
-Executable package is available at https://derelllicht.42web.io/bigcalc.html
+I previously ported BigCalc to 32-bit Windows console utility, and it still works great!  
+Executable package is available at https://derelllicht.42web.io/bigcalc.html  
 Source code is maintained at https://github.com/DerellLicht/bigcalc
 
 ### Original author and notice
