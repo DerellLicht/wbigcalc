@@ -11,10 +11,6 @@ but is rarely seen in pocket calculators any more.
 
 - create debug option to dump X reg in View window, in my dump format
 
-  1. on StoreReg or ClearReg, call save_cfg_file()
-
-- Store registers in INI file?  Maybe stack as well?
-
 ### Notes about large numbers of digits
 If number of digits is set to larger than 75, the stack displays will only display
 first 75 characters; that is due to limitations in the original program;
