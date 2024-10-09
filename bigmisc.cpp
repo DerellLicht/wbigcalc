@@ -1398,28 +1398,76 @@ void dump_work_reg(WORKTYPE *nptr, char *msg)
    syslog("DWR: [%s]\n", outmsg);
 }  //lint !e843
 
-//lint -esym(714, dump_stack)
-//lint -esym(759, dump_stack)
-//lint -esym(765, dump_stack)
-void dump_stack(WORKTYPE *nptr, char *msg)
+//********************************************************************
+void store_regs_in_ini(FILE *fd)
 {
-   char outmsg[100] = "" ;
-   static char *dfltmsg = "MT";
+   static char outmsg[4000] = "" ;
    int slen, idx ;
-   if (msg == NULL) {
-      msg = dfltmsg ;
-   }
-   if (nptr->digits == 0) {
-      sprintf(outmsg, "%s: %ld,%c,%d: empty", msg, nptr->exp, nptr->sign, nptr->digits);
-   }
-   else {
-      slen = sprintf(outmsg, "%s: %ld,%c,%d: ", msg, nptr->exp, nptr->sign, nptr->digits);
-      for (idx=0; idx<nptr->digits; idx++) {
-         slen += sprintf(&outmsg[slen], "%d,", nptr->man[idx]);
+   uint r ;
+   outmsg[0] = 0 ;   //  start output string NULL-term
+   
+   for (r=0; r<10; r++) {
+      NORMTYPE *nptr = &reg[r] ;
+      //  skip empty reg entries
+      if (nptr->digits > 0) {
+         slen = sprintf(outmsg, "R%u: %ld,%c,%d: ", r, nptr->exp, nptr->sign, nptr->digits);
+         for (idx=0; idx<nptr->digits; idx++) {
+            slen += sprintf(&outmsg[slen], "%d,", nptr->man[idx]);
+         }
+         fprintf(fd, "%s\n", outmsg);
       }
    }
-   syslog("DStack: [%s]\n", outmsg);
-}  //lint !e843
+}
+
+//********************************************************************
+//R4: 1,+,75: 2,7,1,8,2,8,1,8,2,8,4,5,9,0,4,5,2,3,5,3,6,0,2,8,7,4,7,1,3,5,2,6,6,2,4,9,7,7,5,7,2,4,7,0,9,3,6,9,9,9,5,9,5,7,4,9,6,6,9,6,7,6,2,7,7,2,4,0,7,6,6,3,0,3,5,
+//********************************************************************
+void recall_reg_from_ini(char *instr)
+{
+   uint r = *(instr+1) - '0';
+   NORMTYPE *nptr = &reg[r] ;
+   // syslog("R%u entry found in ini file\n", r);
+   
+   //  verify line data format
+   if (*(instr+0) != 'R'  ||
+       *(instr+2) != ':'  ||
+       *(instr+3) != ' ') {
+       syslog("recall_reg: bad entry: [%s]\n", instr);
+       return ;
+   }
+   
+   char *inptr = instr + 4 ;
+   while (*inptr != 0) {
+      nptr->exp = atol(inptr);
+      inptr = strchr(inptr, ',');   
+      if (inptr == NULL) {
+         syslog("recall_reg: missing comma 0 [%s]\n", instr);
+         return ;
+      }
+      inptr++ ;   // skip past comma 0
+      nptr->sign = *inptr++ ;
+      if (*inptr != ',') {
+         syslog("recall_reg: missing comma 1 [%s]\n", instr);
+         return ;
+      }
+      inptr++ ;   // skip past comma 1
+      nptr->digits = atoi(inptr) ;
+
+      inptr = next_field(inptr) ;   //  skip past 'colon space'
+      if (inptr == NULL) {
+         syslog("recall_reg: digits not found [%s]\n", instr);
+         return ;
+      }
+      
+      //  read in the digits
+      uint idx ;
+      for (idx=0; idx<(uint)nptr->digits; idx++) {
+         char digit = *inptr++ ;
+         nptr->man[idx] = digit - '0' ;
+         inptr++ ;   //  skip comma
+      }
+   }
+}
 
 /*
  *    **************************************************

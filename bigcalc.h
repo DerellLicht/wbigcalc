@@ -165,7 +165,6 @@ void getx_clear_output_str(void);
 //  bigmisc.cpp - debug dump functions
 void dump_norm_reg(NORMTYPE *nptr, char *msg);
 void dump_work_reg(WORKTYPE *nptr, char *msg);
-void dump_stack(WORKTYPE *nptr, char *msg);
 
 //*********************************************************************************
 //  manage keyboard state machine

@@ -22,6 +22,10 @@
 //lint -esym(843, show_winmsgs)
 bool show_winmsgs = false ;
 
+//  bigmisc.cpp
+extern void store_regs_in_ini(FILE *fd);
+extern void recall_reg_from_ini(char *instr);
+
 //****************************************************************************
 static char ini_name[PATH_MAX+1] = "" ;
 
@@ -62,6 +66,7 @@ static LRESULT save_default_ini_file(void)
    fprintf(fd, "scinotation=%u\n", (scinotation) ? 1U : 0U) ;
    fprintf(fd, "winmsgs=%u\n", (show_winmsgs) ? 1U : 0U) ;
    
+   store_regs_in_ini(fd);
    fclose(fd) ;
    return ERROR_SUCCESS;
 }
@@ -81,7 +86,7 @@ LRESULT save_cfg_file(void)
 //****************************************************************************
 LRESULT read_config_file(void)
 {
-   char inpstr[128] ;
+   char inpstr[4000] ;
    uint uvalue ;
    FILE *fd = fopen(ini_name, "rt") ;
    if (fd == 0) {
@@ -113,6 +118,10 @@ LRESULT read_config_file(void)
       if (strncmp(inpstr, "winmsgs=", 8) == 0) {
          uvalue = (uint) strtoul(&inpstr[8], 0, 0) ;
          show_winmsgs = (uvalue == 0) ? false : true ;
+      } else
+      //  parse register record
+      if (inpstr[0] == 'R'  &&  inpstr[2] == ':') {
+         recall_reg_from_ini(inpstr);
       } else
       {
          syslog("unknown: [%s]\n", inpstr) ;

@@ -11,6 +11,8 @@ but is rarely seen in pocket calculators any more.
 
 - create debug option to dump X reg in View window, in my dump format
 
+  1. on StoreReg or ClearReg, call save_cfg_file()
+
 - Store registers in INI file?  Maybe stack as well?
 
 ### Notes about large numbers of digits
