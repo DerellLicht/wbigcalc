@@ -125,6 +125,7 @@ extern bool scinotation;   /* Force sci notation if TRUE   */
 #define GETCOMPTEMP(n) (COMPTYPE *) malloc((n) * sizeof(COMPTYPE))
 
 //  wbigcalc.cpp
+void Message(char *msg);
 void status_message(char *msgstr);
 void status_message(unsigned idx, char *msgstr);
 void put_stack(unsigned n, char *msg);
@@ -154,14 +155,14 @@ void ExchangeXReg_exec(uint target);
 void StoreX_exec(uint target);
 void RecallReg_exec(uint target);
 
-//  bigio.cpp
+//  bigprint.cpp
 void reset_output_str(void);
 uint get_output_str_len(void);
 
 //  bigmisc.cpp
 void getx_clear_output_str(void);
 
-//  debug dump functions
+//  bigmisc.cpp - debug dump functions
 void dump_norm_reg(NORMTYPE *nptr, char *msg);
 void dump_work_reg(WORKTYPE *nptr, char *msg);
 void dump_stack(WORKTYPE *nptr, char *msg);
@@ -245,19 +246,6 @@ int  move_local_to_work0(void);
 #define EXP10      1101 /* CTRL-F8     */
 #define LN         1102 /* CTRL-F9     */
 #define EXPE       1103 /* CTRL-F10    */
-
-/*
- *    **************************************************
- *    *                                                *
- *    *         BIGIO.C Function Declarations          *
- *    *                                                *
- *    **************************************************
- */
-
-extern  void Message(char *msg);
-extern  void MessageWait(char *msg);
-extern  void MessageEsc(char *msg);
-
 
 /*
  *    **************************************************

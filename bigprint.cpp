@@ -260,6 +260,28 @@ static void WriteNumber(NORMTYPE *nbr)
 /*
  *    **************************************************
  *    *                                                *
+ *    *      Write Message and Wait for keystroke      *
+ *    *                                                *
+ *    **************************************************
+ */
+static void MessageWait(char *msg)
+{
+   char tmsg[81];
+   if (strlen(msg) == 0) {
+      return ;
+   }
+   // syslog("%u [%s]\n", strlen(msg), msg);
+
+   strcpy(tmsg, msg);
+   if (*tmsg)
+      strcat(tmsg, "  ");
+
+   MessageBox(NULL, tmsg, NULL, MB_OK | MB_ICONEXCLAMATION);
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
  *    *                Overflow Message                *
  *    *                                                *
  *    **************************************************

@@ -199,8 +199,6 @@ static void Subtract(void)
  */
 static void Multiply(void)
 {
-   MessageEsc("Multiplying");
-
    restore_stack0();
    MoveStackWork(0, 0);
    MoveStackWork(1, 1);
@@ -223,8 +221,6 @@ static void Multiply(void)
  */
 static void Divide(void)
 {
-   MessageEsc("Dividing");
-
    restore_stack0();
    MoveStackWork(0, 0);
    MoveStackWork(1, 1);
@@ -247,8 +243,6 @@ static void Divide(void)
  */
 static void Power(void)
 {
-   MessageEsc("Computing Y^X");
-
    restore_stack0();
    MoveStackWork(0, 0);
    MoveStackWork(1, 1);
@@ -273,8 +267,6 @@ static void Power(void)
  */
 static void SquareRoot(void)
 {
-   MessageEsc("Computing sqrt(X)");
-
    restore_stack0();
    MoveStackWork(0, 0);
    if (ExtendedSquareRoot() ) {
@@ -296,8 +288,6 @@ static void SquareRoot(void)
  */
 static void Square(void)
 {
-   MessageEsc("Computing X*X");
-
    restore_stack0();
    MoveStackWork(0, 0);
    MoveStackWork(0, 1);
@@ -317,13 +307,8 @@ static void Square(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void Reciprocal(void)
-
 {
-
-   MessageEsc("Computing 1/X");
-
    restore_stack0();
    MoveStackWork(0, 0);
 
@@ -333,11 +318,7 @@ static void Reciprocal(void)
       WriteStack(0, 0);
       stacklift = true;
       }
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -346,13 +327,8 @@ static void Reciprocal(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void Factorial(void)
-
 {
-
-   MessageEsc("Computing X!");
-
    restore_stack0();
    MoveStackWork(0, 0);
 
@@ -362,11 +338,7 @@ static void Factorial(void)
       WriteStack(0, 0);
       stacklift = true;
       }
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -395,11 +367,8 @@ static void IntegerPart(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void FractionPart(void)
-
 {
-
    restore_stack0();
    MoveStackWork(0, 0);
 
@@ -409,11 +378,7 @@ static void FractionPart(void)
       WriteStack(0, 0);
       stacklift = true;
       }
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -422,13 +387,8 @@ static void FractionPart(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void Sin(void)
-
 {
-
-   MessageEsc("Computing SinX");
-
    restore_stack0();
    MoveStackWork(0, 0);
 
@@ -438,11 +398,7 @@ static void Sin(void)
       WriteStack(0, 0);
       stacklift = true;
       }
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -451,13 +407,8 @@ static void Sin(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void ArcSin(void)
-
 {
-
-   MessageEsc("Computing ArcSinX");
-
    restore_stack0();
    MoveStackWork(0, 0);
 
@@ -467,11 +418,7 @@ static void ArcSin(void)
       WriteStack(0, 0);
       stacklift = true;
       }
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -480,13 +427,8 @@ static void ArcSin(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void Cos(void)
-
 {
-
-   MessageEsc("Computing CosX");
-
    restore_stack0();
    MoveStackWork(0, 0);
 
@@ -496,11 +438,7 @@ static void Cos(void)
       WriteStack(0, 0);
       stacklift = true;
       }
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -509,13 +447,8 @@ static void Cos(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void ArcCos(void)
-
 {
-
-   MessageEsc("Computing ArcCosX");
-
    restore_stack0();
    MoveStackWork(0, 0);
 
@@ -525,11 +458,7 @@ static void ArcCos(void)
       WriteStack(0, 0);
       stacklift = true;
       }
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -538,13 +467,8 @@ static void ArcCos(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void Tan(void)
-
 {
-
-   MessageEsc("Computing TanX");
-
    restore_stack0();
    MoveStackWork(0, 0);
 
@@ -554,11 +478,7 @@ static void Tan(void)
       WriteStack(0, 0);
       stacklift = true;
       }
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -567,13 +487,8 @@ static void Tan(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void ArcTan(void)
-
 {
-
-   MessageEsc("Computing ArcTanX");
-
    restore_stack0();
    MoveStackWork(0, 0);
 
@@ -583,11 +498,7 @@ static void ArcTan(void)
       WriteStack(0, 0);
       stacklift = true;
       }
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -596,13 +507,8 @@ static void ArcTan(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void Log(void)
-
 {
-
-   MessageEsc("Computing LogX");
-
    restore_stack0();
    MoveStackWork(0, 0);
 
@@ -612,11 +518,7 @@ static void Log(void)
       WriteStack(0, 0);
       stacklift = true;
       }
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -625,13 +527,8 @@ static void Log(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void Exp10(void)
-
 {
-
-   MessageEsc("Computing 10^X");
-
    restore_stack0();
    MoveStackWork(0, 0);
 
@@ -641,11 +538,7 @@ static void Exp10(void)
       WriteStack(0, 0);
       stacklift = true;
       }
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -654,13 +547,8 @@ static void Exp10(void)
  *    *                                                *
  *    **************************************************
  */
-
 static void Ln(void)
-
 {
-
-   MessageEsc("Computing lnX");
-
    restore_stack0();
    MoveStackWork(0, 0);
 
@@ -670,11 +558,7 @@ static void Ln(void)
       WriteStack(0, 0);
       stacklift = true;
       }
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -685,8 +569,6 @@ static void Ln(void)
  */
 static void ExpE(void)
 {
-   MessageEsc("Computing e^X");
-
    restore_stack0();
    MoveStackWork(0, 0);
 

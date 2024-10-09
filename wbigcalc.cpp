@@ -180,46 +180,6 @@ void put_register(unsigned n, char *msg)
 /*
  *    **************************************************
  *    *                                                *
- *    *      Write Message and Wait for keystroke      *
- *    *                                                *
- *    **************************************************
- */
-void MessageWait(char *msg)
-{
-   char tmsg[81];
-   if (strlen(msg) == 0) {
-      return ;
-   }
-   // syslog("%u [%s]\n", strlen(msg), msg);
-
-   strcpy(tmsg, msg);
-   if (*tmsg)
-      strcat(tmsg, "  ");
-
-   MessageBox(NULL, tmsg, NULL, MB_OK | MB_ICONEXCLAMATION);
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *      Write Message and Prompt for Escape       *
- *    *                                                *
- *    **************************************************
- */
-void MessageEsc(char *msg)
-{
-   char tmsg[81];
-
-   strcpy(tmsg, msg);
-   if (*tmsg)
-      strcat(tmsg, "... ");
-
-   Message(tmsg);
-}
-
-/*
- *    **************************************************
- *    *                                                *
  *    *      Display Message centered on 25th line     *
  *    *                                                *
  *    **************************************************
