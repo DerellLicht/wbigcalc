@@ -717,6 +717,7 @@ void clear_stack_or_register(uint button_code)
       r = button_code - IDB_CLEAR_R0 ;
       ClearReg(r, r);
       WriteReg(r, r);
+      save_cfg_file();
       break ;
    
    case IDB_CLEAR_X:
@@ -736,6 +737,7 @@ void clear_stack_or_register(uint button_code)
    case IDB_CLRR:
       ClearReg(0, 9);
       WriteReg(0, 9);
+      save_cfg_file();
       break ;
       
    default:
@@ -855,6 +857,7 @@ void StoreX_exec(uint target)
    uint r = target - IDB_STOR_R0 ;
    reg[r] = stack[0];
    WriteReg(r, r);
+   save_cfg_file();
    exit_from_store_reg_state();
    stacklift = true;
 }
