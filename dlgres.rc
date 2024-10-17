@@ -281,9 +281,15 @@ BEGIN
    PUSHBUTTON      "FRAC",    IDB_FRAC,    XB7,  YB2, DXB,  12
    PUSHBUTTON      "Pi",      IDB_PI,      XB8,  YB2, DXB,  12
    PUSHBUTTON      "e",       IDB_ECONST,  XB9,  YB2, DXB,  12
-   PUSHBUTTON      "Help",    IDB_HELP,    XB0,  YB2, DXB,  12
-   PUSHBUTTON      "Options", IDB_OPTIONS, XBA,  YB2, DXB,  12
-   PUSHBUTTON      "About",   IDD_ABOUT,   XBB,  YB2, DXB,  12
+   
+   // PUSHBUTTON      "Options", IDB_OPTIONS, XBA,  YB2, DXB,  12
+   // PUSHBUTTON      "Help",    IDB_HELP,    XBB,  YB2, DXB,  12
+   // PUSHBUTTON      "About",   IDD_ABOUT,   XBC,  YB2, DXB,  12
+   
+#define XXX    20   
+   PUSHBUTTON      "Options", IDB_OPTIONS, XBA+XXX,  5, DXB,  12
+   PUSHBUTTON      "Help",    IDB_HELP,    XBB+XXX,  5, DXB,  12
+   PUSHBUTTON      "About",   IDD_ABOUT,   XBC+XXX,  5, DXB,  12
 
 //  button row 2
 #define  YB3      (YB2 + 16)
