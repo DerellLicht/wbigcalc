@@ -16,6 +16,7 @@ and all computations will be done with the full number of requested digits.
 
 ### Pending issues
 
+- support pasting large numbers into a register/stack
 - create debug option to dump X reg in View window, in my dump format
 
 ### Program modifications
