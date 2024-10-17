@@ -1,14 +1,10 @@
 //*********************************************************************************
 //  WBigCalc.cpp 
 //  Windows wrapper for BigCalc Extended Precision Calculator
-//  by Judson D. McClendon (c) 1999
 //*********************************************************************************
 
-
-// #define TITLE "Extended Precision Calculator 6.0"
-
-#define  VER_NUMBER "6.0"
-static char const * const Version = "WBigCalc Extended Precision Calculator, Version " VER_NUMBER " " ;
+#include "version.h"
+static char const * const Version = "WBigCalc Extended Precision Calculator, Version " VerNum " " ;
 
 #include <windows.h>
 #include <stdio.h>
@@ -177,6 +173,17 @@ void put_register(unsigned n, char *msg)
    SetWindowText(hwndRegs[n], msg) ;
 }
 
+//*************************************************************
+char *get_paste_str(void)
+{
+   static char msgstr[1100];
+   HWND hwndPaste = GetDlgItem(hwndMain, IDC_PASTE_X);
+   uint tempEditLength = GetWindowTextLength (hwndPaste);
+   GetWindowText (hwndPaste, msgstr, tempEditLength + 1);
+   msgstr[tempEditLength] = 0;
+   char *tptr = strip_leading_spaces(msgstr) ;
+   return (tptr);
+}
 /*
  *    **************************************************
  *    *                                                *
@@ -356,6 +363,39 @@ IDB_RCALL_R8,
 IDB_RCALL_R9,
 0 } ;
 
+void enable_paste_field(bool show)
+{
+   if (show) {
+      // EDITTEXT  IDC_REG_X,    [...], ES_READONLY | SS_SUNKEN
+      // EDITTEXT  IDC_PASTE_X,  [...], SS_SUNKEN | NOT WS_VISIBLE
+      // PUSHBUTTON      "View",           IDB_VIEW_X,   
+      // PUSHBUTTON      "Paste",          IDC_DO_PASTE,  NOT WS_VISIBLE
+      ShowWindow(GetDlgItem(hwndMain, IDC_REG_X),    SW_HIDE);
+      ShowWindow(GetDlgItem(hwndMain, IDC_PASTE_X),  SW_SHOW); //  enable Paste data field
+      ShowWindow(GetDlgItem(hwndMain, IDC_DO_PASTE), SW_SHOW); //  enable Paste button
+   }
+   else {
+      ShowWindow(GetDlgItem(hwndMain, IDC_PASTE_X),  SW_HIDE);
+      ShowWindow(GetDlgItem(hwndMain, IDC_DO_PASTE), SW_HIDE);
+      ShowWindow(GetDlgItem(hwndMain, IDC_REG_X),    SW_SHOW);
+   }
+}
+      
+void show_hide_view_buttons(bool show)
+{
+   uint idx ;
+   if (show) {
+      for (idx=0; view_button_ids[idx]; idx++) {
+         ShowWindow(GetDlgItem(hwndMain, view_button_ids[idx]), SW_HIDE);
+      }
+   }
+   else {
+      for (idx=0; view_button_ids[idx]; idx++) {
+         ShowWindow(GetDlgItem(hwndMain, view_button_ids[idx]), SW_SHOW);
+      }
+   }
+}
+
 void show_hide_view_xchg_buttons(bool show_xchg)
 {
    uint idx ;
@@ -534,6 +574,7 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
                break ;
             case KBD_STATE_GETX:
             case KBD_STATE_GETREG:
+            case KBD_STATE_PASTE_X:
                keyboard_state_handler(kESC);   
                break ;
             }
@@ -558,6 +599,8 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
          case IDB_XCHG_X_R:  dos_main(XCHGXREG); break ;
          case IDB_STORE_X:   dos_main(STOREX); break ;
          case IDB_RECALL_X:  dos_main(RECALLREG); break ;
+         case IDB_PASTE_X:   PasteValueEnable(); break ;
+         case IDC_DO_PASTE:  PasteValue_exec(); break ;
                                         
          //  button row 2
          case IDB_Y2X   :    dos_main(POWER); break ;
@@ -572,6 +615,7 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
          // case IDB_HELP  :    dos_main(HELP); break ;
          case IDB_HELP  :    view_help_screen(hDlgWnd); break ;
          case IDB_OPTIONS:   open_options_dialog(hDlgWnd); break ;
+         case IDD_ABOUT :    CmdAbout(hDlgWnd); break ;
             
          //  button row 3
          case IDB_SINX :    dos_main(SIN   ); break ;

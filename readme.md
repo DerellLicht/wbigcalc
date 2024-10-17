@@ -16,14 +16,15 @@ and all computations will be done with the full number of requested digits.
 
 ### Pending issues
 
-- support pasting large numbers into a register/stack
+- add *at least* selected tooltips to top-level dialog  
+
 - create debug option to dump X reg in View window, in my dump format
 
 ### Program modifications
 **DDM 09/10/24**
 Removed all 'print to printer/file' routines from Windows version.
 I don't really think those operations are required in a calculator such as this.
-Instead, I will try to make it possible to copy-and-paste from any display windows.
+Instead, user can copy-and-paste from either X-stack field or View window.
 
 **DDM 10/03/24**
 Removed add/subtract/multiply/divide with register commands, since they 
@@ -47,6 +48,22 @@ Neither the author nor the original program appear to be present on the internet
  Pinson, AL 35126-2192         The author assumes no responsibility for the  
      205-680-0460              use of this program.  
 ```
+
+#### building the application
+This application is built using the MinGW toolchain; 
+I recommend the [TDM](http://tdm-gcc.tdragon.net/) distribution, 
+to avoid certain issues with library accessibility. 
+The makefile also requires certain Cygwin tools (rm, make, etc).
+
+_Revision history_
+
+| Version | description |
+| :---: | --- |
+| 6.00 | Original release |
+| 6.01 | - Added Paste option to paste external string into X Stack |
+|      | - Added About dialog |
+|      | - Added program info in internal data |
+
 
 
 

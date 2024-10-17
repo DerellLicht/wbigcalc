@@ -5,7 +5,7 @@ CFLAGS += -Wno-write-strings
 CFLAGS += -Ider_libs
 
 CPPSRC=wbigcalc.cpp bigcalc.cpp bigmath.cpp bigmisc.cpp bigprint.cpp \
-config.cpp options.cpp tooltips.cpp \
+config.cpp options.cpp tooltips.cpp about.cpp hyperlinks.cpp \
 der_libs/common_funcs.cpp \
 der_libs/common_win.cpp \
 der_libs/winmsgs.cpp \
@@ -45,7 +45,7 @@ depend:
 
 # DO NOT DELETE
 
-wbigcalc.o: keywin32.h resource.h bigcalc.h
+wbigcalc.o: version.h keywin32.h resource.h bigcalc.h
 bigcalc.o: resource.h bigcalc.h keywin32.h
 bigmath.o: bigcalc.h
 bigmisc.o: keywin32.h bigcalc.h
@@ -53,6 +53,8 @@ bigprint.o: bigcalc.h
 config.o: bigcalc.h
 options.o: resource.h bigcalc.h tooltips.h
 tooltips.o: tooltips.h
+about.o: resource.h version.h hyperlinks.h
+hyperlinks.o: hyperlinks.h
 der_libs/common_funcs.o: der_libs/common.h
 der_libs/common_win.o: der_libs/common.h der_libs/commonw.h
 der_libs/statbar.o: der_libs/common.h der_libs/commonw.h der_libs/statbar.h

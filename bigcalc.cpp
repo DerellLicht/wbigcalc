@@ -72,6 +72,7 @@ static  void RollUp(void);
 static  void PushStack(void);
 static  void DropStack(void);
 
+static void AcceptXstatic(char *instr);
 
 /*
  *    **************************************************
@@ -909,6 +910,60 @@ void RecallReg_exec(uint target)
    return;
 }
 
+//*********************************************************************
+//  Paste value into modified X register
+//  Maximum integer input (64-bit): 18,446,744,073,709,551,615  
+//                                  18446744073709551615  
+//*********************************************************************
+static void exit_from_paste_value_state(void)
+{
+   Message("");
+   show_hide_view_buttons(false);
+   show_hide_all_buttons(true, 0);
+   enable_paste_field(false);
+   keyboard_state_set(KBD_STATE_DEFAULT) ;
+}
+
+void PasteValueEnable(void)
+{
+   Message("Paste number into X stack field:");
+   if (keyboard_state_get() == KBD_STATE_DEFAULT) {
+      Message("Recall X from Register: Press <Rcall> button by register, or 'Recall X' to exit");
+      show_hide_view_buttons(true);
+      show_hide_all_buttons(false, 0);
+      enable_paste_field(true);
+      enable_paste_field(true);
+      keyboard_state_set(KBD_STATE_GETREG) ;
+   }
+   else {
+      exit_from_paste_value_state();
+   }
+   return;
+}
+
+void PasteValue_exec(void)
+{
+   Message("");
+   
+   //  copy data from paste field
+   char *tptr = get_paste_str();
+   // syslog("[%s]\n", tptr);
+   // [18446744073709551615]
+   
+   //  next, turn this string into a bigcalc working struct
+   AcceptXstatic(tptr);
+   move_local_to_work0();
+   MoveWorkStack(0, 0);
+   // PushStack();   //  push X to Y
+   // WriteStack(0, 3); //  update display fields
+
+   // stack[0] = reg[r];
+   // WriteStack(0, 0);
+   exit_from_paste_value_state();
+   stacklift = true;
+   return;
+}
+
 /*
  *    **************************************************
  *    *                                                *
@@ -1303,6 +1358,47 @@ static void AcceptX(u16 inchr)
    }
 }
 
+/*
+ *    **************************************************
+ *    *                                                *
+ //  Process string into X stack
+ *    *                                                *
+ *    **************************************************
+ */
+static void AcceptXstatic(char *instr)
+{
+   // int result ;
+   // if (stacklift) {
+   //    PushStack();   //  push X to Y
+   //    WriteStack(1, 3); //  update display fields
+   // }
+   // 
+   // if (keyboard_state_get() == KBD_STATE_GETX) {
+   //    result = ExtendedGetX(inchr);
+   //    if (!result) {
+   //       ExitGetXState(false);
+   //    }
+   //    return ;      
+   // }
+   uint instrlen = strlen(instr);
+
+   init_getx_vars();
+   getx_clear_output_str();
+   reset_output_str();
+   put_stack(0, " ");
+   ClearWork(0);
+   // Message("Entering X: S=ChgSign, E=Exp, BakSpc=Backup, Other=Complete, ESC=Exit");
+   // keyboard_state_set(KBD_STATE_GETX);
+   
+   uint idx ;
+   for (idx=0; idx<instrlen; idx++) {
+      int result = ExtendedGetX(*instr++); //  process first input char
+      if (!result) {
+         ExitGetXState(false);
+      }
+   }
+}
+
 //***************************************************************************
 //  called from keyboard_state_handler() in GetX state
 //***************************************************************************
@@ -1423,6 +1519,9 @@ int keyboard_state_handler(u16 inchr)
    case KBD_STATE_GETREG:
       break ;
       
+   case KBD_STATE_PASTE_X:
+      break ;
+      
    default:
       {
       char msg[30];
@@ -1455,6 +1554,11 @@ bool keyboard_state_set(keyboard_state_t new_kbd_state)
       keyboard_state = new_kbd_state ;
       return true ;
       
+   case KBD_STATE_PASTE_X:
+      show_keyboard_state("Paste value into X");
+      keyboard_state = new_kbd_state ;
+      return true ;
+
    default:
       return false ;
    }

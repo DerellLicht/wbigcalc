@@ -133,15 +133,10 @@ void put_register(unsigned n, char *msg);
 void show_hide_buttons(bool show);
 void show_hide_all_buttons(bool show, uint except_id);
 void view_data_field_full(uint fidx, char *fstr);
-
-//  config.cpp
-extern bool show_winmsgs ;
-LRESULT set_ini_filename(void);
-LRESULT read_config_file(void);
-LRESULT save_cfg_file(void);
-
-//  options.cpp
-void open_options_dialog(HWND hwnd);
+void show_hide_view_buttons(bool show);
+void enable_paste_field(bool show);
+void PasteValue_exec(void);
+char *get_paste_str(void);
 
 //  bigcalc.cpp
 void Initialize(void);
@@ -154,6 +149,16 @@ void show_hide_view_rcall_buttons(bool show);
 void ExchangeXReg_exec(uint target);
 void StoreX_exec(uint target);
 void RecallReg_exec(uint target);
+void PasteValueEnable(void);
+
+//  config.cpp
+extern bool show_winmsgs ;
+LRESULT set_ini_filename(void);
+LRESULT read_config_file(void);
+LRESULT save_cfg_file(void);
+
+//  options.cpp
+void open_options_dialog(HWND hwnd);
 
 //  bigprint.cpp
 void reset_output_str(void);
@@ -165,6 +170,9 @@ void getx_clear_output_str(void);
 //  bigmisc.cpp - debug dump functions
 void dump_norm_reg(NORMTYPE *nptr, char *msg);
 void dump_work_reg(WORKTYPE *nptr, char *msg);
+
+//  about.cpp
+BOOL CmdAbout(HWND hwnd);
 
 //*********************************************************************************
 //  manage keyboard state machine
@@ -178,7 +186,8 @@ void dump_work_reg(WORKTYPE *nptr, char *msg);
 typedef enum {
    KBD_STATE_DEFAULT=0,
    KBD_STATE_GETX,
-   KBD_STATE_GETREG
+   KBD_STATE_GETREG,
+   KBD_STATE_PASTE_X
 } keyboard_state_t ;
 
 int keyboard_state_handler(u16 chr);

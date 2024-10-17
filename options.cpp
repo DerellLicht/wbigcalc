@@ -136,7 +136,7 @@ static INT_PTR CALLBACK OptionsProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lPar
             break ;
       
          case IDOK: //  take the new settings
-            tempEditLength = GetWindowTextLength (GetDlgItem(hwnd, IDC_NORMPREC));
+            tempEditLength = GetWindowTextLength (hwndNormPrec);
             GetWindowText (hwndNormPrec, msgstr, tempEditLength + 1);
             msgstr[tempEditLength] = 0;
             tptr = strip_leading_spaces(msgstr) ;

@@ -1,8 +1,12 @@
 // objects other than dialog controls
+#define  IDC_STATIC         99
 #define  IDI_ICON          100
 #define  IDD_MAIN_DIALOG   101
 #define  IDR_ACCELERATOR1  102
 #define  IDC_TITLE         103
+#define  IDC_VERNUM        104
+#define  IDC_WEBLINK       105
+#define  IDD_ABOUT         106
 
 //  misc controls
 #define  IDB_CLOSE         110
@@ -143,6 +147,9 @@
 #define  IDB_XCHG_X_R      409
 #define  IDB_STORE_X       410
 #define  IDB_RECALL_X      411
+#define  IDB_PASTE_X       412
+#define  IDC_PASTE_X       413
+#define  IDC_DO_PASTE      414
 
 //  button row 2
 #define  IDB_Y2X           421
