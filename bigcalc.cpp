@@ -938,7 +938,6 @@ void PasteValueEnable(void)
    else {
       exit_from_paste_value_state();
    }
-   return;
 }
 
 void PasteValue_exec(void)
@@ -952,16 +951,12 @@ void PasteValue_exec(void)
    
    //  next, turn this string into a bigcalc working struct
    AcceptXstatic(tptr);
+   
+   //  move data into X stack
    move_local_to_work0();
    MoveWorkStack(0, 0);
-   // PushStack();   //  push X to Y
-   // WriteStack(0, 3); //  update display fields
-
-   // stack[0] = reg[r];
-   // WriteStack(0, 0);
    exit_from_paste_value_state();
    stacklift = true;
-   return;
 }
 
 /*
