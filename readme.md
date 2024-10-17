@@ -7,16 +7,16 @@ but is rarely seen in pocket calculators any more.
 
 <hr>
 
-### Pending issues
-
-- create debug option to dump X reg in View window, in my dump format
-
 ### Notes about large numbers of digits
 If number of digits is set to larger than 75, the stack displays will only display
 first 75 characters; that is due to limitations in the original program;
 it was designed for an 80-character-wide MS-DOS screen.  
 However, all the specified digits will still be displayed in the View window, 
 and all computations will be done with the full number of requested digits.
+
+### Pending issues
+
+- create debug option to dump X reg in View window, in my dump format
 
 ### Program modifications
 **DDM 09/10/24**
