@@ -43,13 +43,11 @@ Neither the author nor the original program appear to be present on the internet
      205-680-0460              use of this program.  
 ```
 
-#### building the application
+#### Building the application
 This application is built using the MinGW toolchain; 
 I recommend the [TDM](http://tdm-gcc.tdragon.net/) distribution, 
 to avoid certain issues with library accessibility. 
 The makefile also requires Gnu version of Make utility.
-
-### Pending issues
 
 _Revision history_
 
