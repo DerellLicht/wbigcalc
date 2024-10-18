@@ -30,7 +30,6 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-//#include <string.h>
 
 #include "resource.h"
 #include "common.h"
@@ -44,34 +43,6 @@
  */
 
 static void restore_stack0(void);
-
-static  void Subtract(void);
-static  void Multiply(void);
-static  void Divide(void);
-static  void Power(void);
-static  void SquareRoot(void);
-static  void Square(void);
-static  void Reciprocal(void);
-static  void Factorial(void);
-static  void FractionPart(void);
-static  void Sin(void);
-static  void ArcSin(void);
-static  void Cos(void);
-static  void ArcCos(void);
-static  void Tan(void);
-static  void ArcTan(void);
-static  void Log(void);
-static  void Exp10(void);
-static  void Ln(void);
-static  void ExpE(void);
-static  void RecallE(void);
-static  void RecallLastX(void);
-static  void GroupSize(void);
-static  void RollDown(void);
-static  void RollUp(void);
-static  void PushStack(void);
-static  void DropStack(void);
-
 static void AcceptXstatic(char *instr);
 
 /*
@@ -140,11 +111,32 @@ void Initialize(void)
 /*
  *    **************************************************
  *    *                                                *
- *    *                Process Routines                *
+ *    *                  Push Stack                    *
  *    *                                                *
  *    **************************************************
  */
+static void PushStack(void)
+{
+   int s;
 
+   for (s = 3; s >= 1; s--)
+      stack[s] = stack[s - 1];
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *                  Drop Stack                    *
+ *    *                                                *
+ *    **************************************************
+ */
+static void DropStack(void)
+{
+   int s;
+
+   for (s = 0; s <= 2; s++)
+      stack[s] = stack[s + 1];
+}
 
 
 /*
@@ -1009,36 +1001,6 @@ static void RollUp(void)
    stacklift = true;
 
    free(temp);
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *                  Push Stack                    *
- *    *                                                *
- *    **************************************************
- */
-static void PushStack(void)
-{
-   int s;
-
-   for (s = 3; s >= 1; s--)
-      stack[s] = stack[s - 1];
-}
-
-/*
- *    **************************************************
- *    *                                                *
- *    *                  Drop Stack                    *
- *    *                                                *
- *    **************************************************
- */
-static void DropStack(void)
-{
-   int s;
-
-   for (s = 0; s <= 2; s++)
-      stack[s] = stack[s + 1];
 }
 
 //**********************************************************************

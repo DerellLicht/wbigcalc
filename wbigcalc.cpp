@@ -186,16 +186,11 @@ void view_norm_reg(NORMTYPE *nptr, char *msg)
 //*************************************************************
 void put_stack(unsigned n, char *msg)
 {
-   // char tempstr[30];
-   // wsprintf (tempstr, "put_stack %u [%s]", n, get_iostr());
-   // syslog(tempstr);
    SetWindowText(hwndStack[n], msg) ;
 }
 
 void put_register(unsigned n, char *msg)
 {
-   // wsprintf (tempstr, "put_register %u", n);
-   // Statusbar_ShowMessage (tempstr);
    SetWindowText(hwndRegs[n], msg) ;
 }
 
