@@ -62,7 +62,7 @@ _Revision history_
 | Version | Date |description |
 | :---: | :---: | --- |
 | 6.00 | 10/08/24 |Original release |
-| 6.01 | 10/08/24 |- Added Paste option to paste external string into X Stack |
+| 6.01 | 10/17/24 |- Added Paste option to paste external string into X Stack |
 |      |          |- Added About dialog |
 |      |          |- Added program info in internal data |
 
