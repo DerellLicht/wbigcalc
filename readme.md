@@ -14,10 +14,6 @@ it was designed for an 80-character-wide MS-DOS screen.
 However, all the specified digits will still be displayed in the View window, 
 and all computations will be done with the full number of requested digits.
 
-### Pending issues
-
-- create debug option to dump X reg in View window, in my dump format
-
 ### Program modifications
 **DDM 09/10/24**
 Removed all 'print to printer/file' routines from Windows version.
@@ -53,6 +49,8 @@ I recommend the [TDM](http://tdm-gcc.tdragon.net/) distribution,
 to avoid certain issues with library accessibility. 
 The makefile also requires Gnu version of Make utility.
 
+### Pending issues
+
 _Revision history_
 
 | Version | Date |description |
@@ -63,6 +61,7 @@ _Revision history_
 |      |          |- Added program info in internal data |
 | 6.02 | 10/18/24 |- Update help file with info on special functions and INI file |
 |      |          |- "Paste X" button needs to be hidden when other special functions are active |
+
 
 
 

@@ -133,6 +133,7 @@ void put_register(unsigned n, char *msg);
 void show_hide_buttons(bool show);
 void show_hide_all_buttons(bool show, uint except_id);
 void view_data_field_full(uint fidx, char *fstr);
+void view_norm_reg(NORMTYPE *nptr, char *msg);
 void show_hide_view_buttons(bool show);
 void enable_paste_field(bool show);
 void PasteValue_exec(void);

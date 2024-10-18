@@ -158,6 +158,32 @@ void view_data_field_full(uint fidx, char *fstr)
 }
 
 //*************************************************************
+//  debug function: display NORMTYPE struct in View frame
+//*************************************************************
+//lint -esym(714, view_norm_reg)
+//lint -esym(759, view_norm_reg)
+//lint -esym(765, view_norm_reg)
+void view_norm_reg(NORMTYPE *nptr, char *msg)
+{
+   char outmsg[1100] = "" ;
+   static char *dfltmsg = "MT";
+   int slen, idx ;
+   if (msg == NULL) {
+      msg = dfltmsg ;
+   }
+   if (nptr->digits == 0) {
+      sprintf(outmsg, "%s: %ld,%c,%d: empty", msg, nptr->exp, nptr->sign, nptr->digits);
+   }
+   else {
+      slen = sprintf(outmsg, "%s: %ld,%c,%d: ", msg, nptr->exp, nptr->sign, nptr->digits);
+      for (idx=0; idx<nptr->digits; idx++) {
+         slen += sprintf(&outmsg[slen], "%d,", nptr->man[idx]);
+      }
+   }
+   SetWindowText(hwndViewFrame, outmsg);
+}  //lint !e843
+
+//*************************************************************
 void put_stack(unsigned n, char *msg)
 {
    // char tempstr[30];
