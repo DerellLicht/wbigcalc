@@ -16,7 +16,9 @@ and all computations will be done with the full number of requested digits.
 
 ### Pending issues
 
-- add *at least* selected tooltips to top-level dialog  
+- add section in Help file about special functions
+
+- During special operations, "Paste X" button should also be hidden
 
 - create debug option to dump X reg in View window, in my dump format
 
@@ -53,16 +55,16 @@ Neither the author nor the original program appear to be present on the internet
 This application is built using the MinGW toolchain; 
 I recommend the [TDM](http://tdm-gcc.tdragon.net/) distribution, 
 to avoid certain issues with library accessibility. 
-The makefile also requires certain Cygwin tools (rm, make, etc).
+The makefile also requires Gnu version of Make utility.
 
 _Revision history_
 
-| Version | description |
-| :---: | --- |
-| 6.00 | Original release |
-| 6.01 | - Added Paste option to paste external string into X Stack |
-|      | - Added About dialog |
-|      | - Added program info in internal data |
+| Version | Date |description |
+| :---: | :---: | --- |
+| 6.00 | 10/08/24 |Original release |
+| 6.01 | 10/08/24 |- Added Paste option to paste external string into X Stack |
+|      |          |- Added About dialog |
+|      |          |- Added program info in internal data |
 
 
 
