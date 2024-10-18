@@ -59,8 +59,4 @@ _Revision history_
 |      |          |- Added program info in internal data |
 | 6.02 | 10/18/24 |- Update help file with info on special functions and INI file |
 |      |          |- "Paste X" button needs to be hidden when other special functions are active |
-
-
-
-
-
+|      |          |- 'About' dialog: add link to Github page, as well as home page |

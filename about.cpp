@@ -52,12 +52,17 @@ static INT_PTR CALLBACK AboutDlgProc(HWND hdlg, UINT uMessage, WPARAM wparam, LP
    case WM_INITDIALOG:
       SetWindowText(GetDlgItem(hdlg, IDC_VERNUM), VerNum) ;
       ConvertStaticToHyperlink(hdlg, IDC_WEBLINK);
+      ConvertStaticToHyperlink(hdlg, IDC_WEBLINK2);
       break;
 
    case WM_COMMAND:
       switch (LOWORD(wparam)) {
       case IDC_WEBLINK:
          ShellExecute(hdlg, "open", "http://derelllicht.42web.io/bigcalc.html", "", "", SW_SHOW);
+         return TRUE;
+         
+      case IDC_WEBLINK2:
+         ShellExecute(hdlg, "open", "https://github.com/DerellLicht/WBigCalc", "", "", SW_SHOW);
          return TRUE;
          
       case IDOK:

@@ -344,7 +344,7 @@ BEGIN
 END
 
 //*********************************************************************************************
-IDD_ABOUT DIALOG DISCARDABLE  400, 400, 180, 100
+IDD_ABOUT DIALOG DISCARDABLE  400, 400, 180, 110
 // STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "About WBigCalc"
 // FONT 8, "MS Sans Serif"
@@ -356,7 +356,8 @@ BEGIN
     LTEXT           "Copyright (c) 2002-2024",                  IDC_STATIC,   36, 36, 100, 10
     LTEXT           "Daniel D Miller",                          IDC_STATIC,   36, 46, 100, 10
     LTEXT           "http://derelllicht.42web.io/bigcalc.html", IDC_WEBLINK,  36, 56, 140, 10
-    DEFPUSHBUTTON   "Close",                                    IDOK,         36, 74, 100, 14
+    LTEXT           "https://github.com/DerellLicht/WBigCalc",  IDC_WEBLINK2, 36, 66, 140, 10
+    DEFPUSHBUTTON   "Close",                                    IDOK,         36, 84, 100, 14
 END
 
 //*********************************************************************************************

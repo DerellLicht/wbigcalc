@@ -6,7 +6,8 @@
 #define  IDC_TITLE         103
 #define  IDC_VERNUM        104
 #define  IDC_WEBLINK       105
-#define  IDD_ABOUT         106
+#define  IDC_WEBLINK2      106
+#define  IDD_ABOUT         107
 
 //  misc controls
 #define  IDB_CLOSE         110
