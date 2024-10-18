@@ -919,7 +919,7 @@ static void exit_from_paste_value_state(void)
 {
    Message("");
    show_hide_view_buttons(false);
-   show_hide_all_buttons(true, 0);
+   show_hide_all_buttons(true, IDB_PASTE_X);
    enable_paste_field(false);
    keyboard_state_set(KBD_STATE_DEFAULT) ;
 }
@@ -930,7 +930,7 @@ void PasteValueEnable(void)
    if (keyboard_state_get() == KBD_STATE_DEFAULT) {
       Message("Recall X from Register: Press <Rcall> button by register, or 'Recall X' to exit");
       show_hide_view_buttons(true);
-      show_hide_all_buttons(false, 0);
+      show_hide_all_buttons(false, IDB_PASTE_X);
       enable_paste_field(true);
       enable_paste_field(true);
       keyboard_state_set(KBD_STATE_GETREG) ;

@@ -16,10 +16,6 @@ and all computations will be done with the full number of requested digits.
 
 ### Pending issues
 
-- add section in Help file about special functions
-
-- During special operations, "Paste X" button should also be hidden
-
 - create debug option to dump X reg in View window, in my dump format
 
 ### Program modifications
@@ -65,6 +61,8 @@ _Revision history_
 | 6.01 | 10/17/24 |- Added Paste option to paste external string into X Stack |
 |      |          |- Added About dialog |
 |      |          |- Added program info in internal data |
+| 6.02 | 10/18/24 |- Update help file with info on special functions and INI file |
+|      |          |- "Paste X" button needs to be hidden when other special functions are active |
 
 
 

@@ -290,6 +290,7 @@ IDB_CHG_SIGN,
 IDB_XCHG_X_R,
 IDB_STORE_X,
 IDB_RECALL_X,
+IDB_PASTE_X,
 0 } ;
 
 void show_hide_all_buttons(bool show, uint except_id)
