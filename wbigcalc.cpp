@@ -166,7 +166,7 @@ void view_data_field_full(uint fidx, char *fstr)
 void view_norm_reg(NORMTYPE *nptr, char *msg)
 {
    char outmsg[1100] = "" ;
-   static char *dfltmsg = "MT";
+   static char *dfltmsg = "DBG";
    int slen, idx ;
    if (msg == NULL) {
       msg = dfltmsg ;
