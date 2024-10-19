@@ -124,6 +124,20 @@ extern bool scinotation;   /* Force sci notation if TRUE   */
 #define GETNORMTEMP(n) (NORMTYPE *) malloc((n) * sizeof(NORMTYPE))
 #define GETCOMPTEMP(n) (COMPTYPE *) malloc((n) * sizeof(COMPTYPE))
 
+typedef enum {
+   ERROR_UNKNOWN,
+   ERROR_OVERFLOW,
+   ERROR_DIV_ZERO,
+   ERROR_ZERO_ARG,
+   ERROR_NEG_ARG,
+   ERROR_ARG_NOT_INT,
+   ERROR_INV_ARG,
+   ERROR_NO_MEMORY,
+   ERROR_LIST_END
+} error_codes_t ;
+
+void MessageError(error_codes_t ecode);
+
 //  wbigcalc.cpp
 void Message(char *msg);
 void status_message(char *msgstr);
@@ -138,6 +152,7 @@ void show_hide_view_buttons(bool show);
 void enable_paste_field(bool show);
 void PasteValue_exec(void);
 char *get_paste_str(void);
+void show_status_info(void);
 
 //  bigcalc.cpp
 void Initialize(void);
@@ -264,24 +279,22 @@ int  move_local_to_work0(void);
  *    **************************************************
  */
 
-extern  int ExtendedAdd(void);
-extern  int ExtendedSubtract(void);
-extern  int ExtendedMultiply(void);
-extern  int ExtendedDivide(void);
-extern  int ExtendedSquareRoot(void);
-extern  int ExtendedPower(void);
-extern  int ExtendedSinCos(int scflag);
-extern  int ExtendedTan(void);
-extern  int ExtendedArcSinCos(int scflag);
-extern  int ExtendedArcTan(void);
-extern  int ExtendedLog(void);
-extern  int ExtendedExp10(void);
-extern  int ExtendedLn(void);
-extern  int ExtendedExpE(void);
-extern  int ExtendedReciprocal(void);
-extern  int ExtendedFactorial(void);
-
-
+int ExtendedAdd(void);
+int ExtendedSubtract(void);
+int ExtendedMultiply(void);
+int ExtendedDivide(void);
+int ExtendedSquareRoot(void);
+int ExtendedPower(void);
+int ExtendedSinCos(int scflag);
+int ExtendedTan(void);
+int ExtendedArcSinCos(int scflag);
+int ExtendedArcTan(void);
+int ExtendedLog(void);
+int ExtendedExp10(void);
+int ExtendedLn(void);
+int ExtendedExpE(void);
+int ExtendedReciprocal(void);
+int ExtendedFactorial(void);
 
 /*
  *    **************************************************
@@ -291,42 +304,40 @@ extern  int ExtendedFactorial(void);
  *    **************************************************
  */
 
-extern  int Normalize(int w);
-extern  int FlipSign(int sign);
-extern  int ExtendedRound(int w);
-extern  int ExtendedIntegerPart(void);
-extern  int ExtendedFractionPart(void);
+int  Normalize(int w);
+int  FlipSign(int sign);
+int  ExtendedRound(int w);
+int  ExtendedIntegerPart(void);
+int  ExtendedFractionPart(void);
 
-extern  void ExtendedInitConstants(void);
-extern  void ExtendedRecallPi(int dest);
-extern  void ExtendedRecallHalfPi(int dest);
-extern  void ExtendedRecallE(int dest);
-extern  void ExtendedRecallLn10(int dest);
-extern  void ExtendedRecallLnP9(int dest);
-extern  void ExtendedRecallLnP99(int dest);
-extern  void ExtendedRecallLnP999(int dest);
-extern  void ExtendedRecallLnP9999(int dest);
-extern  void ExtendedRecallLnP99999(int dest);
-extern  void ExtendedRecallSinP1(int dest);
-extern  void ExtendedRecallSinP01(int dest);
-extern  void ExtendedRecallSinP001(int dest);
-extern  void ExtendedRecallCosP1(int dest);
-extern  void ExtendedRecallCosP01(int dest);
-extern  void ExtendedRecallCosP001(int dest);
+void ExtendedInitConstants(void);
+void ExtendedRecallPi(int dest);
+void ExtendedRecallHalfPi(int dest);
+void ExtendedRecallE(int dest);
+void ExtendedRecallLn10(int dest);
+void ExtendedRecallLnP9(int dest);
+void ExtendedRecallLnP99(int dest);
+void ExtendedRecallLnP999(int dest);
+void ExtendedRecallLnP9999(int dest);
+void ExtendedRecallLnP99999(int dest);
+void ExtendedRecallSinP1(int dest);
+void ExtendedRecallSinP01(int dest);
+void ExtendedRecallSinP001(int dest);
+void ExtendedRecallCosP1(int dest);
+void ExtendedRecallCosP01(int dest);
+void ExtendedRecallCosP001(int dest);
 
-extern  void ClearStack(int lo,int hi);
-extern  void ClearReg(int lo,int hi);
-extern  void ClearWork(int w);
-extern  void MoveStackWork(int source,int dest);
-extern  void MoveWorkStack(int source,int dest);
-extern  void MoveWorkWork(int source,int dest);
-extern  void MoveWorkTemp(int source,COMPTYPE *dest);
-extern  void MoveTempWork(COMPTYPE *source,int dest);
-extern  void MoveTempTemp(COMPTYPE *source,COMPTYPE *dest);
-extern  void SetWorkInteger(int dest,long integer);
-extern  void SetTempInteger(COMPTYPE *dest,long integer);
-
-
+void ClearStack(int lo,int hi);
+void ClearReg(int lo,int hi);
+void ClearWork(int w);
+void MoveStackWork(int source,int dest);
+void MoveWorkStack(int source,int dest);
+void MoveWorkWork(int source,int dest);
+void MoveWorkTemp(int source,COMPTYPE *dest);
+void MoveTempWork(COMPTYPE *source,int dest);
+void MoveTempTemp(COMPTYPE *source,COMPTYPE *dest);
+void SetWorkInteger(int dest,long integer);
+void SetTempInteger(COMPTYPE *dest,long integer);
 
 /*
  *    **************************************************
@@ -336,16 +347,7 @@ extern  void SetTempInteger(COMPTYPE *dest,long integer);
  *    **************************************************
  */
 
-extern  void WriteReg(int lo,int hi);
-extern  void WriteStack(int s);
-extern  void WriteStack(int lo,int hi);
-extern  void Overflow(void);
-extern  void DivideByZero(void);
-extern  void ZeroArgument(void);
-extern  void NegativeArgument(void);
-extern  void ArgumentNotInteger(void);
-extern  void ArgumentInvalid(void);
-extern  void MemoryError(void);
-
-extern  void show_status_info(void);
-extern  void WorkScreen(void);
+void WriteReg(int lo,int hi);
+void WriteStack(int s);
+void WriteStack(int lo,int hi);
+void WorkScreen(void);

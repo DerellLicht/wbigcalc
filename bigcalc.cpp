@@ -696,6 +696,7 @@ static void SciNotation(void)
 void clear_stack_or_register(uint button_code)
 {
    uint r, s ;   
+   Message("");
    switch (button_code) {
    case IDB_CLEAR_R0:
    case IDB_CLEAR_R1:
@@ -750,7 +751,7 @@ static void ExchangeXY(void)
    NORMTYPE *temp;
 
    if ((temp = GETNORMTEMP(1)) == NULL) {
-      MemoryError();
+      MessageError(ERROR_NO_MEMORY);
       return;
       }
 
@@ -799,7 +800,7 @@ void ExchangeXReg_exec(uint target)
    NORMTYPE *temp;
    uint r = target - IDB_XCHG_R0 ;
    if ((temp = GETNORMTEMP(1)) == NULL) {
-      MemoryError();
+      MessageError(ERROR_NO_MEMORY);
       return;
    }
 
@@ -963,7 +964,7 @@ static void RollDown(void)
    NORMTYPE *temp;
 
    if ((temp = GETNORMTEMP(1)) == NULL) {
-      MemoryError();
+      MessageError(ERROR_NO_MEMORY);
       return;
       }
 
@@ -989,7 +990,7 @@ static void RollUp(void)
    NORMTYPE *temp;
 
    if ((temp = GETNORMTEMP(1)) == NULL) {
-      MemoryError();
+      MessageError(ERROR_NO_MEMORY);
       return;
       }
 
@@ -1159,6 +1160,7 @@ void view_stack_or_register(uint target)
    // char msg[20] ;
    char *regstr ;
 
+   Message("");
    switch (target) {
    case IDB_VIEW_R0:
    case IDB_VIEW_R1:

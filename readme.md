@@ -15,12 +15,12 @@ However, all the specified digits will still be displayed in the View window,
 and all computations will be done with the full number of requested digits.
 
 ### Program modifications
-**DDM 09/10/24**
+**09/10/24**
 Removed all 'print to printer/file' routines from Windows version.
 I don't really think those operations are required in a calculator such as this.
 Instead, user can copy-and-paste from either X-stack field or View window.
 
-**DDM 10/03/24**
+**10/03/24**
 Removed add/subtract/multiply/divide with register commands, since they 
 require GetCh() operations which are awkward to implement in Windows,
 and I don't think they are very important.  

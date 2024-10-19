@@ -221,57 +221,54 @@ char *get_paste_str(void)
 /*
  *    **************************************************
  *    *                                                *
- *    *      Display Message centered on 25th line     *
+ *    *      Display Message in Msg field     *
  *    *                                                *
  *    **************************************************
  */
+static HBRUSH hbMsg = 0 ;  //  used for setting background color in edit control
+
 void Message(char *msg)
 {
    SetWindowText(hwndMsg, msg);
 }
 
-// Overflow Message                *
-void Overflow(void)
-{
-   Message("** Overflow **");
-}
+//************************************************************
+static char const * const error_str[] = {
+"Unknown",
+"Overflow",
+"Divide by zero",
+"Zero Argument",
+"Negative Argument",
+"Argument not Integer",
+"Argument Invalid",
+"Insufficient Memory",
+"" };
 
-// Divide By Zero Message             *
-void DivideByZero(void)
-{
-   Message("** Divide by zero **");
-}
+// typedef enum {
+//    ERROR_UNKNOWN,
+//    ERROR_OVERFLOW,
+//    ERROR_DIV_ZERO,
+//    ERROR_ZERO_ARG,
+//    ERROR_NEG_ARG,
+//    ERROR_ARG_NOT_INT,
+//    ERROR_INV_ARG,
+//    ERROR_NO_MEMORY,
+//    ERROR_LIST_END
+// } error_codes_t ;
 
-// Zero Argument Message             *
-void ZeroArgument(void)
-{
-   Message("** Zero Argument **");
-}
+static error_codes_t ecode_last = ERROR_LIST_END ;
 
-// Negative Argument Message           *
-void NegativeArgument(void)
+void MessageError(error_codes_t ecode)
 {
-   Message("** Negative Argument **");
+   char msgstr[50];
+   if (ecode >= ERROR_LIST_END) {
+      ecode = ERROR_UNKNOWN ;
+   }
+   ecode_last = ecode ;
+   sprintf(msgstr, "** Error: %s **", error_str[ecode]);
+   Message(msgstr);
 }
-
-// Argument not Integer Message          *
-void ArgumentNotInteger(void)
-{
-   Message("** Argument not Integer **");
-}
-
-// Argument Invalid                *
-void ArgumentInvalid(void)
-{
-   Message("** Argument Invalid **");
-}
-
-// Insufficient Memory Message           *
-void MemoryError(void)
-{
-   Message("** Insufficient Memory **");
-}
-
+   
 //************************************************************************
 //  hide all functional buttons while keyboard entry mode is in effect
 //************************************************************************
@@ -804,11 +801,24 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
 
    case WM_CTLCOLORSTATIC:
       {
-      HDC hdcStatic = (HDC) wParam;
-      SetTextColor (hdcStatic, RGB (0, 0, 0));
-      SetBkMode (hdcStatic, TRANSPARENT);
-      return (LONG) g_hbrBackground;
+      HDC hdc = (HDC) wParam;
+      if ((HWND) lParam == hwndMsg) {
+         if (ecode_last < ERROR_LIST_END) {
+            syslog("yeah, we got here...\n");
+            ecode_last = ERROR_LIST_END ;
+            SetTextColor(hdc, WIN_BRED);
+            SetBkColor(hdc, WIN_BLUE);
+            if (hbMsg == 0) 
+               hbMsg = CreateSolidBrush(WIN_BLUE) ;
+            return (LRESULT) hbMsg ;   // hilight colour
+         }
+         else {
+            
+         }
+      } 
+      
       }
+      break;
 
    //********************************************************************
    //  application shutdown handlers

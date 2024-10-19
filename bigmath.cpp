@@ -291,7 +291,7 @@ extern int ExtendedMultiply(void)
       }
 
    if (exponent > (MAXEXP + 2L)) {
-      Overflow();
+      MessageError(ERROR_OVERFLOW);
       return(FALSE);
       }
 
@@ -399,8 +399,9 @@ extern int ExtendedDivide(void)
 
          /* Special Cases */
 
-   if (! work[0].digits) {             /* Divide by zero: error */
-      DivideByZero();
+   if (work[0].digits == 0) {             /* Divide by zero: error */
+      // DivideByZero();
+      MessageError(ERROR_DIV_ZERO);
       return(FALSE);
       }
 
@@ -417,7 +418,7 @@ extern int ExtendedDivide(void)
       }
 
    if (exponent > (MAXEXP + 2L)) {
-      Overflow();
+      MessageError(ERROR_OVERFLOW);
       return(FALSE);
       }
 
@@ -556,7 +557,7 @@ int ExtendedSquareRoot(void)
          /* Special Cases */
 
    if (work[0].sign == '-') {                /* Negative: error */
-      NegativeArgument();
+      MessageError(ERROR_NEG_ARG);
       return(FALSE);
       }
 
@@ -569,7 +570,7 @@ int ExtendedSquareRoot(void)
          /* Set up temp registers */
 
    if ((temp = GETCOMPTEMP(2)) == NULL) {
-      MemoryError();
+      MessageError(ERROR_NO_MEMORY);
       return(FALSE);
       }
    arg = temp;
@@ -734,7 +735,7 @@ extern int ExtendedPower(void)
       }
 
    if (work[0].exp > MAXEXDIGITS) {          /* Overflow */
-      Overflow();
+      MessageError(ERROR_OVERFLOW);
       return(FALSE);
       }
 
@@ -749,7 +750,7 @@ extern int ExtendedPower(void)
             /* Set up temp registers */
 
       if ((temp = GETCOMPTEMP(1)) == NULL) {
-         MemoryError();
+         MessageError(ERROR_NO_MEMORY);
          return(FALSE);
          }
       y = temp;
@@ -878,7 +879,7 @@ extern int ExtendedPower(void)
          /* Set up temp registers */
 
    if ((temp = GETCOMPTEMP(1)) == NULL) {
-      MemoryError();
+      MessageError(ERROR_NO_MEMORY);
       return(FALSE);
       }
    x = temp;
@@ -961,7 +962,7 @@ extern int ExtendedSinCos(int scflag)
       }
 
    if (work[0].exp > MAXEXDIGITS) {       /* Overflow */
-      Overflow();
+      MessageError(ERROR_OVERFLOW);
       return(FALSE);
       }
 
@@ -978,7 +979,7 @@ extern int ExtendedSinCos(int scflag)
          /* Set up temp registers */
 
    if ((temp = GETCOMPTEMP(2)) == NULL) {
-      MemoryError();
+      MessageError(ERROR_NO_MEMORY);
       return(FALSE);
       }
    x = temp;                              /* x and xsq never used together */
@@ -1240,7 +1241,7 @@ extern int ExtendedTan(void)
          /* Set up temp register */
 
    if ((temp = GETCOMPTEMP(1)) == NULL) {
-      MemoryError();
+      MessageError(ERROR_NO_MEMORY);
       return(FALSE);
       }
    temp = temp;
@@ -1310,7 +1311,8 @@ extern int ExtendedArcSinCos(int scflag)
           ( (work[0].man[0] > 1)
              ||
             (work[0].digits > 1) ) ) ) {
-      ArgumentInvalid();
+      // ArgumentInvalid();
+      MessageError(ERROR_INV_ARG);
       return(FALSE);
       }
 
@@ -1333,7 +1335,7 @@ extern int ExtendedArcSinCos(int scflag)
       }
    else {                              /* Calculate angle */
       if ((temp = GETCOMPTEMP(1)) == NULL) {
-         MemoryError();
+         MessageError(ERROR_NO_MEMORY);
          return(FALSE);
          }
       MoveWorkTemp(0, temp);           /* Save 'sine' */
@@ -1430,7 +1432,7 @@ extern int ExtendedArcTan(void)
          /* Get temp area */
 
    if ((temp = GETCOMPTEMP(1)) == NULL) {
-      MemoryError();
+      MessageError(ERROR_NO_MEMORY);
       return(FALSE);
       }
    MoveWorkTemp(0, temp);              /* Save x */
@@ -1513,7 +1515,7 @@ static int ResolveAngle(void)
          /* Set up temp registers */
 
    if ((temp = GETCOMPTEMP(4)) == NULL) {
-      MemoryError();
+      MessageError(ERROR_NO_MEMORY);
       return(FALSE);
       }
    sin  = temp;         /* This group used for scaling */
@@ -1974,7 +1976,7 @@ extern int ExtendedExp10(void)
          return(TRUE);
          }
       else {
-         Overflow();                      /* Overflow */
+         MessageError(ERROR_OVERFLOW);                      /* Overflow */
          return(FALSE);
          }
       }
@@ -2063,12 +2065,13 @@ extern int ExtendedLn(void)
          /* Special Cases */
 
    if (! work[0].digits) {          /* Zero: error */
-      ZeroArgument();
+      // ZeroArgument();
+      MessageError(ERROR_ZERO_ARG);
       return(FALSE);
       }
 
    if (work[0].sign == '-') {       /* Negative: error */
-      NegativeArgument();
+      MessageError(ERROR_NEG_ARG);
       return(FALSE);
       }
 
@@ -2283,7 +2286,7 @@ extern int ExtendedLn(void)
          /* Set up temp registers */
 
    if ((temp = GETCOMPTEMP(3)) == NULL) {
-      MemoryError();
+      MessageError(ERROR_NO_MEMORY);
       return(FALSE);
       }
    ln  = temp;
@@ -2615,7 +2618,7 @@ extern int ExtendedExpE(void)
       }
 
    if (work[0].exp > MAXEXDIGITS) {          /* Overflow */
-      Overflow();
+      MessageError(ERROR_OVERFLOW);
       return(FALSE);
       }
 
@@ -2707,7 +2710,7 @@ extern int ExtendedExpE(void)
          /* Set up temp registers */
 
    if ((temp = GETCOMPTEMP(2)) == NULL) {
-      MemoryError();
+      MessageError(ERROR_NO_MEMORY);
       return(FALSE);
       }
    arg  = temp;
@@ -2901,12 +2904,13 @@ extern int ExtendedFactorial(void)
       }
 
    if (work[0].sign == '-') {             /* Test for negative: error */
-      NegativeArgument();
+      MessageError(ERROR_NEG_ARG);
       return(FALSE);
       }
 
    if (work[0].exp < work[0].digits) {    /* Test for non integer: error */
-      ArgumentNotInteger();
+      // ArgumentNotInteger();
+      MessageError(ERROR_ARG_NOT_INT);
       return(FALSE);
       }
 
@@ -2918,7 +2922,7 @@ extern int ExtendedFactorial(void)
       }
 
    if (work[0].exp > 6) {                 /* Rough test for overflow */
-      Overflow();
+      MessageError(ERROR_OVERFLOW);
       return(FALSE);
       }
 

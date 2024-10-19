@@ -517,7 +517,7 @@ int Normalize(int w)
    memset(&work[w].man[digits], 0, ((workprec - digits) * sizeof(WORKDIGIT)) );
 
    if(work[w].exp > (MAXEXP + 1L)) {
-      Overflow();
+      MessageError(ERROR_OVERFLOW);
       return(FALSE);
       }
 
