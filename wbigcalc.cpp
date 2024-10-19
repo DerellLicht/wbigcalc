@@ -139,6 +139,19 @@ void show_keyboard_state(char *msg)
    SetWindowText(hwndKbdState, msg) ;
 }
 
+//*********************************************************************** 
+//  display status info in status bar
+//*********************************************************************** 
+void show_status_info(void)
+{
+   char tempstr[60];
+   sprintf (tempstr, " Precision: %d, compprec: %d", normprec, compprec);
+   status_message(1, tempstr);
+   
+   sprintf (tempstr, " dgroup: %u", groupsize);
+   status_message(2, tempstr);
+}
+
 //*************************************************************
 static char const stackLtr[5] = "XYZT" ;
 
@@ -215,6 +228,48 @@ char *get_paste_str(void)
 void Message(char *msg)
 {
    SetWindowText(hwndMsg, msg);
+}
+
+// Overflow Message                *
+void Overflow(void)
+{
+   Message("** Overflow **");
+}
+
+// Divide By Zero Message             *
+void DivideByZero(void)
+{
+   Message("** Divide by zero **");
+}
+
+// Zero Argument Message             *
+void ZeroArgument(void)
+{
+   Message("** Zero Argument **");
+}
+
+// Negative Argument Message           *
+void NegativeArgument(void)
+{
+   Message("** Negative Argument **");
+}
+
+// Argument not Integer Message          *
+void ArgumentNotInteger(void)
+{
+   Message("** Argument not Integer **");
+}
+
+// Argument Invalid                *
+void ArgumentInvalid(void)
+{
+   Message("** Argument Invalid **");
+}
+
+// Insufficient Memory Message           *
+void MemoryError(void)
+{
+   Message("** Insufficient Memory **");
 }
 
 //************************************************************************
