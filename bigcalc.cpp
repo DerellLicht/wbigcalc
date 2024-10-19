@@ -1231,6 +1231,7 @@ static void ExitGetXState(bool success)
 //***********************************************************************
 static void restore_stack0(void)
 {
+   Message("");
    if (keyboard_state_get() == KBD_STATE_GETX) {
       move_local_to_work0();
       MoveWorkStack(0, 0);

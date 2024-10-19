@@ -260,35 +260,13 @@ static void WriteNumber(NORMTYPE *nbr)
 /*
  *    **************************************************
  *    *                                                *
- *    *      Write Message and Wait for keystroke      *
- *    *                                                *
- *    **************************************************
- */
-static void MessageWait(char *msg)
-{
-   char tmsg[81];
-   if (strlen(msg) == 0) {
-      return ;
-   }
-   // syslog("%u [%s]\n", strlen(msg), msg);
-
-   strcpy(tmsg, msg);
-   if (*tmsg)
-      strcat(tmsg, "  ");
-
-   MessageBox(NULL, tmsg, NULL, MB_OK | MB_ICONEXCLAMATION);
-}
-
-/*
- *    **************************************************
- *    *                                                *
  *    *                Overflow Message                *
  *    *                                                *
  *    **************************************************
  */
 void Overflow(void)
 {
-   MessageWait("** Overflow **");
+   Message("** Overflow **");
 }
 
 /*
@@ -300,7 +278,7 @@ void Overflow(void)
  */
 void DivideByZero(void)
 {
-   MessageWait("** Divide by zero **");
+   Message("** Divide by zero **");
 }
 
 /*
@@ -312,7 +290,7 @@ void DivideByZero(void)
  */
 void ZeroArgument(void)
 {
-   MessageWait("** Zero Argument **");
+   Message("** Zero Argument **");
 }
 
 /*
@@ -324,7 +302,7 @@ void ZeroArgument(void)
  */
 void NegativeArgument(void)
 {
-   MessageWait("** Negative Argument **");
+   Message("** Negative Argument **");
 }
 
 /*
@@ -336,7 +314,7 @@ void NegativeArgument(void)
  */
 void ArgumentNotInteger(void)
 {
-   MessageWait("** Argument not Integer **");
+   Message("** Argument not Integer **");
 }
 
 /*
@@ -348,7 +326,7 @@ void ArgumentNotInteger(void)
  */
 void ArgumentInvalid(void)
 {
-   MessageWait("** Argument Invalid **");
+   Message("** Argument Invalid **");
 }
 
 /*
@@ -360,7 +338,7 @@ void ArgumentInvalid(void)
  */
 void MemoryError(void)
 {
-   MessageWait("** Insufficient Memory **");
+   Message("** Insufficient Memory **");
 }
 
 /*
