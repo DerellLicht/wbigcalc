@@ -350,7 +350,7 @@ CAPTION "About WBigCalc"
 // FONT 8, "MS Sans Serif"
 FONT 10, "Times New Roman"
 BEGIN
-    ICON            IDI_ICON,                                   IDC_STATIC,    9, 12
+    ICON            IDI_ICON,                                   IDC_STATIC,    9, 14
     LTEXT           "WBigCalc Extended Precision Calculator",   IDC_STATIC,   36, 15,  66, 18
     LTEXT           VerNum,                                     IDC_VERNUM,  104, 15,  50, 10
     LTEXT           "Copyright (c) 2002-2024",                  IDC_STATIC,   36, 36, 100, 10
