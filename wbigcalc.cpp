@@ -34,6 +34,7 @@ HINSTANCE hInst = NULL;
 static HWND hwndMain = NULL ;
 static HWND hwndTitle = NULL ;
 static HWND hwndMsg = NULL ;
+static HBRUSH hbMsg = 0 ;  //  used for setting background color in Msg field
 static HWND hwndKbdState = NULL ;
 static HWND hwndViewFrame = NULL ;
 
@@ -225,8 +226,6 @@ char *get_paste_str(void)
  *    *                                                *
  *    **************************************************
  */
-static HBRUSH hbMsg = 0 ;  //  used for setting background color in edit control
-
 void Message(char *msg)
 {
    SetWindowText(hwndMsg, msg);
