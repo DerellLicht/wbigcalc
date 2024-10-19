@@ -60,3 +60,5 @@ _Revision history_
 | 6.02 | 10/18/24 |- Update help file with info on special functions and INI file |
 |      |          |- "Paste X" button needs to be hidden when other special functions are active |
 |      |          |- 'About' dialog: add link to Github page, as well as home page |
+| 6.03 | 10/19/24 |- Convert error functions to common error handler |
+|      |          |- Change Msg field colors for error messages |

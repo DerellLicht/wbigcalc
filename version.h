@@ -10,6 +10,8 @@
 //    6.02     - Update help file with info on special functions and INI file
 //             - "Paste X" button needs to be hidden when other special functions are active
 //             - 'About' dialog: add link to Github page, as well as home page
+//    6.03     - Convert error functions to common error handler
+//             - Change Msg field colors for error messages
 //*********************************************************************************************
-#define VerNum    "V6.02"
+#define VerNum    "V6.03"
 
