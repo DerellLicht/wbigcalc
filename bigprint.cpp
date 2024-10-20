@@ -204,6 +204,9 @@ static void WriteNumber(NORMTYPE *nbr)
         (exponent > MAXFLOATDSP) ||
         (exponent > normprec) ) {      /* Scientific Notation */
 
+      // syslog("WN: %u, %ld, %d, %d, %u\n", 
+      //   (uint) (scinotation), exponent, MINFLOATDSP, MAXFLOATDSP, normprec) ;
+
       WChar(nbr->man[0]+ '0');         /* First digit and decimal point */
       WChar(DISPDECIMAL);
       ppos += 2;

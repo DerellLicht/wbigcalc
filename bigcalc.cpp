@@ -265,11 +265,10 @@ void SquareRoot(void)
    if (ExtendedSquareRoot() ) {
       lastx = stack[0];
       MoveWorkStack(2, 0);
-      WriteStack(0, 0);
+      WriteStack(0);
       stacklift = true;
-      }
-   show_status_info();
-   
+   }
+   // show_status_info();
 }
 
 /*
@@ -288,9 +287,9 @@ void Square(void)
    if (ExtendedMultiply() ) {
       lastx = stack[0];
       MoveWorkStack(2, 0);
-      WriteStack(0, 0);
+      WriteStack(0);
       stacklift = true;
-      }
+   }
 }
 
 /*
@@ -308,9 +307,9 @@ void Reciprocal(void)
    if (ExtendedReciprocal() ) {
       lastx = stack[0];
       MoveWorkStack(2, 0);
-      WriteStack(0, 0);
+      WriteStack(0);
       stacklift = true;
-      }
+   }
 }
 
 /*
@@ -1277,14 +1276,13 @@ static void Enter(bool success)
  */
 static void AcceptXstatic(char *instr)
 {
-   uint instrlen = strlen(instr);
-
    init_getx_vars();
    getx_clear_output_str();
    reset_output_str();
    put_stack(0, " ");
    ClearWork(0);
    
+   uint instrlen = strlen(instr);
    uint idx ;
    for (idx=0; idx<instrlen; idx++) {
       int result = ExtendedGetX(*instr++); //  process first input char

@@ -36,8 +36,11 @@
 #define MAXEXDIGITS 9                     /* Max exponent digits */
 #define MINEXP -999999999L                /* Min exponent */
 #define MAXEXP  999999999L                /* Max exponent */
-#define MINFLOATDSP -50L                  /* Min exp float decimal display */
-#define MAXFLOATDSP 65L                   /* Max exp float decimal display */
+//  resize to use larger data-field length
+// #define MINFLOATDSP -50L                  /* Min exp float decimal display */
+#define MINFLOATDSP -100L                  /* Min exp float decimal display */
+// #define MAXFLOATDSP 65L                   /* Max exp float decimal display */
+#define MAXFLOATDSP 135L                   /* Max exp float decimal display */
 #define SIZEOFSMALL 453                   /* Max size for part screen entry */
 #define DISPDECIMAL '.'                   /* Display decimal point */
 #define PRINTDECIMAL '*'                  /* Print decimal point */

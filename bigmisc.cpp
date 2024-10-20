@@ -1350,7 +1350,7 @@ void ClearWork(int w)
 //lint -esym(765, dump_norm_reg)
 void dump_norm_reg(NORMTYPE *nptr, char *msg)
 {
-   char outmsg[1024] = "" ;
+   char outmsg[4000] = "" ;
    static char *dfltmsg = "MT";
    int slen, idx ;
    if (msg == NULL) {
@@ -1373,7 +1373,7 @@ void dump_norm_reg(NORMTYPE *nptr, char *msg)
 //lint -esym(765, dump_work_reg)
 void dump_work_reg(WORKTYPE *nptr, char *msg)
 {
-   char outmsg[100] = "" ;
+   char outmsg[4000] = "" ;
    static char *dfltmsg = "MT";
    int slen, idx ;
    if (msg == NULL) {

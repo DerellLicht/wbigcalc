@@ -14,6 +14,7 @@
 //             - Change Msg field colors for error messages
 //    6.04     - Increase max number of displayed digits to 150, to fit dialog data fields
 //             - Code optimization: eliminate double-menu jumps in keyboard handler
+//    6.05     Revise some display constants, to allow for wider display fields
 //*********************************************************************************************
-#define VerNum    "V6.04"
+#define VerNum    "V6.05"
 
