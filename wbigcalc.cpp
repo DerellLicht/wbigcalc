@@ -653,54 +653,53 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
             }
             break ;
             
-         case IDB_KBD_add:       dos_main(ADD); break ;
-         case IDB_KBD_subtract:  dos_main(SUBTRACT); break ;
-         case IDB_KBD_mult:      dos_main(MULTIPLY); break ;
-         case IDB_KBD_divide:    dos_main(DIVIDE); break ;
+         case IDB_KBD_add:       Add(); break ;
+         case IDB_KBD_subtract:  Subtract(); break ;
+         case IDB_KBD_mult:      Multiply(); break ;
+         case IDB_KBD_divide:    Divide(); break ;
             
          //**************************************************
          //  button operations
          //**************************************************
          //  button row 1
-         case IDB_FLTSCI:    dos_main(SCINOT); break ;
-         case IDB_GRP35:     dos_main(GROUPSIZE); break ;
-         case IDB_KBD_UP:    dos_main(ROLLUP); break ;
-         case IDB_KBD_DOWN:  dos_main(ROLLDOWN); break ;
-         case IDB_LAST_X:    dos_main(LASTX); break ;
-         case IDB_CHG_SIGN:  dos_main(CHGSIGN); break ;
-         case IDB_XCHG_X_Y:  dos_main(XCHGXY1); break ;
-         case IDB_XCHG_X_R:  dos_main(XCHGXREG); break ;
-         case IDB_STORE_X:   dos_main(STOREX); break ;
-         case IDB_RECALL_X:  dos_main(RECALLREG); break ;
+         case IDB_FLTSCI:    SciNotation(); break ;
+         case IDB_GRP35:     GroupSize(); break ;
+         case IDB_KBD_UP:    RollUp(); break ;
+         case IDB_KBD_DOWN:  RollDown(); break ;
+         case IDB_LAST_X:    RecallLastX(); break ;
+         case IDB_CHG_SIGN:  ChangeSign(); break ;
+         case IDB_XCHG_X_Y:  ExchangeXY(); break ;
+         case IDB_XCHG_X_R:  ExchangeXReg(); break ;
+         case IDB_STORE_X:   StoreX(); break ;
+         case IDB_RECALL_X:  RecallReg(); break ;
          case IDB_PASTE_X:   PasteValueEnable(); break ;
          case IDC_DO_PASTE:  PasteValue_exec(); break ;
                                         
          //  button row 2
-         case IDB_Y2X   :    dos_main(POWER); break ;
-         case IDB_SQRT  :    dos_main(SQUAREROOT); break ;
-         case IDB_XSQRD :    dos_main(SQUARE); break ;
-         case IDB_INVX  :    dos_main(RECIPROCAL); break ;
-         case IDB_XFACT :    dos_main(FACTORIAL); break ;
-         case IDB_INT   :    dos_main(INTEGER); break ;
-         case IDB_FRAC  :    dos_main(FRACTION); break ;
+         case IDB_Y2X   :    Power(); break ;
+         case IDB_SQRT  :    SquareRoot(); break ;
+         case IDB_XSQRD :    Square(); break ;
+         case IDB_INVX  :    Reciprocal(); break ;
+         case IDB_XFACT :    Factorial(); break ;
+         case IDB_INT   :    IntegerPart(); break ;
+         case IDB_FRAC  :    FractionPart(); break ;
          case IDB_PI    :    RecallPi(); break ;
-         case IDB_ECONST:    dos_main(RECALLE); break ;
-         // case IDB_HELP  :    dos_main(HELP); break ;
+         case IDB_ECONST:    RecallE(); break ;
          case IDB_HELP  :    view_help_screen(hDlgWnd); break ;
          case IDB_OPTIONS:   open_options_dialog(hDlgWnd); break ;
          case IDD_ABOUT :    CmdAbout(hDlgWnd); break ;
             
          //  button row 3
-         case IDB_SINX :    dos_main(SIN   ); break ;
-         case IDB_ASINX:    dos_main(ARCSIN); break ;
-         case IDB_COSX :    dos_main(COS   ); break ;
-         case IDB_ACOSX:    dos_main(ARCCOS); break ;
-         case IDB_TANX :    dos_main(TAN   ); break ;
-         case IDB_ATANX:    dos_main(ARCTAN); break ;
-         case IDB_LOGX :    dos_main(LOG   ); break ;
-         case IDB_102X :    dos_main(EXP10 ); break ;
-         case IDB_LNX  :    dos_main(LN    ); break ;
-         case IDB_E2X  :    dos_main(EXPE  ); break ;
+         case IDB_SINX :    Sin();    break ;
+         case IDB_ASINX:    ArcSin(); break ;
+         case IDB_COSX :    Cos();    break ;
+         case IDB_ACOSX:    ArcCos(); break ;
+         case IDB_TANX :    Tan();    break ;
+         case IDB_ATANX:    ArcTan(); break ;
+         case IDB_LOGX :    Log();    break ;
+         case IDB_102X :    Exp10();  break ;
+         case IDB_LNX  :    Ln();     break ;
+         case IDB_E2X  :    ExpE();   break ;
             
          //**************************************************
          //  clear data fields

@@ -38,16 +38,7 @@
 #define MAXEXP  999999999L                /* Max exponent */
 #define MINFLOATDSP -50L                  /* Min exp float decimal display */
 #define MAXFLOATDSP 65L                   /* Max exp float decimal display */
-#define XSIGNROW 18                       /* X sign row */
-#define ENTRYSIGNROWBIG 4                 /* Sign row for big X */
-#define ENTRYSIGNROWSMALL 18              /* Sign row for small X */
 #define SIZEOFSMALL 453                   /* Max size for part screen entry */
-#define SIGNDISPCOL 3                     /* Sign column for number display */
-#define MINDISPCOL 4                      /* Min column for number display */
-#define MAXDISPCOL 68                     /* Max column for number display */
-#define SIGNPRTCOL 4                      /* Sign column for number printer */
-#define MINPRTCOL 5                       /* Min column for number printer */
-#define MAXPRTCOL 63                      /* Max column for number printer */
 #define DISPDECIMAL '.'                   /* Display decimal point */
 #define PRINTDECIMAL '*'                  /* Print decimal point */
 
@@ -156,7 +147,6 @@ void show_status_info(void);
 
 //  bigcalc.cpp
 void Initialize(void);
-int dos_main(u16 inchr);
 void view_stack_or_register(uint target);
 void clear_stack_or_register(uint button_code);
 void show_hide_view_xchg_buttons(bool show);
@@ -168,8 +158,26 @@ void RecallReg_exec(uint target);
 void PasteValueEnable(void);
 
 //  menu jumps
+void Power(void);
+void SquareRoot(void);
+void Square(void);
+void Reciprocal(void);
+void Factorial(void);
+void IntegerPart(void);
+void FractionPart(void);
+void RecallE(void);
 void RecallPi(void);
 
+void Sin(void);
+void ArcSin(void);
+void Cos(void);
+void ArcCos(void);
+void Tan(void);
+void ArcTan(void);
+void Log(void);
+void Exp10(void);
+void Ln(void);
+void ExpE(void);
 
 //  config.cpp
 extern bool show_winmsgs ;
@@ -228,51 +236,21 @@ int  move_local_to_work0(void);
  *    **************************************************
  */
 
-#define ESCAPE     27   /* Escape          */
-#define BACKSPACE  8    /* Back Space      */
-// #define CR         '\r' /* Carriage Return */
-// #define LF         '\n' /* Line Feed       */
-#define FF         '\f' /* Form Feed       */
-#define PGUP       1073 /* PgUp            */
-#define PGDN       1081 /* PgDn            */
+void Add(void);
+void Subtract(void);
+void Multiply(void);
+void Divide(void);
 
-#define ADD        43   /*  +          */
-#define SUBTRACT   45   /*  -          */
-#define MULTIPLY   42   /*  *          */
-#define DIVIDE     47   /*  /          */
-#define LASTX      76   /*  L          */
-#define CLEAR      67   /*  C          */
-#define SCINOT     70   /*  F          */
-#define XCHGXREG   88   /*  X          */
-#define CHGSIGN    83   /*  S          */
-#define GROUPSIZE  71   /*  G          */
-#define VIEWREG    86   /*  V          */
-#define STOREX     1073 /* PgUp        */
-#define RECALLREG  1081 /* PgDn        */
-#define ENTER      13   /* Enter       */
-#define XCHGXY1    1075 /* Left Arrow  */
-#define XCHGXY2    1077 /* Right Arrow */
-#define ROLLDOWN   1080 /* Down Arrow  */
-#define ROLLUP     1072 /* Up Arrow    */
-#define HELP       1059 /* F1          */
-#define POWER      1060 /* F2          */
-#define SQUAREROOT 1061 /* F3          */
-#define SQUARE     1062 /* F4          */
-#define RECIPROCAL 1063 /* F5          */
-#define FACTORIAL  1064 /* F6          */
-#define INTEGER    1065 /* F7          */
-#define FRACTION   1066 /* F8          */
-#define RECALLE    1068 /* F10         */
-#define SIN        1094 /* CTRL-F1     */
-#define ARCSIN     1095 /* CTRL-F2     */
-#define COS        1096 /* CTRL-F3     */
-#define ARCCOS     1097 /* CTRL-F4     */
-#define TAN        1098 /* CTRL-F5     */
-#define ARCTAN     1099 /* CTRL-F6     */
-#define LOG        1100 /* CTRL-F7     */
-#define EXP10      1101 /* CTRL-F8     */
-#define LN         1102 /* CTRL-F9     */
-#define EXPE       1103 /* CTRL-F10    */
+void ChangeSign(void);
+void StoreX(void);
+void RecallReg(void);
+void SciNotation(void);
+void GroupSize(void);
+void RecallLastX(void);
+void ExchangeXY(void);
+void ExchangeXReg(void);
+void RollDown(void);
+void RollUp(void);
 
 /*
  *    **************************************************

@@ -1893,7 +1893,7 @@ void getx_clear_output_str(void)
 bool ExtendedGetX(u16 chr)
 {
 /*  ******  C H A R A C T E R   W A I T   L O O P  ******  */
-   if (chr == ESCAPE) {      /* Changed his/her mind */
+   if (chr == ESC) {      /* Changed his/her mind */
       return(false);
    }
 
@@ -1990,7 +1990,7 @@ bool ExtendedGetX(u16 chr)
             }
          }
 
-      else if (chr == CHGSIGN) {             /* Reverse mantissa sign */
+      else if (chr == 'S') {             /* Reverse mantissa sign */
          sign = FlipSign(sign);
          getx_sign = (getx_sign == '-') ? ' ' : '-' ;
       }

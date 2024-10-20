@@ -12,7 +12,8 @@
 //             - 'About' dialog: add link to Github page, as well as home page
 //    6.03     - Convert error functions to common error handler
 //             - Change Msg field colors for error messages
-//    6.04     Increase max number of displayed digits to 150, to fit dialog data fields
+//    6.04     - Increase max number of displayed digits to 150, to fit dialog data fields
+//             - Code optimization: eliminate double-menu jumps in keyboard handler
 //*********************************************************************************************
 #define VerNum    "V6.04"
 

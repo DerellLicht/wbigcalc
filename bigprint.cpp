@@ -174,6 +174,9 @@ static void WExponent(long exponent)
 // #define MAX_DISP_LEN   79
 #define MAX_DISP_LEN   150
  
+#define MINDISPCOL 4                      /* Min column for number display */
+#define MAXDISPCOL 68                     /* Max column for number display */
+
 static void WriteNumber(NORMTYPE *nbr)
 {
    long exponent;

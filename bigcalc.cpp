@@ -146,7 +146,7 @@ static void DropStack(void)
  *    *                                                *
  *    **************************************************
  */
-static void Add(void)
+void Add(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -168,7 +168,7 @@ static void Add(void)
  *    *                                                *
  *    **************************************************
  */
-static void Subtract(void)
+void Subtract(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -190,7 +190,7 @@ static void Subtract(void)
  *    *                                                *
  *    **************************************************
  */
-static void Multiply(void)
+void Multiply(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -212,7 +212,7 @@ static void Multiply(void)
  *    *                                                *
  *    **************************************************
  */
-static void Divide(void)
+void Divide(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -234,7 +234,7 @@ static void Divide(void)
  *    *                                                *
  *    **************************************************
  */
-static void Power(void)
+void Power(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -258,7 +258,7 @@ static void Power(void)
  *    *                                                *
  *    **************************************************
  */
-static void SquareRoot(void)
+void SquareRoot(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -279,7 +279,7 @@ static void SquareRoot(void)
  *    *                                                *
  *    **************************************************
  */
-static void Square(void)
+void Square(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -300,7 +300,7 @@ static void Square(void)
  *    *                                                *
  *    **************************************************
  */
-static void Reciprocal(void)
+void Reciprocal(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -320,7 +320,7 @@ static void Reciprocal(void)
  *    *                                                *
  *    **************************************************
  */
-static void Factorial(void)
+void Factorial(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -340,7 +340,7 @@ static void Factorial(void)
  *    *                                                *
  *    **************************************************
  */
-static void IntegerPart(void)
+void IntegerPart(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -360,7 +360,7 @@ static void IntegerPart(void)
  *    *                                                *
  *    **************************************************
  */
-static void FractionPart(void)
+void FractionPart(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -380,7 +380,7 @@ static void FractionPart(void)
  *    *                                                *
  *    **************************************************
  */
-static void Sin(void)
+void Sin(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -400,7 +400,7 @@ static void Sin(void)
  *    *                                                *
  *    **************************************************
  */
-static void ArcSin(void)
+void ArcSin(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -420,7 +420,7 @@ static void ArcSin(void)
  *    *                                                *
  *    **************************************************
  */
-static void Cos(void)
+void Cos(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -440,7 +440,7 @@ static void Cos(void)
  *    *                                                *
  *    **************************************************
  */
-static void ArcCos(void)
+void ArcCos(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -460,7 +460,7 @@ static void ArcCos(void)
  *    *                                                *
  *    **************************************************
  */
-static void Tan(void)
+void Tan(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -480,7 +480,7 @@ static void Tan(void)
  *    *                                                *
  *    **************************************************
  */
-static void ArcTan(void)
+void ArcTan(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -500,7 +500,7 @@ static void ArcTan(void)
  *    *                                                *
  *    **************************************************
  */
-static void Log(void)
+void Log(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -520,7 +520,7 @@ static void Log(void)
  *    *                                                *
  *    **************************************************
  */
-static void Exp10(void)
+void Exp10(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -540,7 +540,7 @@ static void Exp10(void)
  *    *                                                *
  *    **************************************************
  */
-static void Ln(void)
+void Ln(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -560,7 +560,7 @@ static void Ln(void)
  *    *                                                *
  *    **************************************************
  */
-static void ExpE(void)
+void ExpE(void)
 {
    restore_stack0();
    MoveStackWork(0, 0);
@@ -600,7 +600,7 @@ void RecallPi(void)
  *    *                                                *
  *    **************************************************
  */
-static void RecallE(void)
+void RecallE(void)
 {
    if (stacklift) {
       PushStack();
@@ -620,7 +620,7 @@ static void RecallE(void)
  *    *                                                *
  *    **************************************************
  */
-static void RecallLastX(void)
+void RecallLastX(void)
 {
    if (stacklift) {
       PushStack();
@@ -639,7 +639,7 @@ static void RecallLastX(void)
  *    *                                                *
  *    **************************************************
  */
-static void ChangeSign(void)
+void ChangeSign(void)
 {
    if (stack[0].digits) {        /* Only if X non zero */
       stack[0].sign = FlipSign(stack[0].sign);
@@ -656,7 +656,7 @@ static void ChangeSign(void)
  *    *                                                *
  *    **************************************************
  */
-static void GroupSize(void)
+void GroupSize(void)
 {
    if (groupsize == 5) {
       groupsize = 3;
@@ -680,7 +680,7 @@ static void GroupSize(void)
  *    *                                                *
  *    **************************************************
  */
-static void SciNotation(void)
+void SciNotation(void)
 {
    if (scinotation)
       scinotation = false ;
@@ -746,7 +746,7 @@ void clear_stack_or_register(uint button_code)
  *    *                                                *
  *    **************************************************
  */
-static void ExchangeXY(void)
+void ExchangeXY(void)
 {
    NORMTYPE *temp;
 
@@ -782,7 +782,7 @@ static void exit_from_xchg_reg_state(void)
    keyboard_state_set(KBD_STATE_DEFAULT) ;
 }
 
-static void ExchangeXReg(void)
+void ExchangeXReg(void)
 {
    if (keyboard_state_get() == KBD_STATE_DEFAULT) {
       Message("Exchange X with Register: Press <Xchg> button by register, or 'XChg X/R'");
@@ -831,7 +831,7 @@ static void exit_from_store_reg_state(void)
    keyboard_state_set(KBD_STATE_DEFAULT) ;
 }
 
-static void StoreX(void)
+void StoreX(void)
 {
    if (keyboard_state_get() == KBD_STATE_DEFAULT) {
       Message("Store X to Register: Press <Stor> button by register, or 'Store X' to exit");
@@ -871,7 +871,7 @@ static void exit_from_recall_reg_state(void)
    keyboard_state_set(KBD_STATE_DEFAULT) ;
 }
 
-static void RecallReg(void)
+void RecallReg(void)
 {
    Message("Recall to X: Press Reg (0-9) or Esc:");
    if (keyboard_state_get() == KBD_STATE_DEFAULT) {
@@ -959,7 +959,7 @@ void PasteValue_exec(void)
  *    *                                                *
  *    **************************************************
  */
-static void RollDown(void)
+void RollDown(void)
 {
    NORMTYPE *temp;
 
@@ -985,7 +985,7 @@ static void RollDown(void)
  *    *                                                *
  *    **************************************************
  */
-static void RollUp(void)
+void RollUp(void)
 {
    NORMTYPE *temp;
 
@@ -1327,19 +1327,6 @@ static void AcceptX(u16 inchr)
  */
 static void AcceptXstatic(char *instr)
 {
-   // int result ;
-   // if (stacklift) {
-   //    PushStack();   //  push X to Y
-   //    WriteStack(1, 3); //  update display fields
-   // }
-   // 
-   // if (keyboard_state_get() == KBD_STATE_GETX) {
-   //    result = ExtendedGetX(inchr);
-   //    if (!result) {
-   //       ExitGetXState(false);
-   //    }
-   //    return ;      
-   // }
    uint instrlen = strlen(instr);
 
    init_getx_vars();
@@ -1347,8 +1334,6 @@ static void AcceptXstatic(char *instr)
    reset_output_str();
    put_stack(0, " ");
    ClearWork(0);
-   // Message("Entering X: S=ChgSign, E=Exp, BakSpc=Backup, Other=Complete, ESC=Exit");
-   // keyboard_state_set(KBD_STATE_GETX);
    
    uint idx ;
    for (idx=0; idx<instrlen; idx++) {
@@ -1363,10 +1348,8 @@ static void AcceptXstatic(char *instr)
 //  called from keyboard_state_handler() in GetX state
 //***************************************************************************
 // int main(int argc,char *argv[])
-int dos_main(u16 inchr)
+static int dos_main(u16 inchr)
 {
-   // Initialize(argc, argv[1]);
-
    switch (inchr) {
    case ('0'):
    case ('1'):
@@ -1399,49 +1382,6 @@ int dos_main(u16 inchr)
    case (kESC):
       Enter(false);   break ; //  executed from dos_main()
    
-   case (ADD):          Add();      break;   /* Add Y + X */
-   case (SUBTRACT):     Subtract(); break;   /* Subtract Y - X */
-   case (MULTIPLY):     Multiply(); break;   /* Multiply Y * X */
-   case (DIVIDE):       Divide();   break;   /* Divide Y / X */
-   
-   case (SCINOT):       SciNotation();  break;     /* Use Scientific Notation */
-   case (GROUPSIZE):    GroupSize();  break;       /* Toggle Group Size (3/5) */
-   case (ROLLUP):       RollUp();  break;          /* Roll stack up */
-   case (ROLLDOWN):     RollDown();  break;        /* Roll stack down */
-   case (LASTX):        RecallLastX(); break;      /* Recall Last X */
-
-   //  button row 2         
-   case (HELP):   
-      MessageBox(NULL, "Help file is not yet ready", NULL, MB_OK | MB_ICONEXCLAMATION);
-      //  eventually, this will load a Windows help file
-      break;
-   case (POWER):        Power();       break;         /* Power (Y^X) */
-   case (SQUAREROOT):   SquareRoot();  break;        /* Square Root X */
-   case (SQUARE):       Square();      break;      /* Square X */
-   case (RECIPROCAL):   Reciprocal();  break;        /* Reciprocal X */
-   case (FACTORIAL):    Factorial();   break;         /* Factorial X */
-   case (INTEGER):      IntegerPart(); break;       /* Integer Part X */
-   case (FRACTION):     FractionPart();   break;      /* Fraction Part X */
-   case (RECALLE):      RecallE();  break;         /* Recall e */
-
-   //  button row 3         
-   case (SIN   ):       Sin();      break;   /* Sine X */
-   case (ARCSIN):       ArcSin();   break;            /* ArcSine X */
-   case (COS   ):       Cos();    break;             /* Cosine X */
-   case (ARCCOS):       ArcCos(); break;           /* ArcCosine X */
-   case (TAN   ):       Tan();    break;           /* Tangent X */
-   case (ARCTAN):       ArcTan(); break;           /* ArcTangent X */
-   case (LOG   ):       Log(); break;              /* Common Log X */
-   case (EXP10 ):       Exp10();  break;           /* Exponent 10^X */
-   case (LN    ):       Ln();  break;              /* Natural Log X */
-   case (EXPE  ):       ExpE(); break;             /* Exponent e^X */
-   
-   case (CHGSIGN):      ChangeSign();  break;      /* Change sign X */
-   case (XCHGXY1):
-   case (XCHGXY2):      ExchangeXY();   break;     /* Exchange X and Y */
-   case (XCHGXREG):     ExchangeXReg(); break;     /* Exchange X and Reg (prompt for which) */
-   case (STOREX):       StoreX();       break;     /* Store X in register (prompt for which) */
-   case (RECALLREG):    RecallReg();    break;     /* Recall register to X (prompt for which) */
    default:
       ;              /* Unknown key */
 

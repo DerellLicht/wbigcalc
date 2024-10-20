@@ -61,4 +61,5 @@ _Revision history_
 |      |          |- 'About' dialog: add link to Github page, as well as home page |
 | 6.03 | 10/19/24 |- Convert error functions to common error handler |
 |      |          |- Change Msg field colors for error messages |
-| 6.04 | 10/19/24 |Increase max number of displayed digits to 150, to fit dialog data fields |
+| 6.04 | 10/19/24 |- Increase max number of displayed digits to 150, to fit dialog data fields |
+|      |          |- Code optimization: eliminate double-menu jumps in keyboard handler |
