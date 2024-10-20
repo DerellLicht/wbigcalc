@@ -660,6 +660,7 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
             
          //**************************************************
          //  button operations
+         //  Most buttons are not accessible in GetX state
          //**************************************************
          //  button row 1
          case IDB_FLTSCI:    SciNotation(); break ;

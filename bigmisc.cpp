@@ -1501,8 +1501,9 @@ void MoveStackWork(int source, int dest)
       if (size < workprec)
          memset(&work[dest].man[size], 0, ((workprec - size) * sizeof(WORKDIGIT)));
       }
-   else
+   else {
       ClearWork(dest);
+   }
 }
 
 /*
@@ -1534,8 +1535,9 @@ void MoveWorkStack(int source, int dest)
       }
       stack[dest].digits = size;
       }
-   else
+   else {
       ClearStack(dest, dest);
+   }
 }
 
 /*
@@ -1561,8 +1563,9 @@ void MoveWorkWork(int source, int dest)
       if (size < compprec)
          memset(&work[dest].man[size], 0, ((compprec - size) * sizeof(WORKDIGIT)));
       }
-   else
+   else {
       ClearWork(dest);
+   }
 }
 
 /*
@@ -1572,11 +1575,8 @@ void MoveWorkWork(int source, int dest)
  *    *                                                *
  *    **************************************************
  */
-
 void MoveWorkTemp(int source, COMPTYPE *dest)
-
 {
-
    int size;
 
    if ((size = work[source].digits) != 0) {
@@ -1591,13 +1591,10 @@ void MoveWorkTemp(int source, COMPTYPE *dest)
       if (size < compprec)
          memset(&dest->man[size], 0, ((compprec - size) * sizeof(WORKDIGIT)));
       }
-   else
+   else {
       ClearTemp(dest);
-
+   }
 }  //lint !e593
-
-
-
 
 /*
  *    **************************************************
@@ -1606,11 +1603,8 @@ void MoveWorkTemp(int source, COMPTYPE *dest)
  *    *                                                *
  *    **************************************************
  */
-
 void MoveTempWork(COMPTYPE *source, int dest)
-
 {
-
    int size;
 
    if ((size = source->digits) != 0) {
@@ -1625,13 +1619,10 @@ void MoveTempWork(COMPTYPE *source, int dest)
       if (size < workprec)
          memset(&work[dest].man[size], 0, ((workprec - size) * sizeof(WORKDIGIT)));
       }
-   else
+   else {
       ClearWork(dest);
-
+   }
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1640,11 +1631,8 @@ void MoveTempWork(COMPTYPE *source, int dest)
  *    *                                                *
  *    **************************************************
  */
-
 void MoveTempTemp(COMPTYPE *source, COMPTYPE *dest)
-
 {
-
    int size;
 
    if ((size = source->digits) != 0) {
@@ -1659,13 +1647,10 @@ void MoveTempTemp(COMPTYPE *source, COMPTYPE *dest)
       if (size < compprec)
          memset(&dest->man[size], 0, ((compprec - size) * sizeof(WORKDIGIT)));
       }
-   else
+   else {
       ClearTemp(dest);
-
+   }
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1674,11 +1659,8 @@ void MoveTempTemp(COMPTYPE *source, COMPTYPE *dest)
  *    *                                                *
  *    **************************************************
  */
-
 void SetWorkInteger(int dest, long integer)
-
 {
-
    int i;
    long order;
 
@@ -1706,11 +1688,7 @@ void SetWorkInteger(int dest, long integer)
    memset(&work[dest].man[i], 0, ((workprec - i) * sizeof(WORKDIGIT)));
    work[dest].digits = i;
    work[dest].exp = (long) i;
-
 }
-
-
-
 
 /*
  *    **************************************************
@@ -1719,11 +1697,8 @@ void SetWorkInteger(int dest, long integer)
  *    *                                                *
  *    **************************************************
  */
-
 void SetTempInteger(COMPTYPE *dest, long integer)
-
 {
-
    int i;
    long order;
 
@@ -1751,7 +1726,6 @@ void SetTempInteger(COMPTYPE *dest, long integer)
    memset(&dest->man[i], 0, ((compprec - i) * sizeof(WORKDIGIT)));
    dest->digits = i;
    dest->exp = (long) i;
-
 }
 
 /*
@@ -1888,6 +1862,7 @@ void getx_clear_output_str(void)
 }
 
 //***************************************************************************
+//  Process input characters during GetX state.
 //  This returns FALSE only on ESCAPE
 //***************************************************************************
 bool ExtendedGetX(u16 chr)
@@ -1896,13 +1871,6 @@ bool ExtendedGetX(u16 chr)
    if (chr == ESC) {      /* Changed his/her mind */
       return(false);
    }
-
-   /* First digit already entered on first pass */
-
-   // if (!isascii(chr)) {
-   //    // syslog("GetX: NOT_ASCII  %02X, %c\n", (u8) chr, chr);
-   //    return true ;
-   // }       /* Ignore non ASCII characters */
 
    //****************************************************
    //  ******  I N T E G E R   M O D E  ******  
@@ -2065,10 +2033,8 @@ bool ExtendedGetX(u16 chr)
 
    }  /* if mode == INEX */
 
-/*  ******  END  C H A R A C T E R   W A I T   L O O P  ******  */
    getx_build_output_str();
    put_stack(0, getx_get_output_str());
-   
    return true ;
 }
 

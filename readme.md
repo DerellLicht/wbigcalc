@@ -13,6 +13,22 @@ first 150 characters; that is all the digits that fit on the display line.
 However, all the specified digits will still be displayed in the View window, 
 and all computations will be done with the full number of requested digits.
 
+The original MSDOS version of bigcalc, handled data display differently 
+if number of digits was greater than SIZEOFSMALL (453).
+I haven't attempted to experiment with numbers that large, so this Windows version
+of BigCalc isn't going to handle those inputs in a sensible way.
+
+In practice, at this point, manual inputs are limited to about 150 characters
+(the size of the X field, in PasteX mode).  Computations can go larger than that,
+but past 453 digits, the program won't be able to display the numbers without modification.
+Note that the *computations* will probably still work fine, since Judson McClendon's
+math functions are unmodified in this program; just displays will need to be modified.
+
+### Bugs and issues
+- With number of digits set to 100, computed numbers are being converted to 
+  Scientific Notation after 75 characters...
+  This can be observed by squaring MAX_U64 twice.
+
 ### Program modifications
 **09/10/24**
 Removed all 'print to printer/file' routines from Windows version.

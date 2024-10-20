@@ -1204,27 +1204,19 @@ void view_stack_or_register(uint target)
 static void ExitGetXState(bool success)
 {
    if (normprec > SIZEOFSMALL) {
-      // result = ExtendedGetX();
       if (success) {
           if (stacklift)
              PushStack();
          MoveWorkStack(0, 0);
          stacklift = true;
          }
-         // else {
-         //    ExitGetXState();
-         // }
       WorkScreen();
    }
    else {
-      // result = ExtendedGetX();
       if (success) {
          MoveWorkStack(0, 0);
          stacklift = true;
       }
-      // else {
-         // ExitGetXState();
-      // }
       WriteStack(0);
    }
    keyboard_state_set(KBD_STATE_DEFAULT);
@@ -1279,48 +1271,6 @@ static void Enter(bool success)
 /*
  *    **************************************************
  *    *                                                *
- *    *               Accept X from KBD                *
- //  later: enter GetX state
- *    *                                                *
- *    **************************************************
- */
-static void AcceptX(u16 inchr)
-{
-   int result ;
-   if (stacklift) {
-      PushStack();   //  push X to Y
-      WriteStack(1, 3); //  update display fields
-   }
-   
-   if (keyboard_state_get() == KBD_STATE_GETX) {
-      result = ExtendedGetX(inchr);
-      if (!result) {
-         ExitGetXState(false);
-      }
-      return ;      
-   }
-
-   init_getx_vars();
-   getx_clear_output_str();
-   reset_output_str();
-   put_stack(0, " ");
-   ClearWork(0);
-   Message("Entering X: S=ChgSign, E=Exp, BakSpc=Backup, Other=Complete, ESC=Exit");
-   keyboard_state_set(KBD_STATE_GETX);
-   
-   result = ExtendedGetX(inchr); //  process first input char
-   if (!result) {
-      ExitGetXState(false);
-   }
-   if (normprec > SIZEOFSMALL) {
-      //  initial call to GetX function
-      WorkScreen();
-   }
-}
-
-/*
- *    **************************************************
- *    *                                                *
  //  Process string into X stack
  *    *                                                *
  *    **************************************************
@@ -1344,8 +1294,33 @@ static void AcceptXstatic(char *instr)
    }
 }
 
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *               Accept X from KBD                *
+ //  later: enter GetX state
+ *    *                                                *
+ *    **************************************************
+ */
+static void SetupGetX(void)
+{
+   if (stacklift) {
+      PushStack();   //  push X to Y
+      WriteStack(1, 3); //  update display fields
+   }
+   
+   init_getx_vars();
+   getx_clear_output_str();
+   reset_output_str();
+   put_stack(0, " ");
+   ClearWork(0);
+   Message("Entering X: S=ChgSign, E=Exp, BakSpc=Backup, Other=Complete, ESC=Exit");
+   keyboard_state_set(KBD_STATE_GETX);
+   
+}
+
 //***************************************************************************
-//  called from keyboard_state_handler() in GetX state
+//  called from keyboard_state_handler() in default state
 //***************************************************************************
 // int main(int argc,char *argv[])
 static int EnterGetX(u16 inchr)
@@ -1363,28 +1338,30 @@ static int EnterGetX(u16 inchr)
    case ('9'):
    case ('.'):
    case ('E'):
-      /* Accept new X from keyboard with first */
-      /*  character passed to AcceptX routine */
-      //  This enters GetX state if no errors occur
-      AcceptX(inchr);           
-      break;                  
-
-   case (kBSPACE):        
+      SetupGetX();           
+      
+      //  process first input char
       if (!ExtendedGetX(inchr)) {
          ExitGetXState(false);
       }
-      break ;
-      
+      //  what is this about?
+      if (normprec > SIZEOFSMALL) {
+         WorkScreen();
+      }
+      break;                  
+
    case (kENTER):        
-      Enter(true);   break;
+      Enter(true);   
+      break;
       
    //  what is done with ESCAPE, depends upon keyboard state!!
    case (kESC):
-      Enter(false);  break ;
+      Enter(false);  
+      break ;
    
-   default:
-      ;              /* Unknown key */
-
+   case (kBSPACE):   //  this has no meaning in default state
+   default:          //  unexpected key
+      break ;  
    }  /* end switch */
 
    return 0;
@@ -1434,6 +1411,7 @@ int keyboard_state_handler(u16 inchr)
    return result;
 }
 
+//*********************************************************************
 bool keyboard_state_set(keyboard_state_t new_kbd_state)
 {
    switch(new_kbd_state) {
