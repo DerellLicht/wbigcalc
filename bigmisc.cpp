@@ -763,11 +763,8 @@ void ExtendedInitConstants(void)
  *    *                                                *
  *    **************************************************
  */
-
 void ExtendedRecallPi(int dest)
-
 {
-
    WORKDIGIT *workx, *workend;
    char *pix;
 
@@ -784,11 +781,7 @@ void ExtendedRecallPi(int dest)
       *(workx++) = (int) *(pix++);
 
    Normalize(dest);
-
 }
-
-
-
 
 /*
  *    **************************************************

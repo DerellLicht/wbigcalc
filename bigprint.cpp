@@ -171,6 +171,9 @@ static void WExponent(long exponent)
  *    *                                                *
  *    **************************************************
  */
+// #define MAX_DISP_LEN   79
+#define MAX_DISP_LEN   150
+ 
 static void WriteNumber(NORMTYPE *nbr)
 {
    long exponent;
@@ -227,7 +230,7 @@ static void WriteNumber(NORMTYPE *nbr)
 
          for (i = 0; i < digits; i++) {      /* Write number digits */
             WChar(nbr->man[i] + '0');
-            if (++ppos > 79)                 /* Until end of digits or line */
+            if (++ppos > MAX_DISP_LEN)                 /* Until end of digits or line */
                break;
          }
       }                             /* Number < 1 end */
@@ -246,7 +249,7 @@ static void WriteNumber(NORMTYPE *nbr)
             ppos++;
             for (i = (int)exponent; i < digits; i++) {
                WChar(nbr->man[i] + '0');
-               if (++ppos > 79)
+               if (++ppos > MAX_DISP_LEN)
                   break;
                }
             }

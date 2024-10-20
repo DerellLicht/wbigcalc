@@ -8,9 +8,8 @@ but is rarely seen in pocket calculators any more.
 <hr>
 
 ### Notes about large numbers of digits
-If number of digits is set to larger than 75, the stack displays will only display
-first 75 characters; that is due to limitations in the original program;
-it was designed for an 80-character-wide MS-DOS screen.  
+If number of digits is larger than about 150, the stack displays will only display
+first 150 characters; that is all the digits that fit on the display line.
 However, all the specified digits will still be displayed in the View window, 
 and all computations will be done with the full number of requested digits.
 
@@ -62,3 +61,4 @@ _Revision history_
 |      |          |- 'About' dialog: add link to Github page, as well as home page |
 | 6.03 | 10/19/24 |- Convert error functions to common error handler |
 |      |          |- Change Msg field colors for error messages |
+| 6.04 | 10/19/24 |Increase max number of displayed digits to 150, to fit dialog data fields |

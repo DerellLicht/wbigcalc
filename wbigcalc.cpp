@@ -683,7 +683,7 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
          case IDB_XFACT :    dos_main(FACTORIAL); break ;
          case IDB_INT   :    dos_main(INTEGER); break ;
          case IDB_FRAC  :    dos_main(FRACTION); break ;
-         case IDB_PI    :    dos_main(RECALLPI); break ;
+         case IDB_PI    :    RecallPi(); break ;
          case IDB_ECONST:    dos_main(RECALLE); break ;
          // case IDB_HELP  :    dos_main(HELP); break ;
          case IDB_HELP  :    view_help_screen(hDlgWnd); break ;

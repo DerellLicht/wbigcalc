@@ -167,6 +167,10 @@ void StoreX_exec(uint target);
 void RecallReg_exec(uint target);
 void PasteValueEnable(void);
 
+//  menu jumps
+void RecallPi(void);
+
+
 //  config.cpp
 extern bool show_winmsgs ;
 LRESULT set_ini_filename(void);
@@ -258,7 +262,6 @@ int  move_local_to_work0(void);
 #define FACTORIAL  1064 /* F6          */
 #define INTEGER    1065 /* F7          */
 #define FRACTION   1066 /* F8          */
-#define RECALLPI   1067 /* F9          */
 #define RECALLE    1068 /* F10         */
 #define SIN        1094 /* CTRL-F1     */
 #define ARCSIN     1095 /* CTRL-F2     */

@@ -580,7 +580,7 @@ static void ExpE(void)
  *    *                                                *
  *    **************************************************
  */
-static void RecallPi(void)
+void RecallPi(void)
 {
    if (stacklift) {
       PushStack();
@@ -589,7 +589,7 @@ static void RecallPi(void)
 
    ExtendedRecallPi(0);
    MoveWorkStack(0, 0);
-   WriteStack(0, 0);
+   WriteStack(0);
    stacklift = true;
 }
 
@@ -1422,7 +1422,6 @@ int dos_main(u16 inchr)
    case (FACTORIAL):    Factorial();   break;         /* Factorial X */
    case (INTEGER):      IntegerPart(); break;       /* Integer Part X */
    case (FRACTION):     FractionPart();   break;      /* Fraction Part X */
-   case (RECALLPI):     RecallPi(); break;         /* Recall pi */
    case (RECALLE):      RecallE();  break;         /* Recall e */
 
    //  button row 3         
