@@ -1348,7 +1348,7 @@ static void AcceptXstatic(char *instr)
 //  called from keyboard_state_handler() in GetX state
 //***************************************************************************
 // int main(int argc,char *argv[])
-static int dos_main(u16 inchr)
+static int EnterGetX(u16 inchr)
 {
    switch (inchr) {
    case ('0'):
@@ -1376,11 +1376,11 @@ static int dos_main(u16 inchr)
       break ;
       
    case (kENTER):        
-      Enter(true);    break;            //  executed from dos_main()
+      Enter(true);   break;
       
    //  what is done with ESCAPE, depends upon keyboard state!!
    case (kESC):
-      Enter(false);   break ; //  executed from dos_main()
+      Enter(false);  break ;
    
    default:
       ;              /* Unknown key */
@@ -1398,7 +1398,7 @@ int keyboard_state_handler(u16 inchr)
    int result = TRUE ;
    switch(keyboard_state) {
    case KBD_STATE_DEFAULT:
-      dos_main(inchr);
+      EnterGetX(inchr);
       result = TRUE ;
       break ;
 
