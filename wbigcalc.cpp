@@ -159,16 +159,23 @@ static char const stackLtr[5] = "XYZT" ;
 void view_data_field_full(uint fidx, char *fstr)
 {
    uint r ;
+   NORMTYPE *nptr ;
+   char msgstr[20] = "" ;
    char view_str[1100] = "" ;
    if (fidx >= 10) {
       r = fidx - 10 ;   //  stack index
       sprintf(view_str, "%c:  %s", stackLtr[r], fstr);
+      sprintf(msgstr, "view %c: ", stackLtr[r]);
+      nptr = &stack[r] ;
    }
    else {
       r = fidx ;
       sprintf(view_str, "R%u:  %s", r, fstr);
+      sprintf(msgstr, "view R%u ", r);
+      nptr = &reg[r] ;
    }
    SetWindowText(hwndViewFrame, view_str) ;
+   view_norm_reg(nptr , msgstr) ;
 }
 
 //*************************************************************
@@ -189,12 +196,17 @@ void view_norm_reg(NORMTYPE *nptr, char *msg)
       sprintf(outmsg, "%s: %ld,%c,%d: empty", msg, nptr->exp, nptr->sign, nptr->digits);
    }
    else {
+      int digits = nptr->digits ;
+      if (digits > 20) {
+         digits = 20 ;
+      }
       slen = sprintf(outmsg, "%s: %ld,%c,%d: ", msg, nptr->exp, nptr->sign, nptr->digits);
-      for (idx=0; idx<nptr->digits; idx++) {
+      for (idx=0; idx<digits; idx++) {
          slen += sprintf(&outmsg[slen], "%d,", nptr->man[idx]);
       }
    }
-   SetWindowText(hwndViewFrame, outmsg);
+   // SetWindowText(hwndViewFrame, outmsg);
+   status_message(outmsg);
 }  //lint !e843
 
 //*************************************************************

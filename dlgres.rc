@@ -384,7 +384,7 @@ BEGIN
             VALUE "Comments", "WBigCalc - Extended Precision Calculator"
             VALUE "CompanyName", "Cathartes Aura"
             VALUE "FileDescription", "WBigCalc Extended Precision Calculator"
-            VALUE "FileVersion", VerNum
+            // VALUE "FileVersion", VerNum      //  not displayed using my data
             VALUE "InternalName", "WBigCalc"
             VALUE "LegalCopyright", "Copyright © 2002-2024"
             VALUE "OriginalFilename", "wbigcalc.exe"
