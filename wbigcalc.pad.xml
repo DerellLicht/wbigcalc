@@ -71,9 +71,9 @@
 			<Char_Desc_45>WBigCalc extended precision calculator</Char_Desc_45>
 			<Char_Desc_80 />
 			<Char_Desc_250 />
-			<Char_Desc_450>BigCalc is an extended-precision scientific calculator, supporting numbers up to 1075 digits.
+			<Char_Desc_450>WBigCalc is an extended-precision scientific calculator, supporting numbers up to 1075 digits.
 
-BigCalc uses Reverse Polish Notation (RPN), as originally used in HP calculators;
+WBigCalc uses Reverse Polish Notation (RPN), as originally used in HP calculators;
 RPN is an efficient method for handling complex computations,
 but is rarely seen in pocket calculators any more.</Char_Desc_450>
 			<Char_Desc_2000 />
@@ -81,14 +81,14 @@ but is rarely seen in pocket calculators any more.</Char_Desc_450>
 	</Program_Descriptions>
 	<Web_Info>
 		<Application_URLs>
-			<Application_Info_URL>https://derelllicht.42web.io/files/wbigcalc.zip</Application_Info_URL>
+			<Application_Info_URL>http://derelllicht.42web.io/wbigcalc.html</Application_Info_URL>
 			<Application_Order_URL />
-			<Application_Screenshot_URL>https://derelllicht.42web.io/images/wbigcalc%20screen.jpg</Application_Screenshot_URL>
-			<Application_Icon_URL>https://derelllicht.42web.io/files/wbigcalc.ico</Application_Icon_URL>
+			<Application_Screenshot_URL>http://derelllicht.42web.io/images/wbigcalc%20screen.jpg</Application_Screenshot_URL>
+			<Application_Icon_URL>http://derelllicht.42web.io/files/wbigcalc.ico</Application_Icon_URL>
 			<Application_XML_File_URL />
 		</Application_URLs>
 		<Download_URLs>
-			<Primary_Download_URL>https://derelllicht.42web.io/files/wbigcalc.zip</Primary_Download_URL>
+			<Primary_Download_URL>http://derelllicht.42web.io/files/wbigcalc.zip</Primary_Download_URL>
 			<Secondary_Download_URL />
 			<Additional_Download_URL_1 />
 			<Additional_Download_URL_2 />
