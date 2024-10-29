@@ -16,6 +16,7 @@
 //             - Code optimization: eliminate double-menu jumps in keyboard handler
 //    6.05     Revise some display constants, to allow for wider display fields
 //    6.06     Debug: Display stack/register data in status bar, on View command
+//    6.07     Make naming consistent: wbigcalc, *not* bigcalc
 //*********************************************************************************************
-#define VerNum    "V6.06"
+#define VerNum    "V6.07"
 
