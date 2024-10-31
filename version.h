@@ -17,7 +17,8 @@
 //    6.05     Revise some display constants, to allow for wider display fields
 //    6.06     Debug: Display stack/register data in status bar, on View command
 //    6.07     Make naming consistent: wbigcalc, *not* bigcalc
-//    6.08     Add mechanism to allow reading X from file, for very-large-number handling
+//    6.08     - Add mechanism to allow reading X from file, for very-large-number handling
+//             - Add groupsize=0 option for Viewing large numbers
 //*********************************************************************************************
 #define VerNum    "V6.08"
 
