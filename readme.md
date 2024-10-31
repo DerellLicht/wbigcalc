@@ -81,4 +81,4 @@ _Revision history_
 | 6.06 | 10/24/24 |Debug: Display stack/register data in status bar, on View command |
 | 6.07 | 10/29/24 |Make naming consistent: wbigcalc, *not* bigcalc |
 | 6.08 | 10/29/24 |- Add mechanism to allow reading X from file, for very-large-number handling |
-|      |          |- Add groupsize=0 option for Viewing large numbers |
+|      |          |- Add groupsize=0 option for Viewing large numbers without gaps |
