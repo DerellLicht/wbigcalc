@@ -27,15 +27,14 @@ math functions are unchanged in this program; just displays will need to be revi
 ### Other tasks
 
 - Add script handler, to ease computations on large numbers
+- Continue with test vectors
 
 ### Program modifications
-**09/10/24**
-Removed all 'print to printer/file' routines from Windows version.
+- Removed all 'print to printer/file' routines from Windows version.
 I don't really think those operations are required in a calculator such as this.
 Instead, user can copy-and-paste from either X-stack field or View window.
 
-**10/03/24**
-Removed add/subtract/multiply/divide with register commands, since they 
+- Removed add/subtract/multiply/divide with register commands, since they 
 require GetCh() operations which are awkward to implement in Windows,
 and I don't think they are very important.  
 They could be added later if someone wants to; use ExchangeXReg() as reference.
