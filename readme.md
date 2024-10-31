@@ -26,8 +26,8 @@ math functions are unchanged in this program; just displays will need to be revi
 
 ### Other tasks
 
-- add support for negative input numbers
 - In addition to 3/5-spacing options, add 0-space option, to aid in copying numbers
+- Add script handler, to ease computations on large numbers
 
 ### Program modifications
 **09/10/24**

@@ -675,8 +675,8 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
          //  Most buttons are not accessible in GetX state
          //**************************************************
          //  button row 1
-         case IDB_FLTSCI:    SciNotation(); break ;
-         case IDB_GRP35:     GroupSize(); break ;
+         // case IDB_FLTSCI:    SciNotation(); break ;
+         // case IDB_GRP35:     GroupSize(); break ;
          case IDB_KBD_UP:    RollUp(); break ;
          case IDB_KBD_DOWN:  RollDown(); break ;
          case IDB_LAST_X:    RecallLastX(); break ;

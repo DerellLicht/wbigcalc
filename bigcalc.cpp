@@ -656,7 +656,10 @@ void ChangeSign(void)
  *    *                                                *
  *    **************************************************
  */
-void GroupSize(void)
+//lint -esym(714, GroupSize)
+//lint -esym(759, GroupSize)
+//lint -esym(765, GroupSize)
+void GroupSize(void) //  unused
 {
    if (groupsize == 5) {
       groupsize = 3;
@@ -680,7 +683,10 @@ void GroupSize(void)
  *    *                                                *
  *    **************************************************
  */
-void SciNotation(void)
+//lint -esym(714, SciNotation)
+//lint -esym(759, SciNotation)
+//lint -esym(765, SciNotation)
+void SciNotation(void)  //  unused
 {
    if (scinotation)
       scinotation = false ;
@@ -1080,12 +1086,12 @@ static char *form_full_view_str(NORMTYPE *nfield)
       outidx = sprintf(view_str, "%c0*", nfield->sign);
       for (inidx=0; inidx < slen; inidx++) {
          outidx += sprintf(&view_str[outidx], "%u", nfield->man[inidx]);   //lint !e705
-         if (--mspan == 0) {
-            // if (mspan != groupsize) {
-            //    syslog("mspan: %u, inidx: %u, expdigits: %u\n", mspan, inidx, expdigits);
-            // }
-            outidx += sprintf(&view_str[outidx], " ");
-            mspan = groupsize ;
+         //  if mspan == 0, don't put any spacing between groups
+         if (groupsize != 0) {
+            if (--mspan == 0) {
+               outidx += sprintf(&view_str[outidx], " ");
+               mspan = groupsize ;
+            }
          }
          
       }
@@ -1095,20 +1101,17 @@ static char *form_full_view_str(NORMTYPE *nfield)
    //  .0002308...
    // DNR: [dump stack 0: -3,+,50: 2,3,0,8,4,0,2,5,8,5,4,1,0,8,9,5,6,6,0,2,0,3,1,3,9,4,2,7,5,1,6,1,5,8,8,1,8,0,9,7,8,7,6,2,6,9,6,2,1,4,]
    else if (expdigits < 0) {
-      // mspan = (uint) -expdigits % groupsize ;
-      // if (mspan == 0) {
-      //    mspan = groupsize ;
-      // }
-      
       uint zeroes = -expdigits ;
       outidx = sprintf(view_str, "%c0*", nfield->sign);
       mspan = groupsize ;
       for (inidx=0; inidx < zeroes; inidx++) {
          outidx += sprintf(&view_str[outidx], "0");   //lint !e705
-         if (--mspan == 0) {
-            //   &&  (uint) expdigits != slen
-            outidx += sprintf(&view_str[outidx], " ");
-            mspan = groupsize ;
+         if (groupsize != 0) {
+            if (--mspan == 0) {
+               //   &&  (uint) expdigits != slen
+               outidx += sprintf(&view_str[outidx], " ");
+               mspan = groupsize ;
+            }
          }
       }
       
@@ -1116,9 +1119,11 @@ static char *form_full_view_str(NORMTYPE *nfield)
          outidx += sprintf(&view_str[outidx], "%u", nfield->man[inidx]);   //lint !e705
          // syslog("mspan: %u, inidx: %u, expdigits: %u, slen: %u, groupsize: %u\n", 
          //    mspan, inidx, expdigits, slen, groupsize);
-         if (--mspan == 0) {
-            outidx += sprintf(&view_str[outidx], " ");
-            mspan = groupsize ;
+         if (groupsize != 0) {
+            if (--mspan == 0) {
+               outidx += sprintf(&view_str[outidx], " ");
+               mspan = groupsize ;
+            }
          }
       }
    }
@@ -1137,9 +1142,14 @@ static char *form_full_view_str(NORMTYPE *nfield)
    //  <func>: [<str> [mspan]: expdigits, sign, digits, man... ]
    //  DNR: [ffvs [2]: 14,+,4: 8,8,3,8,]
    else {
-      mspan = (uint) expdigits % groupsize ;
-      if (mspan == 0) {
-         mspan = groupsize ;
+      if (groupsize != 0) {
+         mspan = (uint) expdigits % groupsize ;
+         if (mspan == 0) {
+            mspan = groupsize ;
+         }
+      }
+      else {
+         mspan = 0 ;
       }
       // char tstr[20] ;
       // sprintf(tstr, "ffvs [%u, %u, %u]", mspan, slen, groupsize);
@@ -1157,9 +1167,11 @@ static char *form_full_view_str(NORMTYPE *nfield)
             else {
                outidx += sprintf(&view_str[outidx], "0");   //lint !e705
             }
-            if (--mspan == 0) {
-               outidx += sprintf(&view_str[outidx], " ");
-               mspan = groupsize ;
+            if (groupsize != 0) {
+               if (--mspan == 0) {
+                  outidx += sprintf(&view_str[outidx], " ");
+                  mspan = groupsize ;
+               }
             }
          }
       }
@@ -1169,16 +1181,18 @@ static char *form_full_view_str(NORMTYPE *nfield)
             outidx += sprintf(&view_str[outidx], "%u", nfield->man[inidx]);   //lint !e705
             // syslog("mspan: %u, inidx: %u, expdigits: %u, slen: %u, groupsize: %u\n", 
             //    mspan, inidx, expdigits, slen, groupsize);
-            if (--mspan == 0) {
-               if ((inidx+1) == (uint) expdigits) {
-                  if (slen != (uint) expdigits) {
-                     outidx += sprintf(&view_str[outidx], "%c", view_dec_point_char);
+            if (groupsize != 0) {
+               if (--mspan == 0) {
+                  if ((inidx+1) == (uint) expdigits) {
+                     if (slen != (uint) expdigits) {
+                        outidx += sprintf(&view_str[outidx], "%c", view_dec_point_char);
+                     }
                   }
+                  else {
+                     outidx += sprintf(&view_str[outidx], " ");
+                  }
+                  mspan = groupsize ;
                }
-               else {
-                  outidx += sprintf(&view_str[outidx], " ");
-               }
-               mspan = groupsize ;
             }
          }
       }

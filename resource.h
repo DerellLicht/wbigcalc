@@ -22,12 +22,13 @@
 #define  IDC_NORMPREC      131
 #define  IDG_GROUPSIZE     132
 #define  IDC_GS_3BYTES     133
-#define  IDC_GS_5BYTES     134    
-#define  IDM_SCINOT        135
-#define  IDM_WINMSGS       136
-#define  IDG_DEC_CHAR      137
-#define  IDC_DC_STAR       138
-#define  IDC_DC_PERIOD     139
+#define  IDC_GS_5BYTES     134
+#define  IDC_GS_0BYTES     135
+#define  IDM_SCINOT        136
+#define  IDM_WINMSGS       137
+#define  IDG_DEC_CHAR      138
+#define  IDC_DC_STAR       139
+#define  IDC_DC_PERIOD     140
 
 
 //  main dialog controls
