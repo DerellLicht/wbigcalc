@@ -33,9 +33,10 @@
 
 #include "resource.h"
 #include "common.h"
+#include "commonw.h"
 #include "bigcalc.h"
 #include "keywin32.h"
-
+                                              
 /*
  *    **************************************************
  *    *        BIGCALC.C Function Declarations         *
@@ -924,7 +925,6 @@ void PasteValueEnable(void)
       show_hide_view_buttons(true);
       show_hide_all_buttons(false, IDB_PASTE_X);
       enable_paste_field(true);
-      enable_paste_field(true);
       keyboard_state_set(KBD_STATE_GETREG) ;
    }
    else {
@@ -941,7 +941,7 @@ void PasteValue_exec(void)
    // syslog("[%s]\n", tptr);
    // [18446744073709551615]
    
-   //  next, turn this string into a bigcalc working struct
+   //  turn this string into a bigcalc working struct
    AcceptXstatic(tptr);
    
    //  move data into X stack
@@ -949,6 +949,47 @@ void PasteValue_exec(void)
    MoveWorkStack(0, 0);
    exit_from_paste_value_state();
    stacklift = true;
+}
+
+//******************************************************************
+//  This function reads *one* line from cmd_fname,
+//  and expects that to be a number of <= 1075 digits
+//******************************************************************
+static char *read_command_file(char *cmd_fname)
+{
+   static char inpbfr[MAXNORM+1] = "";
+   FILE *fd = fopen(cmd_fname, "rt") ;
+   if (fd == 0) {
+      return NULL ;
+   }
+
+   char *tptr = fgets(inpbfr, MAXNORM, fd) ;
+   fclose(fd) ;
+   return tptr ;
+}
+
+//***********************************************************************************
+//  Read X value from file; assist support for input of very large numbers.
+//***********************************************************************************
+void ReadXFromFile(HWND hwnd)
+{
+   char command_filename[MAX_PATH] = "commands.txt" ;
+   char msgstr[120] = "" ;
+   if (!select_text_file(hwnd, command_filename)) {
+      Message("ReadXFromFile: operation aborted") ;
+      return ;
+   }
+   char *tptr = read_command_file(command_filename);
+   if (tptr == NULL) {
+      sprintf(msgstr, "%s: read failed", command_filename);
+      Message(msgstr);
+   }
+   //  turn this string into a bigcalc working struct
+   AcceptXstatic(tptr);
+   
+   //  move data into X stack
+   move_local_to_work0();
+   MoveWorkStack(0, 0);
 }
 
 /*
@@ -1276,6 +1317,9 @@ static void Enter(bool success)
  */
 static void AcceptXstatic(char *instr)
 {
+   if (instr == NULL) {
+      return ;
+   }
    init_getx_vars();
    getx_clear_output_str();
    reset_output_str();

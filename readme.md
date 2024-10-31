@@ -24,6 +24,11 @@ but past 453 digits, the program won't be able to display the numbers without mo
 Note that the *computations* will probably still work fine, since Judson McClendon's
 math functions are unchanged in this program; just displays will need to be revised.
 
+### Other tasks
+
+- add support for negative input numbers
+- In addition to 3/5-spacing options, add 0-space option, to aid in copying numbers
+
 ### Program modifications
 **09/10/24**
 Removed all 'print to printer/file' routines from Windows version.
@@ -77,3 +82,4 @@ _Revision history_
 | 6.05 | 10/20/24 |Revise some display constants, to allow for wider display fields |
 | 6.06 | 10/24/24 |Debug: Display stack/register data in status bar, on View command |
 | 6.07 | 10/29/24 |Make naming consistent: wbigcalc, *not* bigcalc |
+| 6.08 | 10/29/24 |Add mechanism to allow reading X from file, for very-large-number handling |

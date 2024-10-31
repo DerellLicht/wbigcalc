@@ -159,6 +159,7 @@ void ExchangeXReg_exec(uint target);
 void StoreX_exec(uint target);
 void RecallReg_exec(uint target);
 void PasteValueEnable(void);
+void ReadXFromFile(HWND hwnd);
 
 //  menu jumps
 void Power(void);

@@ -1813,6 +1813,13 @@ static void getx_putc(char chr)
    }
 }
 
+//  this function is used by PasteX and GetXFromFile functions
+static void getx_put_minus(void)
+{
+   sign = FlipSign(sign);
+   getx_sign = (getx_sign == '-') ? ' ' : '-' ;
+}
+
 static void getx_backspace(void)
 {
    if (!getx_exponent) {
@@ -1896,6 +1903,10 @@ bool ExtendedGetX(u16 chr)
          getx_putc((char) chr);
          decimal = true;
          mode = INDEC;
+         }
+
+      else if (chr == '-') {                 /* . invokes decimal mode */
+         getx_put_minus();
          }
 
       else if (chr == 'E') {                 /* E invokes exponent mode, */
