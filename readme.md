@@ -29,6 +29,9 @@ math functions are unchanged in this program; just displays will need to be revi
 - Add script handler, to ease computations on large numbers
 - Continue with test vectors
 
+###  bugs
+- View on large floating point number (sqrt(testnum59.txt)) does not show decimal point
+
 ### Program modifications
 - Removed all 'print to printer/file' routines from Windows version.
 I don't really think those operations are required in a calculator such as this.

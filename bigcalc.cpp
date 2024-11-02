@@ -961,7 +961,7 @@ void PasteValue_exec(void)
 //  This function reads *one* line from cmd_fname,
 //  and expects that to be a number of <= 1075 digits
 //******************************************************************
-static char *read_command_file(char *cmd_fname)
+static char *read_line_from_file(char *cmd_fname)
 {
    static char inpbfr[MAXNORM+1] = "";
    FILE *fd = fopen(cmd_fname, "rt") ;
@@ -985,7 +985,7 @@ void ReadXFromFile(HWND hwnd)
       Message("ReadXFromFile: operation aborted") ;
       return ;
    }
-   char *tptr = read_command_file(command_filename);
+   char *tptr = read_line_from_file(command_filename);
    if (tptr == NULL) {
       sprintf(msgstr, "%s: read failed", command_filename);
       Message(msgstr);
@@ -1010,17 +1010,37 @@ void RunScriptFromFile(HWND hwnd)
       Message("RunScriptFromFile: operation aborted") ;
       return ;
    }
-   char *tptr = read_command_file(command_filename);
-   if (tptr == NULL) {
-      sprintf(msgstr, "%s: read failed", command_filename);
-      Message(msgstr);
-   }
-   //  turn this string into a bigcalc working struct
-   AcceptXstatic(tptr);
    
-   //  move data into X stack
-   move_local_to_work0();
-   MoveWorkStack(0, 0);
+   FILE *fd = fopen(command_filename, "rt") ;
+   if (fd == 0) {
+      sprintf(msgstr, "%s: fopen failed", command_filename);
+      Message(msgstr);
+      return ;
+   }
+   // unsigned lcount = 0 ;
+   char inpbfr[MAXNORM+1] = "";
+   while (fgets(inpbfr, MAXNORM, fd) != 0) {
+      // lcount++ ;
+      char *tptr = inpbfr ;
+      
+      //  process comments
+      if (*tptr == ';') {
+         //  ignore comment
+      } else 
+      //  process commands
+      if (*tptr == ':') {
+         
+      } else
+      {
+         //  turn this string into a bigcalc working struct
+         AcceptXstatic(tptr);
+         
+         //  move data into X stack
+         move_local_to_work0();
+         MoveWorkStack(0, 0);
+      }
+   }
+   fclose(fd) ;
 }
 
 /*
@@ -1184,7 +1204,9 @@ static char *form_full_view_str(NORMTYPE *nfield)
       //  represented at all; the difference between the two numbers will
       //  be represented with zeroes.
       if (expdigits > nfield->digits) {
-         outidx = sprintf(view_str, "%c", nfield->sign);
+         if (nfield->sign != '+') {
+            outidx = sprintf(view_str, "%c", nfield->sign);
+         }
          for (inidx=0; inidx < (uint) expdigits; inidx++) {
             if (inidx <= (uint) nfield->digits) {
                outidx += sprintf(&view_str[outidx], "%u", nfield->man[inidx]);   //lint !e705
@@ -1200,8 +1222,11 @@ static char *form_full_view_str(NORMTYPE *nfield)
             }
          }
       }
+      //  view X: : exp:29, s:+, d:400
       else {
-         outidx = sprintf(view_str, "%c", nfield->sign);
+         if (nfield->sign != '+') {
+            outidx = sprintf(view_str, "%c", nfield->sign);
+         }
          for (inidx=0; inidx < slen; inidx++) {
             outidx += sprintf(&view_str[outidx], "%u", nfield->man[inidx]);   //lint !e705
             // syslog("mspan: %u, inidx: %u, expdigits: %u, slen: %u, groupsize: %u\n", 
@@ -1217,6 +1242,14 @@ static char *form_full_view_str(NORMTYPE *nfield)
                      outidx += sprintf(&view_str[outidx], " ");
                   }
                   mspan = groupsize ;
+               }
+            }
+            //  handle decimal-point char for normal floating point number
+            else {
+               if ((inidx+1) == (uint) expdigits) {
+                  if (slen != (uint) expdigits) {
+                     outidx += sprintf(&view_str[outidx], "%c", view_dec_point_char);
+                  }
                }
             }
          }

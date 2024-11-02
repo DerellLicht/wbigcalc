@@ -200,7 +200,7 @@ void view_norm_reg(NORMTYPE *nptr, char *msg)
       if (digits > 20) {
          digits = 20 ;
       }
-      slen = sprintf(outmsg, "%s: %ld,%c,%d: ", msg, nptr->exp, nptr->sign, nptr->digits);
+      slen = sprintf(outmsg, "%s: exp:%ld, s:%c, d:%d: ", msg, nptr->exp, nptr->sign, nptr->digits);
       for (idx=0; idx<digits; idx++) {
          slen += sprintf(&outmsg[slen], "%d,", nptr->man[idx]);
       }
