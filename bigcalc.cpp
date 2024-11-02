@@ -999,6 +999,32 @@ void ReadXFromFile(HWND hwnd)
 }
 
 //***********************************************************************************
+//  process commands from script file
+//***********************************************************************************
+typedef struct script_cmd_map_s {
+   char *cmd_str ;
+   void (*func) (void) ;
+}  script_cmd_map_t ;
+
+static script_cmd_map_t const script_cmd_map[] = {
+   { "push", RollUp },
+{ NULL, NULL }};
+
+static void process_script_command(char *cmd)
+{
+   uint idx ;
+   int clen = strlen(cmd);
+   for (idx=0; script_cmd_map[idx].func != NULL; idx++) {
+      if (strncmp(cmd, script_cmd_map[idx].cmd_str, clen) == 0) {
+         // syslog("execute cmd [%s]\n", cmd);
+         (script_cmd_map[idx].func());
+         return ;
+      }
+   }
+   // syslog("script command not found\n");
+}
+
+//***********************************************************************************
 //  Load script file, with program commands.
 //  Initially, this is intended for running test vectors.
 //***********************************************************************************
@@ -1022,6 +1048,7 @@ void RunScriptFromFile(HWND hwnd)
    while (fgets(inpbfr, MAXNORM, fd) != 0) {
       // lcount++ ;
       char *tptr = inpbfr ;
+      strip_newlines(tptr);
       
       //  process comments
       if (*tptr == ';') {
@@ -1029,9 +1056,11 @@ void RunScriptFromFile(HWND hwnd)
       } else 
       //  process commands
       if (*tptr == ':') {
-         
+         tptr++ ; //  skip the colon
+         process_script_command(tptr);
       } else
       {
+         // syslog("num: [%s]\n", tptr);
          //  turn this string into a bigcalc working struct
          AcceptXstatic(tptr);
          
