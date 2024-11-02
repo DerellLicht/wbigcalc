@@ -160,6 +160,7 @@ void StoreX_exec(uint target);
 void RecallReg_exec(uint target);
 void PasteValueEnable(void);
 void ReadXFromFile(HWND hwnd);
+void RunScriptFromFile(HWND hwnd);
 
 //  menu jumps
 void Power(void);

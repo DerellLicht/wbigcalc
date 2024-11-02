@@ -269,6 +269,7 @@ BEGIN
    PUSHBUTTON      "Recall X",      IDB_RECALL_X, XB0,  YB1, DXB,  12
    PUSHBUTTON      "Paste X",       IDB_PASTE_X,  XBA,  YB1, DXB,  12
    PUSHBUTTON      "ReadXFile",     IDB_READF_X,  XBB,  YB1, DXB,  12
+   PUSHBUTTON      "RunScript",     IDB_RUNSCRIPT,XBC,  YB1, DXB,  12
 
 //  button row 2
 #define  YB2      (YB1 + 16)

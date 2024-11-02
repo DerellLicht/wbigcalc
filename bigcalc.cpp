@@ -998,6 +998,31 @@ void ReadXFromFile(HWND hwnd)
    MoveWorkStack(0, 0);
 }
 
+//***********************************************************************************
+//  Load script file, with program commands.
+//  Initially, this is intended for running test vectors.
+//***********************************************************************************
+void RunScriptFromFile(HWND hwnd)
+{
+   char command_filename[MAX_PATH] = "commands.txt" ;
+   char msgstr[120] = "" ;
+   if (!select_text_file(hwnd, command_filename)) {
+      Message("RunScriptFromFile: operation aborted") ;
+      return ;
+   }
+   char *tptr = read_command_file(command_filename);
+   if (tptr == NULL) {
+      sprintf(msgstr, "%s: read failed", command_filename);
+      Message(msgstr);
+   }
+   //  turn this string into a bigcalc working struct
+   AcceptXstatic(tptr);
+   
+   //  move data into X stack
+   move_local_to_work0();
+   MoveWorkStack(0, 0);
+}
+
 /*
  *    **************************************************
  *    *                                                *

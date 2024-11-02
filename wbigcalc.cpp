@@ -688,6 +688,7 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
          case IDB_PASTE_X:   PasteValueEnable(); break ;
          case IDC_DO_PASTE:  PasteValue_exec(); break ;
          case IDB_READF_X:   ReadXFromFile(hDlgWnd); break ;
+         case IDB_RUNSCRIPT: RunScriptFromFile(hDlgWnd); break ;
                                         
          //  button row 2
          case IDB_Y2X   :    Power(); break ;
