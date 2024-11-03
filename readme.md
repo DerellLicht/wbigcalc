@@ -26,18 +26,7 @@ math functions are unchanged in this program; just displays will need to be revi
 
 ### Other tasks
 
-- Add script handler, to ease computations on large numbers
 - Continue with test vectors
-
-###  bugs
-- Results in X stack should show full display length (150 chars) regardless
-  of setting of number of digits  
-  In fact, results got truncated at num_digits (50)  
-  See scr_cubed.txt :  
-;01234567890123456789012345678901234567890123456789  
-;6277101735386680762814942322444851025767571854389800000000  
-;bc  
-;6277101735386680762814942322444851025767571854389858533375  
 
 ### Program modifications
 - Removed all 'print to printer/file' routines from Windows version.
