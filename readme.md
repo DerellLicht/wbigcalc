@@ -34,7 +34,7 @@ I don't really think those operations are required in a calculator such as this.
 Instead, user can copy-and-paste from either X-stack field or View window.
 
 - Removed add/subtract/multiply/divide with register commands, since they 
-require GetCh() operations which are awkward to implement in Windows,
+require <code>GetCh()</code> operations which are awkward to implement in Windows,
 and I don't think they are very important.  
 They could be added later if someone wants to; use ExchangeXReg() as reference.
 
