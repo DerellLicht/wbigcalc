@@ -5,10 +5,10 @@ This is the base from which other numbers in the test vectors are derived.
 
 - multiply  
 scr_cubed.txt, cubed.bc
-<pre>
+<code>
 ;X:  6277101735386680762814942322444851025767571854389858533375  
 ;bc: 6277101735386680762814942322444851025767571854389858533375
-</pre>
+</code>
 
 - sqrt  
 scr_sqrt.txt, sqrt.bc  
