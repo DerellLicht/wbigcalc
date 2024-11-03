@@ -24,10 +24,6 @@ but past 453 digits, the program won't be able to display the numbers without mo
 Note that the *computations* will probably still work fine, since Judson McClendon's
 math functions are unchanged in this program; just displays will need to be revised.
 
-### Other tasks
-
-- Continue with test vectors
-
 ### Program modifications
 - Removed all 'print to printer/file' routines from Windows version.
 I don't really think those operations are required in a calculator such as this.
@@ -82,3 +78,4 @@ _Revision history_
 | 6.08 | 10/29/24 |- Add mechanism to allow reading X from file, for very-large-number handling |
 |      |          |- Add groupsize=0 option for Viewing large numbers without gaps |
 |      |          |- Fix bug: computations and number displays were truncated to normprec |
+|      |          |- Implement test vectors for common functions and operations |
