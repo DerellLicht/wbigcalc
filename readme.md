@@ -30,7 +30,14 @@ math functions are unchanged in this program; just displays will need to be revi
 - Continue with test vectors
 
 ###  bugs
-- View on large floating point number (sqrt(testnum59.txt)) does not show decimal point
+- Results in X stack should show full display length (150 chars) regardless
+  of setting of number of digits  
+  In fact, results got truncated at num_digits (50)  
+  See scr_cubed.txt :  
+;01234567890123456789012345678901234567890123456789  
+;6277101735386680762814942322444851025767571854389800000000  
+;bc  
+;6277101735386680762814942322444851025767571854389858533375  
 
 ### Program modifications
 - Removed all 'print to printer/file' routines from Windows version.
@@ -85,3 +92,4 @@ _Revision history_
 | 6.07 | 10/29/24 |Make naming consistent: wbigcalc, *not* bigcalc |
 | 6.08 | 10/29/24 |- Add mechanism to allow reading X from file, for very-large-number handling |
 |      |          |- Add groupsize=0 option for Viewing large numbers without gaps |
+|      |          |- Fix bug: computations and number displays were truncated to normprec |

@@ -1519,16 +1519,20 @@ void MoveWorkStack(int source, int dest)
 
    // syslog("MWS %d->%d: digits: %u\n", source, dest, work[source].digits);
    if ((size = work[source].digits) != 0) {
-      if (size > normprec)
-         size = normprec;
+      //  don't trim computations/results to defined digits
+      // if (size > normprec)
+      //    size = normprec;
+
       stack[dest].exp  = work[source].exp;
       stack[dest].sign = work[source].sign;
 
       for (i = 0; i < size; i++)
          stack[dest].man[i] = (NORMDIGIT)work[source].man[i];
 
+      //  pad with 0s
       if (size < normprec)
          memset(&stack[dest].man[size], 0, ((normprec - size) * sizeof(NORMDIGIT)));
+         
 
       while (!stack[dest].man[size - 1]) {   //lint !e676  possibly negative subscript
          size--;

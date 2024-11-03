@@ -19,6 +19,7 @@
 //    6.07     Make naming consistent: wbigcalc, *not* bigcalc
 //    6.08     - Add mechanism to allow reading X from file, for very-large-number handling
 //             - Add groupsize=0 option for Viewing large numbers without gaps 
+//             - Fix bug: computations and number displays were truncated to normprec
 //*********************************************************************************************
 #define VerNum    "V6.08"
 

@@ -33,6 +33,7 @@
 #define MAXWORK (MAXCOMP * 2 + 5)         /* Max work digits    */
 #define COMPPREC (normprec + 9)           /* Compute digits     */
 #define WORKPREC (compprec * 2 + 5)       /* Work digits        */
+#define DISPPREC 150                      //  max number for stack/register field display
 #define MAXEXDIGITS 9                     /* Max exponent digits */
 #define MINEXP -999999999L                /* Min exponent */
 #define MAXEXP  999999999L                /* Max exponent */

@@ -45,6 +45,7 @@
 
 static void restore_stack0(void);
 static void AcceptXstatic(char *instr);
+static void Enter(void);
 
 /*
  *    **************************************************
@@ -1007,11 +1008,14 @@ typedef struct script_cmd_map_s {
 }  script_cmd_map_t ;
 
 static script_cmd_map_t const script_cmd_map[] = {
-   { "push", RollUp },
-   { "+", Add      },
-   { "-", Subtract },
-   { "*", Multiply },
-   { "/", Divide   },
+   { "rollup", RollUp },
+   { "push",   Enter },
+   { "+",      Add      },
+   { "-",      Subtract },
+   { "*",      Multiply },
+   { "/",      Divide   },
+   { "sqrt",   SquareRoot },
+   { "square", Square },
 { NULL, NULL }};
 
 static void process_script_command(char *cmd)
@@ -1414,6 +1418,21 @@ static void Enter(bool success)
       keyboard_state_set(KBD_STATE_DEFAULT);
       // ExitGetXState(success);
    }
+}
+
+/*
+ *    **************************************************
+ *    *                                                *
+ *    *   Enter - script version                       *
+ *    *                                                *
+ *    **************************************************
+ */
+static void Enter(void)
+{
+   Message("");
+   PushStack();   //  push X to Y
+   WriteStack(0, 3); //  update display fields
+   stacklift = true;
 }
 
 /*

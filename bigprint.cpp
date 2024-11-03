@@ -199,12 +199,18 @@ static void WriteNumber(NORMTYPE *nbr)
    digits = nbr->digits;
    exponent = nbr->exp;
 
+//3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594
    if ( (scinotation) ||
         (exponent < MINFLOATDSP) ||
-        (exponent > MAXFLOATDSP) ||
-        (exponent > normprec) ) {      /* Scientific Notation */
+        (exponent > MAXFLOATDSP) 
+        //  DDM: do not conv to scinot if exp > normprec...
+        //       we want to display full results
+        // ||  (exponent > normprec) 
+        ||  (exponent > DISPPREC)
+        ) {      /* Scientific Notation */
 
-      // syslog("WN: %u, %ld, %d, %d, %u\n", 
+      // [1288] WN: SN:0, exp:58, MIN:-100, MAX:135, np:50
+      // syslog("WN: SN:%u, exp:%ld, MIN:%d, MAX:%d, np:%u\n", 
       //   (uint) (scinotation), exponent, MINFLOATDSP, MAXFLOATDSP, normprec) ;
 
       WChar(nbr->man[0]+ '0');         /* First digit and decimal point */
