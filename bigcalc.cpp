@@ -1008,6 +1008,10 @@ typedef struct script_cmd_map_s {
 
 static script_cmd_map_t const script_cmd_map[] = {
    { "push", RollUp },
+   { "+", Add      },
+   { "-", Subtract },
+   { "*", Multiply },
+   { "/", Divide   },
 { NULL, NULL }};
 
 static void process_script_command(char *cmd)
@@ -1049,6 +1053,9 @@ void RunScriptFromFile(HWND hwnd)
       // lcount++ ;
       char *tptr = inpbfr ;
       strip_newlines(tptr);
+      if (strlen(tptr) == 0) {
+         continue ;
+      }
       
       //  process comments
       if (*tptr == ';') {

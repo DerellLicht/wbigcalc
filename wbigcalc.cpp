@@ -665,10 +665,10 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
             }
             break ;
             
-         case IDB_KBD_add:       Add(); break ;
+         case IDB_KBD_add:       Add();      break ;
          case IDB_KBD_subtract:  Subtract(); break ;
          case IDB_KBD_mult:      Multiply(); break ;
-         case IDB_KBD_divide:    Divide(); break ;
+         case IDB_KBD_divide:    Divide();   break ;
             
          //**************************************************
          //  button operations
