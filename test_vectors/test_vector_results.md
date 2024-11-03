@@ -4,7 +4,7 @@ Note: 18446744073709551615 = max_u64  (i.e., the largest 64-bit number)
 This is the base from which other numbers in the test vectors are derived.
 
 - multiply  
-scr_cubed.txt, cubed.bc
+scr_cubed.txt, cubed.bc  
 <code>;X:  6277101735386680762814942322444851025767571854389858533375</code>  
 ;bc: 6277101735386680762814942322444851025767571854389858533375
 </code>
