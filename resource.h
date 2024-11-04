@@ -152,8 +152,7 @@
 #define  IDB_PASTE_X       412
 #define  IDC_PASTE_X       413
 #define  IDC_DO_PASTE      414
-#define  IDB_READF_X       415
-#define  IDB_RUNSCRIPT     416
+#define  IDB_RUNSCRIPT     415
 
 //  button row 2
 #define  IDB_Y2X           421
