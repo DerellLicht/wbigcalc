@@ -21,6 +21,7 @@
 //             - Add groupsize=0 option for Viewing large numbers without gaps 
 //             - Fix bug: computations and number displays were truncated to normprec
 //             - Implement test vectors for common functions and operations
+//    6.09     Remove ReadXFile button, superceded by ReadScript
 //*********************************************************************************************
-#define VerNum    "V6.08"
+#define VerNum    "V6.09"
 
