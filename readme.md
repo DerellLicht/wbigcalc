@@ -57,7 +57,7 @@ I recommend the [TDM](http://tdm-gcc.tdragon.net/) distribution,
 to avoid certain issues with library accessibility. 
 The makefile also requires Gnu version of Make utility.
 
-_Revision history_
+#### _Revision history_
 
 | Version | Date |description |
 | :---: | :---: | --- |
