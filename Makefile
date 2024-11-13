@@ -5,10 +5,11 @@ CFLAGS += -Wno-write-strings
 CFLAGS += -Ider_libs
 
 CPPSRC=wbigcalc.cpp bigcalc.cpp bigmath.cpp bigmisc.cpp bigprint.cpp \
-config.cpp options.cpp tooltips.cpp about.cpp hyperlinks.cpp \
+config.cpp options.cpp about.cpp hyperlinks.cpp \
 der_libs/common_funcs.cpp \
 der_libs/common_win.cpp \
 der_libs/winmsgs.cpp \
+der_libs/tooltips.cpp \
 der_libs/statbar.cpp
 	
 OBJS = $(CPPSRC:.cpp=.o) dlgres.o
@@ -51,10 +52,11 @@ bigmath.o: bigcalc.h
 bigmisc.o: keywin32.h bigcalc.h
 bigprint.o: bigcalc.h
 config.o: bigcalc.h
-options.o: resource.h bigcalc.h tooltips.h
-tooltips.o: tooltips.h
+options.o: resource.h bigcalc.h
 about.o: resource.h version.h hyperlinks.h
 hyperlinks.o: hyperlinks.h
 der_libs/common_funcs.o: der_libs/common.h
 der_libs/common_win.o: der_libs/common.h der_libs/commonw.h
+der_libs/tooltips.o: der_libs/iface_32_64.h der_libs/common.h
+der_libs/tooltips.o: der_libs/tooltips.h
 der_libs/statbar.o: der_libs/common.h der_libs/commonw.h der_libs/statbar.h
