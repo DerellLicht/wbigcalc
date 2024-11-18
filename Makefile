@@ -23,7 +23,7 @@ BIN=wbigcalc.exe
 all: $(BIN)
 
 clean:
-	del /zqe $(BIN) *.o
+	rm -vf $(BIN) $(OBJS)
 
 wc:
 	wc -l *.cpp *.rc
