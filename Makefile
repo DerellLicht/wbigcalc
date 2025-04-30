@@ -1,5 +1,7 @@
-CFLAGS=-Wall -O3
+CFLAGS=-Wall -O2
 CFLAGS += -Wno-write-strings
+CFLAGS += -Wno-stringop-truncation
+CFLAGS += -Wno-format-overflow
 
 #LiFLAGS = -Ider_libs
 CFLAGS += -Ider_libs

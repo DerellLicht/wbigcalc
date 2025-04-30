@@ -30,6 +30,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <tchar.h>
 
 #include "keywin32.h"
 #include "common.h"
@@ -1848,10 +1849,10 @@ static void getx_backspace(void)
 static void getx_build_output_str(void)
 {
    if (getx_exponent) {
-      sprintf(getx_output_bfr, "%c%s e%c%s", getx_sign, getx_digit_bfr, getx_exp_sign, getx_exp_digit_bfr);
+      _stprintf(getx_output_bfr, _T("%c%s e%c%s"), getx_sign, getx_digit_bfr, getx_exp_sign, getx_exp_digit_bfr);
    }
    else {
-      sprintf(getx_output_bfr, "%c%s", getx_sign, getx_digit_bfr);
+      _stprintf(getx_output_bfr, _T("%c%s"), getx_sign, getx_digit_bfr);
    }
    // syslog("ostr: [%s]\n", getx_output_bfr);
 }
