@@ -22,6 +22,7 @@
 //             - Fix bug: computations and number displays were truncated to normprec
 //             - Implement test vectors for common functions and operations
 //    6.09     Remove ReadXFile button, superceded by ReadScript
+//    6.10     Update help file to discuss script files
 //*********************************************************************************************
-#define VerNum    "V6.09"
+#define VerNum    "V6.10"
 
