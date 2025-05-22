@@ -80,3 +80,4 @@ The makefile also requires Gnu version of Make utility.
 |      |          |- Fix bug: computations and number displays were truncated to normprec |
 |      |          |- Implement test vectors for common functions and operations |
 | 6.09 | 11/03/24 |Remove ReadXFile button, superceded by ReadScript |
+| 6.10 | 05/22/25 |Update help file to discuss script files |
