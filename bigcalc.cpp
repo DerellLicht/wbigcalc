@@ -36,7 +36,7 @@
 #include "commonw.h"
 #include "bigcalc.h"
 #include "keywin32.h"
-                                              
+
 /*
  *    **************************************************
  *    *        BIGCALC.C Function Declarations         *
@@ -1573,4 +1573,3 @@ keyboard_state_t keyboard_state_get(void)
 {
    return keyboard_state ;
 }
-

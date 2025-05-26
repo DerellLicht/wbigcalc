@@ -30,6 +30,9 @@ clean:
 wc:
 	wc -l *.cpp *.rc
 
+check:
+	cmd /C "d:\clang\bin\clang-tidy.exe $(CPPSRC) -- -Ider_libs"
+
 lint:
 	cmd /C "c:\lint9\lint-nt +v -width(160,4) -Ider_libs +fcp -ic:\lint9 mingw.lnt -os(_lint.tmp) lintdefs.cpp dlgres.rc $(CPPSRC)"
 
