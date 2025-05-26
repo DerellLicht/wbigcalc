@@ -2148,6 +2148,7 @@ extern int ExtendedLn(void)
     *    **************************************************
     */
 
+// NOLINTBEGIN(clang-analyzer-deadcode.DeadStores)
             /* F = .9 */
 
    while ( (work[0].man[0] > 1)        /* While X > 1.1 */
@@ -2293,6 +2294,7 @@ extern int ExtendedLn(void)
    ysq = temp + 1;
    num = temp + 2;
 
+// NOLINTEND(clang-analyzer-deadcode.DeadStores)
 
 
    /*

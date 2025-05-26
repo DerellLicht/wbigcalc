@@ -127,6 +127,7 @@ LRESULT read_config_file(void)
          syslog("unknown: [%s]\n", inpstr) ;
       } 
    }
+   fclose(fd);
    return 0;
 }
 

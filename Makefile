@@ -6,6 +6,8 @@ CFLAGS += -Wno-format-overflow
 #LiFLAGS = -Ider_libs
 CFLAGS += -Ider_libs
 
+CHFLAGS = -header-filter=.*
+
 CPPSRC=wbigcalc.cpp bigcalc.cpp bigmath.cpp bigmisc.cpp bigprint.cpp \
 config.cpp options.cpp about.cpp hyperlinks.cpp \
 der_libs/common_funcs.cpp \
@@ -31,7 +33,7 @@ wc:
 	wc -l *.cpp *.rc
 
 check:
-	cmd /C "d:\clang\bin\clang-tidy.exe $(CPPSRC) -- -Ider_libs"
+	cmd /C "d:\clang\bin\clang-tidy.exe $(CHFLAGS) $(CPPSRC) -- -Ider_libs"
 
 lint:
 	cmd /C "c:\lint9\lint-nt +v -width(160,4) -Ider_libs +fcp -ic:\lint9 mingw.lnt -os(_lint.tmp) lintdefs.cpp dlgres.rc $(CPPSRC)"
