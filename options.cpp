@@ -26,7 +26,7 @@ static uint const groupsize_codes[6] = {
 //****************************************************************************
 //  Options dialog tooltips
 //****************************************************************************
-static tooltip_data_t const options_tooltips[] = {
+static tooltip_data const options_tooltips[] = {
 { IDS_NORMPREC,     _T("Set number of digits for working numbers")},
 { IDC_NORMPREC,     _T("Set number of digits for working numbers")},
 { IDG_GROUPSIZE,    _T("Set size of digit groups in View window (3, 5, 0)" )},
