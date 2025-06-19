@@ -47,11 +47,7 @@ static uint cyClient = 0 ;
 static CStatusBar *MainStatusBar = NULL;
 
 //*************************************************************
-#ifndef PATH_MAX
-#define  PATH_MAX    1024
-#endif
-
-static char chmname[PATH_MAX] = "";
+static char chmname[MAX_PATH_LEN] = "";
 
 static void find_chm_location(void)
 {
