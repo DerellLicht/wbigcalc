@@ -997,7 +997,7 @@ static void process_script_command(char *cmd)
 //***********************************************************************************
 void RunScriptFromFile(HWND hwnd)
 {
-   char command_filename[MAX_PATH] = "commands.txt" ;
+   char command_filename[MAX_PATH_LEN] = "commands.txt" ;
    char msgstr[120] = "" ;
    if (!select_text_file(hwnd, command_filename)) {
       Message("RunScriptFromFile: operation aborted") ;

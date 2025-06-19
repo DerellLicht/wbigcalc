@@ -18,6 +18,8 @@ der_libs/winmsgs.cpp \
 der_libs/tooltips.cpp \
 der_libs/statbar.cpp
 	
+LINTFILES=lintdefs.cpp lintdefs.ref.h 
+
 OBJS = $(CPPSRC:.cpp=.o) dlgres.o
 
 BIN=wbigcalc.exe
@@ -38,7 +40,7 @@ check:
 	cmd /C "d:\clang\bin\clang-tidy.exe $(CHFLAGS) $(CPPSRC) $(CHTAIL)"
 
 lint:
-	cmd /C "c:\lint9\lint-nt +v -width(160,4) -Ider_libs +fcp -ic:\lint9 mingw.lnt -os(_lint.tmp) lintdefs.cpp dlgres.rc $(CPPSRC)"
+	cmd /C "c:\lint9\lint-nt +v -width(160,4) -Ider_libs +fcp -ic:\lint9 mingw.lnt -os(_lint.tmp) $(LINTFILES) dlgres.rc $(CPPSRC)"
 
 dist:
 	rm -f wbigcalc.zip
