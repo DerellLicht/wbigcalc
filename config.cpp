@@ -12,7 +12,6 @@
 #include <windows.h>
 #include <stdio.h>   //  fopen, etc
 #include <stdlib.h>  //  atoi()
-#include <limits.h>  //  PATH_MAX
 
 #include "common.h"
 #include "bigcalc.h"
@@ -27,7 +26,7 @@ extern void store_regs_in_ini(FILE *fd);
 extern void recall_reg_from_ini(char *instr);
 
 //****************************************************************************
-static char ini_name[PATH_MAX+1] = "" ;
+static char ini_name[MAX_PATH_LEN+1] = "" ;
 
 //****************************************************************************
 static void strip_comments(char *bfr)
