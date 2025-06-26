@@ -46,27 +46,27 @@ static uint cyClient = 0 ;
 
 static CStatusBar *MainStatusBar = NULL;
 
-//*************************************************************
-static char chmname[MAX_PATH_LEN] = "";
-
-static void find_chm_location(void)
+//*********************************************************************************
+//  this function requires load_exec_filename() to have been previously called
+//*********************************************************************************
+static void view_help_screen(HWND hwnd)
 {
+   char chmname[MAX_PATH_LEN] = "";
    LRESULT result = derive_filename_from_exec(chmname, (char *) ".chm") ; //lint !e1773 const
    if (result != 0) {
       syslog("find_chm_loc: %s\n", get_system_message());
    }
-}
-
-//*************************************************************
-static void view_help_screen(HWND hwnd)
-{
-   find_chm_location() ;
    
    // syslog("help=[%s]", chmname) ;
    //  MinGw gives a couple of indecipherable linker warnings about this:
    // Warning: .drectve `-defaultlib:uuid.lib ' unrecognized
    // Warning: .drectve `-defaultlib:uuid.lib ' unrecognized   
    //  But ignoring them doesn't seem to hurt anything...
+   //  
+   //  Later note:  Later versions of TDM/MinGW give these warnings instead:
+   // Warning: .drectve `-defaultlib:uuid.lib ' unrecognized
+   // Warning: corrupt .drectve at end of def file
+   //  However, ignoring these warnings *still* doesn't seem to hurt anything.
    HtmlHelp(hwnd, chmname, HH_DISPLAY_TOPIC, 0L);
    return ;
 }
