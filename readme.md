@@ -8,8 +8,8 @@ but is rarely seen in pocket calculators any more.
 <hr>
 
 ### Notes about large numbers of digits
-If number of digits is larger than about 150, the stack displays will only display
-first 150 characters; that is all the digits that fit on the display line.
+If number of digits is larger than about 200, the stack displays will only display
+first 200 characters; that is all the digits that fit on the display line.
 However, all the specified digits will still be displayed in the View window, 
 and all computations will be done with the full number of requested digits.
 
@@ -18,7 +18,7 @@ if number of digits was greater than SIZEOFSMALL (453).
 I haven't attempted to experiment with numbers that large, so this Windows version
 of BigCalc isn't going to handle those inputs in a sensible way.
 
-In practice, at this point, manual inputs are limited to about 150 characters
+In practice, at this point, manual inputs are limited to about 200 characters
 (the size of the X field, in PasteX mode).  Computations can go larger than that,
 but past 453 digits, the program won't be able to display the numbers without modification.
 Note that the *computations* will probably still work fine, since Judson McClendon's
