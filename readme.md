@@ -14,7 +14,7 @@ However, all the specified digits will still be displayed in the View window,
 and all computations will be done with the full number of requested digits.
 
 The original MSDOS version of bigcalc, handled data display differently 
-if number of digits was greater than <code>SIZEOFSMALL</code> (453).
+if number of digits was greater than <code>SIZEOFSMALL</code> (453 digits).
 I haven't attempted to experiment with numbers that large, so this Windows version
 of BigCalc isn't going to handle those inputs in a sensible way.
 
