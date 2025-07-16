@@ -99,14 +99,8 @@ extern int
    workprec;               /* Work precision    */
    
 extern uint groupsize;              /* Digit group size  */
-extern char view_dec_point_char ; //  either '.' or '*'
-   // menunbr;                /* Menu number       */
-   
-// extern long
-//    minfloatprn,            /* Min exp for float */
-//    maxfloatprn;            /* Max exp for float */
-
-extern bool scinotation;   /* Force sci notation if TRUE   */
+extern char view_dec_point_char ;   //  either '.' or '*'
+extern bool scinotation;            /* Force sci notation if TRUE   */
 
 /*
  *    **************************************************
