@@ -1,3 +1,17 @@
+//***************************************************************************
+//  bigprint.cpp - copyright (c) Derell Licht
+//  The functions in this file are used to update the register and stack fields.
+//  They functions provide the abilities to translate the bigcalc data structs 
+//  into meaningful output in the target field.
+//  They have *no* knowledge of the bigcalc data-field structs.
+//  
+//***************************************************************************
+//  In Judson's original code, this file also contained all the code for
+//  printing to file or printer.  In the Windows implementation, I don't
+//  feel that effort has any value, so I have removed it.
+//  However, it is still possible to copy-and-paste from either the
+//  X-register field or the View window, and use the data as desired.
+//***************************************************************************
 /*
  *    **************************************************
  *    *                                                *
@@ -18,14 +32,6 @@
  *    **************************************************
  */
 
-/*
- *    **************************************************
- *    *                                                *
- *    *                   Includes                     *
- *    *                                                *
- *    **************************************************
- */
-
 #include <windows.h>
 #include <ctype.h>
 #include <stdio.h>
@@ -34,24 +40,11 @@
 #include "common.h"
 #include "bigcalc.h"
 
-/*
- *    **************************************************
- *    *                                                *
- *    *            Source Local Variables              *
- *    *                                                *
- *    **************************************************
- */
+static int ppos = 0;    //  current write position in display field
 
-static int ppos = 0;            /* Current print column */
-
-/*
- *    **************************************************
- *    *                                                *
- *    *               Writing routines                 *
- *    *                                                *
- *    **************************************************
- */
-
+//***************************************************************************
+//  output_str is used to update the register and stack fields.
+//  It has *no* knowledge of the bigcalc data-field structs.
 //***************************************************************************
 #define  MAX_OUTPUT_STR    1100
 static char output_str[MAX_OUTPUT_STR+1];

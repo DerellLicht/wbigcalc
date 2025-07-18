@@ -1,5 +1,5 @@
 //****************************************************************************
-//  Copyright (c) 2009  Daniel D Miller
+//  Copyright (c) 2009  Derell Licht
 //  config.cpp - manage configuration data file
 //
 //  Filename will be same as executable, but will have .ini extensions.

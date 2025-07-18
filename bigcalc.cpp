@@ -1438,8 +1438,8 @@ static void SetupGetX(void)
    }
    
    init_getx_vars();
-   getx_clear_output_str();
-   reset_output_str();
+   getx_clear_output_str();   //  reset the temp data structs
+   reset_output_str();        //  reset the output-field temp string
    put_stack(0, " ");
    ClearWork(0);
    Message("Entering X: S=ChgSign, E=Exp, BakSpc=Backup, Other=Complete, ESC=Exit");

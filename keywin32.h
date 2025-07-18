@@ -1,7 +1,7 @@
 //*********************************************************
 //  KEYWIN32.H - Win32 keyboard scan codes                 
 //                                                         
-//  Compiled by:  Daniel D. Miller                         
+//  Compiled by:  Derell Licht                         
 //  Last Update:  12/28/01 14:18                           
 //                                                         
 //*********************************************************

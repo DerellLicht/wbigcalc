@@ -1,8 +1,6 @@
 //**********************************************************************
-//  Copyright (c) 2009-2024  Daniel D Miller
+//  Copyright (c) 2009-2024  Derell Licht
 //  options.cpp - options dialog
-//  
-//  Written by:   Daniel D. Miller
 //**********************************************************************
 #include <windows.h>
 #include <time.h>
