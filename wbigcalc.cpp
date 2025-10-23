@@ -93,8 +93,8 @@ static void set_control_font(HWND hwnd, TCHAR *fname, uint fheight, uint flags)
 //**********************************************************************
 static void set_hwnd_values(void)
 {
-   hwndMsg       = GetDlgItem(hwndMain,  IDC_MSG) ;
-   hwndKbdState  = GetDlgItem(hwndMain,  IDC_KSTATE) ;
+   hwndMsg       = GetDlgItem(hwndMain, IDC_MSG) ;
+   hwndKbdState  = GetDlgItem(hwndMain, IDC_KSTATE) ;
    hwndViewFrame = GetDlgItem(hwndMain, IDC_VIEW_DATA) ;
    
    hwndRegs[0]   = GetDlgItem(hwndMain, IDC_R0) ;
