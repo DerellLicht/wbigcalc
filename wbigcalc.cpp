@@ -813,7 +813,7 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
       HDC hdc = (HDC) wParam;
       if ((HWND) lParam == hwndMsg) {
          if (ecode_last < ERROR_LIST_END) {
-            syslog("yeah, we got here...\n");
+            // syslog("yeah, we got here...\n");
             ecode_last = ERROR_LIST_END ;
             SetTextColor(hdc, WIN_BRED);
             SetBkColor(hdc, WIN_BLUE);
