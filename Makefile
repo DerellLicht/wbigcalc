@@ -11,7 +11,8 @@ CHFLAGS = -header-filter=.*
 CHTAIL = -- -Ider_libs 
 
 CPPSRC=wbigcalc.cpp bigcalc.cpp bigmath.cpp bigmisc.cpp bigprint.cpp \
-config.cpp options.cpp about.cpp hyperlinks.cpp \
+config.cpp options.cpp about.cpp \
+der_libs/hyperlinks.cpp \
 der_libs/common_funcs.cpp \
 der_libs/common_win.cpp \
 der_libs/winmsgs.cpp \
@@ -64,8 +65,8 @@ bigmisc.o: keywin32.h bigcalc.h
 bigprint.o: bigcalc.h
 config.o: bigcalc.h
 options.o: resource.h bigcalc.h
-about.o: resource.h version.h hyperlinks.h
-hyperlinks.o: hyperlinks.h
+about.o: resource.h version.h
+der_libs/hyperlinks.o: der_libs/iface_32_64.h der_libs/hyperlinks.h
 der_libs/common_funcs.o: der_libs/common.h
 der_libs/common_win.o: der_libs/common.h der_libs/commonw.h
 der_libs/tooltips.o: der_libs/iface_32_64.h der_libs/common.h
