@@ -38,6 +38,7 @@
 
 //lint -esym(530, row, col, exprow, expcol)
 
+// NOLINTBEGIN(bugprone-signed-char-misuse)
 /*
  *    **************************************************
  *    *                                                *
@@ -1432,7 +1433,7 @@ void recall_reg_from_ini(char *instr)
    
    char *inptr = instr + 4 ;
    while (*inptr != 0) {
-      nptr->exp = atol(inptr);
+      nptr->exp = atol(inptr);   // NOLINT
       inptr = strchr(inptr, ',');   
       if (inptr == NULL) {
          syslog("recall_reg: missing comma 0 [%s]\n", instr);
@@ -1445,7 +1446,7 @@ void recall_reg_from_ini(char *instr)
          return ;
       }
       inptr++ ;   // skip past comma 1
-      nptr->digits = atoi(inptr) ;
+      nptr->digits = atoi(inptr) ;  // NOLINT
 
       inptr = next_field(inptr) ;   //  skip past 'colon space'
       if (inptr == NULL) {
@@ -1500,7 +1501,7 @@ void MoveStackWork(int source, int dest)
          work[dest].man[i] = (WORKDIGIT)stack[source].man[i];
 
       if (size < workprec)
-         memset(&work[dest].man[size], 0, ((workprec - size) * sizeof(WORKDIGIT)));
+         memset(&work[dest].man[size], 0, ((workprec - size) * sizeof(WORKDIGIT))); // NOLINT
       }
    else {
       ClearWork(dest);
@@ -1532,10 +1533,9 @@ void MoveWorkStack(int source, int dest)
 
       //  pad with 0s
       if (size < normprec)
-         memset(&stack[dest].man[size], 0, ((normprec - size) * sizeof(NORMDIGIT)));
+         memset(&stack[dest].man[size], 0, ((normprec - size) * sizeof(NORMDIGIT)));   // NOLINT
          
-
-      while (!stack[dest].man[size - 1]) {   //lint !e676  possibly negative subscript
+      while (!stack[dest].man[size - 1]) {   //lint !e676  possibly negative subscript  NOLINT
          size--;
       }
       stack[dest].digits = size;
@@ -2054,3 +2054,4 @@ bool ExtendedGetX(u16 chr)
    return true ;
 }
 
+// NOLINTEND(bugprone-signed-char-misuse)

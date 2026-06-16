@@ -26,6 +26,7 @@
  *    **************************************************
  */
 
+// NOLINTBEGIN(bugprone-macro-parentheses)
 #define MINPREC 10                        /* Min nbr of digits  */
 #define DEFAULTPREC 50                    /* Default precision  */
 #define MAXNORM 1075                      /* Max normal digits  */
@@ -45,6 +46,7 @@
 #define SIZEOFSMALL 453                   /* Max size for part screen entry */
 #define DISPDECIMAL '.'                   /* Display decimal point */
 #define PRINTDECIMAL '*'                  /* Print decimal point */
+// NOLINTEND(bugprone-macro-parentheses)
 
 /*
  *    **************************************************

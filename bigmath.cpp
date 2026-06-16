@@ -491,7 +491,7 @@ extern int ExtendedDivide(void)
                            if ((*bx += (*ax * factor)) > 9) {
                               bt = bx;                      /* Undo prev borrow */
                               do {
-                                 *(bt - 1) += *bt / 10;
+                                 *(bt - 1) += *bt / 10;  // NOLINT
                                  *bt %= 10;
                                  } while (*(--bt) > 9);
                               }                             /* Undo prev borrow end */

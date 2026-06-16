@@ -1,2 +1,14 @@
 Checks: |
+  clang-analyzer-security.*,
+  -clang-analyzer-security.insecureAPI.strcpy,
+  clang-diagnostic-*,
   -clang-diagnostic-writable-strings,
+  bugprone-*,
+  -bugprone-branch-clone,
+  -bugprone-easily-swappable-parameters,
+  -bugprone-narrowing-conversions,
+  -bugprone-switch-missing-default-case,
+  -bugprone-throwing-static-initialization
+  -bugprone-incorrect-roundings
+  -bugprone-assignment-in-if-condition
+  
