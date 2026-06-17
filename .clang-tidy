@@ -1,8 +1,4 @@
 Checks: |
-  clang-analyzer-security.*,
-  -clang-analyzer-security.insecureAPI.strcpy,
-  clang-diagnostic-*,
-  -clang-diagnostic-writable-strings,
   bugprone-*,
   -bugprone-branch-clone,
   -bugprone-easily-swappable-parameters,
@@ -11,4 +7,11 @@ Checks: |
   -bugprone-throwing-static-initialization
   -bugprone-incorrect-roundings
   -bugprone-assignment-in-if-condition
-  
+  clang-analyzer-security.*,
+  -clang-analyzer-security.insecureAPI.strcpy,
+  clang-diagnostic-*,
+  -clang-diagnostic-writable-strings,
+  cppcoreguidelines-*,
+  misc-*,
+  modernize-*,
+  performance-*,
