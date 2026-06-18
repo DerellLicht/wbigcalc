@@ -1,17 +1,62 @@
+#https://clang.llvm.org/extra/clang-tidy/#id2
+#
+# ** DO NOT PROPAGATE THIS FILE UP TO REFERENCE LEVEL **
+#  Because much of this code is opaque to me, I don't want to touch
+#  any of it with new handling; in many cases, I won't even be able to
+#  test the revised functions to ensure they still work.
+#  Thus, there are a number of rules excluded here,
+#  which I won't necessarily exclude in other projects.
+
 Checks: |
   bugprone-*,
   -bugprone-branch-clone,
   -bugprone-easily-swappable-parameters,
   -bugprone-narrowing-conversions,
   -bugprone-switch-missing-default-case,
-  -bugprone-throwing-static-initialization
-  -bugprone-incorrect-roundings
-  -bugprone-assignment-in-if-condition
-  clang-analyzer-security.*,
+  -bugprone-throwing-static-initialization,
+  -bugprone-incorrect-roundings,
+  -bugprone-assignment-in-if-condition,
+  clang-analyzer-*,
   -clang-analyzer-security.insecureAPI.strcpy,
   clang-diagnostic-*,
   -clang-diagnostic-writable-strings,
   cppcoreguidelines-*,
-  misc-*,
+  -cppcoreguidelines-macro-to-enum,
+  -cppcoreguidelines-narrowing-conversions,
+  -cppcoreguidelines-use-default-member-init,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -cppcoreguidelines-macro-usage,
+  -cppcoreguidelines-pro-type-cstyle-cast,
+  -cppcoreguidelines-pro-bounds-avoid-unchecked-container-access,
+  -cppcoreguidelines-avoid-c-arrays,
+  -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
+  -cppcoreguidelines-pro-type-vararg,
+  -cppcoreguidelines-init-variables,
+  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
+  -cppcoreguidelines-avoid-non-const-global-variables,
+  -cppcoreguidelines-pro-bounds-constant-array-index,
+  -cppcoreguidelines-owning-memory,
+  -cppcoreguidelines-avoid-goto,
+  -cppcoreguidelines-pro-type-union-access,
+  -cppcoreguidelines-use-enum-class,
+  -cppcoreguidelines-prefer-member-initializer,
+  -cppcoreguidelines-no-malloc,
+  -cppcoreguidelines-avoid-do-while,
   modernize-*,
+  -modernize-use-nullptr,
+  -modernize-macro-to-enum,
+  -modernize-avoid-c-style-cast,
+  -modernize-use-default-member-init,
+  -modernize-use-trailing-return-type,
+  -modernize-redundant-void-arg,
+  -modernize-avoid-c-arrays,
+  -modernize-deprecated-headers,
+  -modernize-use-bool-literals,
+  -modernize-use-auto,
+  -modernize-avoid-variadic-functions,
+  -modernize-use-using,
+  -modernize-use-nodiscard,
   performance-*,
+  -performance-no-int-to-ptr,
+  -performance-enum-size,
+  
