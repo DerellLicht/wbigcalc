@@ -1244,7 +1244,7 @@ extern int ExtendedTan(void)
       MessageError(ERROR_NO_MEMORY);
       return(FALSE);
       }
-   temp = temp;
+   // temp = temp;
 
    MoveWorkTemp(0, temp);        /* Save X */
 
@@ -1265,8 +1265,8 @@ extern int ExtendedTan(void)
       goto error_exit;
    }
    free(temp);
-
    return(TRUE);
+   
 error_exit:   
    free(temp);
    return(FALSE);
