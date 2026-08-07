@@ -1,6 +1,50 @@
-CFLAGS=-Wall -O2
+# makefile for mft_reader
+# SHELL=cmd.exe
+USE_DEBUG = NO
+USE_64BIT = NO
+USE_UNICODE = NO
+USE_CLANG = NO
+# use -static for clang/llvm and cygwin/mingw
+# Otherwise program will require libc++.dll and libunwind.dll
+ifeq ($(USE_CLANG),YES)
+USE_STATIC = YES
+else
+USE_STATIC = NO
+endif
+
+#  clang++ vs tdm g++
+#  clang gives *much* clearer compiler error messages...
+ifeq ($(USE_64BIT),YES)
+#TOOLS:=d:\tdm64\bin
+#GNAME:=g++
+#WRNAME:=windres.exe
+TOOLS:=d:/llvm/bin
+GNAME=x86_64-w64-mingw32-clang++
+WRNAME:=x86_64-w64-mingw32-windres.exe
+else
+ifeq ($(USE_CLANG),YES)
+TOOLS:=d:/llvm/bin
+GNAME:=i686-w64-mingw32-clang++.exe
+WRNAME:=i686-w64-mingw32-windres.exe
+else
+# NOTE: the TDM32 version of windres, does not work with forward slashes;
+#       This is why back-slashes are retained here.
+TOOLS:=d:\tdm32\bin
+GNAME:=g++
+WRNAME:=windres.exe
+endif
+endif
+
+ifeq ($(USE_DEBUG),YES)
+CFLAGS=-Wall -O -g
+LFLAGS= -mwindows 
+else
+CFLAGS=-Wall -O2 -c 
+LFLAGS=-s -mwindows 
+endif
 CFLAGS += -Wno-write-strings
 CFLAGS += -Wno-format-overflow
+CFLAGS += -Weffc++ 
 
 #LiFLAGS = -Ider_libs
 CFLAGS += -Ider_libs
@@ -20,9 +64,11 @@ OBJS = $(CPPSRC:.cpp=.o) dlgres.o
 
 BIN=wbigcalc.exe
 
+LIBS=-lcomctl32 -lgdi32 -lcomdlg32 -lhtmlhelp
+
 #************************************************************
 %.o: %.cpp
-	g++ $(CFLAGS) -Weffc++ -c $< -o $@
+	$(TOOLS)/$(GNAME) $(CFLAGS) $< -o $@
 
 all: $(BIN)
 
@@ -38,9 +84,6 @@ check:
 cppc:
 	cmd /C "cppcheck --project=compile_commands.json --std=c++14 --suppressions-list=./.suppress.cppcheck"
 
-cstale:
-	cmd /C "python ..\check_compile_commands_stale.py"
-
 clint:
 	cmd /C "python ..\ClaudeLint.py --exclude der_libs"
 	
@@ -52,10 +95,19 @@ dist:
 	zip wbigcalc.zip wbigcalc.exe wbigcalc.chm bigcalc.txt LICENSE.txt readme.md
 
 $(BIN): $(OBJS)
-	g++ $(CFLAGS) -mwindows -s $(OBJS) -o $@ -lcomctl32 -lgdi32 -lcomdlg32 -lhtmlhelp
+	$(TOOLS)/$(GNAME) $(OBJS) $(LFLAGS) -o $(BIN) $(LIBS) 
 
 dlgres.o: dlgres.rc
-	windres -O COFF $< -o $@
+ifeq ($(USE_CLANG),YES)
+	$(TOOLS)\windres $< -O COFF -o $@
+#	d:\tdm32\bin\windres $< -O COFF -o $@
+else
+ifeq ($(USE_CYGWIN),YES)
+	$(TOOLS)\i686-w64-mingw32-windres $< -O COFF -o $@
+else	
+	$(TOOLS)\windres $< -O COFF -o $@
+endif	
+endif	
 
 depend:
 	makedepend $(CPPSRC)
