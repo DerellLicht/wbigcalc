@@ -1,0 +1,240 @@
+[
+ {
+  "directory": "D:\\SourceCode\\Git\\wbigcalc",
+  "arguments": [
+   "D:/llvm/bin/i686-w64-mingw32-clang++.exe",
+   "-Wall",
+   "-O2",
+   "-Wno-write-strings",
+   "-Wno-format-overflow",
+   "-Ider_libs",
+   "-Weffc++",
+   "-c",
+   "wbigcalc.cpp",
+   "-o",
+   "wbigcalc.o"
+  ],
+  "file": "wbigcalc.cpp"
+ },
+ {
+  "directory": "D:\\SourceCode\\Git\\wbigcalc",
+  "arguments": [
+   "D:/llvm/bin/i686-w64-mingw32-clang++.exe",
+   "-Wall",
+   "-O2",
+   "-Wno-write-strings",
+   "-Wno-format-overflow",
+   "-Ider_libs",
+   "-Weffc++",
+   "-c",
+   "bigcalc.cpp",
+   "-o",
+   "bigcalc.o"
+  ],
+  "file": "bigcalc.cpp"
+ },
+ {
+  "directory": "D:\\SourceCode\\Git\\wbigcalc",
+  "arguments": [
+   "D:/llvm/bin/i686-w64-mingw32-clang++.exe",
+   "-Wall",
+   "-O2",
+   "-Wno-write-strings",
+   "-Wno-format-overflow",
+   "-Ider_libs",
+   "-Weffc++",
+   "-c",
+   "bigmath.cpp",
+   "-o",
+   "bigmath.o"
+  ],
+  "file": "bigmath.cpp"
+ },
+ {
+  "directory": "D:\\SourceCode\\Git\\wbigcalc",
+  "arguments": [
+   "D:/llvm/bin/i686-w64-mingw32-clang++.exe",
+   "-Wall",
+   "-O2",
+   "-Wno-write-strings",
+   "-Wno-format-overflow",
+   "-Ider_libs",
+   "-Weffc++",
+   "-c",
+   "bigmisc.cpp",
+   "-o",
+   "bigmisc.o"
+  ],
+  "file": "bigmisc.cpp"
+ },
+ {
+  "directory": "D:\\SourceCode\\Git\\wbigcalc",
+  "arguments": [
+   "D:/llvm/bin/i686-w64-mingw32-clang++.exe",
+   "-Wall",
+   "-O2",
+   "-Wno-write-strings",
+   "-Wno-format-overflow",
+   "-Ider_libs",
+   "-Weffc++",
+   "-c",
+   "bigprint.cpp",
+   "-o",
+   "bigprint.o"
+  ],
+  "file": "bigprint.cpp"
+ },
+ {
+  "directory": "D:\\SourceCode\\Git\\wbigcalc",
+  "arguments": [
+   "D:/llvm/bin/i686-w64-mingw32-clang++.exe",
+   "-Wall",
+   "-O2",
+   "-Wno-write-strings",
+   "-Wno-format-overflow",
+   "-Ider_libs",
+   "-Weffc++",
+   "-c",
+   "config.cpp",
+   "-o",
+   "config.o"
+  ],
+  "file": "config.cpp"
+ },
+ {
+  "directory": "D:\\SourceCode\\Git\\wbigcalc",
+  "arguments": [
+   "D:/llvm/bin/i686-w64-mingw32-clang++.exe",
+   "-Wall",
+   "-O2",
+   "-Wno-write-strings",
+   "-Wno-format-overflow",
+   "-Ider_libs",
+   "-Weffc++",
+   "-c",
+   "options.cpp",
+   "-o",
+   "options.o"
+  ],
+  "file": "options.cpp"
+ },
+ {
+  "directory": "D:\\SourceCode\\Git\\wbigcalc",
+  "arguments": [
+   "D:/llvm/bin/i686-w64-mingw32-clang++.exe",
+   "-Wall",
+   "-O2",
+   "-Wno-write-strings",
+   "-Wno-format-overflow",
+   "-Ider_libs",
+   "-Weffc++",
+   "-c",
+   "about.cpp",
+   "-o",
+   "about.o"
+  ],
+  "file": "about.cpp"
+ },
+ {
+  "directory": "D:\\SourceCode\\Git\\wbigcalc",
+  "arguments": [
+   "D:/llvm/bin/i686-w64-mingw32-clang++.exe",
+   "-Wall",
+   "-O2",
+   "-Wno-write-strings",
+   "-Wno-format-overflow",
+   "-Ider_libs",
+   "-Weffc++",
+   "-c",
+   "der_libs/hyperlinks.cpp",
+   "-o",
+   "der_libs/hyperlinks.o"
+  ],
+  "file": "der_libs/hyperlinks.cpp"
+ },
+ {
+  "directory": "D:\\SourceCode\\Git\\wbigcalc",
+  "arguments": [
+   "D:/llvm/bin/i686-w64-mingw32-clang++.exe",
+   "-Wall",
+   "-O2",
+   "-Wno-write-strings",
+   "-Wno-format-overflow",
+   "-Ider_libs",
+   "-Weffc++",
+   "-c",
+   "der_libs/common_funcs.cpp",
+   "-o",
+   "der_libs/common_funcs.o"
+  ],
+  "file": "der_libs/common_funcs.cpp"
+ },
+ {
+  "directory": "D:\\SourceCode\\Git\\wbigcalc",
+  "arguments": [
+   "D:/llvm/bin/i686-w64-mingw32-clang++.exe",
+   "-Wall",
+   "-O2",
+   "-Wno-write-strings",
+   "-Wno-format-overflow",
+   "-Ider_libs",
+   "-Weffc++",
+   "-c",
+   "der_libs/common_win.cpp",
+   "-o",
+   "der_libs/common_win.o"
+  ],
+  "file": "der_libs/common_win.cpp"
+ },
+ {
+  "directory": "D:\\SourceCode\\Git\\wbigcalc",
+  "arguments": [
+   "D:/llvm/bin/i686-w64-mingw32-clang++.exe",
+   "-Wall",
+   "-O2",
+   "-Wno-write-strings",
+   "-Wno-format-overflow",
+   "-Ider_libs",
+   "-Weffc++",
+   "-c",
+   "der_libs/winmsgs.cpp",
+   "-o",
+   "der_libs/winmsgs.o"
+  ],
+  "file": "der_libs/winmsgs.cpp"
+ },
+ {
+  "directory": "D:\\SourceCode\\Git\\wbigcalc",
+  "arguments": [
+   "D:/llvm/bin/i686-w64-mingw32-clang++.exe",
+   "-Wall",
+   "-O2",
+   "-Wno-write-strings",
+   "-Wno-format-overflow",
+   "-Ider_libs",
+   "-Weffc++",
+   "-c",
+   "der_libs/tooltips.cpp",
+   "-o",
+   "der_libs/tooltips.o"
+  ],
+  "file": "der_libs/tooltips.cpp"
+ },
+ {
+  "directory": "D:\\SourceCode\\Git\\wbigcalc",
+  "arguments": [
+   "D:/llvm/bin/i686-w64-mingw32-clang++.exe",
+   "-Wall",
+   "-O2",
+   "-Wno-write-strings",
+   "-Wno-format-overflow",
+   "-Ider_libs",
+   "-Weffc++",
+   "-c",
+   "der_libs/statbar.cpp",
+   "-o",
+   "der_libs/statbar.o"
+  ],
+  "file": "der_libs/statbar.cpp"
+ }
+]

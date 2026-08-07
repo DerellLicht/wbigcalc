@@ -1,14 +1,9 @@
 CFLAGS=-Wall -O2
 CFLAGS += -Wno-write-strings
-CFLAGS += -Wno-stringop-truncation
 CFLAGS += -Wno-format-overflow
 
 #LiFLAGS = -Ider_libs
 CFLAGS += -Ider_libs
-
-#  clang-tidy options
-CHFLAGS = -header-filter=.*
-CHTAIL = -- -Ider_libs 
 
 CPPSRC=wbigcalc.cpp bigcalc.cpp bigmath.cpp bigmisc.cpp bigprint.cpp \
 config.cpp options.cpp about.cpp \
@@ -38,8 +33,17 @@ wc:
 	wc -l *.cpp *.rc
 
 check:
-	cmd /C "d:\llvm\bin\clang-tidy.exe $(CHFLAGS) $(CPPSRC) $(CHTAIL)"
+	cmd /C "d:\llvm\bin\clang-tidy.exe $(CPPSRC)"
 
+cppc:
+	cmd /C "cppcheck --project=compile_commands.json --std=c++14 --suppressions-list=./.suppress.cppcheck"
+
+cstale:
+	cmd /C "python ..\check_compile_commands_stale.py"
+
+clint:
+	cmd /C "python ..\ClaudeLint.py --exclude der_libs"
+	
 lint:
 	cmd /C "c:\lint9\lint-nt +v -width(160,4) -Ider_libs +fcp -ic:\lint9 mingw.lnt -os(_lint.tmp) $(LINTFILES) dlgres.rc $(CPPSRC)"
 
