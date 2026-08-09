@@ -78,15 +78,15 @@ clean:
 wc:
 	wc -l *.cpp *.rc
 
-check:
-	cmd /C "d:\llvm\bin\clang-tidy.exe $(CPPSRC)"
-
-cppc:
-	cmd /C "cppcheck --project=compile_commands.json --std=c++14 --suppressions-list=./.suppress.cppcheck"
-
 clint:
 	cmd /C "python ..\ClaudeLint.py --exclude der_libs"
 	
+cppc:
+	cmd /C "cppcheck --project=compile_commands.json --std=c++14 --suppressions-list=./.suppress.cppcheck"
+
+check:
+	cmd /C "d:\llvm\bin\clang-tidy.exe $(CPPSRC)"
+
 lint:
 	cmd /C "c:\lint9\lint-nt +v -width(160,4) -Ider_libs +fcp -ic:\lint9 mingw.lnt -os(_lint.tmp) $(LINTFILES) dlgres.rc $(CPPSRC)"
 
