@@ -98,16 +98,7 @@ $(BIN): $(OBJS)
 	$(TOOLS)/$(GNAME) $(OBJS) $(LFLAGS) -o $(BIN) $(LIBS) 
 
 dlgres.o: dlgres.rc
-ifeq ($(USE_CLANG),YES)
-	$(TOOLS)\windres $< -O COFF -o $@
-#	d:\tdm32\bin\windres $< -O COFF -o $@
-else
-ifeq ($(USE_CYGWIN),YES)
-	$(TOOLS)\i686-w64-mingw32-windres $< -O COFF -o $@
-else	
-	$(TOOLS)\windres $< -O COFF -o $@
-endif	
-endif	
+	$(TOOLS)\$(WRNAME) $< -O COFF -o $@
 
 depend:
 	makedepend $(CPPSRC)
