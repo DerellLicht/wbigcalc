@@ -353,7 +353,10 @@ CAPTION "About WBigCalc"
 // FONT 8, "MS Sans Serif"
 FONT 10, "Times New Roman"
 BEGIN
-    ICON            IDI_ICON,                                   IDC_STATIC,    9, 14
+//  Note about the ICON control...
+//  The "optional" parameters are *not* optional when building with Clang windres.exe ...
+// ICON text, id, x, y [, width, height, style [, extended-style]]
+    ICON            IDI_ICON,                                   IDC_STATIC,    9, 14,   0,  0, SS_ICON
     LTEXT           "WBigCalc Extended Precision Calculator",   IDC_STATIC,   36, 15,  66, 18
     LTEXT           VerNum,                                     IDC_VERNUM,  104, 15,  50, 10
     LTEXT           "Copyright (c) 2002-2024",                  IDC_STATIC,   36, 36, 100, 10
