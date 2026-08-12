@@ -5,12 +5,6 @@ USE_CLANG = NO
 
 # sadly, cygwin mingw does not support gdiplus...
 USE_CYGWIN = NO
-# use -static for clang and cygwin/mingw
-#  clang vs tdm
-#  clang gives *much* clearer compiler error messages...
-#  However, programs built with clang++ will require libc++.dll and libunwind.dll
-#  in order to be used elsewhere 
-#  (unless built with -static, which significantly boosts file size)
 
 # the legacy version of qualify.cpp, does not depend upon c++ string class
 USE_LEGACY = NO
