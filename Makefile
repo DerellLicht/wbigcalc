@@ -1,7 +1,7 @@
 USE_DEBUG = NO
 USE_64BIT = NO
 USE_UNICODE = NO
-USE_CLANG = NO
+USE_CLANG = YES
 
 # sadly, cygwin mingw does not support gdiplus...
 USE_CYGWIN = NO
@@ -24,6 +24,13 @@ CFLAGS += -Weffc++
 
 #LiFLAGS = -Ider_libs
 CFLAGS += -Ider_libs
+CFLAGS += -Imingw_libs
+
+LFLAGS += -Lmingw_libs
+
+ifeq ($(USE_STATIC),YES)
+LFLAGS += -static
+endif
 
 CPPSRC=wbigcalc.cpp bigcalc.cpp bigmath.cpp bigmisc.cpp bigprint.cpp \
 config.cpp options.cpp about.cpp \
@@ -41,7 +48,13 @@ OBJS = $(CPPSRC:.cpp=.o) dlgres.o
 BASE=wbigcalc
 BIN=$(BASE).exe
 
-LIBS=-lcomctl32 -lgdi32 -lcomdlg32 -lhtmlhelp
+LIBS=-lcomctl32 -lgdi32 -lcomdlg32
+
+ifeq ($(USE_64BIT),YES)
+LIBS += -lhhctrl64
+else
+LIBS += -lhhctrl32
+endif
 
 #************************************************************
 %.o: %.cpp
