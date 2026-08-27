@@ -38,7 +38,8 @@ LINTFILES=lintdefs.cpp lintdefs.ref.h
 
 OBJS = $(CPPSRC:.cpp=.o) dlgres.o
 
-BIN=wbigcalc.exe
+BASE=wbigcalc
+BIN=$(BASE).exe
 
 LIBS=-lcomctl32 -lgdi32 -lcomdlg32 -lhtmlhelp
 
@@ -67,8 +68,8 @@ lint:
 	cmd /C "c:\lint9\lint-nt +v -width(160,4) -Ider_libs +fcp -ic:\lint9 mingw.lnt -os(_lint.tmp) $(LINTFILES) dlgres.rc $(CPPSRC)"
 
 dist:
-	rm -f wbigcalc.zip
-	zip wbigcalc.zip wbigcalc.exe wbigcalc.chm bigcalc.txt LICENSE.txt readme.md
+	rm -f $(BASE).zip
+	zip $(BASE).zip $(BASE).exe $(BASE).chm bigcalc.txt LICENSE.txt readme.md $(BASE).ini
 
 $(BIN): $(OBJS)
 	$(TOOLS)/$(GNAME) $(OBJS) $(LFLAGS) -o $(BIN) $(LIBS) 

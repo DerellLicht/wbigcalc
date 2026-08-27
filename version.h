@@ -23,6 +23,7 @@
 //             - Implement test vectors for common functions and operations
 //    6.09     Remove ReadXFile button, superceded by ReadScript
 //    6.10     Update help file to discuss script files
+//    6.11     Include wbigcalc.ini in distribution, to provide register-value examples
 //*********************************************************************************************
-#define VerNum    "V6.10"
+#define VerNum    "V6.11"
 
