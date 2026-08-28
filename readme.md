@@ -67,28 +67,5 @@ you can recover the submodule later, with this command:
 
 <hr>
 
-#### _Revision history_
+See [Changelog](CHANGELOG.md) for the full revision history.
 
-| Version | Date |description |
-| :---: | :---: | --- |
-| 6.00 | 10/08/24 |Original release |
-| 6.01 | 10/17/24 |- Added Paste option to paste external string into X Stack |
-|      |          |- Added About dialog |
-|      |          |- Added program info in internal data |
-| 6.02 | 10/18/24 |- Update help file with info on special functions and INI file |
-|      |          |- "Paste X" button needs to be hidden when other special functions are active |
-|      |          |- 'About' dialog: add link to Github page, as well as home page |
-| 6.03 | 10/19/24 |- Convert error functions to common error handler |
-|      |          |- Change Msg field colors for error messages |
-| 6.04 | 10/19/24 |- Increase max number of displayed digits to 150, to fit dialog data fields |
-|      |          |- Code optimization: eliminate double-menu jumps in keyboard handler |
-| 6.05 | 10/20/24 |Revise some display constants, to allow for wider display fields |
-| 6.06 | 10/24/24 |Debug: Display stack/register data in status bar, on View command |
-| 6.07 | 10/29/24 |Make naming consistent: wbigcalc, *not* bigcalc |
-| 6.08 | 11/03/24 |- Add mechanism to allow reading X from file, for very-large-number handling |
-|      |          |- Add groupsize=0 option for Viewing large numbers without gaps |
-|      |          |- Fix bug: computations and number displays were truncated to normprec |
-|      |          |- Implement test vectors for common functions and operations |
-| 6.09 | 11/03/24 |Remove ReadXFile button, superceded by ReadScript |
-| 6.10 | 05/22/25 |Update help file to discuss script files |
-| 6.11 | 08/27/26 |Include wbigcalc.ini in distribution, to provide register-value examples
