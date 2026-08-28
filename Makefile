@@ -82,7 +82,7 @@ lint:
 
 dist:
 	rm -f $(BASE).zip
-	zip $(BASE).zip $(BASE).exe $(BASE).chm bigcalc.txt LICENSE.txt readme.md $(BASE).ini
+	zip $(BASE).zip $(BASE).exe $(BASE).chm bigcalc.txt CHANGELOG.md LICENSE.txt readme.md $(BASE).ini
 
 $(BIN): $(OBJS)
 	$(TOOLS)/$(GNAME) $(OBJS) $(LFLAGS) -o $(BIN) $(LIBS) 
