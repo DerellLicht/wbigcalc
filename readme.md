@@ -91,3 +91,4 @@ you can recover the submodule later, with this command:
 |      |          |- Implement test vectors for common functions and operations |
 | 6.09 | 11/03/24 |Remove ReadXFile button, superceded by ReadScript |
 | 6.10 | 05/22/25 |Update help file to discuss script files |
+| 6.11 | 08/27/26 |Include wbigcalc.ini in distribution, to provide register-value examples
