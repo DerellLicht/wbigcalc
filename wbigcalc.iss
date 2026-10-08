@@ -4,16 +4,19 @@
 ;
 ; To use: search for "TODO" and fill in each item.
 
-#define MyAppName "wbigcalc"
+#define MyAppName "WBigCalc"
 #ifndef MyAppVersion
 #define MyAppVersion "1.00"
 #endif
 #define MyAppPublisher "Derell Licht"
-#define MyAppURL "https://derelllicht.42web.io/wbigcalc.html"
-#define MyAppExeName "wbigcalc.exe"
+; #define MyAppURL "https://derelllicht.42web.io/wbigcalc.html"
+#define MyAppURL "https://derelllicht.42web.io/" + MyAppName + ".html"
+; #define MyAppExeName "wbigcalc.exe"
+#define MyAppExeName MyAppName + ".exe"
 #define DoubleAmp(Value) StringChange(Value, "&", "&&")
 #define EscapeConstArgument(Value) StringChange(StringChange(StringChange(Value, "%", "%25"), ",", "%2c"), "}", "%7d")
-#define RepoRoot "D:\SourceCode\Git\wbigcalc"
+;#define RepoRoot "D:\SourceCode\Git\wbigcalc"
+#define RepoRoot "D:\SourceCode\Git\" + MyAppName
 
 ; Uncomment to offer a file association (task, registry entries, shell notify).
 ; Also set AssocExt / AssocProgId / AssocDesc below.

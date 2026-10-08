@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.12.0.schema.json
+PackageIdentifier: DerellLicht.WBigCalc
+PackageVersion: 6.12
+Platform:
+- Windows.Desktop
+MinimumOSVersion: 10.0.17763.0
+InstallerType: zip
+NestedInstallerType: inno
+NestedInstallerFiles:
+- RelativeFilePath: WBigCalcV6.12.setup.exe
+Scope: user
+InstallModes:
+- interactive
+- silent
+- silentWithProgress
+UpgradeBehavior: install
+Dependencies:
+  PackageDependencies:
+  - PackageIdentifier: Microsoft.EdgeWebView2Runtime
+Installers:
+- Architecture: x64
+  InstallerUrl: https://github.com/DerellLicht/wbigcalc/releases/download/v6.12/wbigcalcV6.12.setup.zip
+  InstallerSha256: 8d227819e24831caa1eeda5cd311cb9d55ec25f429a781ad6a5a8742eebe5fab
+ManifestType: installer
+ManifestVersion: 1.12.0

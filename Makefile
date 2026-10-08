@@ -47,7 +47,7 @@ der_libs/statbar.cpp
 	
 OBJS = $(CPPSRC:.cpp=.o) dlgres.o
 
-BASE=wbigcalc
+BASE=WBigCalc
 BIN=$(BASE).exe
 
 LIBS=-lcomctl32 -lgdi32 -lcomdlg32
