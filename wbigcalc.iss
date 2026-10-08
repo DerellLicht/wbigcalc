@@ -16,6 +16,10 @@
 ; TODO: GitHub project page. Start Menu "Readme" and "Release notes" open
 ; README.md and CHANGELOG.md in it. (Hardcode the repo name per project.)
 #define MyRepoURL "https://github.com/DerellLicht/wbigcalc"
+; TODO: the repo's default branch; the Readme/Release notes links point into it.
+; Enable exactly one (older repos use master, newer ones main).
+#define MyRepoBranch "main"
+;#define MyRepoBranch "master"
 #define DoubleAmp(Value) StringChange(Value, "&", "&&")
 #define EscapeConstArgument(Value) StringChange(StringChange(StringChange(Value, "%", "%25"), ",", "%2c"), "}", "%7d")
 ;#define RepoRoot "D:\SourceCode\Git\wbigcalc"
@@ -121,9 +125,9 @@ Name: "{group}\{#MyAppName} Uninstall"; Filename: "{uninstallexe}"
 ; An "InternetShortcut" .url file is just an INI file, so [INI] can create it.
 ; Readme and Release notes open README.md / CHANGELOG.md on their own GitHub
 ; file pages (rendered by GitHub), skipping the repo's file listing.
-; TODO: "main" below must match the repo's default branch ("master" in older repos).
-Filename: "{app}\Readme.url"; Section: "InternetShortcut"; Key: "URL"; String: "{#MyRepoURL}/blob/main/README.md"
-Filename: "{app}\ReleaseNotes.url"; Section: "InternetShortcut"; Key: "URL"; String: "{#MyRepoURL}/blob/main/CHANGELOG.md"
+; The branch comes from MyRepoBranch at the top of this file.
+Filename: "{app}\Readme.url"; Section: "InternetShortcut"; Key: "URL"; String: "{#MyRepoURL}/blob/{#MyRepoBranch}/README.md"
+Filename: "{app}\ReleaseNotes.url"; Section: "InternetShortcut"; Key: "URL"; String: "{#MyRepoURL}/blob/{#MyRepoBranch}/CHANGELOG.md"
 
 [UninstallDelete]
 ; Files made by [INI] are not tracked by the uninstaller.
