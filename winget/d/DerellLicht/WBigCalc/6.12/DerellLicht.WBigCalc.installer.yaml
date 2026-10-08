@@ -8,18 +8,18 @@ InstallerType: zip
 NestedInstallerType: inno
 NestedInstallerFiles:
 - RelativeFilePath: WBigCalcV6.12.setup.exe
+ReleaseDate: 2026-10-08
 Scope: user
 InstallModes:
 - interactive
 - silent
 - silentWithProgress
 UpgradeBehavior: install
-Dependencies:
-  PackageDependencies:
-  - PackageIdentifier: Microsoft.EdgeWebView2Runtime
 Installers:
 - Architecture: x64
-  InstallerUrl: https://github.com/DerellLicht/wbigcalc/releases/download/v6.12/wbigcalcV6.12.setup.zip
-  InstallerSha256: 8d227819e24831caa1eeda5cd311cb9d55ec25f429a781ad6a5a8742eebe5fab
+  InstallerUrl: https://github.com/DerellLicht/wbigcalc/releases/download/v6.12/WBigCalcV6.12.setup.zip
+  InstallerSha256: dad3162d6864b6b458982655b164a35caf1783f8733d722f7bd4de4a471c56ad
+  AppsAndFeaturesEntries:
+  - ProductCode: '{9D5652ED-924D-4908-A10D-0D29CDABB246}_is1'
 ManifestType: installer
 ManifestVersion: 1.12.0

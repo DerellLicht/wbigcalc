@@ -13,6 +13,9 @@
 #define MyAppURL "https://derelllicht.42web.io/" + MyAppName + ".html"
 ; #define MyAppExeName "wbigcalc.exe"
 #define MyAppExeName MyAppName + ".exe"
+; TODO: GitHub project page. Start Menu "Readme" and "Release notes" open
+; README.md and CHANGELOG.md in it. (Hardcode the repo name per project.)
+#define MyRepoURL "https://github.com/DerellLicht/wbigcalc"
 #define DoubleAmp(Value) StringChange(Value, "&", "&&")
 #define EscapeConstArgument(Value) StringChange(StringChange(StringChange(Value, "%", "%25"), ",", "%2c"), "}", "%7d")
 ;#define RepoRoot "D:\SourceCode\Git\wbigcalc"
@@ -107,9 +110,24 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 ; add Start Menu entries for the other installed files (match the [Files] list above).
 Name: "{group}\{#MyAppName} Help"; Filename: "{app}\{#MyAppName}.chm"
 Name: "{group}\{#MyAppName} License"; Filename: "{app}\LICENSE.txt"
-Name: "{group}\{#MyAppName} Readme"; Filename: "{app}\README.md"
-Name: "{group}\{#MyAppName} Release notes"; Filename: "{app}\CHANGELOG.md"
+; Readme / Release notes open GitHub pages (via the .url files created in [INI]
+; below), because most machines have no reader for .md files. README.md and
+; CHANGELOG.md are still installed in {app} for anyone who wants them.
+Name: "{group}\{#MyAppName} Readme"; Filename: "{app}\Readme.url"
+Name: "{group}\{#MyAppName} Release notes"; Filename: "{app}\ReleaseNotes.url"
 Name: "{group}\{#MyAppName} Uninstall"; Filename: "{uninstallexe}"
+
+[INI]
+; An "InternetShortcut" .url file is just an INI file, so [INI] can create it.
+; Readme and Release notes open README.md / CHANGELOG.md on their own GitHub
+; file pages (rendered by GitHub), skipping the repo's file listing.
+; TODO: "main" below must match the repo's default branch ("master" in older repos).
+Filename: "{app}\Readme.url"; Section: "InternetShortcut"; Key: "URL"; String: "{#MyRepoURL}/blob/main/README.md"
+Filename: "{app}\ReleaseNotes.url"; Section: "InternetShortcut"; Key: "URL"; String: "{#MyRepoURL}/blob/main/CHANGELOG.md"
+
+[UninstallDelete]
+; Files made by [INI] are not tracked by the uninstaller.
+Type: files; Name: "{app}\*.url"
 
 [Run]
 ; This runs the INSTALLED app (post-install "Launch program now" checkbox) --
