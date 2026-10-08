@@ -91,14 +91,22 @@ Source: "{#RepoRoot}\bigcalc.txt"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files.
 
 [Icons]
+; START MENU ORDER: Inno has no setting for it, and the order of lines in this
+; section does not matter. Each entry is a .lnk file, and Windows displays the
+; group sorted alphabetically by name. To control the order, choose the names
+; so they sort the way you want: every name below starts with "{#MyAppName}"
+; and differs after it, giving this order:
+;   wbigcalc, Help, License, Readme, Release notes, Uninstall
+; (The old names -- Readme, ChangeLog, License, "Uninstall wbigcalc", then
+; wbigcalc and wbigcalc Help -- sorted with the exe and help file last.)
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
-Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 ; add Start Menu entries for the other installed files (match the [Files] list above).
 Name: "{group}\{#MyAppName} Help"; Filename: "{app}\{#MyAppName}.chm"
-Name: "{group}\Readme"; Filename: "{app}\README.md"
-Name: "{group}\ChangeLog"; Filename: "{app}\CHANGELOG.md"
-Name: "{group}\License"; Filename: "{app}\LICENSE.txt"
+Name: "{group}\{#MyAppName} License"; Filename: "{app}\LICENSE.txt"
+Name: "{group}\{#MyAppName} Readme"; Filename: "{app}\README.md"
+Name: "{group}\{#MyAppName} Release notes"; Filename: "{app}\CHANGELOG.md"
+Name: "{group}\{#MyAppName} Uninstall"; Filename: "{uninstallexe}"
 
 [Run]
 ; This runs the INSTALLED app (post-install "Launch program now" checkbox) --
