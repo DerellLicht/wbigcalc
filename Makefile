@@ -28,9 +28,9 @@ CFLAGS += -Weffc++
 
 #LiFLAGS = -Ider_libs
 CFLAGS += -Ider_libs
-CFLAGS += -Imingw_libs
+# CFLAGS += -Imingw_libs
 
-LFLAGS += -Lmingw_libs
+# LFLAGS += -Lmingw_libs
 
 ifeq ($(USE_STATIC),YES)
 LFLAGS += -static
@@ -52,11 +52,12 @@ BIN=$(BASE).exe
 
 LIBS=-lcomctl32 -lgdi32 -lcomdlg32
 
-ifeq ($(USE_64BIT),YES)
-LIBS += -lhhctrl64
-else
-LIBS += -lhhctrl32
-endif
+# ifeq ($(USE_64BIT),YES)
+# LIBS += -lhhctrl64
+# else
+# LIBS += -lhhctrl32
+# endif
+LIBS += -lhtmlhelp
 
 #************************************************************
 # version.h is GENERATED from CHANGELOG.md (single source of truth for the
