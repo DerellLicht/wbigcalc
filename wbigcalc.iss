@@ -58,7 +58,7 @@ ArchitecturesInstallIn64BitMode=x64compatible
 ; Uncomment the following line to use a 64-bit installer.
 ;SetupArchitecture=x64
 DefaultGroupName={#MyAppName}
-; TODO: point at the real license file (or comment out to skip the license page).
+; point at the real license file (or comment out to skip the license page).
 LicenseFile={#RepoRoot}\LICENSE.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only).
 PrivilegesRequired=lowest
@@ -80,25 +80,25 @@ Name: "associateext"; Description: "Associate .{#AssocExt} files with {#MyAppNam
 #endif
 
 [Files]
-; TODO: list the files to install. Paths below are examples only.
+; list the files to install. Paths below are examples only.
 Source: "{#RepoRoot}\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#RepoRoot}\{#MyAppName}.chm"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#RepoRoot}\bigcalc.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#RepoRoot}\{#MyAppName}.ini"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#RepoRoot}\README.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#RepoRoot}\CHANGELOG.md"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#RepoRoot}\README.md"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#RepoRoot}\README.md"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#RepoRoot}\README.md"; DestDir: "{app}"; Flags: ignoreversion
-;Source: "{#RepoRoot}\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#RepoRoot}\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#RepoRoot}\bigcalc.txt"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files.
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
-; TODO: add Start Menu entries for the other installed files (match the [Files] list above).
-;Name: "{group}\{#MyAppName} Help"; Filename: "{app}\TODO_App.chm"
-;Name: "{group}\Readme"; Filename: "{app}\README.md"
-;Name: "{group}\License"; Filename: "{app}\LICENSE.txt"
+; add Start Menu entries for the other installed files (match the [Files] list above).
+Name: "{group}\{#MyAppName} Help"; Filename: "{app}\{#MyAppName}.chm"
+Name: "{group}\Readme"; Filename: "{app}\README.md"
+Name: "{group}\ChangeLog"; Filename: "{app}\CHANGELOG.md"
+Name: "{group}\License"; Filename: "{app}\LICENSE.txt"
 
 [Run]
 ; This runs the INSTALLED app (post-install "Launch program now" checkbox) --
