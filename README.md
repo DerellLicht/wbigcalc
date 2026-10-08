@@ -43,7 +43,7 @@ is to present some values (stored in registers) which demonstrate capabilities o
 
 `R1` - value of `Pi` to 200 digits  
 `R2` - value of `e` (scientific constant) to 200 digits  
-`R5` - MAX_UINT64, maximum number that can be stored in 64-bit number  
+`R5` - MAX_UINT64, maximum value that can be stored in 64-bit number  
 `R6` - MAX_UINT64 ^ 3 (i.e., MAX_UINT64 cubed)  
 
 ***
