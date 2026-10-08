@@ -1,5 +1,8 @@
 # wbigcalc Changelog
 
+## [6.12] - 2026-10-07
+- Convert distribution to Inno Setup installer
+
 ## [6.11] - 2026-08-27
 - Include wbigcalc.ini in distribution, to provide register-value examples
 

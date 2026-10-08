@@ -5,6 +5,10 @@ USE_CLANG = YES
 
 USE_CYGWIN = NO
 
+# if USE_INNO = YES, build the Inno Setup installer
+# if USE_INNO = NO, `setup` and `install` targets will not be used
+USE_INNO = YES
+
 # the legacy version of qualify.cpp, does not depend upon c++ string class
 USE_LEGACY = NO
 
@@ -41,8 +45,6 @@ der_libs/winmsgs.cpp \
 der_libs/tooltips.cpp \
 der_libs/statbar.cpp
 	
-LINTFILES=lintdefs.cpp lintdefs.ref.h 
-
 OBJS = $(CPPSRC:.cpp=.o) dlgres.o
 
 BASE=wbigcalc
@@ -56,10 +58,61 @@ else
 LIBS += -lhhctrl32
 endif
 
-DIST_ZIP := $(BASE)V$(VERSION).zip
+# Distribution targets: the same names (setup, dist, install) work in both
+# modes; USE_INNO (top of file) decides what they do.
+#
+# USE_INNO = YES  (Inno Setup installer; the generic rules installer,
+#                  installer-zip and install-silent live in der_libs\release.mak)
+#   make            build the exe
+#   make setup      exe (if out of date) -> iscc -> Output\wbigcalcV<ver>.setup.exe
+#   make dist       setup, then Output\wbigcalcV<ver>.setup.zip
+#   make install    silent-install the setup exe, for smoke-testing
+#   "make release" / "make update" (release.mak) depend on "dist" and upload
+#   only the setup zip. A missing or broken .iss makes iscc fail loudly.
+#   DIST_ZIP points at the setup zip, so release.mak's plain "sha256" target
+#   checksums the installer zip.
+#
+# USE_INNO = NO   (legacy loose-files distribution)
+#   make            build the exe
+#   make setup      does nothing (make reports "Nothing to be done")
+#   make dist       portable zip $(BASE)V<ver>.zip
+#   make install    does nothing
+#   "make release" / "make update" upload the portable zip + CHANGELOG.md
+#   (release.mak's default RELEASE_ASSETS).
 
 # Force these action-only targets to always run
-.PHONY: dist
+.PHONY: setup dist install
+
+################   USE_INNO  ################
+ifeq ($(USE_INNO),YES)
+
+DIST_ZIP = $(SETUP_ZIP)
+RELEASE_ASSETS = ./$(SETUP_ZIP)
+
+# Recipe-less rule: adds a prerequisite to the generic "installer" target in
+# release.mak, so the installer always packages a freshly built exe.
+installer: $(BIN)
+
+# PrettyReMark-style names for the generic release.mak targets.
+setup: installer
+dist: installer-zip
+install: install-silent
+
+else
+
+DIST_ZIP := $(BASE)V$(VERSION).zip
+
+# No installer in this mode: no prerequisites and no recipe, so make just
+# reports "Nothing to be done".
+setup:
+install:
+
+# Clears old zips from the project folder, then builds the portable zip.
+dist:
+	rm -f *.zip
+	zip $(DIST_ZIP) $(BASE).exe $(BASE).chm bigcalc.txt CHANGELOG.md LICENSE.txt readme.md $(BASE).ini
+
+endif
 
 #************************************************************
 %.o: %.cpp
@@ -69,6 +122,9 @@ all: $(BIN)
 
 clean:
 	rm -vf $(BIN) $(OBJS)
+ifeq ($(USE_INNO),YES)
+	rm -rf $(SETUP_DIR)
+endif
 
 wc:
 	wc -l *.cpp *.rc
@@ -81,13 +137,6 @@ cppc:
 
 check:
 	cmd /C "d:\llvm\bin\clang-tidy.exe $(CPPSRC)"
-
-lint:
-	cmd /C "c:\lint9\lint-nt +v -width(160,4) -Ider_libs +fcp -ic:\lint9 mingw.lnt -os(_lint.tmp) $(LINTFILES) dlgres.rc $(CPPSRC)"
-
-dist:
-	rm -f *.zip
-	zip $(DIST_ZIP) $(BASE).exe $(BASE).chm bigcalc.txt CHANGELOG.md LICENSE.txt readme.md $(BASE).ini
 
 depend:
 	makedepend $(CPPSRC)
