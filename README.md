@@ -34,25 +34,19 @@ require <code>GetCh()</code> operations which are awkward to implement in Window
 and I don't think they are very important.  
 They could be added later if someone wants to; use <code>ExchangeXReg()</code> as reference.
 
-### History
-I previously ported BigCalc to 32-bit Windows console utility, and it still works great!  
-Executable package is available at https://derelllicht.42web.io/bigcalc.html  
-Source code is maintained at https://github.com/DerellLicht/bigcalc
+***
 
-### Original author and notice
-The original program was written by Judson D. McClendon for MSDOS, ca 1999.  
-Neither the author nor the original program appear to be present on the internet any more.
+### default `.ini` file
+The distribution package includes a default configuration file, `wbigcalc.ini`, which
+will be installed in the same folder as `wbigcalc.exe`.  The purpose of this config file
+is to present some values (stored in registers) which demonstrate capabilities of the program:
 
-```
- Judson D. McClendon           $20 gets you a disk with the complete C source.  
- Sun Valley Systems  
- 4522 Shadow Ridge Pkwy        There is no warranty of any kind.  
- Pinson, AL 35126-2192         The author assumes no responsibility for the  
-     205-680-0460              use of this program.  
-```
+`R1` - value of `Pi` to 200 digits  
+`R2` - value of `e` (scientific constant) to 200 digits  
+`R5` - MAX_UINT64, maximum number that can be stored in 64-bit number  
+`R6` - MAX_UINT64 ^ 3 (i.e., MAX_UINT64 cubed)  
 
-<hr>
-
+***
 #### building the application
 This application is built using the MinGW toolchain; 
 I recommend the [TDM](http://tdm-gcc.tdragon.net/) distribution, 
@@ -71,7 +65,24 @@ This project is licensed under _Creative Commons CC0 1.0 Universal_
 
 See the [LICENSE](LICENSE.txt) file for detailed information about this license  
   
-<hr>
-
 See [Changelog](CHANGELOG.md) for the full revision history.
   
+***
+
+### History
+I previously ported BigCalc to 32-bit Windows console utility, and it still works great!  
+Executable package is available at https://derelllicht.42web.io/bigcalc.html  
+Source code is maintained at https://github.com/DerellLicht/bigcalc
+
+### Original author and notice
+The original program was written by Judson D. McClendon for MSDOS, ca 1999.  
+Neither the author nor the original program appear to be present on the internet any more.
+
+```
+ Judson D. McClendon           $20 gets you a disk with the complete C source.  
+ Sun Valley Systems  
+ 4522 Shadow Ridge Pkwy        There is no warranty of any kind.  
+ Pinson, AL 35126-2192         The author assumes no responsibility for the  
+     205-680-0460              use of this program.  
+```
+

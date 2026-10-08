@@ -359,7 +359,7 @@ BEGIN
     ICON            IDI_ICON,                                   IDC_STATIC,    9, 14,   0,  0, SS_ICON
     LTEXT           "WBigCalc Extended Precision Calculator",   IDC_STATIC,   36, 15,  66, 18
     LTEXT           VerNum,                                     IDC_VERNUM,  104, 15,  50, 10
-    LTEXT           "Copyright (c) 2002-2024",                  IDC_STATIC,   36, 36, 100, 10
+    LTEXT           "Copyright (c) 2002-2026",                  IDC_STATIC,   36, 36, 100, 10
     LTEXT           "Derell Licht",                             IDC_STATIC,   36, 46, 100, 10
     LTEXT           "http://derelllicht.42web.io/wbigcalc.html", IDC_WEBLINK,  36, 56, 140, 10
     LTEXT           "https://github.com/DerellLicht/WBigCalc",  IDC_WEBLINK2, 36, 66, 140, 10
@@ -392,7 +392,7 @@ BEGIN
             VALUE "FileDescription", "WBigCalc Extended Precision Calculator"
             // VALUE "FileVersion", VerNum      //  not displayed using my data
             VALUE "InternalName", "WBigCalc"
-            VALUE "LegalCopyright", "Copyright � 2002-2024"
+            VALUE "LegalCopyright", "Copyright � 2002-2026"
             VALUE "OriginalFilename", "wbigcalc.exe"
             VALUE "ProductName", "WBigCalc Extended Precision Calculator"
             VALUE "ProductVersion", VerNum
