@@ -35,7 +35,7 @@
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
 ;       Do not use the same AppId value in installers for other applications.
-; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
+; To generate a new GUID, use the following command:
 ; python -c "import uuid; print('{{' + str(uuid.uuid4()).upper() + '}')"
 AppId={{9D5652ED-924D-4908-A10D-0D29CDABB246}
 AppName={#MyAppName}
