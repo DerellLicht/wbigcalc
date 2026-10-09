@@ -16,6 +16,7 @@ Checks: |
   -bugprone-throwing-static-initialization,
   -bugprone-incorrect-roundings,
   -bugprone-assignment-in-if-condition,
+  -bugprone-signed-bitwise,
   clang-analyzer-*,
   -clang-analyzer-security.insecureAPI.strcpy,
   clang-diagnostic-*,

@@ -50,14 +50,7 @@ OBJS = $(CPPSRC:.cpp=.o) dlgres.o
 BASE=WBigCalc
 BIN=$(BASE).exe
 
-LIBS=-lcomctl32 -lgdi32 -lcomdlg32
-
-# ifeq ($(USE_64BIT),YES)
-# LIBS += -lhhctrl64
-# else
-# LIBS += -lhhctrl32
-# endif
-LIBS += -lhtmlhelp
+LIBS=-lcomctl32 -lgdi32 -lcomdlg32 -lhtmlhelp
 
 #************************************************************
 # version.h is GENERATED from CHANGELOG.md (single source of truth for the

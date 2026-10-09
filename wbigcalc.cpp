@@ -799,10 +799,17 @@ static BOOL CALLBACK InitProc (HWND hDlgWnd, UINT msg, WPARAM wParam, LPARAM lPa
          case IDB_CLOSE:
             PostMessageA(hDlgWnd, WM_CLOSE, 0, 0);
             break;
+            
+         default:
+            return false;
          } //lint !e744  switch target
          return true;
+         
+      default:
+         break ;   
       } //lint !e744  switch cmd
       break;
+      
       }  //lint !e438 !e10  end local context
          
    case WM_CTLCOLORDLG:

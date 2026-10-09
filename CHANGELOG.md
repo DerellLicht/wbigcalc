@@ -1,5 +1,9 @@
 # wbigcalc Changelog
 
+## [6.13] - 2026-10-08
+- Inno Setup - Start Menu - avoid linking to .md files, no standard viewer
+- Makefile - convert to toolchain `htmlhelp` library
+
 ## [6.12] - 2026-10-07
 - Convert distribution to Inno Setup installer
 - Modify Makefile so program takes version number from CHANGELOG.md

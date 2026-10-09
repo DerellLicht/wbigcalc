@@ -70,8 +70,14 @@ static INT_PTR CALLBACK AboutDlgProc(HWND hdlg, UINT uMessage, WPARAM wparam, LP
       case IDCANCEL:
          EndDialog(hdlg, TRUE);
          return TRUE;
+         
+      default:
+         break ;
       }  //lint !e744  switch with no default
       break;
+      
+   default:
+      break ;
    }  //lint !e744  switch with no default
 
    return FALSE;
