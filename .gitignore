@@ -16,3 +16,4 @@ readme.prev.md
 *.kate-swp
 Makefile.wbc
 bugs.md
+version.h
